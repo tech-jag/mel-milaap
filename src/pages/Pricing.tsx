@@ -25,7 +25,7 @@ import { fadeInUp, staggerChildren } from "@/lib/motion";
 const memberPlans = [
   {
     name: "Free",
-    price: "Free",
+    price: "AUD 0",
     duration: "forever",
     description: "Start your journey with basic features",
     features: [
@@ -39,7 +39,7 @@ const memberPlans = [
       { name: "Read receipts", included: false },
       { name: "Priority support", included: false }
     ],
-    cta: "Get Started",
+    cta: "Get Started Free",
     popular: false
   },
   {
@@ -60,14 +60,33 @@ const memberPlans = [
     ],
     cta: "Start Premium",
     popular: true
+  },
+  {
+    name: "Premium+",
+    price: "AUD 99",
+    duration: "per month",
+    description: "Ultimate matchmaking experience with exclusive benefits",
+    features: [
+      { name: "All Premium features", included: true },
+      { name: "Unlimited super likes", included: true },
+      { name: "Priority profile placement", included: true },
+      { name: "Advanced matching algorithm", included: true },
+      { name: "Video call features", included: true },
+      { name: "Personal matchmaker consultation", included: true },
+      { name: "Profile verification badge", included: true },
+      { name: "Exclusive events invites", included: true },
+      { name: "24/7 concierge support", included: true }
+    ],
+    cta: "Go Premium+",
+    popular: false
   }
 ];
 
 // Supplier pricing plans
 const supplierPlans = [
   {
-    name: "Free Listing",
-    price: "Free",
+    name: "Free",
+    price: "AUD 0",
     duration: "forever",
     description: "Basic presence in our directory",
     features: [
@@ -96,7 +115,7 @@ const supplierPlans = [
       { name: "Priority search ranking", included: true },
       { name: "Customer inquiries", included: true },
       { name: "Basic analytics", included: true },
-      { name: "Premium badge", included: false },
+      { name: "Premium badge", included: true },
       { name: "Homepage featuring", included: false },
       { name: "Dedicated account manager", included: false }
     ],
@@ -105,19 +124,19 @@ const supplierPlans = [
   },
   {
     name: "Premium",
-    price: "AUD 299",
+    price: "AUD 499",
     duration: "per month",
     description: "Maximum exposure and premium benefits",
     features: [
-      { name: "Premium business profile", included: true },
-      { name: "Unlimited photos & videos", included: true },
-      { name: "Top category placement", included: true },
-      { name: "Homepage featuring", included: true },
-      { name: "Premium badge", included: true },
-      { name: "Advanced analytics", included: true },
+      { name: "All Featured plan benefits", included: true },
+      { name: "Homepage showcase placement", included: true },
+      { name: "Priority in all searches", included: true },
+      { name: "Custom branding options", included: true },
       { name: "Dedicated account manager", included: true },
-      { name: "Custom lead forms", included: true },
-      { name: "Marketing support", included: true }
+      { name: "Marketing campaign support", included: true },
+      { name: "First priority on new leads", included: true },
+      { name: "Premium badge & verification", included: true },
+      { name: "Advanced analytics dashboard", included: true }
     ],
     cta: "Go Premium",
     popular: false
@@ -194,7 +213,7 @@ const Pricing = () => {
       <section className="py-16">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
-            className={`grid gap-8 ${currentPlans.length === 2 ? 'grid-cols-1 lg:grid-cols-2 max-w-4xl mx-auto' : 'grid-cols-1 lg:grid-cols-3'}`}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             variants={staggerChildren}
             initial="initial"
             whileInView="animate"

@@ -24,6 +24,11 @@ import AccountPlanningGuests from "./pages/AccountPlanningGuests";
 import AccountPlanningTodo from "./pages/AccountPlanningTodo";
 import AccountPlanningSeating from "./pages/AccountPlanningSeating";
 import AccountInvites from "./pages/AccountInvites";
+import SupplierSignup from "./pages/SupplierSignup";
+import SupplierDashboard from "./pages/SupplierDashboard";
+import CitySydney from "./pages/CitySydney";
+import CityMelbourne from "./pages/CityMelbourne";
+import CityAuckland from "./pages/CityAuckland";
 import Health from "./pages/Health";
 import NotFound from "./pages/NotFound";
 
@@ -58,6 +63,11 @@ const App = () => (
           <Route path="/account/planning/todo" element={<AccountPlanningTodo />} />
           <Route path="/account/planning/seating" element={<AccountPlanningSeating />} />
           <Route path="/account/invites" element={<AccountInvites />} />
+          <Route path="/supplier/signup" element={<SupplierSignup />} />
+          <Route path="/supplier/dashboard" element={<SupplierDashboard />} />
+          <Route path="/city/sydney" element={<CitySydney />} />
+          <Route path="/city/melbourne" element={<CityMelbourne />} />
+          <Route path="/city/auckland" element={<CityAuckland />} />
           <Route path="/health" element={<Health />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

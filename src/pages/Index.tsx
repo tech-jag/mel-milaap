@@ -173,9 +173,9 @@ const Index = () => {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <Button variant="luxury" size="lg">
-              Explore All Categories
-            </Button>
+              <Button variant="luxury" size="lg" asChild>
+                <a href="/suppliers">Explore All Categories</a>
+              </Button>
           </motion.div>
         </div>
       </section>
@@ -275,9 +275,11 @@ const Index = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
-          <Button variant="luxury" size="lg" className="shadow-luxury">
-            <Heart className="w-5 h-5 mr-2" />
-            Start Your Journey
+          <Button variant="luxury" size="lg" className="shadow-luxury" asChild>
+            <a href="/auth/signup">
+              <Heart className="w-5 h-5 mr-2" />
+              Start Your Journey
+            </a>
           </Button>
         </motion.div>
       )}

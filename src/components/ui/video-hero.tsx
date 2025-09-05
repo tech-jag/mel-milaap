@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Play, Pause } from "lucide-react";
 import { fadeInUp, heroParallax } from "@/lib/motion";
+import heroImage from "@/assets/hero-wedding-couple.jpg";
 
 interface VideoHeroProps {
   title: string;
@@ -74,7 +75,12 @@ export function VideoHero({
 
       {/* Fallback Background */}
       {!videoSrc && (
-        <div className="absolute inset-0 bg-gradient-hero" />
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/40 via-primary/30 to-primary/70" />
+        </div>
       )}
 
       {/* Content */}

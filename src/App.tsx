@@ -31,6 +31,18 @@ import CityMelbourne from "./pages/CityMelbourne";
 import CityAuckland from "./pages/CityAuckland";
 import Health from "./pages/Health";
 import NotFound from "./pages/NotFound";
+import HowItWorks from "./pages/HowItWorks";
+import ForParents from "./pages/ForParents";
+import ForSingles from "./pages/ForSingles";
+import ForSuppliers from "./pages/ForSuppliers";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
+import Help from "./pages/Help";
+import Careers from "./pages/Careers";
+import Press from "./pages/Press";
+import Destinations from "./pages/Destinations";
+import SuppliersFeatureListings from "./pages/SuppliersFeatureListings";
+import SuppliersPricing from "./pages/SuppliersPricing";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +81,18 @@ const App = () => (
           <Route path="/city/melbourne" element={<CityMelbourne />} />
           <Route path="/city/auckland" element={<CityAuckland />} />
           <Route path="/health" element={<Health />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/for/parents" element={<ForParents />} />
+          <Route path="/for/singles" element={<ForSingles />} />
+          <Route path="/for/suppliers" element={<ForSuppliers />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/help" element={<Help />} />
+          <Route path="/careers" element={<Careers />} />
+          <Route path="/press" element={<Press />} />
+          <Route path="/destinations" element={<Destinations />} />
+          <Route path="/suppliers/featured" element={<SuppliersFeatureListings />} />
+          <Route path="/suppliers/pricing" element={<SuppliersPricing />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

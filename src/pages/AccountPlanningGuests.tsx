@@ -23,6 +23,9 @@ import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import type { Database } from "@/integrations/supabase/types";
+
+type GuestRow = Database['public']['Tables']['guest_list_items']['Row'];
 
 interface GuestItem {
   id: string;
@@ -31,6 +34,17 @@ interface GuestItem {
   rsvp_status: 'pending' | 'confirmed' | 'declined';
   dietary_requirements?: string;
   notes?: string;
+}
+
+function toGuestItem(row: GuestRow): GuestItem {
+  return {
+    id: row.id,
+    name: row.name,
+    side: row.side || undefined,
+    rsvp_status: (row.rsvp_status as 'pending' | 'confirmed' | 'declined') || 'pending',
+    dietary_requirements: row.dietary_requirements || undefined,
+    notes: row.notes || undefined,
+  };
 }
 
 interface GuestList {
@@ -103,10 +117,7 @@ const AccountPlanningGuests = () => {
 
       setGuestList({
         ...guestListData,
-        items: (itemsData || []).map((item: any) => ({
-          ...item,
-          rsvp_status: item.rsvp_status as 'pending' | 'confirmed' | 'declined'
-        }))
+        items: (itemsData || []).map(toGuestItem)
       });
     } catch (error) {
       console.error('Error loading guest list:', error);
@@ -141,7 +152,7 @@ const AccountPlanningGuests = () => {
 
       setGuestList(prev => prev ? {
         ...prev,
-        items: [...prev.items, data]
+        items: [...prev.items, toGuestItem(data)]
       } : null);
 
       setNewGuest({ name: '', side: '', dietary_requirements: '', notes: '' });

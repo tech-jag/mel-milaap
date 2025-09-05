@@ -21,6 +21,9 @@ import AccountSecurity from "./pages/AccountSecurity";
 import AccountFavorites from "./pages/AccountFavorites";
 import AccountPlanningBudget from "./pages/AccountPlanningBudget";
 import AccountPlanningGuests from "./pages/AccountPlanningGuests";
+import AccountPlanningTodo from "./pages/AccountPlanningTodo";
+import AccountPlanningSeating from "./pages/AccountPlanningSeating";
+import AccountInvites from "./pages/AccountInvites";
 import Health from "./pages/Health";
 import NotFound from "./pages/NotFound";
 
@@ -52,6 +55,9 @@ const App = () => (
           <Route path="/account/favorites" element={<AccountFavorites />} />
           <Route path="/account/planning/budget" element={<AccountPlanningBudget />} />
           <Route path="/account/planning/guests" element={<AccountPlanningGuests />} />
+          <Route path="/account/planning/todo" element={<AccountPlanningTodo />} />
+          <Route path="/account/planning/seating" element={<AccountPlanningSeating />} />
+          <Route path="/account/invites" element={<AccountInvites />} />
           <Route path="/health" element={<Health />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

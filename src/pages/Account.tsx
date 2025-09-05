@@ -231,6 +231,18 @@ const Account = () => {
                     ))}
                     
                     <div className="pt-4 border-t">
+                      <div className="grid grid-cols-2 gap-3 mb-3">
+                        <Link to="/account/planning/guests">
+                          <Button variant="outline" size="sm" className="w-full text-xs">
+                            Guest List
+                          </Button>
+                        </Link>
+                        <Link to="/account/planning/todo">
+                          <Button variant="outline" size="sm" className="w-full text-xs">
+                            To-Do List
+                          </Button>
+                        </Link>
+                      </div>
                       <Link to="/match">
                         <Button variant="outline" className="w-full">
                           <Heart className="w-4 h-4 mr-2" />

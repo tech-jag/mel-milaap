@@ -7,6 +7,7 @@ import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import ProtectedImage from "@/components/ui/protected-image";
 import { 
   Search, 
   Filter, 
@@ -19,6 +20,9 @@ import {
   Eye
 } from "lucide-react";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 
 // Mock profile data
 const profiles = [
@@ -74,8 +78,147 @@ const filters = [
 ];
 
 const Match = () => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
   const [selectedFilters, setSelectedFilters] = React.useState<Record<string, string>>({});
   const [showFilters, setShowFilters] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState<any>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [messageCount, setMessageCount] = React.useState(0);
+  const [isPremium, setIsPremium] = React.useState(false);
+
+  React.useEffect(() => {
+    checkAuth();
+  }, []);
+
+  const checkAuth = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      navigate('/auth/login');
+      return;
+    }
+    setCurrentUser(user);
+    
+    // Check premium status
+    const { data: subscription } = await supabase
+      .from('subscriptions')
+      .select('plan, status')
+      .eq('subject_id', user.id)
+      .eq('subject_type', 'user')
+      .eq('status', 'active')
+      .maybeSingle();
+      
+    setIsPremium(subscription?.plan === 'premium' || subscription?.plan === 'premium_plus');
+    
+    // Check daily message count
+    const today = new Date().toISOString().split('T')[0];
+    const { data: messages } = await supabase
+      .from('messages')
+      .select('id')
+      .eq('from_user_id', user.id)
+      .gte('created_at', `${today}T00:00:00.000Z`)
+      .lt('created_at', `${today}T23:59:59.999Z`);
+      
+    setMessageCount(messages?.length || 0);
+    setIsLoading(false);
+  };
+
+  const handleMessage = async (profileId: string, profileName: string) => {
+    if (!currentUser) return;
+    
+    // Check message limits for free users
+    if (!isPremium && messageCount >= 3) {
+      toast({
+        title: "Message Limit Reached",
+        description: "Upgrade to Premium for unlimited messaging!",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      // Create or find existing thread
+      const { data: existingThread } = await supabase
+        .from('threads')
+        .select('id')
+        .or(`and(user1_id.eq.${currentUser.id},user2_id.eq.${profileId}),and(user1_id.eq.${profileId},user2_id.eq.${currentUser.id})`)
+        .maybeSingle();
+
+      let threadId = existingThread?.id;
+
+      if (!threadId) {
+        const { data: newThread, error: threadError } = await supabase
+          .from('threads')
+          .insert({
+            user1_id: currentUser.id,
+            user2_id: profileId
+          })
+          .select('id')
+          .single();
+
+        if (threadError) throw threadError;
+        threadId = newThread.id;
+      }
+
+      // Send a sample message
+      const { error } = await supabase
+        .from('messages')
+        .insert({
+          thread_id: threadId,
+          from_user_id: currentUser.id,
+          to_user_id: profileId,
+          body: `Hi ${profileName}! I'd love to get to know you better.`
+        });
+
+      if (error) throw error;
+
+      setMessageCount(prev => prev + 1);
+      
+      toast({
+        title: "Message Sent!",
+        description: `Your message has been sent to ${profileName}.`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to send message.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleExpressInterest = async (profileId: string) => {
+    if (!currentUser) return;
+
+    try {
+      const { error } = await supabase
+        .from('interests')
+        .insert({
+          from_user_id: currentUser.id,
+          to_user_id: profileId,
+          status: 'pending'
+        });
+
+      if (error) throw error;
+
+      toast({
+        title: "Interest Sent!",
+        description: "Your interest has been sent successfully.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to send interest.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  if (isLoading) {
+    return <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="text-center">Loading...</div>
+    </div>;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -177,10 +320,11 @@ const Match = () => {
               >
                 <Card className="luxury-card overflow-hidden">
                   <div className="relative">
-                    <img
+                    <ProtectedImage
                       src={profile.photos[0]}
+                      profileId={profile.id.toString()}
                       alt={profile.name}
-                      className="w-full h-64 object-cover"
+                      className="w-full h-64"
                     />
                     
                     {/* Badges */}
@@ -236,13 +380,23 @@ const Match = () => {
                       </p>
 
                       <div className="flex gap-2 pt-4">
-                        <Button variant="luxury" size="sm" className="flex-1">
+                        <Button 
+                          variant="luxury" 
+                          size="sm" 
+                          className="flex-1"
+                          onClick={() => handleExpressInterest(profile.id.toString())}
+                        >
                           <Heart className="w-4 h-4 mr-2" />
                           Interest
                         </Button>
-                        <Button variant="premium" size="sm" className="flex-1">
+                        <Button 
+                          variant="premium" 
+                          size="sm" 
+                          className="flex-1"
+                          onClick={() => handleMessage(profile.id.toString(), profile.name)}
+                        >
                           <MessageCircle className="w-4 h-4 mr-2" />
-                          Message
+                          Message {!isPremium && messageCount >= 3 ? '(Limit)' : ''}
                         </Button>
                         <Button variant="ghost" size="sm">
                           <Eye className="w-4 h-4" />

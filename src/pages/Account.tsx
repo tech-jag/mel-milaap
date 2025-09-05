@@ -17,7 +17,8 @@ import {
   Star,
   TrendingUp,
   Gift,
-  CheckCircle
+  CheckCircle,
+  Crown
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
@@ -31,6 +32,7 @@ const Account = () => {
     planningProgress: 0,
     verified: false
   });
+  const [userPlan, setUserPlan] = React.useState('free');
 
   React.useEffect(() => {
     checkUser();
@@ -47,11 +49,12 @@ const Account = () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
 
-    // Load user stats
-    const [favoritesResult, messagesResult, budgetResult] = await Promise.all([
+    // Load user stats and plan
+    const [favoritesResult, messagesResult, budgetResult, userResult] = await Promise.all([
       supabase.from('favorites').select('id').eq('user_id', user.id),
-      supabase.from('messages').select('id').eq('from_user_id', user.id),
-      supabase.from('budgets').select('id').eq('user_id', user.id)
+      supabase.from('messages').select('id').eq('sender_id', user.id),
+      supabase.from('budgets').select('id').eq('user_id', user.id),
+      supabase.from('users').select('plan').eq('id', user.id).single()
     ]);
 
     setStats({
@@ -60,6 +63,8 @@ const Account = () => {
       planningProgress: budgetResult.data?.length > 0 ? 25 : 0,
       verified: user.email_confirmed_at ? true : false
     });
+
+    setUserPlan(userResult.data?.plan || 'free');
   };
 
   const quickActions = [
@@ -121,6 +126,22 @@ const Account = () => {
                 <User className="w-4 h-4 mr-2" />
                 My Account
               </Badge>
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <Badge 
+                  variant={userPlan === 'free' ? 'secondary' : 'default'}
+                  className="text-sm px-3 py-1"
+                >
+                  {userPlan.toUpperCase()} PLAN
+                </Badge>
+                {userPlan === 'free' && (
+                  <Link to="/account/billing">
+                    <Button variant="luxury" size="sm">
+                      <Crown className="w-4 h-4 mr-2" />
+                      Upgrade to Premium
+                    </Button>
+                  </Link>
+                )}
+              </div>
               <h1 className="text-luxury-xl text-foreground mb-6">
                 Welcome back, {user.user_metadata?.name || 'Member'}!
               </h1>

@@ -18,6 +18,9 @@ import Faqs from "./pages/Faqs";
 import Auth from "./pages/Auth";
 import Account from "./pages/Account";
 import AccountSecurity from "./pages/AccountSecurity";
+import AccountProfile from "./pages/AccountProfile";
+import AccountPhotos from "./pages/AccountPhotos";
+import AccountBilling from "./pages/AccountBilling";
 import AccountFavorites from "./pages/AccountFavorites";
 import AccountPlanningBudget from "./pages/AccountPlanningBudget";
 import AccountPlanningGuests from "./pages/AccountPlanningGuests";
@@ -69,7 +72,11 @@ const App = () => (
           <Route path="/auth/login" element={<Auth />} />
           <Route path="/auth/signup" element={<Auth />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/account/profile" element={<AccountProfile />} />
+          <Route path="/account/photos" element={<AccountPhotos />} />
+          <Route path="/account/billing" element={<AccountBilling />} />
           <Route path="/account/security" element={<AccountSecurity />} />
+          <Route path="/account/verification" element={<Verification />} />
           <Route path="/account/favorites" element={<AccountFavorites />} />
           <Route path="/account/planning/budget" element={<AccountPlanningBudget />} />
           <Route path="/account/planning/guests" element={<AccountPlanningGuests />} />

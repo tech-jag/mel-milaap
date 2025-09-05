@@ -11,7 +11,8 @@ import {
   Settings,
   CreditCard,
   Home,
-  Users
+  Users,
+  LogOut
 } from "lucide-react";
 import {
   Sidebar,
@@ -25,12 +26,13 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { Badge } from "./badge";
+import { Button } from "./button";
 import { supabase } from "@/integrations/supabase/client";
 
 const planningItems = [
-  { title: "Guest List", url: "/account/guests", icon: Users },
-  { title: "To-Do List", url: "/account/todo", icon: CheckSquare },
-  { title: "Budget", url: "/account/budget", icon: DollarSign },
+  { title: "Guest List", url: "/account/planning/guests", icon: Users },
+  { title: "To-Do List", url: "/account/planning/todo", icon: CheckSquare },
+  { title: "Budget", url: "/account/planning/budget", icon: DollarSign },
 ];
 
 const accountItems = [
@@ -66,6 +68,10 @@ export function AccountSidebar() {
 
     fetchUserPlan();
   }, []);
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
 
   const isActive = (path: string) => currentPath === path;
   
@@ -132,6 +138,18 @@ export function AccountSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {/* Logout */}
+        <div className="p-4 border-t mt-auto">
+          <Button 
+            variant="ghost" 
+            className="w-full justify-start text-destructive" 
+            onClick={handleLogout}
+          >
+            <LogOut className="h-4 w-4 mr-2" />
+            Logout
+          </Button>
+        </div>
       </SidebarContent>
     </Sidebar>
   );

@@ -7,6 +7,9 @@ import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import ProtectedImage from "@/components/ui/protected-image";
 import { 
   Search, 
@@ -17,12 +20,14 @@ import {
   Shield,
   Star,
   Verified,
-  Eye
+  Eye,
+  ArrowLeft,
+  Send
 } from "lucide-react";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 // Mock profile data
 const profiles = [
@@ -86,6 +91,9 @@ const Match = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [messageCount, setMessageCount] = React.useState(0);
   const [isPremium, setIsPremium] = React.useState(false);
+  const [messageDialogOpen, setMessageDialogOpen] = React.useState(false);
+  const [selectedProfile, setSelectedProfile] = React.useState<any>(null);
+  const [messageText, setMessageText] = React.useState('');
 
   React.useEffect(() => {
     checkAuth();
@@ -123,22 +131,36 @@ const Match = () => {
     setIsLoading(false);
   };
 
-  const handleMessage = async (profileId: string, profileName: string) => {
+  const handleMessage = async (profileId: string, profileName: string, customMessage?: string) => {
     if (!currentUser) return;
     
-    // Simple message implementation without threads for now
+    // Check message limits for non-premium users
+    if (messageCount >= 5 && !isPremium) {
+      toast({
+        title: "Message Limit Reached",
+        description: "Upgrade to Premium for unlimited messages.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const messageBody = customMessage || `Hi ${profileName}! I'd love to get to know you better.`;
+
     try {
       const { error } = await supabase
         .from('messages')
         .insert({
           sender_id: currentUser.id,
           receiver_id: profileId,
-          body: `Hi ${profileName}! I'd love to get to know you better.`
+          body: messageBody
         });
 
       if (error) throw error;
 
       setMessageCount(prev => prev + 1);
+      setMessageText('');
+      setMessageDialogOpen(false);
+      setSelectedProfile(null);
       
       toast({
         title: "Message Sent!",
@@ -150,6 +172,17 @@ const Match = () => {
         description: error.message || "Failed to send message.",
         variant: "destructive"
       });
+    }
+  };
+
+  const openCustomMessageDialog = (profile: any) => {
+    setSelectedProfile(profile);
+    setMessageDialogOpen(true);
+  };
+
+  const sendCustomMessage = () => {
+    if (selectedProfile && messageText.trim()) {
+      handleMessage(selectedProfile.id.toString(), selectedProfile.name, messageText.trim());
     }
   };
 
@@ -198,6 +231,15 @@ const Match = () => {
             initial="initial"
             animate="animate"
           >
+            <motion.div variants={fadeInUp} className="mb-6">
+              <Link to="/account">
+                <Button variant="ghost" size="sm" className="mb-4">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Back to Dashboard
+                </Button>
+              </Link>
+            </motion.div>
+            
             <motion.h1 
               className="text-luxury-lg text-foreground mb-6"
               variants={fadeInUp}
@@ -358,7 +400,7 @@ const Match = () => {
                           variant="premium" 
                           size="sm" 
                           className="flex-1"
-                          onClick={() => handleMessage(profile.id.toString(), profile.name)}
+                          onClick={() => openCustomMessageDialog(profile)}
                         >
                           <MessageCircle className="w-4 h-4 mr-2" />
                           Message {!isPremium && messageCount >= 3 ? '(Limit)' : ''}
@@ -388,6 +430,39 @@ const Match = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Message Dialog */}
+      <Dialog open={messageDialogOpen} onOpenChange={setMessageDialogOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Send Message to {selectedProfile?.name}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <Textarea
+              placeholder="Write your message here..."
+              value={messageText}
+              onChange={(e) => setMessageText(e.target.value)}
+              rows={4}
+              className="resize-none"
+            />
+            <div className="flex justify-end space-x-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setMessageDialogOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button 
+                onClick={sendCustomMessage}
+                disabled={!messageText.trim()}
+              >
+                <Send className="w-4 h-4 mr-2" />
+                Send Message
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Footer />
     </div>

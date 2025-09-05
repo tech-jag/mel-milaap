@@ -608,7 +608,6 @@ export type Database = {
           id: string
           receiver_id: string
           sender_id: string
-          thread_id: string
         }
         Insert: {
           body: string
@@ -616,7 +615,6 @@ export type Database = {
           id?: string
           receiver_id: string
           sender_id: string
-          thread_id: string
         }
         Update: {
           body?: string
@@ -624,31 +622,8 @@ export type Database = {
           id?: string
           receiver_id?: string
           sender_id?: string
-          thread_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "messages_from_user_id_fkey"
-            columns: ["sender_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "messages_thread_id_fkey"
-            columns: ["thread_id"]
-            isOneToOne: false
-            referencedRelation: "threads"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "messages_to_user_id_fkey"
-            columns: ["receiver_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       recovery_codes: {
         Row: {
@@ -898,45 +873,6 @@ export type Database = {
             foreignKeyName: "suppliers_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      threads: {
-        Row: {
-          created_at: string
-          id: string
-          updated_at: string
-          user1_id: string
-          user2_id: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          updated_at?: string
-          user1_id: string
-          user2_id: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          updated_at?: string
-          user1_id?: string
-          user2_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "threads_user1_id_fkey"
-            columns: ["user1_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "threads_user2_id_fkey"
-            columns: ["user2_id"]
-            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },

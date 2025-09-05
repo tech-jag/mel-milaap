@@ -12,7 +12,8 @@ import {
   CreditCard,
   Home,
   Users,
-  LogOut
+  LogOut,
+  MessageCircle
 } from "lucide-react";
 import {
   Sidebar,
@@ -39,6 +40,7 @@ const accountItems = [
   { title: "Overview", url: "/account", icon: Home },
   { title: "Profile", url: "/account/profile", icon: User },
   { title: "Photos", url: "/account/photos", icon: Camera },
+  { title: "Messages", url: "/account/messages", icon: MessageCircle },
   { title: "Verification", url: "/account/verification", icon: Shield },
   { title: "Favorites", url: "/account/favorites", icon: Heart },
   { title: "Security", url: "/account/security", icon: Settings },

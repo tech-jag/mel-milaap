@@ -76,10 +76,14 @@ const profiles = [
 ];
 
 const filters = [
-  { label: "Age", options: ["22-25", "26-30", "31-35", "36-40"] },
-  { label: "Location", options: ["Sydney", "Melbourne", "Brisbane", "Auckland"] },
-  { label: "Religion", options: ["Hindu", "Sikh", "Muslim", "Christian"] },
-  { label: "Education", options: ["Bachelors", "Masters", "PhD", "Professional"] },
+  { label: "Age", options: ["22-25", "26-30", "31-35", "36-40", "41-45"] },
+  { label: "Location", options: ["Sydney", "Melbourne", "Brisbane", "Auckland", "Perth", "Adelaide"] },
+  { label: "Religion", options: ["Hindu", "Sikh", "Muslim", "Christian", "Buddhist", "Jain"] },
+  { label: "Education", options: ["Bachelors", "Masters", "PhD", "Professional", "Diploma"] },
+  { label: "Profession", options: ["Engineer", "Doctor", "Teacher", "Business", "IT", "Finance", "Other"] },
+  { label: "Languages", options: ["English", "Hindi", "Punjabi", "Gujarati", "Tamil", "Telugu", "Urdu"] },
+  { label: "Marital Status", options: ["Never Married", "Divorced", "Widowed"] },
+  { label: "Community", options: ["Punjabi", "Gujarati", "Tamil", "Telugu", "Bengali", "Marathi", "Other"] }
 ];
 
 const Match = () => {
@@ -87,6 +91,7 @@ const Match = () => {
   const navigate = useNavigate();
   const [selectedFilters, setSelectedFilters] = React.useState<Record<string, string>>({});
   const [showFilters, setShowFilters] = React.useState(false);
+  const [sortBy, setSortBy] = React.useState('newest');
   const [currentUser, setCurrentUser] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [messageCount, setMessageCount] = React.useState(0);
@@ -94,6 +99,8 @@ const Match = () => {
   const [messageDialogOpen, setMessageDialogOpen] = React.useState(false);
   const [selectedProfile, setSelectedProfile] = React.useState<any>(null);
   const [messageText, setMessageText] = React.useState('');
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const [verifiedOnly, setVerifiedOnly] = React.useState(false);
 
   React.useEffect(() => {
     checkAuth();
@@ -263,6 +270,8 @@ const Match = () => {
                 <input
                   type="text"
                   placeholder="Search by location, profession, or interests..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-4 py-4 rounded-xl border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
@@ -288,23 +297,72 @@ const Match = () => {
           exit={{ opacity: 0, height: 0 }}
         >
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {/* Sort and Filter Options */}
+            <div className="flex flex-col lg:flex-row gap-6 mb-6">
+              <div className="flex items-center gap-4">
+                <label className="text-sm font-medium text-foreground">Sort by:</label>
+                <select 
+                  className="p-2 rounded-lg border border-border bg-background text-sm"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                >
+                  <option value="newest">Newest First</option>
+                  <option value="active">Most Active</option>
+                  <option value="verified">Verified Only</option>
+                  <option value="premium">Premium Members</option>
+                </select>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <label className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={verifiedOnly}
+                    onChange={(e) => setVerifiedOnly(e.target.checked)}
+                    className="rounded border-border"
+                  />
+                  Verified profiles only
+                </label>
+              </div>
+            </div>
+            
+            {/* Filter Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
               {filters.map((filter) => (
                 <div key={filter.label}>
                   <label className="block text-sm font-medium text-foreground mb-2">
                     {filter.label}
                   </label>
                   <select 
-                    className="w-full p-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full p-2 text-sm rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
                     onChange={(e) => setSelectedFilters({...selectedFilters, [filter.label]: e.target.value})}
+                    value={selectedFilters[filter.label] || ''}
                   >
-                    <option value="">Select {filter.label}</option>
+                    <option value="">Any</option>
                     {filter.options.map((option) => (
                       <option key={option} value={option}>{option}</option>
                     ))}
                   </select>
                 </div>
               ))}
+            </div>
+            
+            {/* Clear Filters */}
+            <div className="mt-4 flex justify-between items-center">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => {
+                  setSelectedFilters({});
+                  setVerifiedOnly(false);
+                  setSearchQuery('');
+                }}
+              >
+                Clear All Filters
+              </Button>
+              <p className="text-sm text-muted-foreground">
+                {profiles.length} profiles found
+              </p>
             </div>
           </div>
         </motion.section>

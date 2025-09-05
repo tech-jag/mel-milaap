@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Match from "./pages/Match";
 import Suppliers from "./pages/Suppliers";
 import Planning from "./pages/Planning";
+import WeddingPlanning from "./pages/WeddingPlanning";
 import Stories from "./pages/Stories";
 import Premium from "./pages/Premium";
 import Pricing from "./pages/Pricing";
@@ -28,6 +29,8 @@ import AccountPlanningTodo from "./pages/AccountPlanningTodo";
 import AccountGuests from "./pages/AccountGuests";
 import AccountPlanningSeating from "./pages/AccountPlanningSeating";
 import AccountInvites from "./pages/AccountInvites";
+import AccountMessages from "./pages/AccountMessages";
+import AccountVerification from "./pages/AccountVerification";
 import SupplierSignup from "./pages/SupplierSignup";
 import SupplierDashboard from "./pages/SupplierDashboard";
 import CitySydney from "./pages/CitySydney";
@@ -60,7 +63,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/match" element={<Match />} />
           <Route path="/suppliers" element={<Suppliers />} />
-          <Route path="/planning" element={<Planning />} />
+          <Route path="/planning" element={<WeddingPlanning />} />
           <Route path="/stories" element={<Stories />} />
           <Route path="/premium" element={<Premium />} />
           <Route path="/pricing" element={<Pricing />} />
@@ -76,7 +79,8 @@ const App = () => (
           <Route path="/account/photos" element={<AccountPhotos />} />
           <Route path="/account/billing" element={<AccountBilling />} />
           <Route path="/account/security" element={<AccountSecurity />} />
-          <Route path="/account/verification" element={<Verification />} />
+          <Route path="/account/verification" element={<AccountVerification />} />
+          <Route path="/account/messages" element={<AccountMessages />} />
           <Route path="/account/favorites" element={<AccountFavorites />} />
           <Route path="/account/planning/budget" element={<AccountPlanningBudget />} />
           <Route path="/account/planning/guests" element={<AccountPlanningGuests />} />

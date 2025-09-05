@@ -52,14 +52,78 @@ const Auth = () => {
     parentManaged: false
   });
 
+  // 2FA states
+  const [showOTP, setShowOTP] = React.useState(false);
+  const [otpCode, setOtpCode] = React.useState('');
+  const [pendingEmail, setPendingEmail] = React.useState('');
+  const [isVerifying, setIsVerifying] = React.useState(false);
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
+      // First check if user has 2FA enabled
+      const { data: userData } = await supabase
+        .from('users')
+        .select('two_factor_enabled')
+        .eq('email', loginData.email)
+        .maybeSingle();
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email: loginData.email,
         password: loginData.password,
+      });
+
+      if (error) throw error;
+
+      // If 2FA is enabled, request OTP
+      if (userData?.two_factor_enabled) {
+        await supabase.auth.signOut(); // Sign out temporarily for OTP verification
+        setPendingEmail(loginData.email);
+        setShowOTP(true);
+        
+        toast({
+          title: "2FA Required",
+          description: "Please check your email for the verification code.",
+        });
+      } else {
+        // Regular login - redirect based on user type
+        toast({
+          title: "Welcome back!",
+          description: "You've been successfully logged in.",
+        });
+        
+        // Check if user is a supplier for redirect
+        const { data: supplier } = await supabase
+          .from('suppliers')
+          .select('id')
+          .eq('user_id', data.user?.id)
+          .maybeSingle();
+          
+        navigate(supplier ? '/supplier/dashboard' : '/account');
+      }
+    } catch (error: any) {
+      toast({
+        title: "Login Failed",
+        description: error.message || "Please check your credentials and try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOTPVerification = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsVerifying(true);
+
+    try {
+      // Verify OTP and complete login
+      const { data, error } = await supabase.auth.verifyOtp({
+        email: pendingEmail,
+        token: otpCode,
+        type: 'email'
       });
 
       if (error) throw error;
@@ -69,15 +133,22 @@ const Auth = () => {
         description: "You've been successfully logged in.",
       });
 
-      navigate('/');
+      // Redirect based on user type
+      const { data: supplier } = await supabase
+        .from('suppliers')
+        .select('id')
+        .eq('user_id', data.user?.id)
+        .maybeSingle();
+        
+      navigate(supplier ? '/supplier/dashboard' : '/account');
     } catch (error: any) {
       toast({
-        title: "Login Failed",
-        description: error.message || "Please check your credentials and try again.",
+        title: "Verification Failed",
+        description: error.message || "Invalid verification code.",
         variant: "destructive"
       });
     } finally {
-      setIsLoading(false);
+      setIsVerifying(false);
     }
   };
 
@@ -459,6 +530,54 @@ const Auth = () => {
                         Continue with Google
                       </Button>
                     </TabsContent>
+                    {/* OTP Verification Modal */}
+                    {showOTP && (
+                      <div className="absolute inset-0 bg-background/95 backdrop-blur-sm flex items-center justify-center z-10">
+                        <Card className="w-full max-w-sm">
+                          <CardHeader className="text-center">
+                            <CardTitle className="flex items-center justify-center space-x-3">
+                              <Shield className="w-6 h-6 text-primary" />
+                              <span>Enter Verification Code</span>
+                            </CardTitle>
+                          </CardHeader>
+                          <CardContent>
+                            <form onSubmit={handleOTPVerification} className="space-y-4">
+                              <div className="space-y-2">
+                                <Label htmlFor="otp">6-digit code from email</Label>
+                                <Input
+                                  id="otp"
+                                  type="text"
+                                  placeholder="123456"
+                                  maxLength={6}
+                                  value={otpCode}
+                                  onChange={(e) => setOtpCode(e.target.value)}
+                                  className="text-center tracking-widest"
+                                  required
+                                />
+                              </div>
+                              <div className="flex space-x-2">
+                                <Button
+                                  type="button"
+                                  variant="outline"
+                                  className="flex-1"
+                                  onClick={() => setShowOTP(false)}
+                                >
+                                  Cancel
+                                </Button>
+                                <Button
+                                  type="submit"
+                                  variant="luxury"
+                                  className="flex-1"
+                                  disabled={isVerifying}
+                                >
+                                  {isVerifying ? "Verifying..." : "Verify"}
+                                </Button>
+                              </div>
+                            </form>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    )}
                   </Tabs>
                 </CardContent>
               </Card>

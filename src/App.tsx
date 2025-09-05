@@ -16,6 +16,8 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Faqs from "./pages/Faqs";
 import Auth from "./pages/Auth";
+import Account from "./pages/Account";
+import AccountSecurity from "./pages/AccountSecurity";
 import Health from "./pages/Health";
 import NotFound from "./pages/NotFound";
 
@@ -42,6 +44,8 @@ const App = () => (
           <Route path="/faqs" element={<Faqs />} />
           <Route path="/auth/login" element={<Auth />} />
           <Route path="/auth/signup" element={<Auth />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/account/security" element={<AccountSecurity />} />
           <Route path="/health" element={<Health />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

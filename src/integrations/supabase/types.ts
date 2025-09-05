@@ -554,6 +554,30 @@ export type Database = {
           },
         ]
       }
+      recovery_codes: {
+        Row: {
+          code_hash: string
+          created_at: string
+          id: string
+          used_at: string | null
+          user_id: string
+        }
+        Insert: {
+          code_hash: string
+          created_at?: string
+          id?: string
+          used_at?: string | null
+          user_id: string
+        }
+        Update: {
+          code_hash?: string
+          created_at?: string
+          id?: string
+          used_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       reports: {
         Row: {
           created_at: string
@@ -781,6 +805,8 @@ export type Database = {
           name: string
           phone: string | null
           role: Database["public"]["Enums"]["user_role"]
+          two_factor_backup_codes: string[] | null
+          two_factor_enabled: boolean | null
           updated_at: string
         }
         Insert: {
@@ -792,6 +818,8 @@ export type Database = {
           name: string
           phone?: string | null
           role?: Database["public"]["Enums"]["user_role"]
+          two_factor_backup_codes?: string[] | null
+          two_factor_enabled?: boolean | null
           updated_at?: string
         }
         Update: {
@@ -803,6 +831,8 @@ export type Database = {
           name?: string
           phone?: string | null
           role?: Database["public"]["Enums"]["user_role"]
+          two_factor_backup_codes?: string[] | null
+          two_factor_enabled?: boolean | null
           updated_at?: string
         }
         Relationships: []

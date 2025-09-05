@@ -54,12 +54,16 @@ export function Navigation() {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
-            <Button variant="ghost" size="sm">
-              Login
-            </Button>
-            <Button variant="luxury" size="sm">
-              Sign Up
-            </Button>
+            <Link to="/auth/login">
+              <Button variant="ghost" size="sm">
+                Login
+              </Button>
+            </Link>
+            <Link to="/auth/signup">
+              <Button variant="luxury" size="sm">
+                Sign Up
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -90,12 +94,16 @@ export function Navigation() {
                 </Link>
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
-                <Button variant="ghost" className="justify-start">
-                  Login
-                </Button>
-                <Button variant="luxury" className="justify-start">
-                  Sign Up
-                </Button>
+                <Link to="/auth/login" onClick={() => setIsOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start">
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/auth/signup" onClick={() => setIsOpen(false)}>
+                  <Button variant="luxury" className="w-full justify-start">
+                    Sign Up
+                  </Button>
+                </Link>
               </div>
             </div>
           </motion.div>

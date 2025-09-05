@@ -14,6 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          action: string
+          actor_user_id: string | null
+          created_at: string
+          id: string
+          metadata: Json | null
+          subject_id: string
+          subject_type: string
+        }
+        Insert: {
+          action: string
+          actor_user_id?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          subject_id: string
+          subject_type: string
+        }
+        Update: {
+          action?: string
+          actor_user_id?: string | null
+          created_at?: string
+          id?: string
+          metadata?: Json | null
+          subject_id?: string
+          subject_type?: string
+        }
+        Relationships: []
+      }
+      blocked_users: {
+        Row: {
+          blocked_user_id: string
+          blocker_user_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          blocked_user_id: string
+          blocker_user_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          blocked_user_id?: string
+          blocker_user_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: []
+      }
       blog_posts: {
         Row: {
           author: string | null
@@ -132,6 +183,30 @@ export type Database = {
           },
         ]
       }
+      favorites: {
+        Row: {
+          created_at: string
+          id: string
+          subject_id: string
+          subject_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          subject_id: string
+          subject_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          subject_id?: string
+          subject_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       guest_list_items: {
         Row: {
           created_at: string
@@ -246,6 +321,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      invites: {
+        Row: {
+          canva_link: string | null
+          created_at: string
+          custom_message: string | null
+          event_date: string | null
+          exported_file_url: string | null
+          guest_names: string[] | null
+          id: string
+          template_name: string
+          updated_at: string
+          user_id: string
+          venue_name: string | null
+        }
+        Insert: {
+          canva_link?: string | null
+          created_at?: string
+          custom_message?: string | null
+          event_date?: string | null
+          exported_file_url?: string | null
+          guest_names?: string[] | null
+          id?: string
+          template_name: string
+          updated_at?: string
+          user_id: string
+          venue_name?: string | null
+        }
+        Update: {
+          canva_link?: string | null
+          created_at?: string
+          custom_message?: string | null
+          event_date?: string | null
+          exported_file_url?: string | null
+          guest_names?: string[] | null
+          id?: string
+          template_name?: string
+          updated_at?: string
+          user_id?: string
+          venue_name?: string | null
+        }
+        Relationships: []
       }
       leads: {
         Row: {
@@ -437,6 +554,39 @@ export type Database = {
           },
         ]
       }
+      reports: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          reason: string
+          reporter_user_id: string
+          status: string
+          subject_id: string
+          subject_type: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          reason: string
+          reporter_user_id: string
+          status?: string
+          subject_id: string
+          subject_type: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          reason?: string
+          reporter_user_id?: string
+          status?: string
+          subject_id?: string
+          subject_type?: string
+        }
+        Relationships: []
+      }
       subscriptions: {
         Row: {
           created_at: string
@@ -475,6 +625,38 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      supplier_views: {
+        Row: {
+          created_at: string
+          id: string
+          ip_hash: string | null
+          supplier_id: string
+          viewer_user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          ip_hash?: string | null
+          supplier_id: string
+          viewer_user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          ip_hash?: string | null
+          supplier_id?: string
+          viewer_user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_views_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       suppliers: {
         Row: {

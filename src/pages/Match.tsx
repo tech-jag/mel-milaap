@@ -115,7 +115,7 @@ const Match = () => {
     const { data: messages } = await supabase
       .from('messages')
       .select('id')
-      .eq('from_user_id', user.id)
+      .eq('sender_id', user.id)
       .gte('created_at', `${today}T00:00:00.000Z`)
       .lt('created_at', `${today}T23:59:59.999Z`);
       
@@ -126,47 +126,13 @@ const Match = () => {
   const handleMessage = async (profileId: string, profileName: string) => {
     if (!currentUser) return;
     
-    // Check message limits for free users
-    if (!isPremium && messageCount >= 3) {
-      toast({
-        title: "Message Limit Reached",
-        description: "Upgrade to Premium for unlimited messaging!",
-        variant: "destructive"
-      });
-      return;
-    }
-
+    // Simple message implementation without threads for now
     try {
-      // Create or find existing thread
-      const { data: existingThread } = await supabase
-        .from('threads')
-        .select('id')
-        .or(`and(user1_id.eq.${currentUser.id},user2_id.eq.${profileId}),and(user1_id.eq.${profileId},user2_id.eq.${currentUser.id})`)
-        .maybeSingle();
-
-      let threadId = existingThread?.id;
-
-      if (!threadId) {
-        const { data: newThread, error: threadError } = await supabase
-          .from('threads')
-          .insert({
-            user1_id: currentUser.id,
-            user2_id: profileId
-          })
-          .select('id')
-          .single();
-
-        if (threadError) throw threadError;
-        threadId = newThread.id;
-      }
-
-      // Send a sample message
       const { error } = await supabase
         .from('messages')
         .insert({
-          thread_id: threadId,
-          from_user_id: currentUser.id,
-          to_user_id: profileId,
+          sender_id: currentUser.id,
+          receiver_id: profileId,
           body: `Hi ${profileName}! I'd love to get to know you better.`
         });
 
@@ -180,7 +146,7 @@ const Match = () => {
       });
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: "Error", 
         description: error.message || "Failed to send message.",
         variant: "destructive"
       });
@@ -194,9 +160,8 @@ const Match = () => {
       const { error } = await supabase
         .from('interests')
         .insert({
-          from_user_id: currentUser.id,
-          to_user_id: profileId,
-          status: 'pending'
+          sender_id: currentUser.id,
+          receiver_id: profileId
         });
 
       if (error) throw error;

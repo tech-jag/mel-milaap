@@ -261,6 +261,48 @@ export type Database = {
         }
         Relationships: []
       }
+      guest_list: {
+        Row: {
+          created_at: string | null
+          dietary: string | null
+          email: string | null
+          full_name: string
+          group_name: string | null
+          id: string
+          notes: string | null
+          phone: string | null
+          rsvp_status: string | null
+          side: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          dietary?: string | null
+          email?: string | null
+          full_name: string
+          group_name?: string | null
+          id?: string
+          notes?: string | null
+          phone?: string | null
+          rsvp_status?: string | null
+          side?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          dietary?: string | null
+          email?: string | null
+          full_name?: string
+          group_name?: string | null
+          id?: string
+          notes?: string | null
+          phone?: string | null
+          rsvp_status?: string | null
+          side?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       guest_list_items: {
         Row: {
           created_at: string
@@ -340,36 +382,36 @@ export type Database = {
       interests: {
         Row: {
           created_at: string
-          from_user_id: string
           id: string
+          receiver_id: string
+          sender_id: string
           status: Database["public"]["Enums"]["interest_status"]
-          to_user_id: string
         }
         Insert: {
           created_at?: string
-          from_user_id: string
           id?: string
+          receiver_id: string
+          sender_id: string
           status?: Database["public"]["Enums"]["interest_status"]
-          to_user_id: string
         }
         Update: {
           created_at?: string
-          from_user_id?: string
           id?: string
+          receiver_id?: string
+          sender_id?: string
           status?: Database["public"]["Enums"]["interest_status"]
-          to_user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "interests_from_user_id_fkey"
-            columns: ["from_user_id"]
+            columns: ["sender_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
           {
             foreignKeyName: "interests_to_user_id_fkey"
-            columns: ["to_user_id"]
+            columns: ["receiver_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
@@ -563,31 +605,31 @@ export type Database = {
         Row: {
           body: string
           created_at: string
-          from_user_id: string
           id: string
+          receiver_id: string
+          sender_id: string
           thread_id: string
-          to_user_id: string
         }
         Insert: {
           body: string
           created_at?: string
-          from_user_id: string
           id?: string
+          receiver_id: string
+          sender_id: string
           thread_id: string
-          to_user_id: string
         }
         Update: {
           body?: string
           created_at?: string
-          from_user_id?: string
           id?: string
+          receiver_id?: string
+          sender_id?: string
           thread_id?: string
-          to_user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "messages_from_user_id_fkey"
-            columns: ["from_user_id"]
+            columns: ["sender_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
@@ -601,7 +643,7 @@ export type Database = {
           },
           {
             foreignKeyName: "messages_to_user_id_fkey"
-            columns: ["to_user_id"]
+            columns: ["receiver_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
@@ -978,6 +1020,7 @@ export type Database = {
           id: string
           name: string
           phone: string | null
+          plan: string | null
           role: Database["public"]["Enums"]["user_role"]
           two_factor_backup_codes: string[] | null
           two_factor_enabled: boolean | null
@@ -991,6 +1034,7 @@ export type Database = {
           id: string
           name: string
           phone?: string | null
+          plan?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           two_factor_backup_codes?: string[] | null
           two_factor_enabled?: boolean | null
@@ -1004,6 +1048,7 @@ export type Database = {
           id?: string
           name?: string
           phone?: string | null
+          plan?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           two_factor_backup_codes?: string[] | null
           two_factor_enabled?: boolean | null

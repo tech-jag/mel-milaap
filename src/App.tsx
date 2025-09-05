@@ -22,6 +22,7 @@ import AccountFavorites from "./pages/AccountFavorites";
 import AccountPlanningBudget from "./pages/AccountPlanningBudget";
 import AccountPlanningGuests from "./pages/AccountPlanningGuests";
 import AccountPlanningTodo from "./pages/AccountPlanningTodo";
+import AccountGuests from "./pages/AccountGuests";
 import AccountPlanningSeating from "./pages/AccountPlanningSeating";
 import AccountInvites from "./pages/AccountInvites";
 import SupplierSignup from "./pages/SupplierSignup";

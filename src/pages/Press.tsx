@@ -11,7 +11,7 @@ import { fadeInUp, staggerChildren } from "@/lib/motion";
 
 const pressReleases = [
   {
-    title: "Shaadi & Co Launches Revolutionary Matrimony Platform for ANZ South Asian Community",
+    title: "Mēl Milaap Launches Revolutionary Matrimony Platform for ANZ South Asian Community",
     date: "January 15, 2024",
     excerpt: "New platform combines traditional matchmaking with modern technology, serving Australia and New Zealand's growing South Asian population."
   },
@@ -80,7 +80,7 @@ const Press = () => {
               variants={fadeInUp}
             >
               <Button variant="luxury" size="lg" asChild>
-                <a href="mailto:press@shaadico.com">
+                <a href="mailto:press@melmilaap.com">
                   <Mail className="w-5 h-5 mr-2" />
                   Contact Press Team
                 </a>
@@ -105,7 +105,7 @@ const Press = () => {
               variants={fadeInUp}
             >
               <h2 className="text-luxury-md text-foreground mb-6">
-                About Shaadi & Co
+                About Mēl Milaap
               </h2>
             </motion.div>
 
@@ -113,14 +113,14 @@ const Press = () => {
               <CardContent className="p-8">
                 <motion.div variants={fadeInUp}>
                   <p className="text-muted-foreground leading-relaxed mb-6">
-                    Shaadi & Co is Australia and New Zealand's premier South Asian matrimony and wedding platform, 
+                    Mēl Milaap is Australia and New Zealand's premier South Asian matrimony and wedding platform, 
                     connecting singles with compatible life partners while honoring cultural traditions and family values. 
                     Founded in 2023, the platform serves the growing South Asian diaspora across major ANZ cities.
                   </p>
                   <p className="text-muted-foreground leading-relaxed mb-6">
                     The platform combines traditional matchmaking principles with modern technology, offering verified 
                     profiles, advanced filtering, and comprehensive wedding planning tools. With over 15,000 verified 
-                    profiles and 800+ wedding suppliers, Shaadi & Co has facilitated over 2,500 successful matches.
+                    profiles and 800+ wedding suppliers, Mēl Milaap has facilitated over 2,500 successful matches.
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                     <div className="text-center">
@@ -157,7 +157,7 @@ const Press = () => {
               Latest Press Releases
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto">
-              Recent news and announcements from Shaadi & Co
+              Recent news and announcements from Mēl Milaap
             </p>
           </motion.div>
 

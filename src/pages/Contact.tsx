@@ -28,7 +28,7 @@ const contactMethods = [
     icon: Mail,
     title: "Email Support",
     description: "Get help via email",
-    contact: "support@shaadi.co",
+    contact: "support@melmilaap.com",
     availability: "24/7 - Response within 4 hours"
   },
   {
@@ -52,19 +52,19 @@ const offices = [
     city: "Sydney",
     address: "Level 15, 1 Martin Place\nSydney NSW 2000",
     phone: "+61 2 9000 1234",
-    email: "sydney@shaadi.co"
+    email: "sydney@melmilaap.com"
   },
   {
     city: "Melbourne",
     address: "Level 20, 567 Collins Street\nMelbourne VIC 3000",
     phone: "+61 3 9000 1234",
-    email: "melbourne@shaadi.co"
+    email: "melbourne@melmilaap.com"
   },
   {
     city: "Auckland",
     address: "Level 10, 188 Quay Street\nAuckland 1010, New Zealand",
     phone: "+64 9 000 1234",
-    email: "auckland@shaadi.co"
+    email: "auckland@melmilaap.com"
   }
 ];
 

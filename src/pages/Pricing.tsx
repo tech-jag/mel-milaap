@@ -44,7 +44,7 @@ const memberPlans = [
   },
   {
     name: "Premium",
-    price: "AUD 39",
+    price: "AUD 49",
     duration: "per month",
     description: "Unlock the full potential of your search",
     features: [
@@ -124,7 +124,7 @@ const supplierPlans = [
   },
   {
     name: "Premium",
-    price: "AUD 499",
+    price: "AUD 399",
     duration: "per month",
     description: "Maximum exposure and premium benefits",
     features: [

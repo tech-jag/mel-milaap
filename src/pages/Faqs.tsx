@@ -56,7 +56,7 @@ const faqs = [
   },
   {
     category: "getting-started",
-    question: "Is Shaadi & Co free to use?",
+    question: "Is Mēl Milaap free to use?",
     answer: "Yes, we offer a free membership that allows you to create a profile, browse matches, and send limited messages. Premium plans offer additional features like unlimited messaging, advanced filters, and priority support."
   },
   {
@@ -162,7 +162,7 @@ const Faqs = () => {
                 How Can We Help You?
               </h1>
               <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Find answers to common questions about using Shaadi & Co, 
+                Find answers to common questions about using Mēl Milaap, 
                 from account setup to finding your perfect match.
               </p>
               

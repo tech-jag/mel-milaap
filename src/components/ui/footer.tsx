@@ -69,8 +69,8 @@ export function Footer() {
                 <Heart className="w-6 h-6 text-primary-foreground" />
               </motion.div>
               <div>
-                <h2 className="text-2xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors">
-                  M&#275;l Milaap
+                <h2 className="brand-title text-2xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors">
+                  Mēl Milaap
                 </h2>
                 <p className="text-sm text-muted-foreground">Find • Match • Marry • Celebrate</p>
               </div>
@@ -120,7 +120,7 @@ export function Footer() {
         <div className="border-t border-border pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-muted-foreground">
-              © 2025 M&#275;l Milaap. All rights reserved. Connecting hearts across Australia & New Zealand.
+              © 2025 Mēl Milaap. All rights reserved. Connecting hearts across Australia & New Zealand.
             </div>
             
             <div className="flex items-center space-x-6 text-sm text-muted-foreground">

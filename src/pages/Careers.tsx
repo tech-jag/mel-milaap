@@ -228,7 +228,7 @@ const Careers = () => {
               variants={fadeInUp}
             >
               <Button variant="luxury" size="lg" asChild>
-                <a href="mailto:careers@shaadico.com">
+                <a href="mailto:careers@melmilaap.com">
                   Send Resume
                 </a>
               </Button>

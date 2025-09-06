@@ -54,7 +54,7 @@ const contactOptions = [
     icon: Mail,
     title: "Email Support",
     description: "Send us an email",
-    action: "support@shaadico.com",
+    action: "support@melmilaap.com",
     available: "We reply within 24 hours"
   },
   {

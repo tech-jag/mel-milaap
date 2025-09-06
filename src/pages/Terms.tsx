@@ -54,7 +54,7 @@ const Terms = () => {
                     1. Acceptance of Terms
                   </h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    By accessing and using Shaadi & Co's services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+                    By accessing and using Mēl Milaap's services, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
                   </p>
                 </motion.div>
 
@@ -63,7 +63,7 @@ const Terms = () => {
                     2. Use License
                   </h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    Permission is granted to temporarily download one copy of the materials on Shaadi & Co's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.
+                    Permission is granted to temporarily download one copy of the materials on Mēl Milaap's website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title.
                   </p>
                 </motion.div>
 
@@ -99,7 +99,7 @@ const Terms = () => {
                     6. Contact Information
                   </h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    If you have any questions about these Terms of Service, please contact us at legal@shaadico.com
+                    If you have any questions about these Terms of Service, please contact us at legal@melmilaap.com
                   </p>
                 </motion.div>
               </CardContent>

@@ -92,7 +92,7 @@ const About = () => {
                 Connecting Hearts, Celebrating Traditions
               </h1>
               <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Founded in 2019, Shaadi & Co has become Australia and New Zealand's most trusted 
+                Founded in 2019, Mēl Milaap has become Australia and New Zealand's most trusted 
                 South Asian matrimony platform, helping thousands find their perfect match.
               </p>
             </motion.div>
@@ -146,7 +146,7 @@ const About = () => {
               </h2>
               <div className="space-y-6 text-muted-foreground">
                 <p>
-                  Shaadi & Co was born from a simple observation: traditional matrimony processes 
+                  Mēl Milaap was born from a simple observation: traditional matrimony processes 
                   needed to evolve for the modern South Asian diaspora. Our founders, themselves 
                   navigating the complexities of finding life partners while maintaining cultural 
                   values, saw an opportunity to create something better.
@@ -247,7 +247,7 @@ const About = () => {
               Leadership Team
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto">
-              Meet the passionate team behind Shaadi & Co
+              Meet the passionate team behind Mēl Milaap
             </p>
           </motion.div>
 

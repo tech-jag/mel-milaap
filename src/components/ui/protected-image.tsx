@@ -146,7 +146,7 @@ export function ProtectedImage({
           {shouldBlur && (
             <div className="absolute top-2 right-2 opacity-30">
               <div className="text-white text-xs font-semibold bg-black/50 px-2 py-1 rounded">
-                Shaadi & Co
+                Mēl Milaap
               </div>
             </div>
           )}

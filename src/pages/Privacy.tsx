@@ -99,7 +99,7 @@ const Privacy = () => {
                     Contact Us
                   </h2>
                   <p className="text-muted-foreground leading-relaxed">
-                    If you have any questions about this Privacy Policy, please contact us at privacy@shaadico.com
+                    If you have any questions about this Privacy Policy, please contact us at privacy@melmilaap.com
                   </p>
                 </motion.div>
               </CardContent>

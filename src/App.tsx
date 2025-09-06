@@ -3,12 +3,16 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ScrollToTop } from "./components/ScrollToTop";
 import Index from "./pages/Index";
 import Match from "./pages/Match";
 import Suppliers from "./pages/Suppliers";
 import Planning from "./pages/Planning";
 import WeddingPlanning from "./pages/WeddingPlanning";
+import Tools from "./pages/Tools";
 import Stories from "./pages/Stories";
+import StoryDetail from "./pages/StoryDetail";
+import DataRights from "./pages/DataRights";
 import Premium from "./pages/Premium";
 import Pricing from "./pages/Pricing";
 import Trust from "./pages/Trust";
@@ -59,12 +63,16 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/match" element={<Match />} />
           <Route path="/suppliers" element={<Suppliers />} />
+          <Route path="/tools" element={<Tools />} />
           <Route path="/planning" element={<WeddingPlanning />} />
           <Route path="/stories" element={<Stories />} />
+          <Route path="/stories/:slug" element={<StoryDetail />} />
+          <Route path="/data-rights" element={<DataRights />} />
           <Route path="/premium" element={<Premium />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/trust" element={<Trust />} />
@@ -99,6 +107,7 @@ const App = () => (
           <Route path="/for/suppliers" element={<ForSuppliers />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/help" element={<Help />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/press" element={<Press />} />

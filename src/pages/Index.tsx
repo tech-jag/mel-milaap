@@ -43,7 +43,7 @@ const categories = [
 // Testimonials
 const testimonials = [
   {
-    quote: "Found my soulmate through Shaadi & Co. The platform made everything so easy and secure.",
+    quote: "Found my soulmate through Mēl Milaap. The platform made everything so easy and secure.",
     author: "Priya & Rahul",
     location: "Sydney, NSW",
     image: "/api/placeholder/60/60"

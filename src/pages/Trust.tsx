@@ -204,7 +204,7 @@ const Trust = () => {
                     </Button>
                     <Button variant="outline" className="w-full justify-start">
                       <Mail className="w-4 h-4 mr-3" />
-                      support@shaadi.co
+                      support@melmilaap.com
                     </Button>
                   </div>
                 </CardContent>

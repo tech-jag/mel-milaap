@@ -271,7 +271,7 @@ const Auth = () => {
                 <CardHeader className="text-center">
                   <CardTitle className="flex items-center justify-center space-x-3">
                     <Shield className="w-6 h-6 text-primary" />
-                    <span>Welcome to Shaadi & Co</span>
+                    <span>Welcome to Mēl Milaap</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>

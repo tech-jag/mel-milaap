@@ -16,12 +16,10 @@ import {
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/match", label: "Find a Match" },
-  { href: "/suppliers", label: "Wedding Suppliers" },
-  { href: "/planning", label: "Planning Tools" },
-  { href: "/premium", label: "Premium Matchmaking" },
+  { href: "/suppliers", label: "Suppliers" },
+  { href: "/tools", label: "Planning Tools" },
   { href: "/stories", label: "Stories" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/trust", label: "Trust & Safety" },
 ];
 
 export function Navigation() {
@@ -73,7 +71,7 @@ return (
     <div className="container mx-auto px-4 lg:px-8">
       <div className="flex items-center justify-between h-20">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-3 group" aria-label="Mel Milaap home">
+        <Link to="/" className="flex items-center space-x-3 group" aria-label="Mēl Milaap home">
           <motion.div
             className="flex items-center justify-center w-10 h-10 bg-gradient-primary rounded-xl"
             whileHover={{ scale: 1.05, rotate: 5 }}
@@ -84,8 +82,8 @@ return (
           <div className="hidden md:block">
             {/* Use HTML entity so the accent always renders */}
             <h1 className="brand-title text-xl text-foreground group-hover:text-primary transition-colors">
-                M\u0113l Milaap
-          </h1>
+              Mēl Milaap
+            </h1>
 
             <p className="text-xs text-muted-foreground">
               Find &bull; Match &bull; Marry &bull; Celebrate

@@ -24,7 +24,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { getTimelineItems, trackEvent } from "@/lib/planning";
 import type { TimelineItem } from "@/lib/planning";
-import { SEOHead } from "@/utils/seo";
+// Remove SEO imports and components temporarily
 
 const PlanningTimeline = () => {
   const { toast } = useToast();
@@ -196,10 +196,6 @@ const PlanningTimeline = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {generateSEOTags({ 
-        title: "Wedding Timeline - Mēl Milaap",
-        description: "Stay on track with your wedding timeline. Organize tasks, set deadlines, and monitor progress."
-      })}
       <Navigation />
       
       {/* Header */}

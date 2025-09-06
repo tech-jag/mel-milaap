@@ -233,10 +233,6 @@ const PlanningDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {generateSEOTags({ 
-        title: "Wedding Planning Dashboard - Mēl Milaap",
-        description: "Manage your wedding planning with budget tracking, guest lists, timelines, and more planning tools."
-      })}
       <Navigation />
       
       {/* Header */}

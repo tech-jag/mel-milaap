@@ -196,10 +196,6 @@ const PlanningChecklist = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead 
-        title="Wedding Checklist - Mēl Milaap"
-        description="Stay organized with our comprehensive wedding planning checklist. Track tasks by timeline to ensure nothing is forgotten."
-      />
       <Navigation />
       
       {/* Header */}

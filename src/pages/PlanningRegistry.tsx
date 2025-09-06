@@ -182,10 +182,6 @@ const PlanningRegistry = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <SEOHead 
-        title="Gift Registry - Mēl Milaap"
-        description="Create and share your wedding gift registry. Add external links and cash funds for your guests."
-      />
       <Navigation />
       
       {/* Header */}

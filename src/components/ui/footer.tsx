@@ -70,7 +70,7 @@ export function Footer() {
               </motion.div>
               <div>
                 <h2 className="text-2xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors">
-                  Shaadi & Co
+                  M&euml;l Milaap
                 </h2>
                 <p className="text-sm text-muted-foreground">Find • Match • Marry • Celebrate</p>
               </div>

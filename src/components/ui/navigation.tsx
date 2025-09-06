@@ -83,7 +83,7 @@ export function Navigation() {
             </motion.div>
             <div className="hidden md:block">
               <h1 className="text-xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors">
-                Shaadi & Co
+                Mēl Milaap
               </h1>
               <p className="text-xs text-muted-foreground">Find • Match • Marry • Celebrate</p>
             </div>

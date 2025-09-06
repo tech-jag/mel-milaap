@@ -33,6 +33,10 @@ import AccountPlanningTodo from "./pages/AccountPlanningTodo";
 import AccountGuests from "./pages/AccountGuests";
 import AccountPlanningSeating from "./pages/AccountPlanningSeating";
 import AccountInvites from "./pages/AccountInvites";
+import PlanningDashboard from "./pages/PlanningDashboard";
+import PlanningTimeline from "./pages/PlanningTimeline";
+import PlanningRegistry from "./pages/PlanningRegistry";
+import PlanningChecklist from "./pages/PlanningChecklist";
 import AccountMessages from "./pages/AccountMessages";
 import AccountVerification from "./pages/AccountVerification";
 import SupplierSignup from "./pages/SupplierSignup";
@@ -82,6 +86,15 @@ const App = () => (
           <Route path="/faqs" element={<Faqs />} />
           <Route path="/auth/login" element={<Auth />} />
           <Route path="/auth/signup" element={<Auth />} />
+          {/* Planning Routes */}
+          <Route path="/planning" element={<PlanningDashboard />} />
+          <Route path="/planning/budget" element={<AccountPlanningBudget />} />
+          <Route path="/planning/guests" element={<AccountPlanningGuests />} />
+          <Route path="/planning/timeline" element={<PlanningTimeline />} />
+          <Route path="/planning/registry" element={<PlanningRegistry />} />
+          <Route path="/planning/checklist" element={<PlanningChecklist />} />
+          
+          {/* Account Routes */}
           <Route path="/account" element={<Account />} />
           <Route path="/account/profile" element={<AccountProfile />} />
           <Route path="/account/photos" element={<AccountPhotos />} />

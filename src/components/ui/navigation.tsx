@@ -18,7 +18,7 @@ const navItems = [
   { href: "/", label: "Home" },
   { href: "/match", label: "Find a Match" },
   { href: "/suppliers", label: "Suppliers" },
-  { href: "/tools", label: "Planning Tools" },
+  { href: "/planning", label: "Planning" },
   { href: "/stories", label: "Stories" },
   { href: "/pricing", label: "Pricing" },
 ];

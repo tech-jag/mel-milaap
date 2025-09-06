@@ -84,7 +84,7 @@ return (
           <div className="hidden md:block">
             {/* Use HTML entity so the accent always renders */}
             <h1 className="brand-title text-xl text-foreground group-hover:text-primary transition-colors">
-            Mēl Milaap
+            M@emacro;l Milaap
           </h1>
 
             <p className="text-xs text-muted-foreground">

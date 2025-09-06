@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Heart, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
+import Wordmark from "@/components/brand/Wordmark";
 
 const footerSections = [
   {
@@ -69,9 +70,7 @@ export function Footer() {
                 <Heart className="w-6 h-6 text-primary-foreground" />
               </motion.div>
               <div>
-                <h2 className="brand-title text-2xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors">
-                  Mēl Milaap
-                </h2>
+                <Wordmark className="h-7 text-foreground group-hover:text-primary transition-colors" />
                 <p className="text-sm text-muted-foreground">Find • Match • Marry • Celebrate</p>
               </div>
             </Link>

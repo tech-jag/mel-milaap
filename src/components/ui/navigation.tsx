@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Heart, Menu, X, User, LogOut, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
+import Wordmark from "@/components/brand/Wordmark";
 import { supabase } from "@/integrations/supabase/client";
 import {
   DropdownMenu,
@@ -71,7 +72,7 @@ return (
     <div className="container mx-auto px-4 lg:px-8">
       <div className="flex items-center justify-between h-20">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-3 group" aria-label="Mēl Milaap home">
+        <Link to="/" className="flex items-center space-x-3 group" aria-label="Go to home">
           <motion.div
             className="flex items-center justify-center w-10 h-10 bg-gradient-primary rounded-xl"
             whileHover={{ scale: 1.05, rotate: 5 }}
@@ -79,12 +80,8 @@ return (
           >
             <Heart className="w-5 h-5 text-primary-foreground" aria-hidden="true" />
           </motion.div>
-          <div className="hidden md:block">
-            {/* Use HTML entity so the accent always renders */}
-            <h1 className="brand-title text-xl text-foreground group-hover:text-primary transition-colors">
-              Mēl Milaap
-            </h1>
-
+          <div className="hidden md:flex md:flex-col">
+            <Wordmark className="h-6 text-foreground group-hover:text-primary transition-colors" />
             <p className="text-xs text-muted-foreground">
               Find &bull; Match &bull; Marry &bull; Celebrate
             </p>

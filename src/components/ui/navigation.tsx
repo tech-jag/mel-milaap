@@ -83,9 +83,10 @@ return (
           </motion.div>
           <div className="hidden md:block">
             {/* Use HTML entity so the accent always renders */}
-            <h1 className="text-xl font-heading font-semibold text-foreground group-hover:text-primary transition-colors">
-              Mēl Milaap
-            </h1>
+            <h1 className="brand-title text-xl text-foreground group-hover:text-primary transition-colors">
+            Mēl Milaap
+          </h1>
+
             <p className="text-xs text-muted-foreground">
               Find &bull; Match &bull; Marry &bull; Celebrate
             </p>

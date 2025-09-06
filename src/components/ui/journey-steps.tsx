@@ -7,8 +7,8 @@ import { journeyStep, staggerChildren } from "@/lib/motion";
 
 const journeySteps = [
   {
-    id: "meet",
-    title: "Meet",
+    id: "find",
+    title: "Find",
     description: "Discover compatible profiles with shared values and cultural background",
     icon: Heart,
     color: "text-primary",

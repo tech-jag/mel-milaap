@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Play, Pause } from "lucide-react";
 import { fadeInUp, heroParallax } from "@/lib/motion";
@@ -28,20 +29,16 @@ export function VideoHero({
   primaryCTA,
   secondaryCTA,
   videoSrc,
-  overlayOpacity = 0.4
+  overlayOpacity = 0.4,
 }: VideoHeroProps) {
   const [isPlaying, setIsPlaying] = React.useState(true);
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
   const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
+    if (!videoRef.current) return;
+    if (isPlaying) videoRef.current.pause();
+    else videoRef.current.play();
+    setIsPlaying(!isPlaying);
   };
 
   return (
@@ -49,7 +46,7 @@ export function VideoHero({
       {/* Video Background */}
       {videoSrc && (
         <motion.div
-          className="absolute inset-0 w-full h-full"
+          className="absolute inset-0 w-full h-full pointer-events-none"
           variants={heroParallax}
           initial="initial"
           animate="animate"
@@ -64,10 +61,10 @@ export function VideoHero({
           >
             <source src={videoSrc} type="video/mp4" />
           </video>
-          
+
           {/* Overlay */}
-          <div 
-            className="absolute inset-0 bg-gradient-to-b from-primary/30 via-primary/20 to-primary/60"
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-primary/30 via-primary/20 to-primary/60 pointer-events-none"
             style={{ opacity: overlayOpacity }}
           />
         </motion.div>
@@ -75,11 +72,11 @@ export function VideoHero({
 
       {/* Fallback Background */}
       {!videoSrc && (
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none"
           style={{ backgroundImage: `url(${heroImage})` }}
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/40 via-primary/30 to-primary/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/40 via-primary/30 to-primary/70 pointer-events-none" />
         </div>
       )}
 
@@ -98,7 +95,7 @@ export function VideoHero({
 
           {/* Subtitle */}
           {subtitle && (
-            <motion.p 
+            <motion.p
               className="text-body-lg text-white/90 max-w-2xl mx-auto leading-relaxed"
               variants={fadeInUp}
             >
@@ -107,42 +104,49 @@ export function VideoHero({
           )}
 
           {/* CTAs */}
-          <motion.div 
+          <motion.div
             className="flex flex-col sm:flex-row gap-4 justify-center items-center"
             variants={fadeInUp}
           >
-            <Button 
-              variant="hero" 
+            <Button
+              asChild
+              variant="hero"
               size="xl"
               className="text-primary-foreground bg-primary hover:bg-primary/90 border-primary-foreground/20"
             >
-              {primaryCTA.text}
+              <Link to={primaryCTA.href} aria-label={primaryCTA.text}>
+                {primaryCTA.text}
+              </Link>
             </Button>
-            <Button 
-              variant="glass" 
+
+            <Button
+              asChild
+              variant="glass"
               size="xl"
               className="text-white border-white/30 hover:bg-white/20"
             >
-              {secondaryCTA.text}
+              <Link to={secondaryCTA.href} aria-label={secondaryCTA.text}>
+                {secondaryCTA.text}
+              </Link>
             </Button>
           </motion.div>
 
           {/* Trust Indicators */}
-          <motion.div 
+          <motion.div
             className="flex flex-wrap justify-center items-center gap-8 pt-8 text-white/80"
             variants={fadeInUp}
           >
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-accent rounded-full"></div>
+              <div className="w-2 h-2 bg-accent rounded-full" />
               <span className="text-sm font-medium">10,000+ Verified Profiles</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-success rounded-full"></div>
+              <div className="w-2 h-2 bg-success rounded-full" />
               <span className="text-sm font-medium">Private & Secure</span>
             </div>
             <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-primary rounded-full"></div>
-              <span className="text-sm font-medium">Australia & NZ Community</span>
+              <div className="w-2 h-2 bg-primary rounded-full" />
+              <span className="text-sm font-medium">Australia &amp; NZ Community</span>
             </div>
           </motion.div>
         </motion.div>
@@ -155,6 +159,7 @@ export function VideoHero({
           onClick={togglePlay}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
+          aria-label={isPlaying ? "Pause background video" : "Play background video"}
         >
           {isPlaying ? (
             <Pause className="w-5 h-5 text-white" />

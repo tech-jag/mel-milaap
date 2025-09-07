@@ -13,6 +13,7 @@ const footerSections = [
     links: [
       { href: "/about", label: "About" },
       { href: "/how-it-works", label: "How it Works" },
+      { href: "/blog", label: "Stories & Blog" },
       { href: "/for/parents", label: "Parents Welcome" },
       { href: "/verification", label: "Verification" },
     ]

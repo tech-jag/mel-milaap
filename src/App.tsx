@@ -40,6 +40,9 @@ import AccountMessages from "./pages/AccountMessages";
 import AccountVerification from "./pages/AccountVerification";
 import SupplierSignup from "./pages/SupplierSignup";
 import SupplierDashboard from "./pages/SupplierDashboard";
+import AccountSettings from "./pages/AccountSettings";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import CitySydney from "./pages/CitySydney";
 import CityMelbourne from "./pages/CityMelbourne";
 import CityAuckland from "./pages/CityAuckland";
@@ -75,9 +78,11 @@ const App = () => (
           <Route path="/match" element={<Match />} />
           <Route path="/suppliers" element={<Suppliers />} />
           <Route path="/tools" element={<Tools />} />
-          <Route path="/planning" element={<WeddingPlanning />} />
+          <Route path="/wedding-planning" element={<WeddingPlanning />} />
           <Route path="/stories" element={<Stories />} />
           <Route path="/stories/:slug" element={<StoryDetail />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/data-rights" element={<DataRights />} />
           <Route path="/premium" element={<Premium />} />
           <Route path="/pricing" element={<Pricing />} />
@@ -98,6 +103,7 @@ const App = () => (
           
           {/* Account Routes */}
           <Route path="/account" element={<AccountDashboard />} />
+          <Route path="/account/settings" element={<AccountSettings />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/data-rights" element={<DataRights />} />
           <Route path="/account/profile" element={<AccountProfile />} />

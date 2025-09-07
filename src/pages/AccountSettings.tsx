@@ -228,7 +228,7 @@ const AccountSettings = () => {
         .insert({
           inviter_user_id: currentUser.id,
           invitee_email: email,
-          role,
+          role: role as 'parent' | 'sibling' | 'partner' | 'close_friend',
           invitation_token: token,
           invitation_expires_at: expiresAt.toISOString(),
           status: 'pending'

@@ -233,7 +233,7 @@ export default function BudgetManager() {
           <div className="space-y-4">
             {categories.map((category) => {
               const categorySpent = items
-                .filter(item => item.category === category.name)
+                .filter(item => item.budget_id === budget.id)
                 .reduce((sum, item) => sum + item.actual_amount, 0);
               const categoryProgress = category.planned_amount > 0 
                 ? (categorySpent / category.planned_amount) * 100 

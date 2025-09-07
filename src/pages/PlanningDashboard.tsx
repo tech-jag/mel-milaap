@@ -98,9 +98,9 @@ const PlanningDashboard = () => {
 
       // Calculate statistics
       const budgetStats = {
-        totalItems: Array.isArray(budgetData.budget_items) ? budgetData.budget_items.length : 0,
-        totalPlanned: Array.isArray(budgetData.budget_items) ? budgetData.budget_items.reduce((sum, item) => sum + (item.planned_amount || 0), 0) : 0,
-        totalActual: Array.isArray(budgetData.budget_items) ? budgetData.budget_items.reduce((sum, item) => sum + (item.actual_amount || 0), 0) : 0,
+        totalItems: budgetData.budget_items?.length || 0,
+        totalPlanned: budgetData.budget_items?.reduce((sum, item) => sum + (item.planned_amount || 0), 0) || 0,
+        totalActual: budgetData.budget_items?.reduce((sum, item) => sum + (item.actual_amount || 0), 0) || 0,
         progress: 0
       };
       budgetStats.progress = budgetStats.totalPlanned > 0 ? (budgetStats.totalActual / budgetStats.totalPlanned) * 100 : 0;

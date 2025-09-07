@@ -194,6 +194,41 @@ export type Database = {
         }
         Relationships: []
       }
+      budget_categories: {
+        Row: {
+          budget_id: string
+          created_at: string
+          id: string
+          name: string
+          planned_amount: number
+          sort_order: number
+        }
+        Insert: {
+          budget_id: string
+          created_at?: string
+          id?: string
+          name: string
+          planned_amount?: number
+          sort_order?: number
+        }
+        Update: {
+          budget_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+          planned_amount?: number
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "budget_categories_budget_id_fkey"
+            columns: ["budget_id"]
+            isOneToOne: false
+            referencedRelation: "budgets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       budget_items: {
         Row: {
           actual_amount: number | null
@@ -1508,6 +1543,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
+      collaborator_role: "parent" | "sibling" | "partner" | "close_friend"
       immigration_status:
         | "citizen"
         | "permanent_resident"
@@ -1645,6 +1681,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      collaborator_role: ["parent", "sibling", "partner", "close_friend"],
       immigration_status: [
         "citizen",
         "permanent_resident",

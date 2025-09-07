@@ -271,7 +271,7 @@ const AccountCollaborators = () => {
                           <SelectItem value="parent">Parent</SelectItem>
                           <SelectItem value="sibling">Sibling</SelectItem>
                           <SelectItem value="partner">Partner</SelectItem>
-                          <SelectItem value="friend">Close Friend</SelectItem>
+                          <SelectItem value="close_friend">Close Friend</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

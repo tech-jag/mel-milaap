@@ -16,256 +16,173 @@ import {
   Trash2,
   Download,
   TrendingUp,
-  AlertTriangle
+  AlertTriangle,
+  Edit,
+  Save,
+  X
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { getBudgetWithCategories, ensureBudget, updateBudgetCategory, addBudgetCategory, deleteBudgetCategory } from "@/lib/budget";
+import { Helmet } from "react-helmet-async";
 
-interface BudgetItem {
+interface BudgetCategory {
   id: string;
-  category: string;
+  name: string;
   planned_amount: number;
-  actual_amount: number;
-  notes?: string;
+  sort_order: number;
 }
 
 interface Budget {
   id: string;
   name: string;
   total_budget?: number;
-  items: BudgetItem[];
+  currency?: string;
 }
 
 const AccountPlanningBudget = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [budget, setBudget] = React.useState<Budget | null>(null);
+  const [categories, setCategories] = React.useState<BudgetCategory[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState<any>(null);
-  const [newItem, setNewItem] = React.useState({
-    category: '',
-    planned_amount: '',
-    actual_amount: '',
-    notes: ''
+  const [newCategory, setNewCategory] = React.useState({
+    name: '',
+    planned_amount: ''
   });
-  const [showAddForm, setShowAddForm] = React.useState(false);
+  const [isAddingCategory, setIsAddingCategory] = React.useState(false);
+  const [editingCategory, setEditingCategory] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    checkAuthAndLoadBudget();
+    checkAuthAndLoadData();
   }, []);
 
-  const checkAuthAndLoadBudget = async () => {
+  const checkAuthAndLoadData = async () => {
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!user) {
+      navigate('/auth/login');
+      return;
+    }
     
     setCurrentUser(user);
-    await loadBudget(user.id);
+    await loadBudgetData(user.id);
+    setIsLoading(false);
   };
 
-  const loadBudget = async (userId: string) => {
-    setIsLoading(true);
-    
+  const loadBudgetData = async (userId: string) => {
     try {
-      // Get or create budget
-      let { data: budgetData, error: budgetError } = await supabase
-        .from('budgets')
-        .select('*')
-        .eq('user_id', userId)
-        .maybeSingle();
-
-      if (budgetError && budgetError.code !== 'PGRST116') throw budgetError;
-
-      if (!budgetData) {
-        // Create new budget
-        const { data: newBudget, error: createError } = await supabase
-          .from('budgets')
-          .insert({
-            user_id: userId,
-            name: 'Wedding Budget',
-            total_budget: 50000
-          })
-          .select()
-          .single();
-
-        if (createError) throw createError;
-        budgetData = newBudget;
-      }
-
-      // Load budget items
-      const { data: itemsData, error: itemsError } = await supabase
-        .from('budget_items')
-        .select('*')
-        .eq('budget_id', budgetData.id)
-        .order('category');
-
-      if (itemsError) throw itemsError;
-
-      setBudget({
-        ...budgetData,
-        items: itemsData || []
-      });
+      const { budget: budgetData, categories: categoriesData } = await getBudgetWithCategories(userId);
+      setBudget(budgetData);
+      setCategories(categoriesData);
     } catch (error) {
       console.error('Error loading budget:', error);
       toast({
         title: "Error loading budget",
-        description: "Please try again.",
+        description: "Please try again",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleAddCategory = async () => {
+    if (!budget || !newCategory.name.trim()) return;
+
+    setIsAddingCategory(true);
+    try {
+      const plannedAmount = parseFloat(newCategory.planned_amount) || 0;
+      const newCat = await addBudgetCategory(budget.id, {
+        name: newCategory.name.trim(),
+        planned_amount: plannedAmount
+      });
+      
+      setCategories(prev => [...prev, newCat]);
+      setNewCategory({ name: '', planned_amount: '' });
+      
+      toast({
+        title: "Category added!",
+        description: `${newCategory.name} has been added to your budget`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error adding category",
+        description: error.message,
         variant: "destructive"
       });
     } finally {
-      setIsLoading(false);
+      setIsAddingCategory(false);
     }
   };
 
-  const addBudgetItem = async () => {
-    if (!budget || !newItem.category || !newItem.planned_amount) return;
-
+  const handleUpdateCategory = async (categoryId: string, updates: { name?: string; planned_amount?: number }) => {
     try {
-      const { data, error } = await supabase
-        .from('budget_items')
-        .insert({
-          budget_id: budget.id,
-          category: newItem.category,
-          planned_amount: parseFloat(newItem.planned_amount),
-          actual_amount: parseFloat(newItem.actual_amount) || 0,
-          notes: newItem.notes
-        })
-        .select()
-        .single();
-
-      if (error) throw error;
-
-      setBudget(prev => prev ? {
-        ...prev,
-        items: [...prev.items, data]
-      } : null);
-
-      setNewItem({ category: '', planned_amount: '', actual_amount: '', notes: '' });
-      setShowAddForm(false);
-
+      await updateBudgetCategory(categoryId, updates);
+      
+      setCategories(prev => prev.map(cat => 
+        cat.id === categoryId ? { ...cat, ...updates } : cat
+      ));
+      
+      setEditingCategory(null);
+      
       toast({
-        title: "Budget item added",
-        description: "Your budget has been updated.",
+        title: "Category updated!",
+        description: "Your budget category has been updated",
       });
     } catch (error: any) {
       toast({
-        title: "Error",
+        title: "Error updating category",
         description: error.message,
         variant: "destructive"
       });
     }
   };
 
-  const updateBudgetItem = async (itemId: string, field: string, value: number) => {
-    if (!budget) return;
-
+  const handleDeleteCategory = async (categoryId: string) => {
     try {
-      const { error } = await supabase
-        .from('budget_items')
-        .update({ [field]: value })
-        .eq('id', itemId);
-
-      if (error) throw error;
-
-      setBudget(prev => prev ? {
-        ...prev,
-        items: prev.items.map(item => 
-          item.id === itemId ? { ...item, [field]: value } : item
-        )
-      } : null);
+      await deleteBudgetCategory(categoryId);
+      setCategories(prev => prev.filter(cat => cat.id !== categoryId));
+      
+      toast({
+        title: "Category deleted",
+        description: "The category has been removed from your budget",
+      });
     } catch (error: any) {
       toast({
-        title: "Error updating item",
+        title: "Error deleting category",
         description: error.message,
         variant: "destructive"
       });
     }
   };
 
-  const deleteBudgetItem = async (itemId: string) => {
-    if (!budget) return;
+  // Calculate totals
+  const totalPlanned = categories.reduce((sum, cat) => sum + cat.planned_amount, 0);
+  const budgetUsed = budget?.total_budget ? (totalPlanned / budget.total_budget) * 100 : 0;
 
-    try {
-      const { error } = await supabase
-        .from('budget_items')
-        .delete()
-        .eq('id', itemId);
-
-      if (error) throw error;
-
-      setBudget(prev => prev ? {
-        ...prev,
-        items: prev.items.filter(item => item.id !== itemId)
-      } : null);
-
-      toast({
-        title: "Budget item deleted",
-        description: "Item removed from your budget.",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive"
-      });
-    }
-  };
-
-  const exportToCSV = () => {
-    if (!budget) return;
-
-    const headers = ['Category', 'Planned Amount', 'Actual Amount', 'Difference', 'Notes'];
-    const rows = budget.items.map(item => [
-      item.category,
-      `$${item.planned_amount.toFixed(2)}`,
-      `$${item.actual_amount.toFixed(2)}`,
-      `$${(item.actual_amount - item.planned_amount).toFixed(2)}`,
-      item.notes || ''
-    ]);
-
-    const csvContent = [headers, ...rows]
-      .map(row => row.map(field => `"${field}"`).join(','))
-      .join('\n');
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'wedding-budget.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    toast({
-      title: "Budget exported",
-      description: "Your budget has been downloaded as CSV.",
-    });
-  };
-
-  if (!currentUser || isLoading) {
-    return <div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="text-center">Loading...</div>
-    </div>;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p>Loading your budget...</p>
+        </div>
+      </div>
+    );
   }
-
-  if (!budget) {
-    return <div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="text-center">Error loading budget</div>
-    </div>;
-  }
-
-  const totalPlanned = budget.items.reduce((sum, item) => sum + item.planned_amount, 0);
-  const totalActual = budget.items.reduce((sum, item) => sum + item.actual_amount, 0);
-  const remaining = totalPlanned - totalActual;
-  const progressPercentage = totalPlanned > 0 ? (totalActual / totalPlanned) * 100 : 0;
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Wedding Budget - Mēl Milaap</title>
+        <meta name="description" content="Track and manage your wedding budget with detailed categories and spending analysis" />
+      </Helmet>
+
       <Navigation />
       
       {/* Header */}
-      <section className="py-16 bg-gradient-hero">
+      <section className="py-12 bg-gradient-hero">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             className="max-w-4xl mx-auto"
@@ -273,29 +190,25 @@ const AccountPlanningBudget = () => {
             initial="initial"
             animate="animate"
           >
-            <motion.div variants={fadeInUp} className="flex items-center justify-between">
+            <motion.div variants={fadeInUp} className="flex items-center justify-between mb-6">
               <div>
-                <Badge variant="outline" className="mb-4">
-                  <DollarSign className="w-4 h-4 mr-2" />
-                  Budget Tracker
-                </Badge>
-                <h1 className="text-luxury-xl text-foreground mb-4">
+                <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
                   Wedding Budget
                 </h1>
-                <p className="text-body-lg text-muted-foreground">
-                  Track your wedding expenses and stay on budget.
+                <p className="text-muted-foreground">
+                  Track your expenses and stay on budget for your special day
                 </p>
               </div>
-              <div className="flex gap-3">
-                <Button variant="outline" onClick={exportToCSV}>
-                  <Download className="w-4 h-4 mr-2" />
-                  Export CSV
-                </Button>
-                <Link to="/account">
-                  <Button variant="outline">
-                    Back to Dashboard
+              <div className="flex items-center space-x-2">
+                <Link to="/planning">
+                  <Button variant="outline" size="sm">
+                    Back to Planning
                   </Button>
                 </Link>
+                <Button variant="outline" size="sm" disabled>
+                  <Download className="w-4 h-4 mr-2" />
+                  Export
+                </Button>
               </div>
             </motion.div>
           </motion.div>
@@ -303,198 +216,262 @@ const AccountPlanningBudget = () => {
       </section>
 
       {/* Budget Overview */}
-      <section className="py-16 bg-background">
+      <section className="py-8 bg-background">
         <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-6xl mx-auto space-y-8">
+          <div className="max-w-4xl mx-auto">
             
-            {/* Budget Summary */}
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-4 gap-6"
+            {/* Summary Cards */}
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
               variants={staggerChildren}
               initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
+              animate="animate"
             >
               <motion.div variants={fadeInUp}>
-                <Card className="luxury-card">
-                  <CardContent className="p-6 text-center">
-                    <DollarSign className="w-8 h-8 text-primary mx-auto mb-2" />
-                    <h3 className="text-2xl font-semibold text-foreground mb-1">
-                      ${totalPlanned.toLocaleString()}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">Total Planned</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-              
-              <motion.div variants={fadeInUp}>
-                <Card className="luxury-card">
-                  <CardContent className="p-6 text-center">
-                    <TrendingUp className="w-8 h-8 text-amber-500 mx-auto mb-2" />
-                    <h3 className="text-2xl font-semibold text-foreground mb-1">
-                      ${totalActual.toLocaleString()}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">Total Spent</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-              
-              <motion.div variants={fadeInUp}>
-                <Card className="luxury-card">
-                  <CardContent className="p-6 text-center">
-                    {remaining >= 0 ? (
-                      <DollarSign className="w-8 h-8 text-green-500 mx-auto mb-2" />
-                    ) : (
-                      <AlertTriangle className="w-8 h-8 text-red-500 mx-auto mb-2" />
-                    )}
-                    <h3 className={`text-2xl font-semibold mb-1 ${remaining >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                      ${Math.abs(remaining).toLocaleString()}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {remaining >= 0 ? 'Remaining' : 'Over Budget'}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-              
-              <motion.div variants={fadeInUp}>
-                <Card className="luxury-card">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-16 h-16 mx-auto mb-2 relative">
-                      <Progress value={Math.min(progressPercentage, 100)} className="w-full h-2 mt-6" />
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Total Budget</p>
+                        <p className="text-2xl font-bold text-foreground">
+                          ${budget?.total_budget?.toLocaleString() || '0'}
+                        </p>
+                      </div>
+                      <DollarSign className="w-8 h-8 text-green-500" />
                     </div>
-                    <h3 className="text-2xl font-semibold text-foreground mb-1">
-                      {progressPercentage.toFixed(0)}%
-                    </h3>
-                    <p className="text-sm text-muted-foreground">Budget Used</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div variants={fadeInUp}>
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Planned Spending</p>
+                        <p className="text-2xl font-bold text-foreground">
+                          ${totalPlanned.toLocaleString()}
+                        </p>
+                      </div>
+                      <TrendingUp className="w-8 h-8 text-blue-500" />
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div variants={fadeInUp}>
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Budget Used</p>
+                        <p className="text-2xl font-bold text-foreground">
+                          {budgetUsed.toFixed(1)}%
+                        </p>
+                      </div>
+                      <AlertTriangle className={`w-8 h-8 ${budgetUsed > 100 ? 'text-red-500' : budgetUsed > 80 ? 'text-yellow-500' : 'text-green-500'}`} />
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
             </motion.div>
 
-            {/* Budget Items */}
+            {/* Progress Bar */}
+            <motion.div variants={fadeInUp} className="mb-8">
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="font-semibold">Budget Progress</h3>
+                    <span className="text-sm text-muted-foreground">
+                      ${totalPlanned.toLocaleString()} of ${budget?.total_budget?.toLocaleString() || '0'}
+                    </span>
+                  </div>
+                  <Progress value={Math.min(budgetUsed, 100)} className="h-3" />
+                  {budgetUsed > 100 && (
+                    <p className="text-sm text-red-500 mt-2">
+                      ⚠️ You're over budget by ${(totalPlanned - (budget?.total_budget || 0)).toLocaleString()}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Budget Categories */}
             <motion.div variants={fadeInUp}>
-              <Card className="luxury-card">
+              <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
-                  <CardTitle>Budget Breakdown</CardTitle>
-                  <Button onClick={() => setShowAddForm(!showAddForm)}>
+                  <CardTitle>Budget Categories</CardTitle>
+                  <Button 
+                    onClick={() => setIsAddingCategory(!isAddingCategory)}
+                    size="sm"
+                  >
                     <PlusCircle className="w-4 h-4 mr-2" />
-                    Add Item
+                    Add Category
                   </Button>
                 </CardHeader>
                 <CardContent>
-                  
-                  {/* Add New Item Form */}
-                  {showAddForm && (
-                    <div className="mb-6 p-4 bg-card border border-border rounded-lg">
-                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  {/* Add Category Form */}
+                  {isAddingCategory && (
+                    <div className="bg-muted/50 p-4 rounded-lg mb-6">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                          <Label>Category</Label>
+                          <Label htmlFor="category-name">Category Name</Label>
                           <Input
-                            placeholder="e.g. Venue"
-                            value={newItem.category}
-                            onChange={(e) => setNewItem({...newItem, category: e.target.value})}
+                            id="category-name"
+                            value={newCategory.name}
+                            onChange={(e) => setNewCategory(prev => ({ ...prev, name: e.target.value }))}
+                            placeholder="e.g., Photography"
                           />
                         </div>
                         <div>
-                          <Label>Planned Amount</Label>
+                          <Label htmlFor="planned-amount">Planned Amount</Label>
                           <Input
+                            id="planned-amount"
                             type="number"
-                            placeholder="0"
-                            value={newItem.planned_amount}
-                            onChange={(e) => setNewItem({...newItem, planned_amount: e.target.value})}
+                            value={newCategory.planned_amount}
+                            onChange={(e) => setNewCategory(prev => ({ ...prev, planned_amount: e.target.value }))}
+                            placeholder="5000"
                           />
                         </div>
-                        <div>
-                          <Label>Actual Amount</Label>
-                          <Input
-                            type="number"
-                            placeholder="0"
-                            value={newItem.actual_amount}
-                            onChange={(e) => setNewItem({...newItem, actual_amount: e.target.value})}
-                          />
-                        </div>
-                        <div className="flex items-end gap-2">
-                          <Button onClick={addBudgetItem} className="flex-1">
+                        <div className="flex items-end space-x-2">
+                          <Button 
+                            onClick={handleAddCategory}
+                            disabled={!newCategory.name.trim() || isAddingCategory}
+                            size="sm"
+                          >
+                            <Save className="w-4 h-4 mr-2" />
                             Add
                           </Button>
-                          <Button variant="outline" onClick={() => setShowAddForm(false)}>
-                            Cancel
+                          <Button 
+                            variant="outline" 
+                            onClick={() => {
+                              setIsAddingCategory(false);
+                              setNewCategory({ name: '', planned_amount: '' });
+                            }}
+                            size="sm"
+                          >
+                            <X className="w-4 h-4" />
                           </Button>
                         </div>
                       </div>
                     </div>
                   )}
 
-                  {/* Budget Items List */}
+                  {/* Categories List */}
                   <div className="space-y-4">
-                    {budget.items.map((item) => (
-                      <div key={item.id} className="grid grid-cols-1 md:grid-cols-6 gap-4 p-4 border border-border rounded-lg">
-                        <div className="font-medium text-foreground">
-                          {item.category}
-                        </div>
-                        <div className="text-sm">
-                          <Label className="text-xs text-muted-foreground">Planned</Label>
-                          <Input
-                            type="number"
-                            value={item.planned_amount}
-                            onChange={(e) => updateBudgetItem(item.id, 'planned_amount', parseFloat(e.target.value) || 0)}
-                            className="mt-1"
-                          />
-                        </div>
-                        <div className="text-sm">
-                          <Label className="text-xs text-muted-foreground">Actual</Label>
-                          <Input
-                            type="number"
-                            value={item.actual_amount}
-                            onChange={(e) => updateBudgetItem(item.id, 'actual_amount', parseFloat(e.target.value) || 0)}
-                            className="mt-1"
-                          />
-                        </div>
-                        <div className="text-sm">
-                          <Label className="text-xs text-muted-foreground">Difference</Label>
-                          <div className={`mt-2 font-medium ${
-                            (item.actual_amount - item.planned_amount) > 0 ? 'text-red-600' : 'text-green-600'
-                          }`}>
-                            ${(item.actual_amount - item.planned_amount).toFixed(2)}
-                          </div>
-                        </div>
-                        <div className="text-sm">
-                          <Label className="text-xs text-muted-foreground">Progress</Label>
-                          <div className="mt-2">
-                            <Progress 
-                              value={item.planned_amount > 0 ? (item.actual_amount / item.planned_amount) * 100 : 0}
-                              className="w-full h-2"
+                    {categories.length === 0 ? (
+                      <div className="text-center py-8">
+                        <DollarSign className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                        <p className="text-muted-foreground mb-2">No budget categories yet</p>
+                        <p className="text-sm text-muted-foreground">
+                          Add categories to start tracking your wedding expenses
+                        </p>
+                      </div>
+                    ) : (
+                      categories.map((category) => (
+                        <div
+                          key={category.id}
+                          className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                        >
+                          {editingCategory === category.id ? (
+                            <EditCategoryForm 
+                              category={category}
+                              onSave={(updates) => handleUpdateCategory(category.id, updates)}
+                              onCancel={() => setEditingCategory(null)}
                             />
-                          </div>
+                          ) : (
+                            <>
+                              <div className="flex-1">
+                                <h4 className="font-medium text-foreground">{category.name}</h4>
+                                <div className="flex items-center space-x-4 mt-1">
+                                  <span className="text-sm text-muted-foreground">
+                                    Planned: ${category.planned_amount.toLocaleString()}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => setEditingCategory(category.id)}
+                                >
+                                  <Edit className="w-4 h-4" />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => handleDeleteCategory(category.id)}
+                                >
+                                  <Trash2 className="w-4 h-4 text-destructive" />
+                                </Button>
+                              </div>
+                            </>
+                          )}
                         </div>
-                        <div className="flex justify-end">
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => deleteBudgetItem(item.id)}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
-                    
-                    {budget.items.length === 0 && (
-                      <div className="text-center py-8 text-muted-foreground">
-                        No budget items yet. Click "Add Item" to get started.
-                      </div>
+                      ))
                     )}
                   </div>
                 </CardContent>
               </Card>
             </motion.div>
-            
           </div>
         </div>
       </section>
 
       <Footer />
+    </div>
+  );
+};
+
+// Edit Category Form Component
+const EditCategoryForm = ({ 
+  category, 
+  onSave, 
+  onCancel 
+}: { 
+  category: BudgetCategory; 
+  onSave: (updates: { name?: string; planned_amount?: number }) => void;
+  onCancel: () => void;
+}) => {
+  const [name, setName] = React.useState(category.name);
+  const [plannedAmount, setPlannedAmount] = React.useState(category.planned_amount.toString());
+
+  const handleSave = () => {
+    const updates: { name?: string; planned_amount?: number } = {};
+    
+    if (name.trim() !== category.name) {
+      updates.name = name.trim();
+    }
+    
+    const newAmount = parseFloat(plannedAmount) || 0;
+    if (newAmount !== category.planned_amount) {
+      updates.planned_amount = newAmount;
+    }
+    
+    onSave(updates);
+  };
+
+  return (
+    <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <Input
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Category name"
+      />
+      <Input
+        type="number"
+        value={plannedAmount}
+        onChange={(e) => setPlannedAmount(e.target.value)}
+        placeholder="Planned amount"
+      />
+      <div className="flex items-center space-x-2">
+        <Button size="sm" onClick={handleSave}>
+          <Save className="w-4 h-4" />
+        </Button>
+        <Button variant="outline" size="sm" onClick={onCancel}>
+          <X className="w-4 h-4" />
+        </Button>
+      </div>
     </div>
   );
 };

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { DashboardSwitcher } from "@/components/ui/dashboard-switcher";
 import { 
   Calendar,
   Users, 
@@ -41,6 +42,8 @@ import {
   getCollaborators,
   calculatePlanningProgress
 } from "@/lib/planning";
+import { getPlanBadgeText, getBadgeVariant, getUserSubscription } from "@/lib/planning-helpers";
+import { Helmet } from "react-helmet-async";
 
 interface DashboardStats {
   budget: {
@@ -66,30 +69,8 @@ interface DashboardStats {
   overall: number;
 }
 
-// Helper functions for plan badge mapping
-const getPlanBadgeText = (tier: string) => {
-  switch (tier) {
-    case 'member_99':
-      return 'Premium';
-    case 'member_49': 
-      return 'Member';
-    case 'free':
-    default:
-      return 'Free';
-  }
-};
-
-const getBadgeVariant = (tier: string) => {
-  switch (tier) {
-    case 'member_99':
-      return 'default';
-    case 'member_49':
-      return 'secondary'; 
-    case 'free':
-    default:
-      return 'outline';
-  }
-};
+// Dashboard mode state
+const [dashboardMode, setDashboardMode] = React.useState<'match' | 'planning'>('planning');
 
 const AccountDashboard = () => {
   const { toast } = useToast();
@@ -97,6 +78,7 @@ const AccountDashboard = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState<any>(null);
   const [userProfile, setUserProfile] = React.useState<any>(null);
+  const [userSubscription, setUserSubscription] = React.useState<any>(null);
   const [stats, setStats] = React.useState<DashboardStats>({
     budget: { totalItems: 0, totalPlanned: 0, totalActual: 0, progress: 0 },
     guests: { total: 0, confirmed: 0, progress: 0 },
@@ -128,8 +110,12 @@ const AccountDashboard = () => {
 
   const loadUserProfile = async (userId: string) => {
     try {
-      const profile = await getUserProfile(userId);
+      const [profile, subscription] = await Promise.all([
+        getUserProfile(userId),
+        getUserSubscription(userId)
+      ]);
       setUserProfile(profile);
+      setUserSubscription(subscription);
     } catch (error) {
       console.error('Error loading user profile:', error);
     }
@@ -311,6 +297,11 @@ const AccountDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Dashboard - Mēl Milaap</title>
+        <meta name="description" content="Your personal wedding planning and match dashboard" />
+      </Helmet>
+
       <Navigation />
       
       {/* Header */}
@@ -337,8 +328,8 @@ const AccountDashboard = () => {
                 </p>
               </div>
               <div className="flex items-center space-x-2">
-                <Badge variant={getBadgeVariant(userProfile?.subscription_tier)}>
-                  {getPlanBadgeText(userProfile?.subscription_tier)}
+                <Badge variant={getBadgeVariant(userSubscription?.plan || 'free')}>
+                  {getPlanBadgeText(userSubscription?.plan || 'free')}
                 </Badge>
                 <Link to="/account/profile">
                   <Button variant="outline" size="sm">
@@ -347,6 +338,14 @@ const AccountDashboard = () => {
                   </Button>
                 </Link>
               </div>
+            </motion.div>
+
+            {/* Dashboard Switcher */}
+            <motion.div variants={fadeInUp} className="mb-6">
+              <DashboardSwitcher 
+                currentMode={dashboardMode}
+                onModeChange={setDashboardMode}
+              />
             </motion.div>
 
             {/* Overall Progress */}

@@ -7,22 +7,32 @@ import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
-  Eye, 
-  Heart, 
-  MessageSquare, 
+  DollarSign,
+  Users, 
   TrendingUp,
-  Crown,
   Calendar,
-  Users,
   Mail,
   Phone,
-  ExternalLink
+  Star,
+  Eye,
+  MessageCircle,
+  Award,
+  Settings,
+  Plus,
+  Filter,
+  Download,
+  ExternalLink,
+  Crown,
+  Heart,
+  MessageSquare
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { getSupplierLeads } from "@/lib/planning";
 
 interface SupplierProfile {
   id: string;

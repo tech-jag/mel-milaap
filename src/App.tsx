@@ -12,7 +12,6 @@ import WeddingPlanning from "./pages/WeddingPlanning";
 import Tools from "./pages/Tools";
 import Stories from "./pages/Stories";
 import StoryDetail from "./pages/StoryDetail";
-import DataRights from "./pages/DataRights";
 import Premium from "./pages/Premium";
 import Pricing from "./pages/Pricing";
 import Trust from "./pages/Trust";
@@ -46,6 +45,9 @@ import CityMelbourne from "./pages/CityMelbourne";
 import CityAuckland from "./pages/CityAuckland";
 import Health from "./pages/Health";
 import NotFound from "./pages/NotFound";
+import AccountDashboard from "./pages/AccountDashboard";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import DataRights from "./pages/DataRights";
 import HowItWorks from "./pages/HowItWorks";
 import ForParents from "./pages/ForParents";
 import ForSingles from "./pages/ForSingles";
@@ -95,7 +97,9 @@ const App = () => (
           <Route path="/planning/checklist" element={<PlanningChecklist />} />
           
           {/* Account Routes */}
-          <Route path="/account" element={<Account />} />
+          <Route path="/account" element={<AccountDashboard />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/data-rights" element={<DataRights />} />
           <Route path="/account/profile" element={<AccountProfile />} />
           <Route path="/account/photos" element={<AccountPhotos />} />
           <Route path="/account/billing" element={<AccountBilling />} />

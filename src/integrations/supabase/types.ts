@@ -38,6 +38,69 @@ export type Database = {
         }
         Relationships: []
       }
+      articles: {
+        Row: {
+          author_id: string | null
+          author_name: string
+          category: string | null
+          content: string
+          cover_image: string | null
+          created_at: string
+          excerpt: string | null
+          featured: boolean | null
+          id: string
+          published_at: string | null
+          read_time_minutes: number | null
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          status: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          author_name: string
+          category?: string | null
+          content: string
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured?: boolean | null
+          id?: string
+          published_at?: string | null
+          read_time_minutes?: number | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          status?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          author_name?: string
+          category?: string | null
+          content?: string
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured?: boolean | null
+          id?: string
+          published_at?: string | null
+          read_time_minutes?: number | null
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          status?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       audit_logs: {
         Row: {
           action: string
@@ -134,33 +197,45 @@ export type Database = {
       budget_items: {
         Row: {
           actual_amount: number | null
+          booked_amount: number | null
           budget_id: string
           category: string
           created_at: string
           id: string
           notes: string | null
           planned_amount: number | null
+          status: string | null
           updated_at: string
+          vendor_contact: string | null
+          vendor_name: string | null
         }
         Insert: {
           actual_amount?: number | null
+          booked_amount?: number | null
           budget_id: string
           category: string
           created_at?: string
           id?: string
           notes?: string | null
           planned_amount?: number | null
+          status?: string | null
           updated_at?: string
+          vendor_contact?: string | null
+          vendor_name?: string | null
         }
         Update: {
           actual_amount?: number | null
+          booked_amount?: number | null
           budget_id?: string
           category?: string
           created_at?: string
           id?: string
           notes?: string | null
           planned_amount?: number | null
+          status?: string | null
           updated_at?: string
+          vendor_contact?: string | null
+          vendor_name?: string | null
         }
         Relationships: [
           {
@@ -207,6 +282,48 @@ export type Database = {
           },
         ]
       }
+      collaborators: {
+        Row: {
+          created_at: string
+          id: string
+          invitation_expires_at: string | null
+          invitation_token: string | null
+          invitee_email: string
+          invitee_user_id: string | null
+          inviter_user_id: string
+          permissions: Json | null
+          role: string
+          status: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          invitation_expires_at?: string | null
+          invitation_token?: string | null
+          invitee_email: string
+          invitee_user_id?: string | null
+          inviter_user_id: string
+          permissions?: Json | null
+          role: string
+          status?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          invitation_expires_at?: string | null
+          invitation_token?: string | null
+          invitee_email?: string
+          invitee_user_id?: string | null
+          inviter_user_id?: string
+          permissions?: Json | null
+          role?: string
+          status?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
@@ -238,22 +355,28 @@ export type Database = {
         Row: {
           created_at: string
           id: string
+          notes: string | null
           subject_id: string
           subject_type: string
+          tags: string[] | null
           user_id: string
         }
         Insert: {
           created_at?: string
           id?: string
+          notes?: string | null
           subject_id: string
           subject_type: string
+          tags?: string[] | null
           user_id: string
         }
         Update: {
           created_at?: string
           id?: string
+          notes?: string | null
           subject_id?: string
           subject_type?: string
+          tags?: string[] | null
           user_id?: string
         }
         Relationships: []
@@ -287,10 +410,13 @@ export type Database = {
       }
       gift_registries: {
         Row: {
+          contributors: Json | null
           created_at: string
           description: string | null
           id: string
+          image_url: string | null
           is_public: boolean | null
+          purchased_amount: number | null
           sort_order: number | null
           target_amount: number | null
           title: string
@@ -300,10 +426,13 @@ export type Database = {
           wedding_id: string | null
         }
         Insert: {
+          contributors?: Json | null
           created_at?: string
           description?: string | null
           id?: string
+          image_url?: string | null
           is_public?: boolean | null
+          purchased_amount?: number | null
           sort_order?: number | null
           target_amount?: number | null
           title: string
@@ -313,10 +442,13 @@ export type Database = {
           wedding_id?: string | null
         }
         Update: {
+          contributors?: Json | null
           created_at?: string
           description?: string | null
           id?: string
+          image_url?: string | null
           is_public?: boolean | null
+          purchased_amount?: number | null
           sort_order?: number | null
           target_amount?: number | null
           title?: string
@@ -925,6 +1057,139 @@ export type Database = {
         }
         Relationships: []
       }
+      supplier_leads: {
+        Row: {
+          budget_range: string | null
+          created_at: string
+          customer_email: string
+          customer_name: string
+          customer_phone: string | null
+          event_date: string | null
+          follow_up_date: string | null
+          id: string
+          message: string | null
+          notes: string | null
+          priority: string | null
+          source: string | null
+          status: string | null
+          supplier_id: string
+          updated_at: string
+          value_estimate: number | null
+        }
+        Insert: {
+          budget_range?: string | null
+          created_at?: string
+          customer_email: string
+          customer_name: string
+          customer_phone?: string | null
+          event_date?: string | null
+          follow_up_date?: string | null
+          id?: string
+          message?: string | null
+          notes?: string | null
+          priority?: string | null
+          source?: string | null
+          status?: string | null
+          supplier_id: string
+          updated_at?: string
+          value_estimate?: number | null
+        }
+        Update: {
+          budget_range?: string | null
+          created_at?: string
+          customer_email?: string
+          customer_name?: string
+          customer_phone?: string | null
+          event_date?: string | null
+          follow_up_date?: string | null
+          id?: string
+          message?: string | null
+          notes?: string | null
+          priority?: string | null
+          source?: string | null
+          status?: string | null
+          supplier_id?: string
+          updated_at?: string
+          value_estimate?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_leads_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: false
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      supplier_pages: {
+        Row: {
+          about_section: string | null
+          banner_url: string | null
+          contact_form_enabled: boolean | null
+          created_at: string
+          custom_css: string | null
+          gallery_images: string[] | null
+          id: string
+          is_published: boolean | null
+          logo_url: string | null
+          packages: Json | null
+          seo_description: string | null
+          seo_title: string | null
+          services_section: string | null
+          slug: string
+          supplier_id: string
+          updated_at: string
+          video_url: string | null
+        }
+        Insert: {
+          about_section?: string | null
+          banner_url?: string | null
+          contact_form_enabled?: boolean | null
+          created_at?: string
+          custom_css?: string | null
+          gallery_images?: string[] | null
+          id?: string
+          is_published?: boolean | null
+          logo_url?: string | null
+          packages?: Json | null
+          seo_description?: string | null
+          seo_title?: string | null
+          services_section?: string | null
+          slug: string
+          supplier_id: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Update: {
+          about_section?: string | null
+          banner_url?: string | null
+          contact_form_enabled?: boolean | null
+          created_at?: string
+          custom_css?: string | null
+          gallery_images?: string[] | null
+          id?: string
+          is_published?: boolean | null
+          logo_url?: string | null
+          packages?: Json | null
+          seo_description?: string | null
+          seo_title?: string | null
+          services_section?: string | null
+          slug?: string
+          supplier_id?: string
+          updated_at?: string
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "supplier_pages_supplier_id_fkey"
+            columns: ["supplier_id"]
+            isOneToOne: true
+            referencedRelation: "suppliers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       supplier_views: {
         Row: {
           created_at: string
@@ -1108,6 +1373,7 @@ export type Database = {
           email: string
           id: string
           name: string
+          partner_name: string | null
           phone: string | null
           plan: string | null
           planning_phase: string | null
@@ -1116,6 +1382,8 @@ export type Database = {
           two_factor_backup_codes: string[] | null
           two_factor_enabled: boolean | null
           updated_at: string
+          venue_location: string | null
+          wedding_date: string | null
         }
         Insert: {
           city?: string | null
@@ -1124,6 +1392,7 @@ export type Database = {
           email: string
           id: string
           name: string
+          partner_name?: string | null
           phone?: string | null
           plan?: string | null
           planning_phase?: string | null
@@ -1132,6 +1401,8 @@ export type Database = {
           two_factor_backup_codes?: string[] | null
           two_factor_enabled?: boolean | null
           updated_at?: string
+          venue_location?: string | null
+          wedding_date?: string | null
         }
         Update: {
           city?: string | null
@@ -1140,6 +1411,7 @@ export type Database = {
           email?: string
           id?: string
           name?: string
+          partner_name?: string | null
           phone?: string | null
           plan?: string | null
           planning_phase?: string | null
@@ -1148,14 +1420,20 @@ export type Database = {
           two_factor_backup_codes?: string[] | null
           two_factor_enabled?: boolean | null
           updated_at?: string
+          venue_location?: string | null
+          wedding_date?: string | null
         }
         Relationships: []
       }
       wedding_timeline_items: {
         Row: {
+          assigned_to: string | null
+          completed_at: string | null
           created_at: string
+          description: string | null
           due_on: string
           id: string
+          priority: string | null
           sort_order: number | null
           status: string | null
           title: string
@@ -1163,9 +1441,13 @@ export type Database = {
           wedding_id: string | null
         }
         Insert: {
+          assigned_to?: string | null
+          completed_at?: string | null
           created_at?: string
+          description?: string | null
           due_on: string
           id?: string
+          priority?: string | null
           sort_order?: number | null
           status?: string | null
           title: string
@@ -1173,9 +1455,13 @@ export type Database = {
           wedding_id?: string | null
         }
         Update: {
+          assigned_to?: string | null
+          completed_at?: string | null
           created_at?: string
+          description?: string | null
           due_on?: string
           id?: string
+          priority?: string | null
           sort_order?: number | null
           status?: string | null
           title?: string

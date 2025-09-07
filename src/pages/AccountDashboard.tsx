@@ -66,6 +66,31 @@ interface DashboardStats {
   overall: number;
 }
 
+// Helper functions for plan badge mapping
+const getPlanBadgeText = (tier: string) => {
+  switch (tier) {
+    case 'member_99':
+      return 'Premium';
+    case 'member_49': 
+      return 'Member';
+    case 'free':
+    default:
+      return 'Free';
+  }
+};
+
+const getBadgeVariant = (tier: string) => {
+  switch (tier) {
+    case 'member_99':
+      return 'default';
+    case 'member_49':
+      return 'secondary'; 
+    case 'free':
+    default:
+      return 'outline';
+  }
+};
+
 const AccountDashboard = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -161,10 +186,13 @@ const AccountDashboard = () => {
       });
     } catch (error) {
       console.error('Error loading dashboard data:', error);
-      toast({
-        title: "Error loading data",
-        description: "Please try again.",
-        variant: "destructive"
+      // Show empty states instead of error toasts for better UX
+      setStats({
+        budget: { totalItems: 0, totalPlanned: 0, totalActual: 0, progress: 0 },
+        guests: { total: 0, confirmed: 0, progress: 0 },
+        timeline: { total: 0, completed: 0, progress: 0 },
+        registry: { total: 0, progress: 0 },
+        overall: 0
       });
     }
   };
@@ -309,8 +337,8 @@ const AccountDashboard = () => {
                 </p>
               </div>
               <div className="flex items-center space-x-2">
-                <Badge variant={userProfile?.subscription_tier === 'free' ? 'secondary' : 'default'}>
-                  {userProfile?.subscription_tier === 'free' ? 'Free Member' : 'Premium Member'}
+                <Badge variant={getBadgeVariant(userProfile?.subscription_tier)}>
+                  {getPlanBadgeText(userProfile?.subscription_tier)}
                 </Badge>
                 <Link to="/account/profile">
                   <Button variant="outline" size="sm">

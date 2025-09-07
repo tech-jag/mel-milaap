@@ -130,10 +130,12 @@ const PlanningDashboard = () => {
       });
     } catch (error) {
       console.error('Error loading planning data:', error);
-      toast({
-        title: "Error loading data",
-        description: "Please try again.",
-        variant: "destructive"
+      // Show empty states instead of error toasts for better UX
+      setStats({
+        budget: { totalItems: 0, totalPlanned: 0, totalActual: 0, progress: 0 },
+        guests: { total: 0, confirmed: 0, progress: 0 },
+        timeline: { total: 0, completed: 0, progress: 0 },
+        registry: { total: 0, progress: 0 }
       });
     } finally {
       setIsLoading(false);

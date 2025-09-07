@@ -5,6 +5,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop";
 import Index from "./pages/Index";
+import AccountCollaborators from "./pages/AccountCollaborators";
+import PlanningNotes from "./pages/PlanningNotes";
 import Match from "./pages/Match";
 import Suppliers from "./pages/Suppliers";
 import Planning from "./pages/Planning";
@@ -100,6 +102,7 @@ const App = () => (
           <Route path="/planning/timeline" element={<PlanningTimeline />} />
           <Route path="/planning/registry" element={<PlanningRegistry />} />
           <Route path="/planning/checklist" element={<PlanningChecklist />} />
+          <Route path="/planning/notes" element={<PlanningNotes />} />
           
           {/* Account Routes */}
           <Route path="/account" element={<AccountDashboard />} />
@@ -118,8 +121,11 @@ const App = () => (
           <Route path="/account/planning/todo" element={<AccountPlanningTodo />} />
           <Route path="/account/planning/seating" element={<AccountPlanningSeating />} />
           <Route path="/account/invites" element={<AccountInvites />} />
+          <Route path="/account/collaborators" element={<AccountCollaborators />} />
           <Route path="/supplier/signup" element={<SupplierSignup />} />
+          <Route path="/suppliers/signup" element={<SupplierSignup />} />
           <Route path="/supplier/dashboard" element={<SupplierDashboard />} />
+          <Route path="/suppliers/dashboard" element={<SupplierDashboard />} />
           <Route path="/city/sydney" element={<CitySydney />} />
           <Route path="/city/melbourne" element={<CityMelbourne />} />
           <Route path="/city/auckland" element={<CityAuckland />} />

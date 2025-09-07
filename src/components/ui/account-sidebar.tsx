@@ -43,6 +43,7 @@ const accountItems = [
   { title: "Messages", url: "/account/messages", icon: MessageCircle },
   { title: "Verification", url: "/account/verification", icon: Shield },
   { title: "Favorites", url: "/account/favorites", icon: Heart },
+  { title: "Collaborators", url: "/account/collaborators", icon: Users },
   { title: "Security", url: "/account/security", icon: Settings },
   { title: "Billing", url: "/account/billing", icon: CreditCard },
 ];

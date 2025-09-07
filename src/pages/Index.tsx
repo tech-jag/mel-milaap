@@ -23,6 +23,7 @@ import {
   Quote
 } from "lucide-react";
 import { fadeInUp, staggerChildren, cardHover } from "@/lib/motion";
+import { SEO } from "@/utils/seo";
 
 // Metrics data
 const metrics = [
@@ -77,6 +78,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO />
       <Navigation />
       
       {/* Hero Section */}

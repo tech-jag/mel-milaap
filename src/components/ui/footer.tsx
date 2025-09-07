@@ -35,15 +35,15 @@ const footerSections = [
       { href: "/help", label: "Help Center" },
     ]
   },
-  {
-    title: "Legal",
-    links: [
-      { href: "/terms", label: "Terms" },
-      { href: "/privacy", label: "Privacy" },
-      { href: "/careers", label: "Careers" },
-      { href: "/press", label: "Press Kit" },
-    ]
-  }
+    {
+      title: "Legal",
+      links: [
+        { href: "/terms", label: "Terms" },
+        { href: "/privacy-policy", label: "Privacy Policy" },
+        { href: "/data-rights", label: "Data Rights" },
+        { href: "/careers", label: "Careers" },
+      ]
+    }
 ];
 
 const socialLinks = [

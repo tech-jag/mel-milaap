@@ -11,8 +11,8 @@ interface SEOProps {
 }
 
 export function SEO({
-  title = "Mēl Milaap – Find Your Person, Celebrate Your Forever",
-  description = "Mēl Milaap is Australia & New Zealand's premier South Asian matrimony and wedding platform. Verified profiles, trusted suppliers, and wedding planning tools – all in one place.",
+  title = "Mēl Milaap – Australia & New Zealand's Premier South Asian Matrimony & Wedding Platform",
+  description = "Find your perfect match and plan your wedding with Mēl Milaap. A trusted South Asian matrimony and wedding platform connecting hearts, families, and traditions.",
   canonical,
   ogImage = "/api/placeholder/1200/630",
   keywords = "south asian matrimony, indian wedding, pakistani wedding, sri lankan wedding, australian indian wedding, new zealand indian wedding, wedding suppliers, matrimony australia, wedding planning",

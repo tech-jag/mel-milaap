@@ -19,7 +19,7 @@ export function SEO({
   author = "Mēl Milaap",
   type = "website"
 }: SEOProps) {
-  const currentUrl = canonical || window.location.href;
+  const currentUrl = canonical || (typeof window !== 'undefined' ? window.location.href : 'https://melmilaap.com');
   
   return (
     <Helmet>

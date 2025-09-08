@@ -63,7 +63,7 @@ export function Navigation() {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await supabase.auth.signOut({ scope: 'global' });
     setIsOpen(false);
   };
 
@@ -101,14 +101,19 @@ return (
 
           {/* Desktop Auth Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
-            {user ? (
-              <>
-                <Link to="/account">
-                  <Button variant="ghost" size="sm">
-                    Dashboard
-                  </Button>
-                </Link>
-                <DropdownMenu>
+              {user ? (
+                <>
+                  <Link to="/account">
+                    <Button variant="ghost" size="sm">
+                      Dashboard
+                    </Button>
+                  </Link>
+                  <Link to="/account/planning">
+                    <Button variant="outline" size="sm">
+                      My Planning
+                    </Button>
+                  </Link>
+                  <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm" className="space-x-2">
                       <User className="w-4 h-4" />

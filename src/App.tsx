@@ -31,6 +31,8 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Faqs from "./pages/Faqs";
 import Auth from "./pages/Auth";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Account from "./pages/Account";
 import AccountSecurity from "./pages/AccountSecurity";
 import AccountProfile from "./pages/AccountProfile";
@@ -110,6 +112,8 @@ const App = () => (
               <Route path="/auth/signup" element={<Auth />} />
               <Route path="/login" element={<Auth />} />
               <Route path="/signup" element={<Auth />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/account/reset-password" element={<ResetPassword />} />
               
               {/* Public Planning Route */}
               <Route path="/planning" element={<PublicPlanning />} />

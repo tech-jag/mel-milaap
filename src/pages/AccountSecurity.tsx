@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { ReauthModal } from "@/components/ui/reauth-modal";
 import { 
   Shield, 
   Key, 
@@ -17,7 +18,9 @@ import {
   Copy,
   RefreshCw,
   CheckCircle,
-  AlertTriangle
+  AlertTriangle,
+  Eye,
+  EyeOff
 } from "lucide-react";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useToast } from "@/hooks/use-toast";
@@ -32,6 +35,16 @@ const AccountSecurity = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [otpCode, setOtpCode] = React.useState('');
   const [isEnabling2FA, setIsEnabling2FA] = React.useState(false);
+  
+  // Password change states
+  const [showPasswordChange, setShowPasswordChange] = React.useState(false);
+  const [newPassword, setNewPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
+  
+  // Reauthentication states
+  const [showReauthModal, setShowReauthModal] = React.useState(false);
+  const [pendingAction, setPendingAction] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     checkUser();
@@ -61,25 +74,47 @@ const AccountSecurity = () => {
     return codes;
   };
 
-  const enable2FA = async () => {
+  const requestReauth = (action: string) => {
+    setPendingAction(action);
+    setShowReauthModal(true);
+  };
+
+  const handleReauthSuccess = () => {
+    if (pendingAction === 'enable2FA') {
+      enable2FAInternal();
+    } else if (pendingAction === 'disable2FA') {
+      disable2FAInternal();
+    } else if (pendingAction === 'changePassword') {
+      setShowPasswordChange(true);
+    }
+    setPendingAction(null);
+  };
+
+  const enable2FA = () => {
+    requestReauth('enable2FA');
+  };
+
+  const enable2FAInternal = async () => {
     setIsEnabling2FA(true);
     setIsLoading(true);
 
     try {
-      // Generate recovery codes
-      const codes = generateRecoveryCodes();
-      setRecoveryCodes(codes);
-      
-      // Send OTP for verification
-      const { error } = await supabase.auth.signInWithOtp({
-        email: user.email,
+      // For TOTP implementation, we'll use Supabase's MFA
+      const { data, error } = await supabase.auth.mfa.enroll({ 
+        factorType: 'totp',
+        friendlyName: 'Authenticator App'
       });
 
       if (error) throw error;
 
+      // Generate recovery codes
+      const codes = generateRecoveryCodes();
+      setRecoveryCodes(codes);
+      
       toast({
-        title: "Verification Code Sent",
-        description: "Please check your email for the verification code.",
+        title: "Scan QR Code",
+        description: "Scan the QR code with your authenticator app and enter the 6-digit code below.",
+        duration: 5000,
       });
       
       setShowRecoveryCodes(true);
@@ -87,7 +122,8 @@ const AccountSecurity = () => {
       toast({
         title: "Error",
         description: error.message,
-        variant: "destructive"
+        variant: "destructive",
+        duration: 3000,
       });
     } finally {
       setIsLoading(false);
@@ -98,11 +134,23 @@ const AccountSecurity = () => {
     setIsLoading(true);
 
     try {
-      // Verify the OTP code
-      const { error } = await supabase.auth.verifyOtp({
-        email: user.email,
-        token: otpCode,
-        type: 'email'
+      // For TOTP verification using MFA, we need to create a challenge first
+      const factors = await supabase.auth.mfa.listFactors();
+      const totp = factors.data?.totp?.[0];
+
+      if (!totp) throw new Error('No TOTP factor found');
+
+      // Create challenge and then verify
+      const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
+        factorId: totp.id
+      });
+
+      if (challengeError) throw challengeError;
+
+      const { error } = await supabase.auth.mfa.verify({
+        factorId: totp.id,
+        challengeId: challenge.id,
+        code: otpCode,
       });
 
       if (error) throw error;
@@ -126,22 +174,36 @@ const AccountSecurity = () => {
       toast({
         title: "2FA Enabled",
         description: "Two-factor authentication has been enabled for your account.",
+        duration: 3000,
       });
     } catch (error: any) {
       toast({
         title: "Verification Failed",
         description: error.message,
-        variant: "destructive"
+        variant: "destructive",
+        duration: 3000,
       });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const disable2FA = async () => {
+  const disable2FA = () => {
+    requestReauth('disable2FA');
+  };
+
+  const disable2FAInternal = async () => {
     setIsLoading(true);
 
     try {
+      // Unenroll all TOTP factors
+      const factors = await supabase.auth.mfa.listFactors();
+      const totpFactors = factors.data?.totp || [];
+
+      for (const factor of totpFactors) {
+        await supabase.auth.mfa.unenroll({ factorId: factor.id });
+      }
+
       const { error } = await supabase
         .from('users')
         .update({ 
@@ -158,12 +220,69 @@ const AccountSecurity = () => {
       toast({
         title: "2FA Disabled",
         description: "Two-factor authentication has been disabled.",
+        duration: 3000,
       });
     } catch (error: any) {
       toast({
         title: "Error",
         description: error.message,
-        variant: "destructive"
+        variant: "destructive",
+        duration: 3000,
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleChangePassword = () => {
+    requestReauth('changePassword');
+  };
+
+  const changePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: "Passwords Don't Match",
+        description: "Please make sure your passwords match.",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      toast({
+        title: "Password Too Short",
+        description: "Password must be at least 8 characters long.",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { error } = await supabase.auth.updateUser({ 
+        password: newPassword 
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Password Changed",
+        description: "Your password has been successfully updated.",
+        duration: 3000,
+      });
+
+      setShowPasswordChange(false);
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+        duration: 3000,
       });
     } finally {
       setIsLoading(false);
@@ -175,6 +294,7 @@ const AccountSecurity = () => {
     toast({
       title: "Copied",
       description: "Recovery code copied to clipboard.",
+      duration: 3000,
     });
   };
 
@@ -370,16 +490,93 @@ const AccountSecurity = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-foreground">Change Password</p>
-                      <p className="text-sm text-muted-foreground">
-                        Last changed: Never (using OAuth)
-                      </p>
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium text-foreground">Change Password</p>
+                        <p className="text-sm text-muted-foreground">
+                          {user?.app_metadata?.provider === 'email' 
+                            ? "Update your account password" 
+                            : "Password change not available for OAuth accounts"
+                          }
+                        </p>
+                      </div>
+                      {user?.app_metadata?.provider === 'email' && (
+                        <Button 
+                          variant="outline" 
+                          onClick={handleChangePassword}
+                          disabled={isLoading}
+                        >
+                          Change Password
+                        </Button>
+                      )}
                     </div>
-                    <Button variant="outline" disabled>
-                      Change Password
-                    </Button>
+
+                    {showPasswordChange && (
+                      <div className="space-y-4 p-4 bg-card border border-border rounded-lg">
+                        <div className="space-y-3">
+                          <div className="space-y-2">
+                            <Label htmlFor="new-password">New Password</Label>
+                            <div className="relative">
+                              <Input
+                                id="new-password"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="••••••••"
+                                className="pr-10"
+                                autoComplete="new-password"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                required
+                                minLength={8}
+                              />
+                              <button
+                                type="button"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                                onClick={() => setShowPassword(!showPassword)}
+                              >
+                                {showPassword ? (
+                                  <EyeOff className="w-4 h-4 text-muted-foreground" />
+                                ) : (
+                                  <Eye className="w-4 h-4 text-muted-foreground" />
+                                )}
+                              </button>
+                            </div>
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label htmlFor="confirm-password">Confirm New Password</Label>
+                            <Input
+                              id="confirm-password"
+                              type="password"
+                              placeholder="••••••••"
+                              autoComplete="new-password"
+                              value={confirmPassword}
+                              onChange={(e) => setConfirmPassword(e.target.value)}
+                              required
+                            />
+                          </div>
+
+                          <div className="flex space-x-2">
+                            <Button
+                              onClick={changePassword}
+                              disabled={isLoading || !newPassword || !confirmPassword}
+                            >
+                              {isLoading ? "Updating..." : "Update Password"}
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => {
+                                setShowPasswordChange(false);
+                                setNewPassword('');
+                                setConfirmPassword('');
+                              }}
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -390,6 +587,14 @@ const AccountSecurity = () => {
       </section>
 
       <Footer />
+      
+      <ReauthModal
+        open={showReauthModal}
+        onOpenChange={setShowReauthModal}
+        onSuccess={handleReauthSuccess}
+        title="Confirm Your Identity"
+        description="Please re-enter your password to continue with this security action."
+      />
     </div>
   );
 };

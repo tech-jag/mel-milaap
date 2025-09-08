@@ -86,12 +86,14 @@ const Auth = () => {
         toast({
           title: "2FA Required",
           description: "Please check your email for the verification code.",
+          duration: 3000,
         });
       } else {
         // Regular login - redirect based on user type
         toast({
           title: "Welcome back!",
           description: "You've been successfully logged in.",
+          duration: 3000,
         });
         
         // Check if user is a supplier for redirect
@@ -107,7 +109,8 @@ const Auth = () => {
       toast({
         title: "Login Failed",
         description: error.message || "Please check your credentials and try again.",
-        variant: "destructive"
+        variant: "destructive",
+        duration: 3000,
       });
     } finally {
       setIsLoading(false);
@@ -131,6 +134,7 @@ const Auth = () => {
       toast({
         title: "Welcome back!",
         description: "You've been successfully logged in.",
+        duration: 3000,
       });
 
       // Redirect based on user type
@@ -145,7 +149,8 @@ const Auth = () => {
       toast({
         title: "Verification Failed",
         description: error.message || "Invalid verification code.",
-        variant: "destructive"
+        variant: "destructive",
+        duration: 3000,
       });
     } finally {
       setIsVerifying(false);
@@ -159,7 +164,8 @@ const Auth = () => {
       toast({
         title: "Password Mismatch",
         description: "Please make sure your passwords match.",
-        variant: "destructive"
+        variant: "destructive",
+        duration: 3000,
       });
       return;
     }
@@ -168,7 +174,8 @@ const Auth = () => {
       toast({
         title: "Terms Required",
         description: "Please agree to our terms and conditions.",
-        variant: "destructive"
+        variant: "destructive",
+        duration: 3000,
       });
       return;
     }
@@ -188,11 +195,24 @@ const Auth = () => {
         }
       });
 
-      if (error) throw error;
+      if (error) {
+        // Handle duplicate email error
+        if (error.message?.toLowerCase().includes('already registered') || error.status === 422) {
+          toast({
+            title: "Email Already Registered",
+            description: "That email is already registered. Please log in or reset your password.",
+            variant: "destructive",
+            duration: 3000,
+          });
+          return;
+        }
+        throw error;
+      }
 
       toast({
         title: "Account Created!",
         description: "Please check your email to verify your account.",
+        duration: 3000,
       });
 
       // Switch to login tab
@@ -201,7 +221,8 @@ const Auth = () => {
       toast({
         title: "Signup Failed",
         description: error.message || "Please try again.",
-        variant: "destructive"
+        variant: "destructive",
+        duration: 3000,
       });
     } finally {
       setIsLoading(false);
@@ -222,7 +243,8 @@ const Auth = () => {
       toast({
         title: "Google Login Failed",
         description: error.message || "Please try again.",
-        variant: "destructive"
+        variant: "destructive",
+        duration: 3000,
       });
     }
   };
@@ -345,7 +367,7 @@ const Auth = () => {
                         <button
                           type="button"
                           className="text-sm text-primary hover:underline"
-                          onClick={() => {/* TODO: Implement forgot password */}}
+                          onClick={() => navigate('/forgot-password')}
                         >
                           Forgot your password?
                         </button>

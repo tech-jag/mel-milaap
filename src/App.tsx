@@ -8,6 +8,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { ErrorBoundary } from "./components/system/ErrorBoundary";
 import { AuthProvider } from "./hooks/useAuth";
 import { PrivateRoute } from "./components/routing/PrivateRoute";
+import { OnboardingGuard } from "./components/routing/OnboardingGuard";
 
 // ... keep existing imports
 
@@ -76,6 +77,8 @@ import Press from "./pages/Press";
 import Destinations from "./pages/Destinations";
 import SuppliersFeatureListings from "./pages/SuppliersFeatureListings";
 import SuppliersPricing from "./pages/SuppliersPricing";
+import Onboarding from "./pages/Onboarding";
+import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -88,7 +91,8 @@ const App = () => (
         <AuthProvider>
           <BrowserRouter>
             <ScrollToTop />
-            <Routes>
+            <OnboardingGuard>
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/match" element={<Match />} />
               <Route path="/suppliers" element={<Suppliers />} />
@@ -114,6 +118,12 @@ const App = () => (
               <Route path="/signup" element={<Auth />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/account/reset-password" element={<ResetPassword />} />
+              
+              {/* Onboarding Route */}
+              <Route path="/onboarding" element={<PrivateRoute><Onboarding /></PrivateRoute>} />
+              
+              {/* Dashboard Route */}
+              <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
               
               {/* Public Planning Route */}
               <Route path="/planning" element={<PublicPlanning />} />
@@ -172,6 +182,7 @@ const App = () => (
               {/* Catch-all 404 Route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </OnboardingGuard>
           </BrowserRouter>
         </AuthProvider>
       </ErrorBoundary>

@@ -103,7 +103,7 @@ const AccountPlanningBudget = () => {
 
       setBudget({
         ...budgetData,
-        items: (itemsData || []).map(item => ({ ...item, category: item.category || 'General' }))
+        items: (itemsData || []).map((item: any) => ({ ...item, category: item.category || 'General' }))
       });
     } catch (error) {
       console.error('Error loading budget:', error);
@@ -137,7 +137,7 @@ const AccountPlanningBudget = () => {
 
       setBudget(prev => prev ? {
         ...prev,
-        items: [...prev.items, data]
+        items: [...prev.items, { ...data, category: (data as any).category || 'General' } as any]
       } : null);
 
       setNewItem({ category: '', planned_amount: '', actual_amount: '', notes: '' });

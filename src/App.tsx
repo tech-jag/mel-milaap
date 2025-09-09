@@ -87,6 +87,13 @@ import OnboardingStep5 from "./pages/onboarding/OnboardingStep5";
 
 const queryClient = new QueryClient();
 
+// Debug logging to confirm React is working
+console.log('React import check:', { 
+  React: typeof React, 
+  useEffect: typeof React.useEffect,
+  useState: typeof React.useState 
+});
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>

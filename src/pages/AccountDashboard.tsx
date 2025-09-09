@@ -327,6 +327,25 @@ const AccountDashboard = () => {
                 <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground mb-2">
                   Welcome back, {currentUser.user_metadata?.name || 'Beautiful Soul'}!
                 </h1>
+                <div className="flex items-center gap-4 mt-2">
+                  <Badge variant="secondary" className="text-sm font-mono">
+                    ID: {userProfile?.profile_id || currentUser.id?.slice(0, 8)}
+                  </Badge>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const profileUrl = `${window.location.origin}/profile-preview?profileid=${userProfile?.profile_id || currentUser.id?.slice(0, 8)}`;
+                      navigator.clipboard.writeText(profileUrl);
+                      toast({
+                        title: "Profile link copied!",
+                        description: "Share this link with potential matches."
+                      });
+                    }}
+                  >
+                    Share Profile
+                  </Button>
+                </div>
                 <p className="text-muted-foreground">
                   {userProfile?.planning_phase === 'discover' 
                     ? "Ready to find your perfect match?"

@@ -25,6 +25,8 @@ import {
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { AccountSidebar } from "@/components/ui/account-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const AccountSecurity = () => {
   const { toast } = useToast();
@@ -316,33 +318,37 @@ const AccountSecurity = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      {/* Hero Section */}
-      <section className="py-24 bg-gradient-hero">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            className="max-w-4xl mx-auto text-center"
-            variants={staggerChildren}
-            initial="initial"
-            animate="animate"
-          >
-            <motion.div variants={fadeInUp}>
-              <Badge variant="outline" className="mb-6">
-                <Shield className="w-4 h-4 mr-2" />
-                Account Security
-              </Badge>
-              <h1 className="text-luxury-xl text-foreground mb-6">
-                Secure Your Account
-              </h1>
-              <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Manage your security settings and protect your account with two-factor authentication.
-              </p>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
+          
+          {/* Hero Section */}
+          <section className="py-24 bg-gradient-hero">
+            <div className="container mx-auto px-4 lg:px-8">
+              <motion.div
+                className="max-w-4xl mx-auto text-center"
+                variants={staggerChildren}
+                initial="initial"
+                animate="animate"
+              >
+                <motion.div variants={fadeInUp}>
+                  <Badge variant="outline" className="mb-6">
+                    <Shield className="w-4 h-4 mr-2" />
+                    Account Security
+                  </Badge>
+                  <h1 className="text-luxury-xl text-foreground mb-6">
+                    Secure Your Account
+                  </h1>
+                  <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+                    Manage your security settings and protect your account with two-factor authentication.
+                  </p>
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
 
       {/* Security Settings */}
       <section className="py-16 bg-background">
@@ -586,16 +592,18 @@ const AccountSecurity = () => {
         </div>
       </section>
 
-      <Footer />
-      
-      <ReauthModal
-        open={showReauthModal}
-        onOpenChange={setShowReauthModal}
-        onSuccess={handleReauthSuccess}
-        title="Confirm Your Identity"
-        description="Please re-enter your password to continue with this security action."
-      />
-    </div>
+          <Footer />
+          
+          <ReauthModal
+            open={showReauthModal}
+            onOpenChange={setShowReauthModal}
+            onSuccess={handleReauthSuccess}
+            title="Confirm Your Identity"
+            description="Please re-enter your password to continue with this security action."
+          />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 

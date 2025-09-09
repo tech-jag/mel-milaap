@@ -26,6 +26,8 @@ import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { AccountSidebar } from "@/components/ui/account-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const AccountVerification = () => {
   const { toast } = useToast();
@@ -96,41 +98,39 @@ const AccountVerification = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      {/* Header */}
-      <section className="py-16 bg-gradient-hero">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            className="max-w-4xl mx-auto"
-            variants={staggerChildren}
-            initial="initial"
-            animate="animate"
-          >
-            <motion.div variants={fadeInUp} className="flex items-center justify-between">
-              <div>
-                <Badge variant="outline" className="mb-4">
-                  <Shield className="w-4 h-4 mr-2" />
-                  Identity Verification
-                </Badge>
-                <h1 className="text-luxury-xl text-foreground mb-4">
-                  Verify Your Identity
-                </h1>
-                <p className="text-body-lg text-muted-foreground">
-                  Get verified to build trust, increase visibility, and connect with serious members.
-                </p>
-              </div>
-              <Link to="/account">
-                <Button variant="outline">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Dashboard
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
+          
+          {/* Header */}
+          <section className="py-16 bg-gradient-hero">
+            <div className="container mx-auto px-4 lg:px-8">
+              <motion.div
+                className="max-w-4xl mx-auto"
+                variants={staggerChildren}
+                initial="initial"
+                animate="animate"
+              >
+                <motion.div variants={fadeInUp}>
+                  <div>
+                    <Badge variant="outline" className="mb-4">
+                      <Shield className="w-4 h-4 mr-2" />
+                      Identity Verification
+                    </Badge>
+                    <h1 className="text-luxury-xl text-foreground mb-4">
+                      Verify Your Identity
+                    </h1>
+                    <p className="text-body-lg text-muted-foreground">
+                      Get verified to build trust, increase visibility, and connect with serious members.
+                    </p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
 
       {/* Verification Benefits */}
       <section className="py-16 bg-background">
@@ -314,8 +314,10 @@ const AccountVerification = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 

@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { supabase } from "@/integrations/supabase/client";
 import MessagingCenter from "@/components/MessagingCenter";
+import { AccountSidebar } from "@/components/ui/account-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const AccountMessages = () => {
   const [currentUser, setCurrentUser] = React.useState<any>(null);
@@ -35,53 +37,53 @@ const AccountMessages = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      {/* Header */}
-      <section className="py-16 bg-gradient-hero">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            className="max-w-6xl mx-auto"
-            variants={staggerChildren}
-            initial="initial"
-            animate="animate"
-          >
-            <motion.div variants={fadeInUp} className="flex items-center justify-between">
-              <div>
-                <Badge variant="outline" className="mb-4">
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  Messaging Center
-                </Badge>
-                <h1 className="text-luxury-xl text-foreground mb-4">
-                  Messages
-                </h1>
-                <p className="text-body-lg text-muted-foreground">
-                  Connect and communicate with your matches.
-                </p>
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
+          
+          {/* Header */}
+          <section className="py-16 bg-gradient-hero">
+            <div className="container mx-auto px-4 lg:px-8">
+              <motion.div
+                className="max-w-6xl mx-auto"
+                variants={staggerChildren}
+                initial="initial"
+                animate="animate"
+              >
+                <motion.div variants={fadeInUp} className="flex items-center justify-between">
+                  <div>
+                    <Badge variant="outline" className="mb-4">
+                      <MessageCircle className="w-4 h-4 mr-2" />
+                      Messaging Center
+                    </Badge>
+                    <h1 className="text-luxury-xl text-foreground mb-4">
+                      Messages
+                    </h1>
+                    <p className="text-body-lg text-muted-foreground">
+                      Connect and communicate with your matches.
+                    </p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
+
+          {/* Messaging Interface */}
+          <section className="py-16 bg-background">
+            <div className="container mx-auto px-4 lg:px-8">
+              <div className="max-w-6xl mx-auto">
+                <MessagingCenter />
               </div>
-              <Link to="/account">
-                <Button variant="outline">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Back to Dashboard
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+            </div>
+          </section>
 
-      {/* Messaging Interface */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <MessagingCenter />
-          </div>
+          <Footer />
         </div>
-      </section>
-
-      <Footer />
-    </div>
+      </div>
+    </SidebarProvider>
   );
 };
 

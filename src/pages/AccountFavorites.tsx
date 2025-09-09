@@ -22,6 +22,8 @@ import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import ProtectedImage from "@/components/ui/protected-image";
+import { AccountSidebar } from "@/components/ui/account-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 interface Favorite {
   id: string;
@@ -136,40 +138,39 @@ const AccountFavorites = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      {/* Header */}
-      <section className="py-16 bg-gradient-hero">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            className="max-w-4xl mx-auto"
-            variants={staggerChildren}
-            initial="initial"
-            animate="animate"
-          >
-            <motion.div variants={fadeInUp} className="flex items-center justify-between">
-              <div>
-                <Badge variant="outline" className="mb-4">
-                  <Heart className="w-4 h-4 mr-2" />
-                  My Favorites
-                </Badge>
-                <h1 className="text-luxury-xl text-foreground mb-4">
-                  Saved Profiles & Suppliers
-                </h1>
-                <p className="text-body-lg text-muted-foreground">
-                  Keep track of your favorite matches and wedding suppliers.
-                </p>
-              </div>
-              <Link to="/account">
-                <Button variant="outline">
-                  Back to Dashboard
-                </Button>
-              </Link>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
+          
+          {/* Header */}
+          <section className="py-16 bg-gradient-hero">
+            <div className="container mx-auto px-4 lg:px-8">
+              <motion.div
+                className="max-w-4xl mx-auto"
+                variants={staggerChildren}
+                initial="initial"
+                animate="animate"
+              >
+                <motion.div variants={fadeInUp}>
+                  <div>
+                    <Badge variant="outline" className="mb-4">
+                      <Heart className="w-4 h-4 mr-2" />
+                      My Favorites
+                    </Badge>
+                    <h1 className="text-luxury-xl text-foreground mb-4">
+                      Saved Profiles & Suppliers
+                    </h1>
+                    <p className="text-body-lg text-muted-foreground">
+                      Keep track of your favorite matches and wedding suppliers.
+                    </p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
 
       {/* Favorites Content */}
       <section className="py-16 bg-background">
@@ -355,8 +356,10 @@ const AccountFavorites = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 

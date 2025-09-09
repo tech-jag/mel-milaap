@@ -26,6 +26,8 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { getCollaborators, inviteCollaborator } from "@/lib/planning";
 import { Helmet } from "react-helmet-async";
+import { AccountSidebar } from "@/components/ui/account-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 interface Collaborator {
   id: string;
@@ -191,44 +193,43 @@ const AccountCollaborators = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Helmet>
-        <title>Family Collaboration - Mēl Milaap</title>
-        <meta name="description" content="Invite family members to collaborate on your wedding planning" />
-      </Helmet>
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <Helmet>
+          <title>Family Collaboration - Mēl Milaap</title>
+          <meta name="description" content="Invite family members to collaborate on your wedding planning" />
+        </Helmet>
 
-      <Navigation />
-      
-      <div className="container mx-auto px-4 lg:px-8 py-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
-          <motion.div
-            className="mb-8"
-            variants={fadeInUp}
-            initial="initial"
-            animate="animate"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <Users className="w-6 h-6 text-primary" />
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
+          
+          <div className="container mx-auto px-4 lg:px-8 py-8">
+            <div className="max-w-4xl mx-auto">
+              {/* Header */}
+              <motion.div
+                className="mb-8"
+                variants={fadeInUp}
+                initial="initial"
+                animate="animate"
+              >
+                <div className="mb-4">
+                  <div className="flex items-center space-x-3 mb-4">
+                    <div className="p-2 bg-primary/10 rounded-lg">
+                      <Users className="w-6 h-6 text-primary" />
+                    </div>
+                    <div>
+                      <h1 className="text-3xl font-heading font-bold text-foreground">
+                        Family Collaboration
+                      </h1>
+                      <p className="text-muted-foreground">
+                        Invite family members to help with your wedding planning
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h1 className="text-3xl font-heading font-bold text-foreground">
-                    Family Collaboration
-                  </h1>
-                  <p className="text-muted-foreground">
-                    Invite family members to help with your wedding planning
-                  </p>
-                </div>
-              </div>
-              <Link to="/account">
-                <Button variant="outline">
-                  Back to Dashboard
-                </Button>
-              </Link>
-            </div>
-          </motion.div>
+              </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Invite Form */}
@@ -381,11 +382,13 @@ const AccountCollaborators = () => {
               </Card>
             </motion.div>
           </div>
+            </div>
+          </div>
+
+          <Footer />
         </div>
       </div>
-
-      <Footer />
-    </div>
+    </SidebarProvider>
   );
 };
 

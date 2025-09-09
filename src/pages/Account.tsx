@@ -23,6 +23,8 @@ import {
 import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { supabase } from "@/integrations/supabase/client";
+import { AccountSidebar } from "@/components/ui/account-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const Account = () => {
   const [user, setUser] = React.useState<any>(null);
@@ -109,49 +111,53 @@ const Account = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      {/* Hero Section */}
-      <section className="py-24 bg-gradient-hero">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            className="max-w-4xl mx-auto text-center"
-            variants={staggerChildren}
-            initial="initial"
-            animate="animate"
-          >
-            <motion.div variants={fadeInUp}>
-              <Badge variant="outline" className="mb-6">
-                <User className="w-4 h-4 mr-2" />
-                My Account
-              </Badge>
-              <div className="flex items-center justify-center gap-4 mb-6">
-                <Badge 
-                  variant={userPlan === 'free' ? 'secondary' : 'default'}
-                  className="text-sm px-3 py-1"
-                >
-                  {userPlan.toUpperCase()} PLAN
-                </Badge>
-                {userPlan === 'free' && (
-                  <Link to="/account/billing">
-                    <Button variant="luxury" size="sm">
-                      <Crown className="w-4 h-4 mr-2" />
-                      Upgrade to Premium
-                    </Button>
-                  </Link>
-                )}
-              </div>
-              <h1 className="text-luxury-xl text-foreground mb-6">
-                Welcome back, {user.user_metadata?.name || 'Member'}!
-              </h1>
-              <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Manage your profile, connect with matches, and plan your perfect wedding.
-              </p>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
+          
+          {/* Hero Section */}
+          <section className="py-24 bg-gradient-hero">
+            <div className="container mx-auto px-4 lg:px-8">
+              <motion.div
+                className="max-w-4xl mx-auto text-center"
+                variants={staggerChildren}
+                initial="initial"
+                animate="animate"
+              >
+                <motion.div variants={fadeInUp}>
+                  <Badge variant="outline" className="mb-6">
+                    <User className="w-4 h-4 mr-2" />
+                    My Account
+                  </Badge>
+                  <div className="flex items-center justify-center gap-4 mb-6">
+                    <Badge 
+                      variant={userPlan === 'free' ? 'secondary' : 'default'}
+                      className="text-sm px-3 py-1"
+                    >
+                      {userPlan.toUpperCase()} PLAN
+                    </Badge>
+                    {userPlan === 'free' && (
+                      <Link to="/account/billing">
+                        <Button variant="luxury" size="sm">
+                          <Crown className="w-4 h-4 mr-2" />
+                          Upgrade to Premium
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                  <h1 className="text-luxury-xl text-foreground mb-6">
+                    Welcome back, {user.user_metadata?.name || 'Member'}!
+                  </h1>
+                  <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+                    Manage your profile, connect with matches, and plan your perfect wedding.
+                  </p>
+                </motion.div>
+              </motion.div>
+            </div>
+          </section>
 
       {/* Dashboard Content */}
       <section className="py-16 bg-background">
@@ -280,8 +286,10 @@ const Account = () => {
         </div>
       </section>
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 

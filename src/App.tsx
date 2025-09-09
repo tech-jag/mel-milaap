@@ -103,6 +103,7 @@ import OnboardingStep21 from "./pages/onboarding/OnboardingStep21";
 import OnboardingStep22 from "./pages/onboarding/OnboardingStep22";
 import OnboardingStep23 from "./pages/onboarding/OnboardingStep23";
 import PremiumPlans from "./pages/PremiumPlans";
+import PublicProfile from "./pages/PublicProfile";
 
 const queryClient = new QueryClient();
 
@@ -159,6 +160,7 @@ const App = () => (
               <Route path="/suppliers/pricing" element={<SuppliersPricing />} />
               <Route path="/premium-plans" element={<OnboardingGuard><PremiumPlans /></OnboardingGuard>} />
               <Route path="/planning" element={<PublicPlanning />} />
+              <Route path="/profile/:userId" element={<PublicProfile />} />
               
               {/* Auth Routes */}
               <Route path="/auth/login" element={<Auth />} />

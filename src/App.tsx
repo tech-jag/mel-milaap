@@ -24,6 +24,8 @@ import Tools from "./pages/Tools";
 import Stories from "./pages/Stories";
 import StoryDetail from "./pages/StoryDetail";
 import Premium from "./pages/Premium";
+import PartnerPreferences from "./pages/PartnerPreferences";
+import ProfilePreviewPage from "./pages/ProfilePreview";
 import Pricing from "./pages/Pricing";
 import Trust from "./pages/Trust";
 import Verification from "./pages/Verification";

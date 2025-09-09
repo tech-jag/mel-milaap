@@ -82,6 +82,9 @@ import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
+console.log('React object:', React);
+console.log('QueryClient initialized:', queryClient);
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>

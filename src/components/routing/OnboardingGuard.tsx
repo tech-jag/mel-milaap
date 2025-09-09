@@ -9,7 +9,12 @@ export function OnboardingGuard({ children }: { children: React.ReactElement }) 
   const location = useLocation();
 
   useEffect(() => {
-    if (!user || authLoading) return;
+    if (!user || authLoading) {
+      setOnboardingCompleted(null);
+      return;
+    }
+
+    let isMounted = true;
 
     const checkOnboardingStatus = async () => {
       try {
@@ -19,14 +24,31 @@ export function OnboardingGuard({ children }: { children: React.ReactElement }) 
           .eq('user_id', user.id)
           .single();
 
-        setOnboardingCompleted(profile?.onboarding_completed || false);
+        if (isMounted) {
+          setOnboardingCompleted(profile?.onboarding_completed || false);
+        }
       } catch (error) {
         console.error('Error checking onboarding status:', error);
-        setOnboardingCompleted(false);
+        if (isMounted) {
+          setOnboardingCompleted(false);
+        }
       }
     };
 
+    // Add a timeout to prevent infinite loading
+    const timeoutId = setTimeout(() => {
+      if (isMounted && onboardingCompleted === null) {
+        console.warn('Onboarding check timed out, defaulting to false');
+        setOnboardingCompleted(false);
+      }
+    }, 5000);
+
     checkOnboardingStatus();
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+    };
   }, [user, authLoading]);
 
   // Loading states
@@ -53,7 +75,8 @@ export function OnboardingGuard({ children }: { children: React.ReactElement }) 
     '/dashboard',
     '/find',
     '/messages',
-    '/match'
+    '/match',
+    '/planning'
   ];
 
   const isProtectedPath = protectedPaths.some(path => 

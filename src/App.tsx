@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { ErrorBoundary } from "./components/system/ErrorBoundary";
 import { AuthProvider } from "./hooks/useAuth";
@@ -80,10 +80,14 @@ import SuppliersPricing from "./pages/SuppliersPricing";
 import Onboarding from "./pages/Onboarding";
 import Dashboard from "./pages/Dashboard";
 
-const queryClient = new QueryClient();
-
-console.log('React object:', React);
-console.log('QueryClient initialized:', queryClient);
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      retry: 1,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -184,7 +188,7 @@ const App = () => (
               <Route path="/suppliers/pricing" element={<SuppliersPricing />} />
               
               {/* Catch-all 404 Route */}
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={<Navigate to="/login" replace />} />
             </Routes>
             </OnboardingGuard>
           </BrowserRouter>

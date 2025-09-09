@@ -102,6 +102,7 @@ import OnboardingStep20 from "./pages/onboarding/OnboardingStep20";
 import OnboardingStep21 from "./pages/onboarding/OnboardingStep21";
 import OnboardingStep22 from "./pages/onboarding/OnboardingStep22";
 import OnboardingStep23 from "./pages/onboarding/OnboardingStep23";
+import PremiumPlans from "./pages/PremiumPlans";
 
 const queryClient = new QueryClient();
 
@@ -121,10 +122,9 @@ const App = () => (
         <AuthProvider>
           <BrowserRouter>
             <ScrollToTop />
-            <OnboardingGuard>
-              <Routes>
+            <Routes>
+              {/* Public Marketing Pages - No Auth Required */}
               <Route path="/" element={<Index />} />
-              <Route path="/match" element={<Match />} />
               <Route path="/suppliers" element={<Suppliers />} />
               <Route path="/tools" element={<Tools />} />
               <Route path="/wedding-planning" element={<WeddingPlanning />} />
@@ -140,77 +140,6 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/faqs" element={<Faqs />} />
-              
-              {/* Auth Routes */}
-              <Route path="/auth/login" element={<Auth />} />
-              <Route path="/auth/signup" element={<Auth />} />
-              <Route path="/login" element={<Auth />} />
-              <Route path="/signup" element={<Auth />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/account/reset-password" element={<ResetPassword />} />
-              
-              {/* Onboarding Routes */}
-              <Route path="/onboarding/1" element={<OnboardingStep1 />} />
-              <Route path="/onboarding/2" element={<OnboardingStep2 />} />
-              <Route path="/onboarding/3" element={<OnboardingStep3 />} />
-            <Route path="/onboarding/4" element={<OnboardingStep4 />} />
-            <Route path="/onboarding/5" element={<OnboardingStep5 />} />
-            <Route path="/onboarding/6" element={<OnboardingStep6 />} />
-            <Route path="/onboarding/7" element={<OnboardingStep7 />} />
-            <Route path="/onboarding/8" element={<OnboardingStep8 />} />
-            <Route path="/onboarding/9" element={<OnboardingStep9 />} />
-            <Route path="/onboarding/10" element={<OnboardingStep10 />} />
-            <Route path="/onboarding/11" element={<OnboardingStep11 />} />
-            <Route path="/onboarding/12" element={<OnboardingStep12 />} />
-            <Route path="/onboarding/13" element={<OnboardingStep13 />} />
-            <Route path="/onboarding/14" element={<OnboardingStep14 />} />
-            <Route path="/onboarding/15" element={<OnboardingStep15 />} />
-            <Route path="/onboarding/16" element={<OnboardingStep16 />} />
-            <Route path="/onboarding/17" element={<OnboardingStep17 />} />
-            <Route path="/onboarding/18" element={<OnboardingStep18 />} />
-            <Route path="/onboarding/19" element={<OnboardingStep19 />} />
-            <Route path="/onboarding/20" element={<OnboardingStep20 />} />
-            <Route path="/onboarding/21" element={<OnboardingStep21 />} />
-            <Route path="/onboarding/22" element={<OnboardingStep22 />} />
-            <Route path="/onboarding/23" element={<OnboardingStep23 />} />
-              <Route path="/onboarding/:step" element={<div className="min-h-screen flex items-center justify-center"><div className="text-center"><h1 className="text-2xl font-semibold mb-4">Onboarding Step Coming Soon</h1><p className="text-muted-foreground">This step is being developed. Please check back soon!</p></div></div>} />
-              
-              {/* Public Planning Route */}
-              <Route path="/planning" element={<PublicPlanning />} />
-              
-              {/* Protected Planning Routes */}
-              <Route path="/account/planning" element={<PrivateRoute><AccountPlanning /></PrivateRoute>} />
-              <Route path="/planning/budget" element={<PrivateRoute><AccountPlanningBudget /></PrivateRoute>} />
-              <Route path="/planning/guests" element={<PrivateRoute><AccountPlanningGuests /></PrivateRoute>} />
-              <Route path="/planning/timeline" element={<PrivateRoute><PlanningTimeline /></PrivateRoute>} />
-              <Route path="/planning/registry" element={<PrivateRoute><PlanningRegistry /></PrivateRoute>} />
-              <Route path="/planning/checklist" element={<PrivateRoute><PlanningChecklist /></PrivateRoute>} />
-              <Route path="/planning/notes" element={<PrivateRoute><PlanningNotes /></PrivateRoute>} />
-              
-              {/* Protected Account Routes */}
-              <Route path="/account" element={<PrivateRoute><AccountDashboard /></PrivateRoute>} />
-              <Route path="/account/settings" element={<PrivateRoute><AccountSettings /></PrivateRoute>} />
-              <Route path="/account/profile" element={<PrivateRoute><AccountProfile /></PrivateRoute>} />
-              <Route path="/account/photos" element={<PrivateRoute><AccountPhotos /></PrivateRoute>} />
-              <Route path="/account/billing" element={<PrivateRoute><AccountBilling /></PrivateRoute>} />
-              <Route path="/account/security" element={<PrivateRoute><AccountSecurity /></PrivateRoute>} />
-              <Route path="/account/verification" element={<PrivateRoute><AccountVerification /></PrivateRoute>} />
-              <Route path="/account/messages" element={<PrivateRoute><AccountMessages /></PrivateRoute>} />
-              <Route path="/account/favorites" element={<PrivateRoute><AccountFavorites /></PrivateRoute>} />
-              <Route path="/account/planning/budget" element={<PrivateRoute><AccountPlanningBudget /></PrivateRoute>} />
-              <Route path="/account/planning/guests" element={<PrivateRoute><AccountPlanningGuests /></PrivateRoute>} />
-              <Route path="/account/planning/todo" element={<PrivateRoute><AccountPlanningTodo /></PrivateRoute>} />
-              <Route path="/account/planning/seating" element={<PrivateRoute><AccountPlanningSeating /></PrivateRoute>} />
-              <Route path="/account/invites" element={<PrivateRoute><AccountInvites /></PrivateRoute>} />
-              <Route path="/account/collaborators" element={<PrivateRoute><AccountCollaborators /></PrivateRoute>} />
-              
-              {/* Supplier Routes */}
-              <Route path="/supplier/signup" element={<SupplierSignup />} />
-              <Route path="/suppliers/signup" element={<SupplierSignup />} />
-              <Route path="/supplier/dashboard" element={<PrivateRoute><SupplierDashboard /></PrivateRoute>} />
-              <Route path="/suppliers/dashboard" element={<PrivateRoute><SupplierDashboard /></PrivateRoute>} />
-              
-              {/* Public Routes */}
               <Route path="/city/sydney" element={<CitySydney />} />
               <Route path="/city/melbourne" element={<CityMelbourne />} />
               <Route path="/city/auckland" element={<CityAuckland />} />
@@ -228,11 +157,82 @@ const App = () => (
               <Route path="/destinations" element={<Destinations />} />
               <Route path="/suppliers/featured" element={<SuppliersFeatureListings />} />
               <Route path="/suppliers/pricing" element={<SuppliersPricing />} />
+              <Route path="/premium-plans" element={<OnboardingGuard><PremiumPlans /></OnboardingGuard>} />
+              <Route path="/planning" element={<PublicPlanning />} />
+              
+              {/* Auth Routes */}
+              <Route path="/auth/login" element={<Auth />} />
+              <Route path="/auth/signup" element={<Auth />} />
+              <Route path="/login" element={<Auth />} />
+              <Route path="/signup" element={<Auth />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/account/reset-password" element={<ResetPassword />} />
+              
+              {/* Supplier Public Routes */}
+              <Route path="/supplier/signup" element={<SupplierSignup />} />
+              <Route path="/suppliers/signup" element={<SupplierSignup />} />
+
+              {/* Onboarding Routes - Protected */}
+              <Route path="/onboarding/1" element={<OnboardingGuard><OnboardingStep1 /></OnboardingGuard>} />
+              <Route path="/onboarding/2" element={<OnboardingGuard><OnboardingStep2 /></OnboardingGuard>} />
+              <Route path="/onboarding/3" element={<OnboardingGuard><OnboardingStep3 /></OnboardingGuard>} />
+              <Route path="/onboarding/4" element={<OnboardingGuard><OnboardingStep4 /></OnboardingGuard>} />
+              <Route path="/onboarding/5" element={<OnboardingGuard><OnboardingStep5 /></OnboardingGuard>} />
+              <Route path="/onboarding/6" element={<OnboardingGuard><OnboardingStep6 /></OnboardingGuard>} />
+              <Route path="/onboarding/7" element={<OnboardingGuard><OnboardingStep7 /></OnboardingGuard>} />
+              <Route path="/onboarding/8" element={<OnboardingGuard><OnboardingStep8 /></OnboardingGuard>} />
+              <Route path="/onboarding/9" element={<OnboardingGuard><OnboardingStep9 /></OnboardingGuard>} />
+              <Route path="/onboarding/10" element={<OnboardingGuard><OnboardingStep10 /></OnboardingGuard>} />
+              <Route path="/onboarding/11" element={<OnboardingGuard><OnboardingStep11 /></OnboardingGuard>} />
+              <Route path="/onboarding/12" element={<OnboardingGuard><OnboardingStep12 /></OnboardingGuard>} />
+              <Route path="/onboarding/13" element={<OnboardingGuard><OnboardingStep13 /></OnboardingGuard>} />
+              <Route path="/onboarding/14" element={<OnboardingGuard><OnboardingStep14 /></OnboardingGuard>} />
+              <Route path="/onboarding/15" element={<OnboardingGuard><OnboardingStep15 /></OnboardingGuard>} />
+              <Route path="/onboarding/16" element={<OnboardingGuard><OnboardingStep16 /></OnboardingGuard>} />
+              <Route path="/onboarding/17" element={<OnboardingGuard><OnboardingStep17 /></OnboardingGuard>} />
+              <Route path="/onboarding/18" element={<OnboardingGuard><OnboardingStep18 /></OnboardingGuard>} />
+              <Route path="/onboarding/19" element={<OnboardingGuard><OnboardingStep19 /></OnboardingGuard>} />
+              <Route path="/onboarding/20" element={<OnboardingGuard><OnboardingStep20 /></OnboardingGuard>} />
+              <Route path="/onboarding/21" element={<OnboardingGuard><OnboardingStep21 /></OnboardingGuard>} />
+              <Route path="/onboarding/22" element={<OnboardingGuard><OnboardingStep22 /></OnboardingGuard>} />
+              <Route path="/onboarding/23" element={<OnboardingGuard><OnboardingStep23 /></OnboardingGuard>} />
+              
+              {/* Protected Routes with OnboardingGuard */}
+              <Route path="/match" element={<OnboardingGuard><Match /></OnboardingGuard>} />
+              
+              {/* Protected Planning Routes */}
+              <Route path="/account/planning" element={<OnboardingGuard><PrivateRoute><AccountPlanning /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/planning/budget" element={<OnboardingGuard><PrivateRoute><AccountPlanningBudget /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/planning/guests" element={<OnboardingGuard><PrivateRoute><AccountPlanningGuests /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/planning/timeline" element={<OnboardingGuard><PrivateRoute><PlanningTimeline /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/planning/registry" element={<OnboardingGuard><PrivateRoute><PlanningRegistry /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/planning/checklist" element={<OnboardingGuard><PrivateRoute><PlanningChecklist /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/planning/notes" element={<OnboardingGuard><PrivateRoute><PlanningNotes /></PrivateRoute></OnboardingGuard>} />
+              
+              {/* Protected Account Routes */}
+              <Route path="/account" element={<OnboardingGuard><PrivateRoute><AccountDashboard /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/settings" element={<OnboardingGuard><PrivateRoute><AccountSettings /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/profile" element={<OnboardingGuard><PrivateRoute><AccountProfile /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/photos" element={<OnboardingGuard><PrivateRoute><AccountPhotos /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/billing" element={<OnboardingGuard><PrivateRoute><AccountBilling /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/security" element={<OnboardingGuard><PrivateRoute><AccountSecurity /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/verification" element={<OnboardingGuard><PrivateRoute><AccountVerification /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/messages" element={<OnboardingGuard><PrivateRoute><AccountMessages /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/favorites" element={<OnboardingGuard><PrivateRoute><AccountFavorites /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/planning/budget" element={<OnboardingGuard><PrivateRoute><AccountPlanningBudget /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/planning/guests" element={<OnboardingGuard><PrivateRoute><AccountPlanningGuests /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/planning/todo" element={<OnboardingGuard><PrivateRoute><AccountPlanningTodo /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/planning/seating" element={<OnboardingGuard><PrivateRoute><AccountPlanningSeating /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/invites" element={<OnboardingGuard><PrivateRoute><AccountInvites /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/collaborators" element={<OnboardingGuard><PrivateRoute><AccountCollaborators /></PrivateRoute></OnboardingGuard>} />
+              
+              {/* Protected Supplier Routes */}
+              <Route path="/supplier/dashboard" element={<OnboardingGuard><PrivateRoute><SupplierDashboard /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/suppliers/dashboard" element={<OnboardingGuard><PrivateRoute><SupplierDashboard /></PrivateRoute></OnboardingGuard>} />
               
               {/* Catch-all 404 Route */}
               <Route path="*" element={<NotFound />} />
-              </Routes>
-            </OnboardingGuard>
+            </Routes>
           </BrowserRouter>
         </AuthProvider>
       </ErrorBoundary>

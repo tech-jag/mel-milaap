@@ -18,7 +18,7 @@ export default function OnboardingStep23() {
         title: "Profile Complete!",
         description: "Welcome to your matrimonial journey. You can now explore matches and connect with potential partners.",
       });
-      navigate('/account');
+      navigate('/premium-plans');
     } catch (error) {
       toast({
         title: "Error",

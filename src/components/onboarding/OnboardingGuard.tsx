@@ -12,8 +12,8 @@ export const OnboardingGuard: React.FC<OnboardingGuardProps> = ({ children }) =>
   const { userProfile, isLoading: onboardingLoading } = useOnboardingState();
   const location = useLocation();
 
-  // Show loading while checking auth and onboarding state
-  if (authLoading || onboardingLoading) {
+  // Show loading while checking auth and onboarding state for authenticated users only
+  if (user && (authLoading || onboardingLoading)) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -24,7 +24,7 @@ export const OnboardingGuard: React.FC<OnboardingGuardProps> = ({ children }) =>
     );
   }
 
-  // Not authenticated - redirect to auth
+  // Not authenticated - redirect to auth (only for protected routes that require OnboardingGuard)
   if (!user) {
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }

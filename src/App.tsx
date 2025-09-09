@@ -135,8 +135,26 @@ const App = () => (
               <Route path="/onboarding/1" element={<OnboardingStep1 />} />
               <Route path="/onboarding/2" element={<OnboardingStep2 />} />
               <Route path="/onboarding/3" element={<OnboardingStep3 />} />
-              <Route path="/onboarding/4" element={<OnboardingStep4 />} />
-              <Route path="/onboarding/5" element={<OnboardingStep5 />} />
+            <Route path="/onboarding/4" element={<OnboardingStep4 />} />
+            <Route path="/onboarding/5" element={<OnboardingStep5 />} />
+            <Route path="/onboarding/6" element={<OnboardingStep6 />} />
+            <Route path="/onboarding/7" element={<OnboardingStep7 />} />
+            <Route path="/onboarding/8" element={<OnboardingStep8 />} />
+            <Route path="/onboarding/9" element={<OnboardingStep9 />} />
+            <Route path="/onboarding/10" element={<OnboardingStep10 />} />
+            <Route path="/onboarding/11" element={<OnboardingStep11 />} />
+            <Route path="/onboarding/12" element={<OnboardingStep12 />} />
+            <Route path="/onboarding/13" element={<OnboardingStep13 />} />
+            <Route path="/onboarding/14" element={<OnboardingStep14 />} />
+            <Route path="/onboarding/15" element={<OnboardingStep15 />} />
+            <Route path="/onboarding/16" element={<OnboardingStep16 />} />
+            <Route path="/onboarding/17" element={<OnboardingStep17 />} />
+            <Route path="/onboarding/18" element={<OnboardingStep18 />} />
+            <Route path="/onboarding/19" element={<OnboardingStep19 />} />
+            <Route path="/onboarding/20" element={<OnboardingStep20 />} />
+            <Route path="/onboarding/21" element={<OnboardingStep21 />} />
+            <Route path="/onboarding/22" element={<OnboardingStep22 />} />
+            <Route path="/onboarding/23" element={<OnboardingStep23 />} />
               <Route path="/onboarding/:step" element={<div className="min-h-screen flex items-center justify-center"><div className="text-center"><h1 className="text-2xl font-semibold mb-4">Onboarding Step Coming Soon</h1><p className="text-muted-foreground">This step is being developed. Please check back soon!</p></div></div>} />
               
               {/* Public Planning Route */}

@@ -218,7 +218,7 @@ const App = () => (
               <Route path="/account/settings" element={<OnboardingGuard><PrivateRoute><AccountSettings /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/profile" element={<OnboardingGuard><PrivateRoute><AccountProfile /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/photos" element={<OnboardingGuard><PrivateRoute><AccountPhotos /></PrivateRoute></OnboardingGuard>} />
-              <Route path="/partner-preferences" element={<OnboardingGuard><PrivateRoute><PartnerPreferences /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/account/partner-preferences" element={<OnboardingGuard><PrivateRoute><PartnerPreferences /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/billing" element={<OnboardingGuard><PrivateRoute><AccountBilling /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/security" element={<OnboardingGuard><PrivateRoute><AccountSecurity /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/verification" element={<OnboardingGuard><PrivateRoute><AccountVerification /></PrivateRoute></OnboardingGuard>} />

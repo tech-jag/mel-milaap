@@ -137,7 +137,7 @@ export default function AccountProfile() {
                   </div>
                   <div className="flex gap-2">
                     <Button variant="outline" onClick={() => {
-                      const profileId = user?.id?.slice(0, 8);
+                      const profileId = profileData.profile_id;
                       window.open(`/profile/${profileId}`, '_blank');
                     }}>
                       <Eye className="w-4 h-4 mr-2" />
@@ -163,7 +163,7 @@ export default function AccountProfile() {
                       </div>
                       <div className="flex-1">
                         <h2 className="text-xl font-semibold">{profileData.first_name} {profileData.last_name}</h2>
-                        <p className="text-muted-foreground">Profile ID: {user?.id?.slice(0, 8)}</p>
+                        <p className="text-muted-foreground">Profile ID: {profileData.profile_id}</p>
                         <div className="flex items-center gap-2 mt-1">
                           <Badge variant={profileData.profile_ready ? "default" : "secondary"}>
                             {profileData.profile_ready ? "Complete" : "Incomplete"}

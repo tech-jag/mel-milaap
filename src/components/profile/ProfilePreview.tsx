@@ -54,11 +54,7 @@ export const ProfilePreview: React.FC<ProfilePreviewProps> = ({
   const age = calculateAge(profile.birth_date);
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <main className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto">
           {/* Header Banner */}
           <div className="bg-gradient-primary text-primary-foreground p-6 rounded-xl mb-8 shadow-luxury">
             <div className="text-center">
@@ -85,12 +81,12 @@ export const ProfilePreview: React.FC<ProfilePreviewProps> = ({
                     </Avatar>
                     {!isOwnProfile && (
                       <div className="absolute inset-0 flex items-center justify-center">
-                            <Button 
-                              onClick={() => window.open(`/profile/${profile.profile_id || user?.id?.slice(0, 8)}`, '_blank')}
-                              className="bg-primary/90 text-primary-foreground hover:bg-primary/80 px-4 py-2 text-sm font-medium"
-                            >
-                             View Full Profile
-                           </Button>
+            <Button 
+              onClick={() => window.open(`/profile/${profile.profile_id}`, '_blank')}
+              className="bg-primary/90 text-primary-foreground hover:bg-primary/80 px-4 py-2 text-sm font-medium"
+            >
+             View Full Profile
+           </Button>
                       </div>
                     )}
                   </div>
@@ -149,7 +145,10 @@ export const ProfilePreview: React.FC<ProfilePreviewProps> = ({
                           <MessageCircle className="w-4 h-4" />
                           Message
                         </Button>
-                        <Button variant="outline" className="flex items-center gap-2">
+                        <Button variant="outline" className="flex items-center gap-2" onClick={() => {
+                          const url = `${window.location.origin}/profile/${profile.profile_id}`;
+                          navigator.clipboard.writeText(url);
+                        }}>
                           <Share className="w-4 h-4" />
                           Share
                         </Button>
@@ -199,7 +198,10 @@ export const ProfilePreview: React.FC<ProfilePreviewProps> = ({
                       Partner Preferences  
                     </button>
                     <div className="ml-auto flex gap-2">
-                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+                      <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground" onClick={() => {
+                        const url = `${window.location.origin}/profile/${profile.profile_id}`;
+                        navigator.clipboard.writeText(url);
+                      }}>
                         <Share className="w-4 h-4" />
                       </Button>
                       <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
@@ -219,7 +221,7 @@ export const ProfilePreview: React.FC<ProfilePreviewProps> = ({
                       </h3>
                       <div className="flex flex-wrap gap-3 mb-6">
                         <Badge variant="secondary" className="font-medium">
-                          ID: {profile.profile_id || user?.id?.slice(0, 8)}
+                          ID: {profile.profile_id}
                         </Badge>
                         <Badge variant="outline" className="font-medium">
                           Profile Managed by {profile.profile_manager || 'Self'}
@@ -367,9 +369,5 @@ export const ProfilePreview: React.FC<ProfilePreviewProps> = ({
             </div>
           </div>
         </div>
-      </main>
-      
-      <Footer />
-    </div>
-  );
-};
+      );
+    };

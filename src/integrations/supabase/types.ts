@@ -887,6 +887,117 @@ export type Database = {
         }
         Relationships: []
       }
+      onboarding_progress: {
+        Row: {
+          current_step: number | null
+          draft: Json | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          current_step?: number | null
+          draft?: Json | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          current_step?: number | null
+          draft?: Json | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      onboarding_state: {
+        Row: {
+          current_step: number | null
+          last_saved_at: string | null
+          status: Database["public"]["Enums"]["onboarding_status_t"] | null
+          user_id: string
+        }
+        Insert: {
+          current_step?: number | null
+          last_saved_at?: string | null
+          status?: Database["public"]["Enums"]["onboarding_status_t"] | null
+          user_id: string
+        }
+        Update: {
+          current_step?: number | null
+          last_saved_at?: string | null
+          status?: Database["public"]["Enums"]["onboarding_status_t"] | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      partner_preferences: {
+        Row: {
+          age_max: number | null
+          age_min: number | null
+          cities: string[] | null
+          communities: string[] | null
+          countries: string[] | null
+          created_at: string | null
+          diet: string[] | null
+          drink: string[] | null
+          education_levels: string[] | null
+          height_max_cm: number | null
+          height_min_cm: number | null
+          industries: string[] | null
+          mother_tongues: string[] | null
+          notes: string | null
+          professions: string[] | null
+          religions: string[] | null
+          smoke: string[] | null
+          states: string[] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          age_max?: number | null
+          age_min?: number | null
+          cities?: string[] | null
+          communities?: string[] | null
+          countries?: string[] | null
+          created_at?: string | null
+          diet?: string[] | null
+          drink?: string[] | null
+          education_levels?: string[] | null
+          height_max_cm?: number | null
+          height_min_cm?: number | null
+          industries?: string[] | null
+          mother_tongues?: string[] | null
+          notes?: string | null
+          professions?: string[] | null
+          religions?: string[] | null
+          smoke?: string[] | null
+          states?: string[] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          age_max?: number | null
+          age_min?: number | null
+          cities?: string[] | null
+          communities?: string[] | null
+          countries?: string[] | null
+          created_at?: string | null
+          diet?: string[] | null
+          drink?: string[] | null
+          education_levels?: string[] | null
+          height_max_cm?: number | null
+          height_min_cm?: number | null
+          industries?: string[] | null
+          mother_tongues?: string[] | null
+          notes?: string | null
+          professions?: string[] | null
+          religions?: string[] | null
+          smoke?: string[] | null
+          states?: string[] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           body: string | null
@@ -926,6 +1037,177 @@ export type Database = {
           slug?: string
           status?: string | null
           title?: string
+        }
+        Relationships: []
+      }
+      profile_photos: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_primary: boolean | null
+          url: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean | null
+          url: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean | null
+          url?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          bio: string | null
+          caste_community: string | null
+          citizenship: string | null
+          city: string | null
+          company: string | null
+          country_of_residence: string | null
+          created_at: string | null
+          diet: string | null
+          dob: string | null
+          drink: string | null
+          education_field: string | null
+          education_institution: string | null
+          education_level: string | null
+          email_verified: boolean | null
+          employment_type: string | null
+          family_type: string | null
+          family_values: string | null
+          father_occupation: string | null
+          first_name: string | null
+          gender: string | null
+          has_children: boolean | null
+          height_cm: number | null
+          hobbies: string[] | null
+          income_range: string | null
+          industry: string | null
+          last_name: string | null
+          managed_by_user_id: string | null
+          manager_relation: string | null
+          marital_status: string | null
+          messaging_policy: string | null
+          mother_occupation: string | null
+          mother_tongue: string | null
+          onboarding_completed: boolean | null
+          phone_verified: boolean | null
+          photo_primary_url: string | null
+          profession_title: string | null
+          profile_manager: string | null
+          religion: string | null
+          siblings_count: number | null
+          smoke: string | null
+          updated_at: string | null
+          user_id: string
+          visa_status: string | null
+          visibility_last_seen: boolean | null
+          visibility_photos: string | null
+          willing_to_relocate: boolean | null
+        }
+        Insert: {
+          bio?: string | null
+          caste_community?: string | null
+          citizenship?: string | null
+          city?: string | null
+          company?: string | null
+          country_of_residence?: string | null
+          created_at?: string | null
+          diet?: string | null
+          dob?: string | null
+          drink?: string | null
+          education_field?: string | null
+          education_institution?: string | null
+          education_level?: string | null
+          email_verified?: boolean | null
+          employment_type?: string | null
+          family_type?: string | null
+          family_values?: string | null
+          father_occupation?: string | null
+          first_name?: string | null
+          gender?: string | null
+          has_children?: boolean | null
+          height_cm?: number | null
+          hobbies?: string[] | null
+          income_range?: string | null
+          industry?: string | null
+          last_name?: string | null
+          managed_by_user_id?: string | null
+          manager_relation?: string | null
+          marital_status?: string | null
+          messaging_policy?: string | null
+          mother_occupation?: string | null
+          mother_tongue?: string | null
+          onboarding_completed?: boolean | null
+          phone_verified?: boolean | null
+          photo_primary_url?: string | null
+          profession_title?: string | null
+          profile_manager?: string | null
+          religion?: string | null
+          siblings_count?: number | null
+          smoke?: string | null
+          updated_at?: string | null
+          user_id: string
+          visa_status?: string | null
+          visibility_last_seen?: boolean | null
+          visibility_photos?: string | null
+          willing_to_relocate?: boolean | null
+        }
+        Update: {
+          bio?: string | null
+          caste_community?: string | null
+          citizenship?: string | null
+          city?: string | null
+          company?: string | null
+          country_of_residence?: string | null
+          created_at?: string | null
+          diet?: string | null
+          dob?: string | null
+          drink?: string | null
+          education_field?: string | null
+          education_institution?: string | null
+          education_level?: string | null
+          email_verified?: boolean | null
+          employment_type?: string | null
+          family_type?: string | null
+          family_values?: string | null
+          father_occupation?: string | null
+          first_name?: string | null
+          gender?: string | null
+          has_children?: boolean | null
+          height_cm?: number | null
+          hobbies?: string[] | null
+          income_range?: string | null
+          industry?: string | null
+          last_name?: string | null
+          managed_by_user_id?: string | null
+          manager_relation?: string | null
+          marital_status?: string | null
+          messaging_policy?: string | null
+          mother_occupation?: string | null
+          mother_tongue?: string | null
+          onboarding_completed?: boolean | null
+          phone_verified?: boolean | null
+          photo_primary_url?: string | null
+          profession_title?: string | null
+          profile_manager?: string | null
+          religion?: string | null
+          siblings_count?: number | null
+          smoke?: string | null
+          updated_at?: string | null
+          user_id?: string
+          visa_status?: string | null
+          visibility_last_seen?: boolean | null
+          visibility_photos?: string | null
+          willing_to_relocate?: boolean | null
         }
         Relationships: []
       }
@@ -1354,6 +1636,169 @@ export type Database = {
         }
         Relationships: []
       }
+      user_profiles: {
+        Row: {
+          about_me: string | null
+          annual_income: number | null
+          birth_city: string | null
+          birth_date: string | null
+          birth_time: string | null
+          body_type: Database["public"]["Enums"]["body_type_t"] | null
+          children_living_with: string | null
+          citizenship: string | null
+          community: string | null
+          complexion: Database["public"]["Enums"]["complexion_t"] | null
+          contact_by: string[] | null
+          diet: Database["public"]["Enums"]["diet_t"] | null
+          drinking: Database["public"]["Enums"]["freq_t"] | null
+          education_level: string | null
+          employer: string | null
+          family_about: string | null
+          family_living_in: string | null
+          family_type: Database["public"]["Enums"]["family_type_t"] | null
+          family_values: Database["public"]["Enums"]["family_values_t"] | null
+          father_occupation: string | null
+          field_of_study: string | null
+          full_name: string | null
+          gender: Database["public"]["Enums"]["gender_t"] | null
+          gothra: string | null
+          have_children: boolean | null
+          height_cm: number | null
+          highlights: string[] | null
+          languages_spoken: string[] | null
+          lifestyle_tags: string[] | null
+          location_city: string | null
+          location_country: string | null
+          location_state: string | null
+          manglik: Database["public"]["Enums"]["yes_no_unknown_t"] | null
+          marital_status: Database["public"]["Enums"]["marital_status_t"] | null
+          mother_occupation: string | null
+          mother_tongue: string | null
+          nakshatra: string | null
+          occupation: string | null
+          photo_visibility: string | null
+          profile_ready: boolean | null
+          religion: string | null
+          residency_status: string | null
+          siblings_brothers: number | null
+          siblings_sisters: number | null
+          smoking: Database["public"]["Enums"]["freq_t"] | null
+          sub_community: string | null
+          university: string | null
+          updated_at: string | null
+          user_id: string
+          work_location: string | null
+        }
+        Insert: {
+          about_me?: string | null
+          annual_income?: number | null
+          birth_city?: string | null
+          birth_date?: string | null
+          birth_time?: string | null
+          body_type?: Database["public"]["Enums"]["body_type_t"] | null
+          children_living_with?: string | null
+          citizenship?: string | null
+          community?: string | null
+          complexion?: Database["public"]["Enums"]["complexion_t"] | null
+          contact_by?: string[] | null
+          diet?: Database["public"]["Enums"]["diet_t"] | null
+          drinking?: Database["public"]["Enums"]["freq_t"] | null
+          education_level?: string | null
+          employer?: string | null
+          family_about?: string | null
+          family_living_in?: string | null
+          family_type?: Database["public"]["Enums"]["family_type_t"] | null
+          family_values?: Database["public"]["Enums"]["family_values_t"] | null
+          father_occupation?: string | null
+          field_of_study?: string | null
+          full_name?: string | null
+          gender?: Database["public"]["Enums"]["gender_t"] | null
+          gothra?: string | null
+          have_children?: boolean | null
+          height_cm?: number | null
+          highlights?: string[] | null
+          languages_spoken?: string[] | null
+          lifestyle_tags?: string[] | null
+          location_city?: string | null
+          location_country?: string | null
+          location_state?: string | null
+          manglik?: Database["public"]["Enums"]["yes_no_unknown_t"] | null
+          marital_status?:
+            | Database["public"]["Enums"]["marital_status_t"]
+            | null
+          mother_occupation?: string | null
+          mother_tongue?: string | null
+          nakshatra?: string | null
+          occupation?: string | null
+          photo_visibility?: string | null
+          profile_ready?: boolean | null
+          religion?: string | null
+          residency_status?: string | null
+          siblings_brothers?: number | null
+          siblings_sisters?: number | null
+          smoking?: Database["public"]["Enums"]["freq_t"] | null
+          sub_community?: string | null
+          university?: string | null
+          updated_at?: string | null
+          user_id: string
+          work_location?: string | null
+        }
+        Update: {
+          about_me?: string | null
+          annual_income?: number | null
+          birth_city?: string | null
+          birth_date?: string | null
+          birth_time?: string | null
+          body_type?: Database["public"]["Enums"]["body_type_t"] | null
+          children_living_with?: string | null
+          citizenship?: string | null
+          community?: string | null
+          complexion?: Database["public"]["Enums"]["complexion_t"] | null
+          contact_by?: string[] | null
+          diet?: Database["public"]["Enums"]["diet_t"] | null
+          drinking?: Database["public"]["Enums"]["freq_t"] | null
+          education_level?: string | null
+          employer?: string | null
+          family_about?: string | null
+          family_living_in?: string | null
+          family_type?: Database["public"]["Enums"]["family_type_t"] | null
+          family_values?: Database["public"]["Enums"]["family_values_t"] | null
+          father_occupation?: string | null
+          field_of_study?: string | null
+          full_name?: string | null
+          gender?: Database["public"]["Enums"]["gender_t"] | null
+          gothra?: string | null
+          have_children?: boolean | null
+          height_cm?: number | null
+          highlights?: string[] | null
+          languages_spoken?: string[] | null
+          lifestyle_tags?: string[] | null
+          location_city?: string | null
+          location_country?: string | null
+          location_state?: string | null
+          manglik?: Database["public"]["Enums"]["yes_no_unknown_t"] | null
+          marital_status?:
+            | Database["public"]["Enums"]["marital_status_t"]
+            | null
+          mother_occupation?: string | null
+          mother_tongue?: string | null
+          nakshatra?: string | null
+          occupation?: string | null
+          photo_visibility?: string | null
+          profile_ready?: boolean | null
+          religion?: string | null
+          residency_status?: string | null
+          siblings_brothers?: number | null
+          siblings_sisters?: number | null
+          smoking?: Database["public"]["Enums"]["freq_t"] | null
+          sub_community?: string | null
+          university?: string | null
+          updated_at?: string | null
+          user_id?: string
+          work_location?: string | null
+        }
+        Relationships: []
+      }
       user_settings: {
         Row: {
           created_at: string
@@ -1530,7 +1975,20 @@ export type Database = {
       }
     }
     Enums: {
+      body_type_t: "slim" | "average" | "athletic" | "heavy" | "prefer_not"
       collaborator_role: "parent" | "sibling" | "partner" | "close_friend"
+      complexion_t: "very_fair" | "fair" | "wheatish" | "dark" | "prefer_not"
+      diet_t:
+        | "vegetarian"
+        | "eggetarian"
+        | "non_vegetarian"
+        | "vegan"
+        | "halal"
+        | "prefer_not"
+      family_type_t: "nuclear" | "joint" | "other"
+      family_values_t: "traditional" | "moderate" | "liberal" | "other"
+      freq_t: "no" | "occasional" | "yes"
+      gender_t: "male" | "female" | "non_binary" | "prefer_not"
       immigration_status:
         | "citizen"
         | "permanent_resident"
@@ -1539,8 +1997,11 @@ export type Database = {
         | "work_visa"
         | "other"
       interest_status: "pending" | "accepted" | "declined"
+      marital_status_t: "never_married" | "divorced" | "widowed" | "annulled"
+      onboarding_status_t: "in_progress" | "complete"
       supplier_plan: "free" | "featured" | "premium"
       user_role: "guest" | "member" | "parent" | "supplier" | "admin"
+      yes_no_unknown_t: "yes" | "no" | "unknown"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1668,7 +2129,21 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      body_type_t: ["slim", "average", "athletic", "heavy", "prefer_not"],
       collaborator_role: ["parent", "sibling", "partner", "close_friend"],
+      complexion_t: ["very_fair", "fair", "wheatish", "dark", "prefer_not"],
+      diet_t: [
+        "vegetarian",
+        "eggetarian",
+        "non_vegetarian",
+        "vegan",
+        "halal",
+        "prefer_not",
+      ],
+      family_type_t: ["nuclear", "joint", "other"],
+      family_values_t: ["traditional", "moderate", "liberal", "other"],
+      freq_t: ["no", "occasional", "yes"],
+      gender_t: ["male", "female", "non_binary", "prefer_not"],
       immigration_status: [
         "citizen",
         "permanent_resident",
@@ -1678,8 +2153,11 @@ export const Constants = {
         "other",
       ],
       interest_status: ["pending", "accepted", "declined"],
+      marital_status_t: ["never_married", "divorced", "widowed", "annulled"],
+      onboarding_status_t: ["in_progress", "complete"],
       supplier_plan: ["free", "featured", "premium"],
       user_role: ["guest", "member", "parent", "supplier", "admin"],
+      yes_no_unknown_t: ["yes", "no", "unknown"],
     },
   },
 } as const

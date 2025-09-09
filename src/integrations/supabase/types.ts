@@ -194,12 +194,46 @@ export type Database = {
         }
         Relationships: []
       }
+      budget_categories: {
+        Row: {
+          budget_id: string
+          created_at: string
+          id: string
+          name: string
+          planned_amount: number
+          sort_order: number
+        }
+        Insert: {
+          budget_id: string
+          created_at?: string
+          id?: string
+          name: string
+          planned_amount?: number
+          sort_order?: number
+        }
+        Update: {
+          budget_id?: string
+          created_at?: string
+          id?: string
+          name?: string
+          planned_amount?: number
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "budget_categories_budget_id_fkey"
+            columns: ["budget_id"]
+            isOneToOne: false
+            referencedRelation: "budgets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       budget_items: {
         Row: {
           actual_amount: number | null
           booked_amount: number | null
           budget_id: string
-          category: string
           created_at: string
           id: string
           notes: string | null
@@ -213,7 +247,6 @@ export type Database = {
           actual_amount?: number | null
           booked_amount?: number | null
           budget_id: string
-          category: string
           created_at?: string
           id?: string
           notes?: string | null
@@ -227,7 +260,6 @@ export type Database = {
           actual_amount?: number | null
           booked_amount?: number | null
           budget_id?: string
-          category?: string
           created_at?: string
           id?: string
           notes?: string | null
@@ -237,19 +269,12 @@ export type Database = {
           vendor_contact?: string | null
           vendor_name?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "budget_items_budget_id_fkey"
-            columns: ["budget_id"]
-            isOneToOne: false
-            referencedRelation: "budgets"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       budgets: {
         Row: {
           created_at: string
+          currency: string
           id: string
           name: string
           total_budget: number | null
@@ -258,6 +283,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          currency?: string
           id?: string
           name?: string
           total_budget?: number | null
@@ -266,21 +292,14 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          currency?: string
           id?: string
           name?: string
           total_budget?: number | null
           updated_at?: string
           user_id?: string
         }
-        Relationships: [
-          {
-            foreignKeyName: "budgets_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       collaborators: {
         Row: {
@@ -292,7 +311,7 @@ export type Database = {
           invitee_user_id: string | null
           inviter_user_id: string
           permissions: Json | null
-          role: string
+          role: Database["public"]["Enums"]["collaborator_role"]
           status: string | null
           updated_at: string
         }
@@ -305,7 +324,7 @@ export type Database = {
           invitee_user_id?: string | null
           inviter_user_id: string
           permissions?: Json | null
-          role: string
+          role: Database["public"]["Enums"]["collaborator_role"]
           status?: string | null
           updated_at?: string
         }
@@ -318,7 +337,7 @@ export type Database = {
           invitee_user_id?: string | null
           inviter_user_id?: string
           permissions?: Json | null
-          role?: string
+          role?: Database["public"]["Enums"]["collaborator_role"]
           status?: string | null
           updated_at?: string
         }
@@ -1505,9 +1524,13 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      ensure_user_budget: {
+        Args: { p_user_id: string }
+        Returns: string
+      }
     }
     Enums: {
+      collaborator_role: "parent" | "sibling" | "partner" | "close_friend"
       immigration_status:
         | "citizen"
         | "permanent_resident"
@@ -1645,6 +1668,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      collaborator_role: ["parent", "sibling", "partner", "close_friend"],
       immigration_status: [
         "citizen",
         "permanent_resident",

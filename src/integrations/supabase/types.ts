@@ -1677,6 +1677,7 @@ export type Database = {
           nakshatra: string | null
           occupation: string | null
           photo_visibility: string | null
+          profile_id: string | null
           profile_ready: boolean | null
           religion: string | null
           residency_status: string | null
@@ -1731,6 +1732,7 @@ export type Database = {
           nakshatra?: string | null
           occupation?: string | null
           photo_visibility?: string | null
+          profile_id?: string | null
           profile_ready?: boolean | null
           religion?: string | null
           residency_status?: string | null
@@ -1785,6 +1787,7 @@ export type Database = {
           nakshatra?: string | null
           occupation?: string | null
           photo_visibility?: string | null
+          profile_id?: string | null
           profile_ready?: boolean | null
           religion?: string | null
           residency_status?: string | null
@@ -1971,6 +1974,10 @@ export type Database = {
     Functions: {
       ensure_user_budget: {
         Args: { p_user_id: string }
+        Returns: string
+      }
+      generate_profile_id: {
+        Args: Record<PropertyKey, never>
         Returns: string
       }
     }

@@ -77,6 +77,14 @@ import Destinations from "./pages/Destinations";
 import SuppliersFeatureListings from "./pages/SuppliersFeatureListings";
 import SuppliersPricing from "./pages/SuppliersPricing";
 
+// Import Onboarding components
+import { OnboardingGuard } from "./components/onboarding/OnboardingGuard";
+import OnboardingStep1 from "./pages/onboarding/OnboardingStep1";
+import OnboardingStep2 from "./pages/onboarding/OnboardingStep2";
+import OnboardingStep3 from "./pages/onboarding/OnboardingStep3";
+import OnboardingStep4 from "./pages/onboarding/OnboardingStep4";
+import OnboardingStep5 from "./pages/onboarding/OnboardingStep5";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -88,7 +96,8 @@ const App = () => (
         <AuthProvider>
           <BrowserRouter>
             <ScrollToTop />
-            <Routes>
+            <OnboardingGuard>
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/match" element={<Match />} />
               <Route path="/suppliers" element={<Suppliers />} />
@@ -114,6 +123,14 @@ const App = () => (
               <Route path="/signup" element={<Auth />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/account/reset-password" element={<ResetPassword />} />
+              
+              {/* Onboarding Routes */}
+              <Route path="/onboarding/1" element={<OnboardingStep1 />} />
+              <Route path="/onboarding/2" element={<OnboardingStep2 />} />
+              <Route path="/onboarding/3" element={<OnboardingStep3 />} />
+              <Route path="/onboarding/4" element={<OnboardingStep4 />} />
+              <Route path="/onboarding/5" element={<OnboardingStep5 />} />
+              <Route path="/onboarding/:step" element={<div className="min-h-screen flex items-center justify-center"><div className="text-center"><h1 className="text-2xl font-semibold mb-4">Onboarding Step Coming Soon</h1><p className="text-muted-foreground">This step is being developed. Please check back soon!</p></div></div>} />
               
               {/* Public Planning Route */}
               <Route path="/planning" element={<PublicPlanning />} />
@@ -171,7 +188,8 @@ const App = () => (
               
               {/* Catch-all 404 Route */}
               <Route path="*" element={<NotFound />} />
-            </Routes>
+              </Routes>
+            </OnboardingGuard>
           </BrowserRouter>
         </AuthProvider>
       </ErrorBoundary>

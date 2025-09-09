@@ -103,7 +103,20 @@ const Auth = () => {
           .eq('user_id', data.user?.id)
           .maybeSingle();
           
-        navigate(supplier ? '/supplier/dashboard' : '/account');
+        // Check if user has completed onboarding
+        const { data: profile } = await supabase
+          .from('user_profiles')
+          .select('profile_ready')
+          .eq('user_id', data.user?.id)
+          .maybeSingle();
+          
+        if (supplier) {
+          navigate('/supplier/dashboard');
+        } else if (profile?.profile_ready) {
+          navigate('/account');
+        } else {
+          navigate('/onboarding/1');
+        }
       }
     } catch (error: any) {
       toast({
@@ -144,7 +157,20 @@ const Auth = () => {
         .eq('user_id', data.user?.id)
         .maybeSingle();
         
-      navigate(supplier ? '/supplier/dashboard' : '/account');
+      // Check if user has completed onboarding
+      const { data: profile } = await supabase
+        .from('user_profiles')
+        .select('profile_ready')
+        .eq('user_id', data.user?.id)
+        .maybeSingle();
+        
+      if (supplier) {
+        navigate('/supplier/dashboard');
+      } else if (profile?.profile_ready) {
+        navigate('/account');
+      } else {
+        navigate('/onboarding/1');
+      }
     } catch (error: any) {
       toast({
         title: "Verification Failed",
@@ -215,8 +241,8 @@ const Auth = () => {
         duration: 3000,
       });
 
-      // Switch to login tab
-      setActiveTab('login');
+      // Redirect to onboarding instead of switching to login tab
+      navigate('/onboarding/1');
     } catch (error: any) {
       toast({
         title: "Signup Failed",

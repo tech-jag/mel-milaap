@@ -329,13 +329,21 @@ const AccountDashboard = () => {
                 </h1>
                 <div className="flex items-center gap-4 mt-2">
                   <Badge variant="secondary" className="text-sm font-mono">
-                    ID: {userProfile?.profile_id || currentUser.id?.slice(0, 8)}
+                    ID: {userProfile?.profile_id || 'Not Set'}
                   </Badge>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      const profileId = userProfile?.profile_id || currentUser.id?.slice(0, 8);
+                      const profileId = userProfile?.profile_id;
+                      if (!profileId) {
+                        toast({
+                          title: "Profile ID not set",
+                          description: "Please complete your profile first.",
+                          variant: "destructive"
+                        });
+                        return;
+                      }
                       const profileUrl = `${window.location.origin}/profile/${profileId}`;
                       navigator.clipboard.writeText(profileUrl);
                       toast({
@@ -402,60 +410,97 @@ const AccountDashboard = () => {
               whileInView="animate"
               viewport={{ once: true }}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                <div>
-                  <h2 className="text-2xl font-heading font-semibold text-foreground mb-4">Your Activity Summary</h2>
-                  <div className="grid grid-cols-3 gap-4 mb-6">
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-muted-foreground mb-1">0</div>
-                      <div className="text-sm text-muted-foreground">No Pending Invitations</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-muted-foreground mb-1">0</div>
-                      <div className="text-sm text-muted-foreground">No Accepted Invitations</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold text-muted-foreground mb-1">0</div>
-                      <div className="text-sm text-muted-foreground">No Recent Visitors</div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-lg p-4 mb-4">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="text-sm font-medium text-orange-800">
-                        Only <span className="text-blue-600 font-semibold">Premium</span> Members can avail these benefits
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Left Column - Activity Stats */}
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-card rounded-2xl shadow-elegant -rotate-1"></div>
+                  <div className="relative bg-card rounded-2xl border shadow-soft p-6">
+                    <h2 className="text-2xl font-heading font-semibold text-foreground mb-6">Your Activity Summary</h2>
+                    
+                    {/* Top Stats Grid */}
+                    <div className="grid grid-cols-3 gap-4 mb-8">
+                      <div className="text-center p-4 bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-xl border border-secondary/30">
+                        <div className="text-3xl font-bold text-muted-foreground mb-2">0</div>
+                        <div className="text-sm text-muted-foreground">Pending Invitations</div>
                       </div>
-                      <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      <div className="text-center p-4 bg-gradient-to-br from-accent/20 to-accent/10 rounded-xl border border-accent/30">
+                        <div className="text-3xl font-bold text-muted-foreground mb-2">0</div>
+                        <div className="text-sm text-muted-foreground">Accepted Invitations</div>
+                      </div>
+                      <div className="text-center p-4 bg-gradient-to-br from-success/20 to-success/10 rounded-xl border border-success/30">
+                        <div className="text-3xl font-bold text-muted-foreground mb-2">0</div>
+                        <div className="text-sm text-muted-foreground">Recent Visitors</div>
                       </div>
                     </div>
-                  </div>
+                    
+                    {/* Premium Notice */}
+                    <div className="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-xl p-4 mb-6 shadow-soft">
+                      <div className="flex items-center gap-3">
+                        <div className="flex-shrink-0 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center shadow-sm">
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        </div>
+                        <div className="text-sm font-medium text-orange-800">
+                          Only <span className="text-primary font-semibold">Premium</span> Members can avail these benefits
+                        </div>
+                      </div>
+                    </div>
 
-                  <div className="grid grid-cols-2 gap-8">
-                    <div className="text-center">
-                      <MessageCircle className="w-8 h-8 mx-auto mb-2 text-purple-500" />
-                      <div className="text-2xl font-bold text-muted-foreground mb-1">0</div>
-                      <div className="text-sm text-muted-foreground">Contacts viewed</div>
-                    </div>
-                    <div className="text-center">
-                      <MessageCircle className="w-8 h-8 mx-auto mb-2 text-pink-500" />
-                      <div className="text-2xl font-bold text-muted-foreground mb-1">0</div>
-                      <div className="text-sm text-muted-foreground">Chats initiated</div>
+                    {/* Bottom Stats */}
+                    <div className="grid grid-cols-2 gap-6">
+                      <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200 shadow-sm">
+                        <MessageCircle className="w-10 h-10 mx-auto mb-3 text-purple-600" />
+                        <div className="text-2xl font-bold text-purple-700 mb-1">0</div>
+                        <div className="text-sm text-purple-600">Contacts Viewed</div>
+                      </div>
+                      <div className="text-center p-4 bg-gradient-to-br from-pink-50 to-pink-100 rounded-xl border border-pink-200 shadow-sm">
+                        <MessageCircle className="w-10 h-10 mx-auto mb-3 text-pink-600" />
+                        <div className="text-2xl font-bold text-pink-700 mb-1">0</div>
+                        <div className="text-sm text-pink-600">Chats Initiated</div>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div>
-                  <h3 className="font-semibold mb-4">Improve your Profile</h3>
-                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h4 className="font-semibold text-green-800 mb-1">Members with Photos</h4>
-                        <p className="text-sm text-green-700">get twice as many responses</p>
+                {/* Right Column - Profile Improvement */}
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-champagne rounded-2xl shadow-champagne rotate-1"></div>
+                  <div className="relative bg-card rounded-2xl border shadow-soft p-6 h-full">
+                    <h3 className="text-2xl font-heading font-semibold mb-6">Improve your Profile</h3>
+                    
+                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6 shadow-soft">
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <h4 className="font-semibold text-green-800 mb-2 text-lg">Members with Photos</h4>
+                          <p className="text-green-700 mb-4">get twice as many responses</p>
+                        </div>
+                        <Camera className="w-8 h-8 text-green-600 flex-shrink-0" />
                       </div>
-                      <div className="text-right">
-                        <div className="text-green-600 font-semibold mb-2">Get more responses</div>
-                        <Badge className="bg-white text-green-600 border-green-600">Add Photo</Badge>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="text-green-600 font-semibold">Get more responses</div>
+                        <Link to="/account/profile">
+                          <Button 
+                            className="bg-white text-green-600 border-green-600 hover:bg-green-50 shadow-sm"
+                            variant="outline"
+                          >
+                            Add Photo
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                    
+                    {/* Additional CTA */}
+                    <div className="mt-6 p-4 bg-gradient-to-r from-accent/10 to-accent/20 rounded-xl border border-accent/30">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="font-semibold text-accent-foreground">Complete Your Journey</div>
+                          <div className="text-sm text-muted-foreground">Unlock premium features</div>
+                        </div>
+                        <Link to="/pricing">
+                          <Button variant="outline" size="sm" className="border-accent text-accent hover:bg-accent/10">
+                            Upgrade Now
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -503,6 +548,46 @@ const AccountDashboard = () => {
               ))}
             </motion.div>
 
+            {/* Collaborators Section */}
+            {collaborators.length > 0 && (
+              <motion.div
+                className="mb-12"
+                variants={fadeInUp}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+              >
+                <Card className="shadow-elegant">
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <Users className="w-5 h-5 mr-2" />
+                      Family Collaboration
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {collaborators.slice(0, 3).map((collab) => (
+                        <div key={collab.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border">
+                          <div>
+                            <p className="font-medium">{collab.invitee_email}</p>
+                            <p className="text-sm text-muted-foreground capitalize">{collab.role} • {collab.status}</p>
+                          </div>
+                          <Badge variant={collab.status === 'accepted' ? 'default' : 'secondary'}>
+                            {collab.status}
+                          </Badge>
+                        </div>
+                      ))}
+                    </div>
+                    <Link to="/account/collaborators" className="block mt-4">
+                      <Button variant="outline" size="sm" className="w-full">
+                        Manage Collaborators
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+
             {/* Planning Tools or Discover Mode */}
             {userProfile?.planning_phase === 'planning' ? (
               <motion.div
@@ -533,7 +618,7 @@ const AccountDashboard = () => {
                   {planningCards.map((card) => (
                     <motion.div key={card.title} variants={fadeInUp}>
                       <Link to={card.href}>
-                        <Card className="h-full hover:shadow-lg transition-shadow">
+                        <Card className="h-full hover:shadow-luxury transition-shadow duration-300">
                           <CardHeader className="pb-4">
                             <div className="flex items-center justify-between mb-2">
                               <card.icon className={`w-8 h-8 ${card.color}`} />
@@ -554,64 +639,27 @@ const AccountDashboard = () => {
               </motion.div>
             ) : (
               <motion.div
-                className="text-center bg-card rounded-xl p-12"
+                className="text-center bg-gradient-card rounded-2xl p-12 shadow-luxury border"
                 variants={fadeInUp}
                 initial="initial"
                 whileInView="animate"
                 viewport={{ once: true }}
               >
-                <Heart className="w-16 h-16 text-primary mx-auto mb-6" />
-                <h3 className="text-2xl font-heading font-semibold text-foreground mb-4">
-                  Ready to Start Planning?
-                </h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  Found your perfect match? It's time to start planning your dream wedding! 
-                  Access our comprehensive planning tools to organize every detail.
-                </p>
-                <Button size="lg" onClick={handleStartPlanning}>
-                  Start Planning My Wedding
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </motion.div>
-            )}
-
-            {/* Collaborators Section */}
-            {collaborators.length > 0 && (
-              <motion.div
-                className="mt-12"
-                variants={fadeInUp}
-                initial="initial"
-                whileInView="animate"
-                viewport={{ once: true }}
-              >
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center">
-                      <Users className="w-5 h-5 mr-2" />
-                      Family Collaboration
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2">
-                      {collaborators.slice(0, 3).map((collab) => (
-                        <div key={collab.id} className="flex items-center justify-between p-2 bg-muted/50 rounded-lg">
-                          <div>
-                            <p className="font-medium">{collab.invitee_email}</p>
-                            <p className="text-sm text-muted-foreground capitalize">{collab.role} • {collab.status}</p>
-                          </div>
-                          <Badge variant={collab.status === 'accepted' ? 'default' : 'secondary'}>
-                            {collab.status}
-                          </Badge>
-                        </div>
-                      ))}
-                    </div>
-                    <Link to="/account/collaborators" className="block mt-4">
-                      <Button variant="outline" size="sm" className="w-full">
-                        Manage Collaborators
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-primary opacity-5 rounded-2xl"></div>
+                  <Heart className="w-20 h-20 text-primary mx-auto mb-6 relative z-10" />
+                  <h3 className="text-3xl font-heading font-semibold text-foreground mb-4 relative z-10">
+                    Ready to Start Planning?
+                  </h3>
+                  <p className="text-muted-foreground mb-8 max-w-md mx-auto relative z-10">
+                    Found your perfect match? It's time to start planning your dream wedding! 
+                    Access our comprehensive planning tools to organize every detail.
+                  </p>
+                  <Button size="lg" onClick={handleStartPlanning} className="relative z-10 shadow-elegant">
+                    Start Planning My Wedding
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
               </motion.div>
             )}
           </div>

@@ -84,6 +84,24 @@ import OnboardingStep2 from "./pages/onboarding/OnboardingStep2";
 import OnboardingStep3 from "./pages/onboarding/OnboardingStep3";
 import OnboardingStep4 from "./pages/onboarding/OnboardingStep4";
 import OnboardingStep5 from "./pages/onboarding/OnboardingStep5";
+import OnboardingStep6 from "./pages/onboarding/OnboardingStep6";
+import OnboardingStep7 from "./pages/onboarding/OnboardingStep7";
+import OnboardingStep8 from "./pages/onboarding/OnboardingStep8";
+import OnboardingStep9 from "./pages/onboarding/OnboardingStep9";
+import OnboardingStep10 from "./pages/onboarding/OnboardingStep10";
+import OnboardingStep11 from "./pages/onboarding/OnboardingStep11";
+import OnboardingStep12 from "./pages/onboarding/OnboardingStep12";
+import OnboardingStep13 from "./pages/onboarding/OnboardingStep13";
+import OnboardingStep14 from "./pages/onboarding/OnboardingStep14";
+import OnboardingStep15 from "./pages/onboarding/OnboardingStep15";
+import OnboardingStep16 from "./pages/onboarding/OnboardingStep16";
+import OnboardingStep17 from "./pages/onboarding/OnboardingStep17";
+import OnboardingStep18 from "./pages/onboarding/OnboardingStep18";
+import OnboardingStep19 from "./pages/onboarding/OnboardingStep19";
+import OnboardingStep20 from "./pages/onboarding/OnboardingStep20";
+import OnboardingStep21 from "./pages/onboarding/OnboardingStep21";
+import OnboardingStep22 from "./pages/onboarding/OnboardingStep22";
+import OnboardingStep23 from "./pages/onboarding/OnboardingStep23";
 
 const queryClient = new QueryClient();
 

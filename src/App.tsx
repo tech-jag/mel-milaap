@@ -153,6 +153,7 @@ const App = () => (
               <Route path="/account/planning/seating" element={<PrivateRoute><AccountPlanningSeating /></PrivateRoute>} />
               <Route path="/account/invites" element={<PrivateRoute><AccountInvites /></PrivateRoute>} />
               <Route path="/account/collaborators" element={<PrivateRoute><AccountCollaborators /></PrivateRoute>} />
+              <Route path="/account/profile" element={<PrivateRoute><AccountProfile /></PrivateRoute>} />
               
               {/* Supplier Routes */}
               <Route path="/supplier/signup" element={<SupplierSignup />} />

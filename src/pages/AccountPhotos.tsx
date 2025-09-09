@@ -31,13 +31,19 @@ export default function AccountPhotos() {
 
   const loadPhotos = async () => {
     try {
+      console.log('Loading photos for user:', user?.id);
       const { data, error } = await supabase
         .from('profile_photos')
         .select('*')
         .eq('user_id', user?.id)
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error loading photos:', error);
+        throw error;
+      }
+      
+      console.log('Photos loaded:', data);
       setPhotos(data || []);
     } catch (error) {
       console.error('Error loading photos:', error);

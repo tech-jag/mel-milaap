@@ -85,10 +85,10 @@ export const ProfilePreview: React.FC<ProfilePreviewProps> = ({
                     </Avatar>
                     {!isOwnProfile && (
                       <div className="absolute inset-0 flex items-center justify-center">
-                           <Button 
-                             onClick={() => window.open(`/profile-preview?profileid=${profile.profile_id}`, '_blank')}
-                             className="bg-primary/90 text-primary-foreground hover:bg-primary/80 px-4 py-2 text-sm font-medium"
-                           >
+                            <Button 
+                              onClick={() => window.open(`/profile/${profile.profile_id || user?.id?.slice(0, 8)}`, '_blank')}
+                              className="bg-primary/90 text-primary-foreground hover:bg-primary/80 px-4 py-2 text-sm font-medium"
+                            >
                              View Full Profile
                            </Button>
                       </div>

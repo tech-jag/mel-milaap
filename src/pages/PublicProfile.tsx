@@ -7,37 +7,37 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 export default function PublicProfile() {
-  const { userId } = useParams();
+  const { profileId } = useParams();
   const [profile, setProfile] = useState<any>(null);
   const [preferences, setPreferences] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    if (userId) {
-      loadPublicProfile(userId);
+    if (profileId) {
+      loadPublicProfile(profileId);
     }
-  }, [userId]);
+  }, [profileId]);
 
   const loadPublicProfile = async (id: string) => {
     try {
-      // Load user profile
+      // Load user profile by profile_id
       const { data: profileData, error: profileError } = await supabase
         .from('user_profiles')
         .select('*')
-        .eq('user_id', id)
+        .eq('profile_id', id)
         .single();
 
       if (profileError) throw profileError;
 
-      // Load partner preferences
+      // Load partner preferences using the user_id from the profile
       const { data: preferencesData, error: preferencesError } = await supabase
         .from('partner_preferences')
         .select('*')
-        .eq('user_id', id)
+        .eq('user_id', profileData.user_id)
         .single();
 
-      if (preferencesError) throw preferencesError;
+      if (preferencesError && preferencesError.code !== 'PGRST116') throw preferencesError;
 
       setProfile(profileData);
       setPreferences(preferencesData);

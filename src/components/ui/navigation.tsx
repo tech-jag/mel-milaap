@@ -103,6 +103,13 @@ return (
           <div className="hidden lg:flex items-center space-x-3">
               {user ? (
                 <>
+                  {userPlan === 'free' && (
+                    <Link to="/premium-plans">
+                      <Button variant="luxury" size="sm">
+                        Upgrade Now
+                      </Button>
+                    </Link>
+                  )}
                   <Link to="/account">
                     <Button variant="ghost" size="sm">
                       Dashboard

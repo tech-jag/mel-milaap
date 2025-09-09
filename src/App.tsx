@@ -162,7 +162,7 @@ const App = () => (
               <Route path="/suppliers/pricing" element={<SuppliersPricing />} />
               <Route path="/premium-plans" element={<OnboardingGuard><PremiumPlans /></OnboardingGuard>} />
               <Route path="/planning" element={<PublicPlanning />} />
-              <Route path="/profile/:userId" element={<PublicProfile />} />
+              <Route path="/profile/:profileId" element={<PublicProfile />} />
               
               {/* Auth Routes */}
               <Route path="/auth/login" element={<Auth />} />
@@ -218,6 +218,7 @@ const App = () => (
               <Route path="/account/settings" element={<OnboardingGuard><PrivateRoute><AccountSettings /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/profile" element={<OnboardingGuard><PrivateRoute><AccountProfile /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/photos" element={<OnboardingGuard><PrivateRoute><AccountPhotos /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/partner-preferences" element={<OnboardingGuard><PrivateRoute><PartnerPreferences /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/billing" element={<OnboardingGuard><PrivateRoute><AccountBilling /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/security" element={<OnboardingGuard><PrivateRoute><AccountSecurity /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/verification" element={<OnboardingGuard><PrivateRoute><AccountVerification /></PrivateRoute></OnboardingGuard>} />
@@ -229,6 +230,7 @@ const App = () => (
               <Route path="/account/planning/seating" element={<OnboardingGuard><PrivateRoute><AccountPlanningSeating /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/invites" element={<OnboardingGuard><PrivateRoute><AccountInvites /></PrivateRoute></OnboardingGuard>} />
               <Route path="/account/collaborators" element={<OnboardingGuard><PrivateRoute><AccountCollaborators /></PrivateRoute></OnboardingGuard>} />
+              <Route path="/profile-preview" element={<OnboardingGuard><PrivateRoute><ProfilePreviewPage /></PrivateRoute></OnboardingGuard>} />
               
               {/* Protected Supplier Routes */}
               <Route path="/supplier/dashboard" element={<OnboardingGuard><PrivateRoute><SupplierDashboard /></PrivateRoute></OnboardingGuard>} />

@@ -335,7 +335,8 @@ const AccountDashboard = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      const profileUrl = `${window.location.origin}/profile-preview?profileid=${userProfile?.profile_id || currentUser.id?.slice(0, 8)}`;
+                      const profileId = userProfile?.profile_id || currentUser.id?.slice(0, 8);
+                      const profileUrl = `${window.location.origin}/profile/${profileId}`;
                       navigator.clipboard.writeText(profileUrl);
                       toast({
                         title: "Profile link copied!",

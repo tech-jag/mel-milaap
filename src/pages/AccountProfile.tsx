@@ -6,7 +6,6 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Camera, MapPin, Briefcase, GraduationCap, Heart, Home, Users, Star, Eye } from "lucide-react";
@@ -14,12 +13,10 @@ import { Link } from "react-router-dom";
 import { useOnboardingState } from "@/hooks/useOnboardingState";
 import { useAuth } from "@/hooks/useAuth";
 import { EditableProfileSection } from "@/components/profile/EditableProfileSection";
-import { ProfilePreview } from "@/components/profile/ProfilePreview";
 
 export default function AccountProfile() {
   const { user } = useAuth();
   const { userProfile, partnerPreferences, updateUserProfile, updatePartnerPreferences, isLoading } = useOnboardingState();
-  const [showPreview, setShowPreview] = useState(false);
 
   if (isLoading) {
     return (
@@ -139,7 +136,10 @@ export default function AccountProfile() {
                     <p className="text-muted-foreground">Manage your personal information and preferences</p>
                   </div>
                   <div className="flex gap-2">
-                    <Button variant="outline" onClick={() => setShowPreview(true)}>
+                    <Button variant="outline" onClick={() => {
+                      const profileId = user?.id?.slice(0, 8);
+                      window.open(`/profile/${profileId}`, '_blank');
+                    }}>
                       <Eye className="w-4 h-4 mr-2" />
                       Preview My Profile
                     </Button>
@@ -161,7 +161,7 @@ export default function AccountProfile() {
                       <div className="h-20 w-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
                         <Camera className="h-8 w-8 text-white" />
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h2 className="text-xl font-semibold">{profileData.first_name} {profileData.last_name}</h2>
                         <p className="text-muted-foreground">Profile ID: {user?.id?.slice(0, 8)}</p>
                         <div className="flex items-center gap-2 mt-1">
@@ -172,6 +172,14 @@ export default function AccountProfile() {
                             <Badge variant="outline">Verified</Badge>
                           )}
                         </div>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="outline" size="sm" asChild>
+                          <Link to="/account/photos">
+                            <Camera className="w-4 h-4 mr-2" />
+                            Edit Photos
+                          </Link>
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
@@ -275,20 +283,6 @@ export default function AccountProfile() {
           </main>
         </div>
       </SidebarProvider>
-
-      {/* Profile Preview Modal */}
-      <Dialog open={showPreview} onOpenChange={setShowPreview}>
-        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Profile Preview</DialogTitle>
-          </DialogHeader>
-          <ProfilePreview 
-            profile={profileData} 
-            preferences={preferences} 
-            isOwnProfile={true}
-          />
-        </DialogContent>
-      </Dialog>
 
       <Footer />
     </div>

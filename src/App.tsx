@@ -3,12 +3,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { ErrorBoundary } from "./components/system/ErrorBoundary";
 import { AuthProvider } from "./hooks/useAuth";
 import { PrivateRoute } from "./components/routing/PrivateRoute";
-import { OnboardingGuard } from "./components/routing/OnboardingGuard";
 
 // ... keep existing imports
 
@@ -77,17 +76,8 @@ import Press from "./pages/Press";
 import Destinations from "./pages/Destinations";
 import SuppliersFeatureListings from "./pages/SuppliersFeatureListings";
 import SuppliersPricing from "./pages/SuppliersPricing";
-import Onboarding from "./pages/Onboarding";
-import Dashboard from "./pages/Dashboard";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000, // 5 minutes
-      retry: 1,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -98,8 +88,7 @@ const App = () => (
         <AuthProvider>
           <BrowserRouter>
             <ScrollToTop />
-            <OnboardingGuard>
-              <Routes>
+            <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/match" element={<Match />} />
               <Route path="/suppliers" element={<Suppliers />} />
@@ -125,12 +114,6 @@ const App = () => (
               <Route path="/signup" element={<Auth />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/account/reset-password" element={<ResetPassword />} />
-              
-              {/* Onboarding Route */}
-              <Route path="/onboarding" element={<PrivateRoute><Onboarding /></PrivateRoute>} />
-              
-              {/* Dashboard Route */}
-              <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
               
               {/* Public Planning Route */}
               <Route path="/planning" element={<PublicPlanning />} />
@@ -160,7 +143,6 @@ const App = () => (
               <Route path="/account/planning/seating" element={<PrivateRoute><AccountPlanningSeating /></PrivateRoute>} />
               <Route path="/account/invites" element={<PrivateRoute><AccountInvites /></PrivateRoute>} />
               <Route path="/account/collaborators" element={<PrivateRoute><AccountCollaborators /></PrivateRoute>} />
-              <Route path="/account/profile" element={<PrivateRoute><AccountProfile /></PrivateRoute>} />
               
               {/* Supplier Routes */}
               <Route path="/supplier/signup" element={<SupplierSignup />} />
@@ -188,9 +170,8 @@ const App = () => (
               <Route path="/suppliers/pricing" element={<SuppliersPricing />} />
               
               {/* Catch-all 404 Route */}
-              <Route path="*" element={<Navigate to="/login" replace />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
-            </OnboardingGuard>
           </BrowserRouter>
         </AuthProvider>
       </ErrorBoundary>

@@ -287,7 +287,7 @@ export const inviteCollaborator = async (inviterUserId: string, email: string, r
     .insert({
       inviter_user_id: inviterUserId,
       invitee_email: email,
-      role: role as 'parent' | 'sibling' | 'partner' | 'close_friend',
+      role,
       invitation_token: token,
       invitation_expires_at: expiresAt.toISOString(),
       status: 'pending'

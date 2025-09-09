@@ -223,12 +223,18 @@ const AccountSettings = () => {
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + 7);
 
+      // Type-safe role validation
+      const validRoles = ['parent', 'sibling', 'partner', 'close_friend'] as const;
+      if (!validRoles.includes(role as any)) {
+        throw new Error(`Invalid role: ${role}`);
+      }
+
       const { error } = await supabase
         .from('collaborators')
         .insert({
           inviter_user_id: currentUser.id,
           invitee_email: email,
-          role,
+          role: role as typeof validRoles[number],
           invitation_token: token,
           invitation_expires_at: expiresAt.toISOString(),
           status: 'pending'

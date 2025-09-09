@@ -103,7 +103,7 @@ const AccountPlanningBudget = () => {
 
       setBudget({
         ...budgetData,
-        items: itemsData || []
+        items: (itemsData || []).map(item => ({ ...item, category: item.category || 'General' }))
       });
     } catch (error) {
       console.error('Error loading budget:', error);

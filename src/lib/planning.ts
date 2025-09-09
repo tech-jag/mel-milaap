@@ -3,7 +3,20 @@ import type { Database } from "@/integrations/supabase/types";
 
 // Type definitions - enhanced with new tables
 export type Budget = Database['public']['Tables']['budgets']['Row'];
-export type BudgetItem = Database['public']['Tables']['budget_items']['Row'];
+export type BudgetItem = Database['public']['Tables']['budget_items']['Row'] | {
+  id: string;
+  budget_id: string;
+  category?: string;
+  planned_amount: number;
+  actual_amount: number;
+  booked_amount: number;
+  status: string;
+  vendor_name: string;
+  vendor_contact: string;
+  notes: string;
+  created_at: string;
+  updated_at: string;
+};
 export type Guest = Database['public']['Tables']['guests']['Row'];
 export type TimelineItem = Database['public']['Tables']['wedding_timeline_items']['Row'];
 export type GiftRegistry = Database['public']['Tables']['gift_registries']['Row'];
@@ -282,12 +295,18 @@ export const inviteCollaborator = async (inviterUserId: string, email: string, r
   const expiresAt = new Date();
   expiresAt.setDate(expiresAt.getDate() + 7); // 7 days expiry
 
+  // Type-safe role validation
+  const validRoles = ['parent', 'sibling', 'partner', 'close_friend'] as const;
+  if (!validRoles.includes(role as any)) {
+    throw new Error(`Invalid role: ${role}`);
+  }
+
   const { data, error } = await supabase
     .from('collaborators')
     .insert({
       inviter_user_id: inviterUserId,
       invitee_email: email,
-      role,
+      role: role as typeof validRoles[number],
       invitation_token: token,
       invitation_expires_at: expiresAt.toISOString(),
       status: 'pending'

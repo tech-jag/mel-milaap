@@ -43,14 +43,32 @@ export const trackEvent = async (event: string, payload: any = {}) => {
 
 // Enhanced user profile helpers
 export const getUserProfile = async (userId: string) => {
-  const { data, error } = await supabase
+  // Get user data from users table
+  const { data: userData, error: userError } = await supabase
     .from('users')
     .select('planning_phase, subscription_tier, plan, partner_name, wedding_date, venue_location')
     .eq('id', userId)
     .single();
 
-  if (error) throw error;
-  return data;
+  if (userError) throw userError;
+
+  // Get profile data from user_profiles table
+  const { data: profileData, error: profileError } = await supabase
+    .from('user_profiles')
+    .select('profile_id, full_name')
+    .eq('user_id', userId)
+    .single();
+
+  // Profile may not exist yet, so don't throw error for missing profile
+  if (profileError && profileError.code !== 'PGRST116') {
+    console.warn('Profile not found for user:', userId);
+  }
+
+  return {
+    ...userData,
+    profile_id: profileData?.profile_id,
+    full_name: profileData?.full_name
+  };
 };
 
 export const updateUserPlanningPhase = async (userId: string, phase: 'discover' | 'planning' | 'married') => {

@@ -344,7 +344,8 @@ const AccountDashboard = () => {
                         });
                         return;
                       }
-                      const profileUrl = `${window.location.origin}/profile/${profileId}`;
+                      const profileId = profileData.profile_id;
+                      window.open(`/profile/${profileId}`, '_blank');
                       navigator.clipboard.writeText(profileUrl);
                       toast({
                         title: "Profile link copied!",

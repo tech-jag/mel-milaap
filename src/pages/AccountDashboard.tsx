@@ -344,7 +344,7 @@ const AccountDashboard = () => {
                         });
                         return;
                       }
-                      const profileId = profileData.profile_id;
+                      const profileUrl = `${window.location.origin}/profile/${profileId}`;
                       window.open(`/profile/${profileId}`, '_blank');
                       navigator.clipboard.writeText(profileUrl);
                       toast({

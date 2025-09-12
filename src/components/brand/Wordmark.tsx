@@ -32,8 +32,7 @@ export default function Wordmark({ className = "" }: WordmarkProps) {
         <tspan>l</tspan>
       </text>
       
-     
-      
+            
       {/* Milaap */}
       <text x="55" y="28" className="wordmark-text">
         <tspan>Milaap</tspan>

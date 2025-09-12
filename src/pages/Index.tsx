@@ -96,10 +96,6 @@ const Index = () => {
   </span>
 </h1>
 
-
-            <p className="mt-6 text-4xl md:text-5xl lg:text-6xl font-body font-light text-lux-porcelain">
-              Coming Soon
-            </p>
             
             <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 mt-8 leading-relaxed max-w-3xl mx-auto font-light">
               Australia & New Zealand's most exclusive South Asian matrimony platform. 

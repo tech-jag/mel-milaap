@@ -19,7 +19,7 @@ export default function Wordmark({ className = "" }: WordmarkProps) {
             .wordmark-text {
               font-family: 'Fraunces', serif;
               font-weight: 600;
-              font-size: 24px;
+              font-size: 32px;
             }
           `}
         </style>

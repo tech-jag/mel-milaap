@@ -86,7 +86,7 @@ const Index = () => {
             </Badge>
             
             <h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none">
-              Mēl <span className="text-gradient-champagne">Milaap</span>
+              Mel <span className="text-gradient-champagne">Milaap</span>
               <br />
               <span className="text-4xl md:text-5xl lg:text-6xl font-body font-light">
                 Coming Soon
@@ -241,7 +241,7 @@ const Index = () => {
               Secure Your Exclusive Access
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto">
-              Join all who are already on the waiting list. Limited founding memberships available.
+              Join thousands who are already on the waiting list. Limited founding memberships available.
             </p>
           </motion.div>
 

@@ -15,55 +15,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/match", label: "Find a Match" },
-  { href: "/suppliers", label: "Suppliers" },
-  { href: "/planning", label: "Planning" },
-  { href: "/blog", label: "Stories" },
-  { href: "/pricing", label: "Pricing" },
+  { href: '#benefits', label: 'Benefits' },
+  { href: '#early-access', label: 'Join Founders Circle' },
 ];
 
 export function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [user, setUser] = React.useState<any>(null);
-  const [userPlan, setUserPlan] = React.useState('free');
 
-  React.useEffect(() => {
-    // Check initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) fetchUserPlan(session.user.id);
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        setUser(session?.user ?? null);
-        if (session?.user) {
-          fetchUserPlan(session.user.id);
-        } else {
-          setUserPlan('free');
-        }
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const fetchUserPlan = async (userId: string) => {
-    const { data } = await supabase
-      .from('users')
-      .select('plan')
-      .eq('id', userId)
-      .single();
-    
-    if (data?.plan) {
-      setUserPlan(data.plan);
+  const handleNavClick = (href: string) => {
+    if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      element?.scrollIntoView({ behavior: 'smooth' });
     }
-  };
-
-  const handleLogout = async () => {
-    await supabase.auth.signOut({ scope: 'global' });
     setIsOpen(false);
   };
 
@@ -91,80 +54,26 @@ return (
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-1">
           {navItems.map((item) => (
-            <Link key={item.href} to={item.href}>
-              <Button variant="ghost" size="sm" className="text-foreground hover:text-primary">
-                {item.label}
-              </Button>
-            </Link>
+            <button 
+              key={item.href} 
+              onClick={() => handleNavClick(item.href)}
+              className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium"
+            >
+              {item.label}
+            </button>
           ))}
         </div>
 
-          {/* Desktop Auth Buttons */}
-          <div className="hidden lg:flex items-center space-x-3">
-              {user ? (
-                <>
-                  {userPlan === 'free' && (
-                    <Link to="/premium-plans">
-                      <Button variant="luxury" size="sm">
-                        Upgrade Now
-                      </Button>
-                    </Link>
-                  )}
-                  <Link to="/account">
-                    <Button variant="ghost" size="sm">
-                      Dashboard
-                    </Button>
-                  </Link>
-                  <Link to="/account/planning">
-                    <Button variant="outline" size="sm">
-                      My Planning
-                    </Button>
-                  </Link>
-                  <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="space-x-2">
-                      <User className="w-4 h-4" />
-                      <span>{user.user_metadata?.name || 'My Account'}</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuItem asChild>
-                      <Link to="/account" className="w-full cursor-pointer">
-                        <User className="w-4 h-4 mr-2" />
-                        Dashboard
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to="/account/profile" className="w-full cursor-pointer">
-                        <Settings className="w-4 h-4 mr-2" />
-                        Settings
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem 
-                      onClick={handleLogout}
-                      className="cursor-pointer text-destructive"
-                    >
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Logout
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            ) : (
-              <>
-                <Link to="/auth/login">
-                  <Button variant="ghost" size="sm">
-                    Login
-                  </Button>
-                </Link>
-                <Link to="/auth/signup">
-                  <Button variant="luxury" size="sm">
-                    Sign Up
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
+        {/* Desktop CTA */}
+        <div className="hidden lg:flex items-center space-x-3">
+          <Button 
+            variant="luxury" 
+            size="sm"
+            onClick={() => handleNavClick('#early-access')}
+          >
+            Join Now
+          </Button>
+        </div>
 
           {/* Mobile Menu Button */}
           <Button
@@ -187,44 +96,22 @@ return (
           >
             <div className="flex flex-col space-y-2">
               {navItems.map((item) => (
-                <Link key={item.href} to={item.href} onClick={() => setIsOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start text-foreground">
-                    {item.label}
-                  </Button>
-                </Link>
+                <button 
+                  key={item.href} 
+                  onClick={() => handleNavClick(item.href)}
+                  className="px-4 py-2 text-left text-foreground hover:text-primary transition-colors"
+                >
+                  {item.label}
+                </button>
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
-                {user ? (
-                  <>
-                    <Link to="/account" onClick={() => setIsOpen(false)}>
-                      <Button variant="ghost" className="w-full justify-start">
-                        <User className="w-4 h-4 mr-2" />
-                        Dashboard
-                      </Button>
-                    </Link>
-                    <Button 
-                      variant="ghost" 
-                      className="w-full justify-start text-destructive" 
-                      onClick={handleLogout}
-                    >
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Logout
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Link to="/auth/login" onClick={() => setIsOpen(false)}>
-                      <Button variant="ghost" className="w-full justify-start">
-                        Login
-                      </Button>
-                    </Link>
-                    <Link to="/auth/signup" onClick={() => setIsOpen(false)}>
-                      <Button variant="luxury" className="w-full justify-start">
-                        Sign Up
-                      </Button>
-                    </Link>
-                  </>
-                )}
+                <Button 
+                  variant="luxury" 
+                  className="w-full justify-start"
+                  onClick={() => handleNavClick('#early-access')}
+                >
+                  Join Founders Circle
+                </Button>
               </div>
             </div>
           </motion.div>

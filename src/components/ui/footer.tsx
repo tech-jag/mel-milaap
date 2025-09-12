@@ -9,42 +9,12 @@ import Wordmark from "@/components/brand/Wordmark";
 
 const footerSections = [
   {
-    title: "Platform",
+    title: "Coming Soon",
     links: [
-      { href: "/about", label: "About" },
-      { href: "/how-it-works", label: "How it Works" },
-      { href: "/blog", label: "Stories & Blog" },
-      { href: "/for/parents", label: "Parents Welcome" },
-      { href: "/verification", label: "Verification" },
+      { href: "#benefits", label: "Founder Benefits" },
+      { href: "#early-access", label: "Join Waiting List" },
     ]
-  },
-  {
-    title: "For Suppliers",
-    links: [
-      { href: "/supplier/signup", label: "Supplier Sign-up" },
-      { href: "/supplier/dashboard", label: "Supplier Dashboard" },
-      { href: "/suppliers/featured", label: "Featured Listings" },
-      { href: "/suppliers/pricing", label: "Supplier Pricing" },
-    ]
-  },
-  {
-    title: "Support",
-    links: [
-      { href: "/contact", label: "Contact" },
-      { href: "/faqs", label: "FAQs" },
-      { href: "/trust", label: "Trust & Safety" },
-      { href: "/help", label: "Help Center" },
-    ]
-  },
-    {
-      title: "Legal",
-      links: [
-        { href: "/terms", label: "Terms" },
-        { href: "/privacy-policy", label: "Privacy Policy" },
-        { href: "/data-rights", label: "Data Rights" },
-        { href: "/careers", label: "Careers" },
-      ]
-    }
+  }
 ];
 
 const socialLinks = [
@@ -59,61 +29,55 @@ export function Footer() {
     <footer className="bg-card border-t border-border">
       <div className="container mx-auto px-4 lg:px-8 py-16">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 mb-12">
+        <div className="text-center mb-12">
           {/* Brand Section */}
-          <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center space-x-3 group mb-6">
-              <motion.div 
-                className="flex items-center justify-center w-12 h-12 bg-gradient-primary rounded-xl"
-                whileHover={{ scale: 1.05, rotate: 5 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              >
-                <Heart className="w-6 h-6 text-primary-foreground" />
-              </motion.div>
-              <div>
-                <Wordmark className="h-7 text-foreground group-hover:text-primary transition-colors" />
-                <p className="text-sm text-muted-foreground">Find • Match • Marry • Celebrate</p>
-              </div>
-            </Link>
-            
-            <p className="text-muted-foreground mb-6 max-w-md">
-              Australia & New Zealand's premier South Asian matrimony and wedding platform. 
-              Connecting hearts, celebrating traditions, creating memories.
-            </p>
-
-            {/* Social Links */}
-            <div className="flex space-x-3">
-              {socialLinks.map((social) => (
-                <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">
-                  <Button variant="ghost" size="icon" className="hover:text-primary">
-                    <social.icon className="h-5 w-5" />
-                    <span className="sr-only">{social.label}</span>
-                  </Button>
-                </a>
-              ))}
+          <Link to="/" className="inline-flex items-center space-x-3 group mb-6">
+            <motion.div 
+              className="flex items-center justify-center w-12 h-12 bg-gradient-primary rounded-xl"
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+              <Heart className="w-6 h-6 text-primary-foreground" />
+            </motion.div>
+            <div>
+              <Wordmark className="h-7 text-foreground group-hover:text-primary transition-colors" />
+              <p className="text-sm text-muted-foreground">Find • Match • Marry • Celebrate</p>
             </div>
-          </div>
+          </Link>
+          
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Australia & New Zealand's most exclusive South Asian matrimony platform. 
+            Join our founders circle for early access and premium benefits.
+          </p>
 
           {/* Footer Links */}
-          {footerSections.map((section) => (
-            <div key={section.title}>
-              <h3 className="font-heading font-semibold text-foreground mb-4">
-                {section.title}
-              </h3>
-              <ul className="space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.href}>
-                    <Link 
-                      to={link.href}
-                      className="text-muted-foreground hover:text-primary transition-colors text-sm"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="flex justify-center space-x-8 mb-8">
+            {footerSections[0].links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-muted-foreground hover:text-primary transition-colors text-sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector(link.href)?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Social Links */}
+          <div className="flex justify-center space-x-3">
+            {socialLinks.map((social) => (
+              <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer">
+                <Button variant="ghost" size="icon" className="hover:text-primary">
+                  <social.icon className="h-5 w-5" />
+                  <span className="sr-only">{social.label}</span>
+                </Button>
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* Bottom Section */}

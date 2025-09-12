@@ -89,10 +89,7 @@ const Index = () => {
             {/* Accessible H1 + visual brand wordmark */}
             <h1 className="sr-only">Mēl Milaap</h1>
             <div aria-hidden="true" className="text-lux-porcelain">
-              {/* Responsive, color-driven via currentColor.
-                 If your Wordmark.tsx defines a gradient for “Milaap”,
-                 it will render automatically here. */}
-              <Wordmark className="w-[min(90vw,740px)] h-auto mx-auto drop-shadow-lg" />
+              <Wordmark className="w-[min(70vw,740px)] h-auto mx-auto drop-shadow-lg" />
             </div>
 
             <p className="mt-6 text-4xl md:text-5xl lg:text-6xl font-body font-light text-lux-porcelain">

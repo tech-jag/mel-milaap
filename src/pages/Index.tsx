@@ -85,15 +85,13 @@ const Index = () => {
               Exclusive Founders Circle Now Open
             </Badge>
             
-<picture>
-  <source srcSet="/logo-dark.svg" media="(prefers-color-scheme: dark)" />
-  <img src="/logo-dark.svg" alt="Mēl Milaap" className="h-12 md:h-14 w-auto" />
-</picture>
-<br />
-<span className="text-4xl md:text-5xl lg:text-6xl font-body font-light text-lux-porcelain">
-  Coming Soon
-</span>
-
+            <h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none">
+              Mēl <span className="text-gradient-champagne">Milaap</span>
+              <br />
+              <span className="text-4xl md:text-5xl lg:text-6xl font-body font-light">
+                Coming Soon
+              </span>
+            </h1>
             
             <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 leading-relaxed max-w-3xl mx-auto font-light">
               Australia & New Zealand's most exclusive South Asian matrimony platform. 

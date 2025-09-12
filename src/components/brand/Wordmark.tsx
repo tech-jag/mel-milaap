@@ -32,8 +32,7 @@ export default function Wordmark({ className = "" }: WordmarkProps) {
         <tspan>l</tspan>
       </text>
       
-      {/* Macron over the 'e' */}
-      <line x1="20" y1="12" x2="30" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+     
       
       {/* Milaap */}
       <text x="55" y="28" className="wordmark-text">

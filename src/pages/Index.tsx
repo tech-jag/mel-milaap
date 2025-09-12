@@ -23,6 +23,7 @@ import { fadeInUp, staggerChildren, cardHover } from "@/lib/motion";
 import { SEO } from "@/utils/seo";
 import { EarlyAccessForm } from "@/components/EarlyAccessForm";
 import heroImage from "@/assets/hero-coming-soon.jpg";
+import Wordmark from "@/components/brand/Wordmark";
 
 // Founder benefits
 const founderBenefits = [
@@ -84,16 +85,21 @@ const Index = () => {
               <Crown className="w-4 h-4 mr-2" />
               Exclusive Founders Circle Now Open
             </Badge>
+
+            {/* Accessible H1 + visual brand wordmark */}
+            <h1 className="sr-only">Mēl Milaap</h1>
+            <div aria-hidden="true" className="text-lux-porcelain">
+              {/* Responsive, color-driven via currentColor.
+                 If your Wordmark.tsx defines a gradient for “Milaap”,
+                 it will render automatically here. */}
+              <Wordmark className="w-[min(90vw,740px)] h-auto mx-auto drop-shadow-lg" />
+            </div>
+
+            <p className="mt-6 text-4xl md:text-5xl lg:text-6xl font-body font-light text-lux-porcelain">
+              Coming Soon
+            </p>
             
-            <h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none">
-              Mēl <span className="text-gradient-champagne">Milaap</span>
-              <br />
-              <span className="text-4xl md:text-5xl lg:text-6xl font-body font-light">
-                Coming Soon
-              </span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 leading-relaxed max-w-3xl mx-auto font-light">
+            <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 mt-8 leading-relaxed max-w-3xl mx-auto font-light">
               Australia & New Zealand's most exclusive South Asian matrimony platform. 
               <br className="hidden md:block" />
               Be among the first to find your perfect match with our founding members.
@@ -241,7 +247,7 @@ const Index = () => {
               Secure Your Exclusive Access
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto">
-              Join all who are already on the waiting list. Limited founding memberships available.
+              Join thousands who are already on the waiting list. Limited founding memberships available.
             </p>
           </motion.div>
 

@@ -86,7 +86,7 @@ const Index = () => {
             </Badge>
             
             <h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none">
-              Mel <span className="text-gradient-champagne">Milaap</span>
+              M&emacr;l <span className="text-gradient-champagne">Milaap</span>
               <br />
               <span className="text-4xl md:text-5xl lg:text-6xl font-body font-light">
                 Coming Soon

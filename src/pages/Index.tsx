@@ -4,8 +4,6 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Navigation } from "@/components/ui/navigation";
 import { Footer } from "@/components/ui/footer";
-import { VideoHero } from "@/components/ui/video-hero";
-import { JourneySteps } from "@/components/ui/journey-steps";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,176 +12,140 @@ import {
   Shield, 
   Users, 
   Star, 
-  MapPin, 
-  Camera, 
-  Utensils, 
-  Music,
   Sparkles,
   CheckCircle,
-  Quote
+  Crown,
+  Gift,
+  Calendar,
+  Zap
 } from "lucide-react";
 import { fadeInUp, staggerChildren, cardHover } from "@/lib/motion";
 import { SEO } from "@/utils/seo";
+import { EarlyAccessForm } from "@/components/EarlyAccessForm";
+import heroImage from "@/assets/hero-coming-soon.jpg";
 
-// Metrics data
-const metrics = [
-  { value: "15,000+", label: "Verified Profiles" },
-  { value: "2,500+", label: "Successful Matches" },
-  { value: "800+", label: "Trusted Suppliers" },
-  { value: "50+", label: "Cities Covered" },
-];
-
-// Featured categories
-const categories = [
-  { name: "Wedding Venues", icon: MapPin, count: "120+ venues" },
-  { name: "Photographers", icon: Camera, count: "200+ professionals" },
-  { name: "Catering Services", icon: Utensils, count: "150+ caterers" },
-  { name: "Entertainment", icon: Music, count: "80+ artists" },
-];
-
-// Testimonials
-const testimonials = [
-  {
-    quote: "Found my soulmate through Mēl Milaap. The platform made everything so easy and secure.",
-    author: "Priya & Rahul",
-    location: "Sydney, NSW",
-    image: "/api/placeholder/60/60"
+// Founder benefits
+const founderBenefits = [
+  { 
+    icon: Crown, 
+    title: "3 Months Premium Free", 
+    description: "Full access to all premium features at launch"
   },
-  {
-    quote: "As wedding suppliers, we've connected with amazing couples. Highly recommend!",
-    author: "Golden Palace Venues",
-    location: "Melbourne, VIC",
-    image: "/api/placeholder/60/60"
+  { 
+    icon: Gift, 
+    title: "Exclusive Features", 
+    description: "First access to new features and updates"
   },
-  {
-    quote: "The verification process gave us confidence. Found our perfect match within 3 months.",
-    author: "Aisha & Dev",
-    location: "Auckland, NZ",
-    image: "/api/placeholder/60/60"
+  { 
+    icon: Calendar, 
+    title: "Priority Support", 
+    description: "Direct line to our support team"
+  },
+  { 
+    icon: Zap, 
+    title: "Early Access", 
+    description: "Be the first to use the platform before public launch"
   },
 ];
 
 const Index = () => {
-  const [stickyVisible, setStickyVisible] = React.useState(false);
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.scrollY > window.innerHeight * 0.4;
-      setStickyVisible(scrolled);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
-      <SEO />
+      <SEO 
+        title="Mēl Milaap - Coming Soon | Join Our Founders Circle"
+        description="Be the first to experience Australia & New Zealand's most exclusive South Asian matrimony platform. Join our founders circle for 3 months free premium access."
+      />
       <Navigation />
       
       {/* Hero Section */}
-      <VideoHero
-        title="Find your person. Plan a wedding worthy of forever."
-        subtitle="Australia & New Zealand's premier South Asian matrimony platform. Connecting hearts, celebrating traditions, creating lifelong memories."
-        primaryCTA={{ text: "Find a Match", href: "/match" }}
-        secondaryCTA={{ text: "Find Suppliers", href: "/suppliers" }}
-      />
-
-      {/* Journey Steps */}
-      <JourneySteps />
-
-      {/* Metrics Section */}
-      <section className="py-16 bg-card">
-        <div className="container mx-auto px-4 lg:px-8">
-          <motion.div
-            className="grid grid-cols-2 lg:grid-cols-4 gap-8"
-            variants={staggerChildren}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            {metrics.map((metric) => (
-              <motion.div
-                key={metric.label}
-                className="text-center"
-                variants={fadeInUp}
-              >
-                <div className="text-4xl lg:text-5xl font-heading font-bold text-gradient-primary mb-2">
-                  {metric.value}
-                </div>
-                <div className="text-muted-foreground font-medium">
-                  {metric.label}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src={heroImage} 
+            alt="Luxury South Asian wedding couple"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-lux-onyx/80 via-lux-onyx/60 to-transparent" />
         </div>
-      </section>
-
-      {/* Featured Categories */}
-      <section className="py-24 bg-background">
-        <div className="container mx-auto px-4 lg:px-8">
+        
+        {/* Hero Content */}
+        <div className="relative z-10 container mx-auto px-4 lg:px-8 text-center">
           <motion.div
-            className="text-center mb-16"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto"
           >
-            <h2 className="text-luxury-lg text-foreground mb-6">
-              Top Wedding Categories
-            </h2>
-            <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto">
-              Discover premium wedding suppliers across Australia & New Zealand
+            <Badge 
+              variant="secondary" 
+              className="mb-8 px-6 py-2 text-base bg-lux-porcelain/20 text-lux-porcelain border-lux-champagne/30"
+            >
+              <Crown className="w-4 h-4 mr-2" />
+              Exclusive Founders Circle Now Open
+            </Badge>
+            
+            <h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none">
+              Mēl <span className="text-gradient-champagne">Milaap</span>
+              <br />
+              <span className="text-4xl md:text-5xl lg:text-6xl font-body font-light">
+                Coming Soon
+              </span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 leading-relaxed max-w-3xl mx-auto font-light">
+              Australia & New Zealand's most exclusive South Asian matrimony platform. 
+              <br className="hidden md:block" />
+              Be among the first to find your perfect match with our founding members.
             </p>
-          </motion.div>
-
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            variants={staggerChildren}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-            {categories.map((category) => (
-              <motion.div
-                key={category.name}
-                variants={{...fadeInUp, ...cardHover}}
-                whileHover="hover"
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-wrap justify-center gap-4"
+            >
+              <Button 
+                variant="luxury" 
+                size="xl" 
+                className="bg-lux-champagne text-lux-onyx hover:bg-lux-champagne/90 shadow-champagne"
+                onClick={() => document.getElementById('early-access')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <Card className="luxury-card cursor-pointer">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                      <category.icon className="w-8 h-8 text-accent" />
-                    </div>
-                    <h3 className="font-heading font-semibold text-foreground mb-2">
-                      {category.name}
-                    </h3>
-                    <p className="text-sm text-muted-foreground">
-                      {category.count}
-                    </p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          <motion.div
-            className="text-center mt-12"
-            variants={fadeInUp}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
-          >
-              <Button variant="luxury" size="lg" asChild>
-                <a href="/suppliers">Explore All Categories</a>
+                <Heart className="w-5 h-5 mr-2" />
+                Join Founders Circle
               </Button>
+              <Button 
+                variant="glass" 
+                size="xl" 
+                className="text-lux-porcelain border-lux-porcelain/30 hover:bg-lux-porcelain/10"
+                onClick={() => document.getElementById('benefits')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <Gift className="w-5 h-5 mr-2" />
+                Learn More
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.5 }}
+        >
+          <div className="w-6 h-10 border-2 border-lux-porcelain/50 rounded-full flex justify-center">
+            <motion.div
+              className="w-1 h-3 bg-lux-champagne rounded-full mt-2"
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            />
+          </div>
+        </motion.div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-24 bg-card">
+      {/* Founder Benefits Section */}
+      <section id="benefits" className="py-24 bg-card">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -192,57 +154,53 @@ const Index = () => {
             whileInView="animate"
             viewport={{ once: true }}
           >
+            <Badge 
+              variant="secondary" 
+              className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/20"
+            >
+              <Crown className="w-4 h-4 mr-2" />
+              Exclusive Founder Benefits
+            </Badge>
             <h2 className="text-luxury-lg text-foreground mb-6">
-              Love Stories & Success Stories
+              Join Our Founding Members
             </h2>
-            <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto">
-              Real stories from couples and suppliers in our community
+            <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto">
+              Be part of an exclusive community of early adopters who will shape the future of South Asian matchmaking in ANZ. 
+              Enjoy premium benefits worth $300+ absolutely free.
             </p>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
             variants={staggerChildren}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
           >
-            {testimonials.map((testimonial, index) => (
+            {founderBenefits.map((benefit) => (
               <motion.div
-                key={index}
+                key={benefit.title}
                 variants={{...fadeInUp, ...cardHover}}
                 whileHover="hover"
               >
-                <Card className="luxury-card h-full">
+                <Card className="luxury-card h-full text-center">
                   <CardContent className="p-8">
-                    <Quote className="w-8 h-8 text-accent mb-6" />
-                    <p className="text-foreground leading-relaxed mb-6">
-                      "{testimonial.quote}"
-                    </p>
-                    <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center">
-                        <Heart className="w-6 h-6 text-accent" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-foreground">
-                          {testimonial.author}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {testimonial.location}
-                        </div>
-                      </div>
+                    <div className="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-6">
+                      <benefit.icon className="w-8 h-8 text-accent" />
                     </div>
+                    <h3 className="font-heading font-semibold text-foreground mb-4 text-lg">
+                      {benefit.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {benefit.description}
+                    </p>
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
           </motion.div>
-        </div>
-      </section>
 
-      {/* Trust Bar */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4 lg:px-8">
+          {/* Trust Indicators */}
           <motion.div
             className="flex flex-wrap justify-center items-center gap-8 lg:gap-16"
             variants={staggerChildren}
@@ -251,10 +209,10 @@ const Index = () => {
             viewport={{ once: true }}
           >
             {[
-              { icon: CheckCircle, text: "Verified Profiles", color: "text-success" },
-              { icon: Shield, text: "Private & Secure", color: "text-primary" },
-              { icon: Users, text: "Local ANZ Community", color: "text-accent" },
-              { icon: Star, text: "Reviewed Suppliers", color: "text-lux-champagne" },
+              { icon: CheckCircle, text: "Verified Community", color: "text-success" },
+              { icon: Shield, text: "Privacy First", color: "text-primary" },
+              { icon: Users, text: "South Asian Focus", color: "text-accent" },
+              { icon: Sparkles, text: "Premium Experience", color: "text-lux-champagne" },
             ].map((item) => (
               <motion.div
                 key={item.text}
@@ -269,22 +227,34 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Sticky CTA */}
-      {stickyVisible && (
-        <motion.div
-          className="fixed bottom-6 right-6 z-50"
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        >
-          <Button variant="luxury" size="lg" className="shadow-luxury" asChild>
-            <a href="/auth/signup">
-              <Heart className="w-5 h-5 mr-2" />
-              Start Your Journey
-            </a>
-          </Button>
-        </motion.div>
-      )}
+      {/* Early Access Form Section */}
+      <section id="early-access" className="py-24 bg-background">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            className="text-center mb-16"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <h2 className="text-luxury-lg text-foreground mb-6">
+              Secure Your Exclusive Access
+            </h2>
+            <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto">
+              Join thousands who are already on the waiting list. Limited founding memberships available.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <EarlyAccessForm />
+          </motion.div>
+        </div>
+      </section>
 
       <Footer />
     </div>

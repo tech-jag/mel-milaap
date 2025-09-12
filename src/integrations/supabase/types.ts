@@ -370,6 +370,102 @@ export type Database = {
         }
         Relationships: []
       }
+      early_access_suppliers: {
+        Row: {
+          additional_comments: string | null
+          business_category: string
+          business_name: string
+          city: string | null
+          contact_person: string
+          created_at: string
+          current_client_base: string | null
+          desired_features: string[] | null
+          email: string
+          id: string
+          mobile: string | null
+          state: string | null
+          website: string | null
+          years_experience: number | null
+        }
+        Insert: {
+          additional_comments?: string | null
+          business_category: string
+          business_name: string
+          city?: string | null
+          contact_person: string
+          created_at?: string
+          current_client_base?: string | null
+          desired_features?: string[] | null
+          email: string
+          id?: string
+          mobile?: string | null
+          state?: string | null
+          website?: string | null
+          years_experience?: number | null
+        }
+        Update: {
+          additional_comments?: string | null
+          business_category?: string
+          business_name?: string
+          city?: string | null
+          contact_person?: string
+          created_at?: string
+          current_client_base?: string | null
+          desired_features?: string[] | null
+          email?: string
+          id?: string
+          mobile?: string | null
+          state?: string | null
+          website?: string | null
+          years_experience?: number | null
+        }
+        Relationships: []
+      }
+      early_access_users: {
+        Row: {
+          additional_comments: string | null
+          city: string | null
+          created_at: string
+          desired_features: string[] | null
+          email: string
+          full_name: string
+          id: string
+          mobile: string | null
+          referral_source: string | null
+          relationship_status: string | null
+          role: string
+          state: string | null
+        }
+        Insert: {
+          additional_comments?: string | null
+          city?: string | null
+          created_at?: string
+          desired_features?: string[] | null
+          email: string
+          full_name: string
+          id?: string
+          mobile?: string | null
+          referral_source?: string | null
+          relationship_status?: string | null
+          role: string
+          state?: string | null
+        }
+        Update: {
+          additional_comments?: string | null
+          city?: string | null
+          created_at?: string
+          desired_features?: string[] | null
+          email?: string
+          full_name?: string
+          id?: string
+          mobile?: string | null
+          referral_source?: string | null
+          relationship_status?: string | null
+          role?: string
+          state?: string | null
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           created_at: string

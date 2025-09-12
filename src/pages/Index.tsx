@@ -241,7 +241,7 @@ const Index = () => {
               Secure Your Exclusive Access
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto">
-              Join thousands who are already on the waiting list. Limited founding memberships available.
+              Join all who are already on the waiting list. Limited founding memberships available.
             </p>
           </motion.div>
 

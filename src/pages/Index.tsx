@@ -85,16 +85,13 @@ const Index = () => {
               Exclusive Founders Circle Now Open
             </Badge>
             
-<h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none font-heading">
-  {/* Use HTML entity to avoid encoding issues */}
-  <span>M&emacr;l</span>{" "}
-  <span className="text-gradient-champagne">Milaap</span>
-  <br />
-  <span className="text-4xl md:text-5xl lg:text-6xl font-body font-light">
-    Coming Soon
-  </span>
-</h1>
-
+            <h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none">
+              Mēl <span className="text-gradient-champagne">Milaap</span>
+              <br />
+              <span className="text-4xl md:text-5xl lg:text-6xl font-body font-light">
+                Coming Soon
+              </span>
+            </h1>
             
             <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 leading-relaxed max-w-3xl mx-auto font-light">
               Australia & New Zealand's most exclusive South Asian matrimony platform. 

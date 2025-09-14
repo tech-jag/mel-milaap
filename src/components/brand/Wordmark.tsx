@@ -33,6 +33,17 @@ export default function Wordmark({ className = "" }: WordmarkProps) {
         <tspan>l</tspan>
       </text>
 
+      {/* Center the entire word visually */}
+      <text
+        x="50%"             // center of viewBox
+        y="95"              // baseline
+        textAnchor="middle" // center-align the text itself
+        className="mm-text"
+        fill="currentColor" // "Mēl" uses currentColor
+      >
+        Mēl <tspan fill="#F9C64A">Milaap</tspan>
+      </text>
+
       {/* Milaap (solid champagne) */}
       <text x="55" y="28" className="wordmark-text" fill="#F9C64A">
         <tspan>Milaap</tspan>

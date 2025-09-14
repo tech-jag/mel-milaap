@@ -88,7 +88,7 @@ const Index = () => {
 
             {/* Centered brand wordmark and coming soon */}
             <div className="mb-8 w-full flex flex-col items-center justify-center text-center">
-              <Wordmark className="h-20 w-auto mx-auto text-lux-porcelain mb-8" />
+              <Wordmark className="h-30 w-auto mx-auto text-lux-porcelain mb-8" />
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center brand-title">
                 Coming Soon
               </h1>

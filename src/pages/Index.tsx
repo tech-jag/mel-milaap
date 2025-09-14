@@ -87,16 +87,15 @@ const Index = () => {
             </Badge>
 
             {/* Accessible H1 + visual brand wordmark */}
-<h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none">
-  Mēl{" "}
-  <span className="text-lux-champagne">
-    Milaap
-  </span>
+<h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none text-center">
+  <Wordmark className="inline-block" />{" "}
+  <span className="text-lux-champagne">Milaap</span>
   <br />
   <span className="text-4xl md:text-5xl lg:text-6xl font-body font-light">
     Coming Soon
   </span>
 </h1>
+
 
 
             

@@ -6,11 +6,12 @@ export default function Wordmark({ className = "" }: WordmarkProps) {
   return (
     <svg
       viewBox="0 0 200 40"
+      preserveAspectRatio="xMidYMid meet"
       fill="currentColor"
       role="img"
       focusable="false"
       aria-label="Mēl Milaap"
-      className={className}
+      className={`block ${className}`}   // <-- makes centering reliable
     >
       <title>Mēl Milaap</title>
       <defs>
@@ -24,16 +25,15 @@ export default function Wordmark({ className = "" }: WordmarkProps) {
           `}
         </style>
       </defs>
-      
-      {/* Mēl */}
+
+      {/* Mēl (inherits currentColor) */}
       <text x="0" y="28" className="wordmark-text">
         <tspan>M</tspan>
         <tspan>ē</tspan>
         <tspan>l</tspan>
       </text>
-      
-            
-      {/* Milaap */}
+
+      {/* Milaap (solid champagne) */}
       <text x="55" y="28" className="wordmark-text" fill="#F9C64A">
         <tspan>Milaap</tspan>
       </text>

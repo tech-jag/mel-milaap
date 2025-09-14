@@ -86,27 +86,15 @@ const Index = () => {
               Exclusive Founders Circle Now Open
             </Badge>
 
-            {/* Accessible H1 + visual brand wordmark */}
-
-            <div className="mb-8 w-full grid place-items-center">
-  <Wordmark
-    className="block h-[72px] md:h-[88px] lg:h-[104px] text-lux-porcelain"
-  />
-</div>
-
-            <h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none text-center">
-
-              <Wordmark className="inline-block" />{" "}
-  
-              <br />
- 
-              <span className="text-4xl md:text-5xl lg:text-6xl font-body font-light">
-   
+            {/* Centered brand wordmark and coming soon */}
+            <div className="mb-8 w-full flex flex-col items-center justify-center">
+              <Wordmark
+                className="block h-[72px] md:h-[88px] lg:h-[104px] text-lux-porcelain mb-6"
+              />
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-body font-light text-lux-porcelain text-center">
                 Coming Soon
-  
-              </span>
-
-            </h1>
+              </h1>
+            </div>
 
 
 

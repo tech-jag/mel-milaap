@@ -34,7 +34,7 @@ export default function Wordmark({ className = "" }: WordmarkProps) {
       
             
       {/* Milaap */}
-      <text x="55" y="28" className="wordmark-text">
+      <text x="55" y="28" className="wordmark-text" fill="#F9C64A">
         <tspan>Milaap</tspan>
       </text>
     </svg>

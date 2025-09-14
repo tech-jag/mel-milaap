@@ -88,17 +88,25 @@ const Index = () => {
 
             {/* Accessible H1 + visual brand wordmark */}
 
-            {/* Centered wordmark */}
-<div className="mb-8 w-full">
+            <div className="mb-8 w-full grid place-items-center">
   <Wordmark
-    className="block mx-auto h-[72px] md:h-[88px] lg:h-[104px] text-lux-porcelain"
+    className="block h-[72px] md:h-[88px] lg:h-[104px] text-lux-porcelain"
   />
 </div>
 
-<h2 className="text-4xl md:text-5xl lg:text-6xl font-body font-light mb-8">
-  Coming Soon
-</h2>
+            <h1 className="text-luxury-xl text-lux-porcelain mb-8 leading-none text-center">
 
+              <Wordmark className="inline-block" />{" "}
+  
+              <br />
+ 
+              <span className="text-4xl md:text-5xl lg:text-6xl font-body font-light">
+   
+                Coming Soon
+  
+              </span>
+
+            </h1>
 
 
 

@@ -87,11 +87,11 @@ const Index = () => {
             </Badge>
 
             {/* Centered brand wordmark and coming soon */}
-            <div className="mb-8 w-full flex flex-col items-center justify-center">
+            <div className="mb-8 w-full flex flex-col items-center justify-center text-center">
               <Wordmark
-                className="block h-[72px] md:h-[88px] lg:h-[104px] text-lux-porcelain mb-6"
+                className="block h-[72px] md:h-[88px] lg:h-[104px] text-lux-porcelain mb-4"
               />
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-body font-light text-lux-porcelain text-center">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center brand-title">
                 Coming Soon
               </h1>
             </div>

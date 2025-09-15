@@ -89,14 +89,29 @@ const Index = () => {
 
             {/* Centered brand text with proper macron */}
 
-<h1 className="text-6xl text-lux-porcelain" style={{ fontFamily: 'Georgia, serif' }}>
-  Mēl <span className="text-lux-champagne">Milaap</span>
-</h1>
-
-            {/* Coming soon heading */}
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center mb-8">
-              Coming Soon
-            </h2>
+<div className="mb-8 w-full text-center">
+  <div className="mb-8 flex justify-center">
+    <h1 
+      className="text-lux-porcelain font-bold"
+      style={{ 
+        fontFamily: 'Georgia, "Times New Roman", serif',
+        fontSize: 'clamp(4rem, 12vw, 10rem)', // Responsive: min 4rem, scales with viewport, max 10rem
+        letterSpacing: '-0.02em',
+        lineHeight: '0.9'
+      }}
+    >
+      Mēl <span className="text-lux-champagne">Milaap</span>
+    </h1>
+  </div>
+  <h2 
+    className="font-heading font-medium text-lux-porcelain text-center"
+    style={{
+      fontSize: 'clamp(2.5rem, 6vw, 5rem)' // Responsive Coming Soon text
+    }}
+  >
+    Coming Soon
+  </h2>
+</div>
 
 
             

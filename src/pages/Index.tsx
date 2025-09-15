@@ -7,6 +7,7 @@ import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import './app.css';  // or './index.css'
 import { 
   Heart, 
   Shield, 

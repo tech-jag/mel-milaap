@@ -7,6 +7,10 @@ import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
 import { 
   Heart, 
   Shield, 
@@ -87,33 +91,67 @@ const Index = () => {
             </Badge>
 
 {/* Centered brand text with proper macron */}
-<div className="mb-8 w-full text-center">
-  <div className="mb-8 flex justify-center">
-    <div className="relative">
-      {/* Macron line positioned above */}
-      <div 
-        className="absolute text-lux-porcelain"
-        style={{
-          top: '-0.2em',
-          left: '1.05em', // Position over the 'e'
-          fontSize: '0.3em',
-          lineHeight: '1',
-          width: '0.8em',
-          height: '0.15em',
-          backgroundColor: 'currentColor'
-        }}
-      />
-      {/* Main text */}
-      <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-lux-porcelain"
-          style={{ fontFamily: '"Fraunces", serif', fontWeight: 600 }}>
-        Mel <span className="text-lux-champagne">Milaap</span>
+/* Replace your hero section temporarily with this font test */
+
+{/* Font comparison test */}
+<div className="mb-8 w-full text-center bg-black/20 p-8 rounded-lg">
+  <h3 className="text-xl text-lux-porcelain mb-6">Font Test - Which renders Mēl correctly?</h3>
+  
+  <div className="space-y-6">
+    {/* Original Fraunces */}
+    <div>
+      <p className="text-sm text-lux-porcelain/70 mb-2">Current: Fraunces</p>
+      <h1 className="text-5xl text-lux-porcelain" style={{ fontFamily: '"Fraunces", serif', fontWeight: 600 }}>
+        Mēl <span className="text-lux-champagne">Milaap</span>
+      </h1>
+    </div>
+    
+    {/* Crimson Pro */}
+    <div>
+      <p className="text-sm text-lux-porcelain/70 mb-2">Test 1: Crimson Pro</p>
+      <h1 className="brand-crimson text-5xl text-lux-porcelain">
+        Mēl <span className="text-lux-champagne">Milaap</span>
+      </h1>
+    </div>
+    
+    {/* Cormorant Garamond */}
+    <div>
+      <p className="text-sm text-lux-porcelain/70 mb-2">Test 2: Cormorant Garamond</p>
+      <h1 className="brand-cormorant text-5xl text-lux-porcelain">
+        Mēl <span className="text-lux-champagne">Milaap</span>
+      </h1>
+    </div>
+    
+    {/* Playfair Display */}
+    <div>
+      <p className="text-sm text-lux-porcelain/70 mb-2">Test 3: Playfair Display</p>
+      <h1 className="brand-playfair text-5xl text-lux-porcelain">
+        Mēl <span className="text-lux-champagne">Milaap</span>
+      </h1>
+    </div>
+    
+    {/* EB Garamond */}
+    <div>
+      <p className="text-sm text-lux-porcelain/70 mb-2">Test 4: EB Garamond</p>
+      <h1 className="brand-garamond text-5xl text-lux-porcelain">
+        Mēl <span className="text-lux-champagne">Milaap</span>
+      </h1>
+    </div>
+    
+    {/* System fallback test */}
+    <div>
+      <p className="text-sm text-lux-porcelain/70 mb-2">Test 5: System Serif</p>
+      <h1 className="text-5xl text-lux-porcelain" style={{ fontFamily: 'Georgia, "Times New Roman", serif', fontWeight: 600 }}>
+        Mēl <span className="text-lux-champagne">Milaap</span>
       </h1>
     </div>
   </div>
-  <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center">
-    Coming Soon
-  </h2>
 </div>
+
+{/* Temporary coming soon */}
+<h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center mb-8">
+  Coming Soon
+</h2>
 
 
             

@@ -89,9 +89,26 @@ const Index = () => {
 {/* Centered brand text with proper macron */}
 <div className="mb-8 w-full text-center">
   <div className="mb-8 flex justify-center">
-    <h1 className="hero-brand-title text-6xl md:text-7xl lg:text-8xl text-lux-porcelain">
-      M<span className="letter-e-with-macron">e</span>l <span className="text-lux-champagne">Milaap</span>
-    </h1>
+    <div className="relative">
+      {/* Macron line positioned above */}
+      <div 
+        className="absolute text-lux-porcelain"
+        style={{
+          top: '-0.2em',
+          left: '1.05em', // Position over the 'e'
+          fontSize: '0.3em',
+          lineHeight: '1',
+          width: '0.8em',
+          height: '0.15em',
+          backgroundColor: 'currentColor'
+        }}
+      />
+      {/* Main text */}
+      <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold text-lux-porcelain"
+          style={{ fontFamily: '"Fraunces", serif', fontWeight: 600 }}>
+        Mel <span className="text-lux-champagne">Milaap</span>
+      </h1>
+    </div>
   </div>
   <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center">
     Coming Soon

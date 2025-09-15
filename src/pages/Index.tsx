@@ -87,8 +87,23 @@ const Index = () => {
             </Badge>
 
 <div className="mb-8 w-full flex flex-col items-center justify-center text-center">
-  <div className="hero-wordmark-container mb-8">
-    <Wordmark className="h-32 w-auto text-lux-porcelain" />
+  <div 
+    className="mb-8"
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      textAlign: 'center'
+    }}
+  >
+    <Wordmark 
+      className="h-32 w-auto text-lux-porcelain" 
+      style={{
+        margin: '0 auto',
+        display: 'block'
+      }}
+    />
   </div>
   <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center brand-title">
     Coming Soon

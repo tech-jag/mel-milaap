@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
+import { sendWelcomeEmail } from '@/emailService';
 import { 
   Select,
   SelectContent,
@@ -158,9 +159,11 @@ export function EarlyAccessForm() {
           });
         } else {
           throw error;
-        }
+                  }
         return;
-      }
+      } 
+
+      await sendWelcomeEmail('founder_member', userFormData.email, userFormData);
 
       setIsSubmitted(true);
       toast({
@@ -197,10 +200,12 @@ export function EarlyAccessForm() {
           });
         } else {
           throw error;
-        }
+                  }
         return;
       }
 
+        await sendWelcomeEmail('supplier', supplierFormData.email, supplierFormData);
+      
       setIsSubmitted(true);
       toast({
         title: "Registration Successful!",

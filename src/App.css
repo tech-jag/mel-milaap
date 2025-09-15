@@ -18,6 +18,19 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.hero-wordmark-container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.hero-wordmark-container svg {
+  margin: 0 auto !important;
+  display: block !important;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

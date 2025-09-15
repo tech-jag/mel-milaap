@@ -86,24 +86,11 @@ const Index = () => {
               Exclusive Founders Circle Now Open
             </Badge>
 
-<div className="mb-8 w-full flex flex-col items-center justify-center text-center">
-  <div 
-    className="mb-8"
-    style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
-      textAlign: 'center'
-    }}
-  >
-    <Wordmark 
-      className="h-32 w-auto text-lux-porcelain" 
-      style={{
-        margin: '0 auto',
-        display: 'block'
-      }}
-    />
+<div className="mb-8 w-full">
+  <div className="flex justify-center items-center w-full mb-8">
+    <div className="flex justify-center items-center">
+      <Wordmark className="h-32 w-auto text-lux-porcelain mx-auto block" />
+    </div>
   </div>
   <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center brand-title">
     Coming Soon

@@ -1,19 +1,19 @@
 interface WordmarkProps {
   className?: string;
-  style?: React.CSSProperties; // Add style prop to interface
+  style?: React.CSSProperties;
 }
 
 export default function Wordmark({ className = "", style }: WordmarkProps) {
   return (
     <svg
-      viewBox="0 0 300 50"  // Adjusted viewBox for better centering
+      viewBox="0 0 300 50"
       preserveAspectRatio="xMidYMid meet"
       fill="currentColor"
       role="img"
       focusable="false"
       aria-label="Mēl Milaap"
       className={`block ${className}`}
-      style={style} // Now accepts style prop
+      style={style}
     >
       <title>Mēl Milaap</title>
       <defs>
@@ -28,7 +28,7 @@ export default function Wordmark({ className = "", style }: WordmarkProps) {
         </style>
       </defs>
       
-      {/* Single centered text element - no duplicates */}
+      {/* Properly centered text with macron preserved */}
       <text
         x="50%"
         y="35"

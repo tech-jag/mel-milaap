@@ -20,39 +20,30 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
 
-.hero-brand-text {
+.hero-brand-title {
   font-family: 'Fraunces', serif;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1;
-  text-rendering: optimizeLegibility;
-  -webkit-font-feature-settings: "kern" 1;
-  font-feature-settings: "kern" 1;
+  display: inline-block;
+  position: relative;
 }
 
-.brand-text-with-macron {
-  font-family: 'Fraunces', serif;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1;
+.letter-e-with-macron {
   position: relative;
   display: inline-block;
 }
 
-.brand-text-with-macron .e-with-macron {
-  position: relative;
-  display: inline-block;
-}
-
-.brand-text-with-macron .e-with-macron::after {
-  content: '¯';
+.letter-e-with-macron::before {
+  content: '';
   position: absolute;
-  top: -0.3em;
+  top: -0.15em;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.6em;
-  line-height: 1;
-}
+  width: 0.7em;
+  height: 0.08em;
+  background-color: currentColor;
+  border-radius: 0.04em;
 
 @keyframes logo-spin {
   from {

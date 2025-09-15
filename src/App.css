@@ -18,17 +18,16 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.hero-wordmark-container {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  width: 100% !important;
-  margin: 0 auto !important;
-}
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
 
-.hero-wordmark-container svg {
-  margin: 0 auto !important;
-  display: block !important;
+.hero-brand-text {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
 }
 
 @keyframes logo-spin {

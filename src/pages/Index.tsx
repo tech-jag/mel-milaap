@@ -71,6 +71,8 @@ const Index = () => {
         </div>
         
         {/* Hero Content */}
+/* Replace your hero content section with this corrected version */
+
 <div className="relative z-10 container mx-auto px-4 lg:px-8 text-center">
   <motion.div
     initial={{ opacity: 0, y: 30 }}
@@ -86,17 +88,10 @@ const Index = () => {
       Exclusive Founders Circle Now Open
     </Badge>
 
-    {/* FIXED: Centered brand wordmark and coming soon */}
+    {/* FIXED: Properly centered wordmark */}
     <div className="mb-8 flex flex-col items-center justify-center space-y-6">
-      <div className="flex justify-center w-full">
-        <Wordmark 
-          className="h-32 w-auto text-lux-porcelain" 
-          style={{ 
-            display: 'block',
-            margin: '0 auto',
-            textAlign: 'center'
-          }} 
-        />
+      <div className="w-full flex justify-center">
+        <Wordmark className="h-32 w-auto text-lux-porcelain mx-auto" />
       </div>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center">
         Coming Soon
@@ -136,7 +131,6 @@ const Index = () => {
     </motion.div>
   </motion.div>
 </div>
-
         {/* Scroll Indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"

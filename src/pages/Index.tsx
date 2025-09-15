@@ -90,7 +90,7 @@ const Index = () => {
 <div className="mb-8 w-full text-center">
   <div className="mb-8 flex justify-center">
     <h1 className="brand-text-with-macron text-6xl md:text-7xl lg:text-8xl text-lux-porcelain">
-      M<span className="e-with-macron">e</span>l <span className="text-lux-champagne">Milaap</span>
+      M<span className="e-with-macron">ē</span>l <span className="text-lux-champagne">Milaap</span>
     </h1>
   </div>
   <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center">

@@ -71,98 +71,66 @@ const Index = () => {
         </div>
         
         {/* Hero Content */}
-/* Replace your entire hero section with this properly centered version */
+        <div className="relative z-10 container mx-auto px-4 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto"
+          >
+            <Badge 
+              variant="secondary" 
+              className="mb-8 px-6 py-2 text-base bg-lux-porcelain/20 text-lux-porcelain border-lux-champagne/30"
+            >
+              <Crown className="w-4 h-4 mr-2" />
+              Exclusive Founders Circle Now Open
+            </Badge>
 
-<section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-  {/* Background Image */}
-  <div className="absolute inset-0 z-0">
-    <img 
-      src={heroImage} 
-      alt="Luxury South Asian wedding couple"
-      className="w-full h-full object-cover"
-    />
-    <div className="absolute inset-0 bg-gradient-to-r from-lux-onyx/80 via-lux-onyx/60 to-transparent" />
-  </div>
-  
-  {/* Hero Content - FIXED CENTERING */}
-  <div className="relative z-10 w-full">
-    <div className="container mx-auto px-4 lg:px-8">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-4xl mx-auto text-center"
-      >
-        <Badge 
-          variant="secondary" 
-          className="mb-8 px-6 py-2 text-base bg-lux-porcelain/20 text-lux-porcelain border-lux-champagne/30"
-        >
-          <Crown className="w-4 h-4 mr-2" />
-          Exclusive Founders Circle Now Open
-        </Badge>
+            {/* Centered brand wordmark and coming soon */}
+            <div className="mb-8 w-full flex flex-col items-center justify-center text-center">
+              <Wordmark className="h-30 w-auto mx-auto text-lux-porcelain mb-8" />
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center brand-title">
+                Coming Soon
+              </h1>
+            </div>
 
-        {/* CORRECTED: Centered brand wordmark and coming soon */}
-        <div className="mb-8 w-full">
-          <div className="flex justify-center mb-6">
-            <Wordmark className="h-32 w-auto text-lux-porcelain" />
-          </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center">
-            Coming Soon
-          </h1>
+
+
+            
+            <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 mt-8 leading-relaxed max-w-3xl mx-auto font-light">
+              Australia & New Zealand's most exclusive South Asian matrimony platform. 
+              <br className="hidden md:block" />
+              Be among the first to find your perfect match with our founding members.
+            </p>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="flex flex-wrap justify-center gap-4"
+            >
+              <Button 
+                variant="luxury" 
+                size="xl" 
+                className="bg-lux-champagne text-lux-onyx hover:bg-lux-champagne/90 shadow-champagne"
+                onClick={() => document.getElementById('early-access')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <Heart className="w-5 h-5 mr-2" />
+                Join Founders Circle
+              </Button>
+              <Button 
+                variant="glass" 
+                size="xl" 
+                className="text-lux-porcelain border-lux-porcelain/30 hover:bg-lux-porcelain/10"
+                onClick={() => document.getElementById('benefits')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <Gift className="w-5 h-5 mr-2" />
+                Learn More
+              </Button>
+            </motion.div>
+          </motion.div>
         </div>
-        
-        <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 mt-8 leading-relaxed max-w-3xl mx-auto font-light">
-          Australia & New Zealand's most exclusive South Asian matrimony platform. 
-          <br className="hidden md:block" />
-          Be among the first to find your perfect match with our founding members.
-        </p>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex flex-wrap justify-center gap-4"
-        >
-          <Button 
-            variant="luxury" 
-            size="xl" 
-            className="bg-lux-champagne text-lux-onyx hover:bg-lux-champagne/90 shadow-champagne"
-            onClick={() => document.getElementById('early-access')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            <Heart className="w-5 h-5 mr-2" />
-            Join Founders Circle
-          </Button>
-          <Button 
-            variant="glass" 
-            size="xl" 
-            className="text-lux-porcelain border-lux-porcelain/30 hover:bg-lux-porcelain/10"
-            onClick={() => document.getElementById('benefits')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            <Gift className="w-5 h-5 mr-2" />
-            Learn More
-          </Button>
-        </motion.div>
-      </motion.div>
-    </div>
-  </div>
 
-  {/* Scroll Indicator */}
-  <motion.div
-    className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ delay: 1, duration: 0.5 }}
-  >
-    <div className="w-6 h-10 border-2 border-lux-porcelain/50 rounded-full flex justify-center">
-      <motion.div
-        className="w-1 h-3 bg-lux-champagne rounded-full mt-2"
-        animate={{ y: [0, 12, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
-      />
-    </div>
-  </motion.div>
-</section>
-        
         {/* Scroll Indicator */}
         <motion.div
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"

@@ -1,6 +1,18 @@
-// src/emailService.js - Replace your current file with this
+// src/emailService.js - Temporary debug version
 
 export async function sendWelcomeEmail(userType, email, userData) {
+  // DEBUG: Check if API key is loading
+  const apiKey = import.meta.env.VITE_RESEND_API_KEY || process.env.RESEND_API_KEY;
+  
+  console.log('API Key exists:', !!apiKey);
+  console.log('API Key starts with re_:', apiKey?.startsWith('re_'));
+  console.log('Environment variables:', import.meta.env);
+  
+  if (!apiKey) {
+    console.error('❌ Resend API key not found in environment variables');
+    return { success: false, error: 'API key missing' };
+  }
+
   // Email templates
   const templates = {
     founder_member: {
@@ -64,13 +76,8 @@ export async function sendWelcomeEmail(userType, email, userData) {
   try {
     const template = templates[userType] || templates.founder_member;
     
-    // Get the API key from environment variables
-    const apiKey = import.meta.env.VITE_RESEND_API_KEY || process.env.RESEND_API_KEY;
-    
-    if (!apiKey) {
-      console.error('Resend API key not found');
-      return { success: false, error: 'API key missing' };
-    }
+    console.log('📧 Attempting to send email to:', email);
+    console.log('📧 Using template:', userType);
     
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -86,17 +93,21 @@ export async function sendWelcomeEmail(userType, email, userData) {
       })
     });
 
+    console.log('📧 Response status:', response.status);
+    console.log('📧 Response ok:', response.ok);
+    
     const result = await response.json();
+    console.log('📧 Response data:', result);
     
     if (response.ok) {
-      console.log('Welcome email sent successfully', result);
+      console.log('✅ Welcome email sent successfully', result);
       return { success: true, id: result.id };
     } else {
-      console.error('Resend API error:', result);
+      console.error('❌ Resend API error:', result);
       return { success: false, error: result };
     }
   } catch (error) {
-    console.error('Email sending error:', error);
+    console.error('❌ Email sending error:', error);
     return { success: false, error: error.message };
   }
 }

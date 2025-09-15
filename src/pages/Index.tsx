@@ -87,9 +87,11 @@ const Index = () => {
             </Badge>
 
 {/* Centered brand text with proper macron */}
-<div className="mb-8 w-full">
+<div className="mb-8 w-full text-center">
   <div className="mb-8 flex justify-center">
-    <HeroBrandText />
+    <h1 className="brand-text-with-macron text-6xl md:text-7xl lg:text-8xl text-lux-porcelain">
+      M<span className="e-with-macron">e</span>l <span className="text-lux-champagne">Milaap</span>
+    </h1>
   </div>
   <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center">
     Coming Soon

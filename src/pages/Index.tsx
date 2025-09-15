@@ -88,9 +88,10 @@ const Index = () => {
             </Badge>
 
             {/* Centered brand text with proper macron */}
-            <div className="text-center mb-8">
-              <Wordmark />
-            </div>
+
+<h1 className="text-6xl text-lux-porcelain" style={{ fontFamily: 'Georgia, serif' }}>
+  Mēl <span className="text-lux-champagne">Milaap</span>
+</h1>
 
             {/* Coming soon heading */}
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center mb-8">

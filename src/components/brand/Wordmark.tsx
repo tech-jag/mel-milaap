@@ -1,17 +1,19 @@
 interface WordmarkProps {
   className?: string;
+  style?: React.CSSProperties; // Add style prop to interface
 }
 
-export default function Wordmark({ className = "" }: WordmarkProps) {
+export default function Wordmark({ className = "", style }: WordmarkProps) {
   return (
     <svg
-      viewBox="0 0 200 40"
+      viewBox="0 0 300 50"  // Adjusted viewBox for better centering
       preserveAspectRatio="xMidYMid meet"
       fill="currentColor"
       role="img"
       focusable="false"
       aria-label="Mēl Milaap"
-      className={`block ${className}`}   // <-- makes centering reliable
+      className={`block ${className}`}
+      style={style} // Now accepts style prop
     >
       <title>Mēl Milaap</title>
       <defs>
@@ -20,33 +22,21 @@ export default function Wordmark({ className = "" }: WordmarkProps) {
             .wordmark-text {
               font-family: 'Fraunces', serif;
               font-weight: 600;
-              font-size: 32px;
+              font-size: 28px;
             }
           `}
         </style>
       </defs>
-
-      {/* Mēl (inherits currentColor) */}
-      <text x="0" y="28" className="wordmark-text">
-        <tspan>M</tspan>
-        <tspan>ē</tspan>
-        <tspan>l</tspan>
-      </text>
-
-      {/* Center the entire word visually */}
+      
+      {/* Single centered text element - no duplicates */}
       <text
-        x="50%"             // center of viewBox
-        y="95"              // baseline
-        textAnchor="middle" // center-align the text itself
-        className="mm-text"
-        fill="currentColor" // "Mēl" uses currentColor
+        x="50%"
+        y="35"
+        textAnchor="middle"
+        className="wordmark-text"
+        fill="currentColor"
       >
         Mēl <tspan fill="#F9C64A">Milaap</tspan>
-      </text>
-
-      {/* Milaap (solid champagne) */}
-      <text x="55" y="28" className="wordmark-text" fill="#F9C64A">
-        <tspan>Milaap</tspan>
       </text>
     </svg>
   );

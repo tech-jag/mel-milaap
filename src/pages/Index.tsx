@@ -88,54 +88,7 @@ const Index = () => {
             </Badge>
 
 {/* Centered brand text with proper macron */}
-/* Replace your hero section temporarily with this font test */
 
-{/* Font comparison test */}
-<div className="mb-8 w-full text-center bg-black/20 p-8 rounded-lg">
-  <h3 className="text-xl text-lux-porcelain mb-6">Font Test - Which renders Mēl correctly?</h3>
-  
-  <div className="space-y-6">
-    {/* Original Fraunces */}
-    <div>
-      <p className="text-sm text-lux-porcelain/70 mb-2">Current: Fraunces</p>
-      <h1 className="text-5xl text-lux-porcelain" style={{ fontFamily: '"Fraunces", serif', fontWeight: 600 }}>
-        Mēl <span className="text-lux-champagne">Milaap</span>
-      </h1>
-    </div>
-    
-    {/* Crimson Pro */}
-    <div>
-      <p className="text-sm text-lux-porcelain/70 mb-2">Test 1: Crimson Pro</p>
-      <h1 className="brand-crimson text-5xl text-lux-porcelain">
-        Mēl <span className="text-lux-champagne">Milaap</span>
-      </h1>
-    </div>
-    
-    {/* Cormorant Garamond */}
-    <div>
-      <p className="text-sm text-lux-porcelain/70 mb-2">Test 2: Cormorant Garamond</p>
-      <h1 className="brand-cormorant text-5xl text-lux-porcelain">
-        Mēl <span className="text-lux-champagne">Milaap</span>
-      </h1>
-    </div>
-    
-    {/* Playfair Display */}
-    <div>
-      <p className="text-sm text-lux-porcelain/70 mb-2">Test 3: Playfair Display</p>
-      <h1 className="brand-playfair text-5xl text-lux-porcelain">
-        Mēl <span className="text-lux-champagne">Milaap</span>
-      </h1>
-    </div>
-    
-    {/* EB Garamond */}
-    <div>
-      <p className="text-sm text-lux-porcelain/70 mb-2">Test 4: EB Garamond</p>
-      <h1 className="brand-garamond text-5xl text-lux-porcelain">
-        Mēl <span className="text-lux-champagne">Milaap</span>
-      </h1>
-    </div>
-    
-    {/* System fallback test */}
     <div>
       <p className="text-sm text-lux-porcelain/70 mb-2">Test 5: System Serif</p>
       <h1 className="text-5xl text-lux-porcelain" style={{ fontFamily: 'Georgia, "Times New Roman", serif', fontWeight: 600 }}>

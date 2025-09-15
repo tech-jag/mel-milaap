@@ -30,6 +30,30 @@
   font-feature-settings: "kern" 1;
 }
 
+.brand-text-with-macron {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  position: relative;
+  display: inline-block;
+}
+
+.brand-text-with-macron .e-with-macron {
+  position: relative;
+  display: inline-block;
+}
+
+.brand-text-with-macron .e-with-macron::after {
+  content: '¯';
+  position: absolute;
+  top: -0.3em;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6em;
+  line-height: 1;
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

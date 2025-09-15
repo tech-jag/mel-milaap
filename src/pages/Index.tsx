@@ -26,30 +26,6 @@ import { EarlyAccessForm } from "@/components/EarlyAccessForm";
 import heroImage from "@/assets/hero-coming-soon.jpg";
 import Wordmark from "@/components/brand/Wordmark";
 
-.brand-crimson {
-  font-family: 'Crimson Pro', serif;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.brand-cormorant {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.brand-playfair {
-  font-family: 'Playfair Display', serif;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.brand-garamond {
-  font-family: 'EB Garamond', serif;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
 // Founder benefits
 const founderBenefits = [
   { 

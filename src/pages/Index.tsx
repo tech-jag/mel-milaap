@@ -7,10 +7,7 @@ import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
 import { 
   Heart, 
   Shield, 
@@ -28,6 +25,30 @@ import { SEO } from "@/utils/seo";
 import { EarlyAccessForm } from "@/components/EarlyAccessForm";
 import heroImage from "@/assets/hero-coming-soon.jpg";
 import Wordmark from "@/components/brand/Wordmark";
+
+.brand-crimson {
+  font-family: 'Crimson Pro', serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.brand-cormorant {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.brand-playfair {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.brand-garamond {
+  font-family: 'EB Garamond', serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
 
 // Founder benefits
 const founderBenefits = [

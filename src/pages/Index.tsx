@@ -86,17 +86,24 @@ const Index = () => {
               Exclusive Founders Circle Now Open
             </Badge>
 
-<div className="mb-8 w-full">
-  <div className="flex justify-center items-center w-full mb-8">
-    <div className="flex justify-center items-center">
-      <Wordmark className="h-32 w-auto text-lux-porcelain mx-auto block" />
-    </div>
+{/* Centered brand text with proper macron */}
+<div className="mb-8 w-full text-center">
+  <div className="mb-8 flex justify-center">
+    <h1 
+      className="text-6xl md:text-7xl lg:text-8xl font-heading font-semibold text-lux-porcelain"
+      style={{ 
+        fontFamily: '"Fraunces", serif',
+        letterSpacing: '-0.02em',
+        lineHeight: '1'
+      }}
+    >
+      M&emacr;l <span className="text-lux-champagne">Milaap</span>
+    </h1>
   </div>
-  <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center brand-title">
+  <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-medium text-lux-porcelain text-center">
     Coming Soon
-  </h1>
+  </h2>
 </div>
-
 
 
             

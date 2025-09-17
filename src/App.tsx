@@ -129,8 +129,391 @@ const App = () => (
               {/* Landing Page - Coming Soon */}
               <Route path="/" element={<Index />} />
               
-              {/* Catch-all Route - Redirect to Landing */}
-              <Route path="*" element={<Index />} />
+              {/* Public Pages */}
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/faqs" element={<Faqs />} />
+              <Route path="/help" element={<Help />} />
+              <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/premium" element={<Premium />} />
+              <Route path="/premium-plans" element={<PremiumPlans />} />
+              <Route path="/trust" element={<Trust />} />
+              <Route path="/verification" element={<Verification />} />
+              <Route path="/stories" element={<Stories />} />
+              <Route path="/story/:id" element={<StoryDetail />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/data-rights" element={<DataRights />} />
+              <Route path="/careers" element={<Careers />} />
+              <Route path="/press" element={<Press />} />
+              <Route path="/health" element={<Health />} />
+              
+              {/* Target Pages */}
+              <Route path="/for-parents" element={<ForParents />} />
+              <Route path="/for-singles" element={<ForSingles />} />
+              <Route path="/for-suppliers" element={<ForSuppliers />} />
+              
+              {/* Destinations */}
+              <Route path="/destinations" element={<Destinations />} />
+              <Route path="/city/sydney" element={<CitySydney />} />
+              <Route path="/city/melbourne" element={<CityMelbourne />} />
+              <Route path="/city/auckland" element={<CityAuckland />} />
+              
+              {/* Suppliers */}
+              <Route path="/suppliers" element={<Suppliers />} />
+              <Route path="/suppliers/signup" element={<SupplierSignup />} />
+              <Route path="/suppliers/feature-listings" element={<SuppliersFeatureListings />} />
+              <Route path="/suppliers/pricing" element={<SuppliersPricing />} />
+              
+              {/* Auth Routes */}
+              <Route path="/login" element={<Auth />} />
+              <Route path="/register" element={<Auth />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              
+              {/* Tools and Features */}
+              <Route path="/tools" element={<Tools />} />
+              <Route path="/planning" element={<WeddingPlanning />} />
+              <Route path="/planning/public" element={<PublicPlanning />} />
+              <Route path="/planning/dashboard" element={<PlanningDashboard />} />
+              <Route path="/planning/timeline" element={<PlanningTimeline />} />
+              <Route path="/planning/registry" element={<PlanningRegistry />} />
+              <Route path="/planning/checklist" element={<PlanningChecklist />} />
+              <Route path="/planning/notes" element={<PlanningNotes />} />
+              
+              {/* Public Profiles */}
+              <Route path="/profile/:id" element={<PublicProfile />} />
+              <Route path="/profile/preview" element={<ProfilePreviewPage />} />
+              
+              {/* Protected Routes */}
+              <Route path="/match" element={
+                <PrivateRoute>
+                  <Match />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/partner-preferences" element={
+                <PrivateRoute>
+                  <PartnerPreferences />
+                </PrivateRoute>
+              } />
+              
+              {/* Account Routes */}
+              <Route path="/account" element={
+                <PrivateRoute>
+                  <Account />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/dashboard" element={
+                <PrivateRoute>
+                  <AccountDashboard />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/profile" element={
+                <PrivateRoute>
+                  <AccountProfile />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/photos" element={
+                <PrivateRoute>
+                  <AccountPhotos />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/security" element={
+                <PrivateRoute>
+                  <AccountSecurity />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/settings" element={
+                <PrivateRoute>
+                  <AccountSettings />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/billing" element={
+                <PrivateRoute>
+                  <AccountBilling />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/favorites" element={
+                <PrivateRoute>
+                  <AccountFavorites />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/messages" element={
+                <PrivateRoute>
+                  <AccountMessages />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/verification" element={
+                <PrivateRoute>
+                  <AccountVerification />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/collaborators" element={
+                <PrivateRoute>
+                  <AccountCollaborators />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/invites" element={
+                <PrivateRoute>
+                  <AccountInvites />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/guests" element={
+                <PrivateRoute>
+                  <AccountGuests />
+                </PrivateRoute>
+              } />
+              
+              {/* Account Planning Routes */}
+              <Route path="/account/planning" element={
+                <PrivateRoute>
+                  <AccountPlanning />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/planning/budget" element={
+                <PrivateRoute>
+                  <AccountPlanningBudget />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/planning/guests" element={
+                <PrivateRoute>
+                  <AccountPlanningGuests />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/planning/todo" element={
+                <PrivateRoute>
+                  <AccountPlanningTodo />
+                </PrivateRoute>
+              } />
+              
+              <Route path="/account/planning/seating" element={
+                <PrivateRoute>
+                  <AccountPlanningSeating />
+                </PrivateRoute>
+              } />
+              
+              {/* Supplier Dashboard */}
+              <Route path="/supplier/dashboard" element={
+                <PrivateRoute>
+                  <SupplierDashboard />
+                </PrivateRoute>
+              } />
+              
+              {/* Onboarding Routes */}
+              <Route path="/onboarding" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep1 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-1" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep1 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-2" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep2 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-3" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep3 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-4" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep4 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-5" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep5 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-6" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep6 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-7" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep7 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-8" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep8 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-9" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep9 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-10" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep10 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-11" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep11 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-12" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep12 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-13" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep13 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-14" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep14 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-15" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep15 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-16" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep16 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-17" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep17 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-18" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep18 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-19" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep19 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-20" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep20 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-21" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep21 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-22" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep22 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/step-23" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep23 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              {/* 404 - Not Found */}
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </AuthProvider>

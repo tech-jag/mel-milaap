@@ -255,16 +255,31 @@ const Auth = () => {
         throw error;
       }
 
-      toast({
-        title: "Welcome to Mēl Milaap!",
-        description: "Account created successfully. Let's build your profile!",
-        duration: 3000,
-      });
+      // Check if user was created but needs email confirmation
+      if (data.user && !data.session) {
+        toast({
+          title: "Account Created!",
+          description: "Please check your email to verify your account, then sign in to continue.",
+          duration: 5000,
+        });
+        
+        // Switch to login tab
+        setActiveTab('login');
+        return;
+      }
 
-      console.log('Signup successful, navigating to onboarding/3 (skipping email verification)');
-      
-      // Skip email verification step and go directly to profile setup
-      navigate('/onboarding/3');
+      // User is fully authenticated (email confirmation disabled)
+      if (data.user && data.session) {
+        toast({
+          title: "Welcome to Mēl Milaap!",
+          description: "Account created successfully. Let's build your profile!",
+          duration: 3000,
+        });
+
+        console.log('Signup successful, user authenticated, navigating to onboarding/3');
+        navigate('/onboarding/3');
+        return;
+      }
     } catch (error: any) {
       toast({
         title: "Signup Failed",

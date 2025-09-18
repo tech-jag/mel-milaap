@@ -332,6 +332,191 @@ const App = () => (
                 </PrivateRoute>
               } />
               
+              {/* Numbered onboarding routes */}
+              <Route path="/onboarding/1" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep1 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/2" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep2 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/3" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep3 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/4" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep4 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/5" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep5 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/6" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep6 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/7" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep7 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/8" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep8 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/9" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep9 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/10" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep10 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/11" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep11 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/12" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep12 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/13" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep13 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/14" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep14 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/15" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep15 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/16" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep16 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/17" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep17 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/18" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep18 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/19" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep19 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/20" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep20 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/21" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep21 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/22" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep22 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
+              <Route path="/onboarding/23" element={
+                <PrivateRoute>
+                  <OnboardingGuard>
+                    <OnboardingStep23 />
+                  </OnboardingGuard>
+                </PrivateRoute>
+              } />
+              
               <Route path="/onboarding/step-1" element={
                 <PrivateRoute>
                   <OnboardingGuard>

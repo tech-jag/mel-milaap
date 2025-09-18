@@ -4,7 +4,7 @@ const HeroBrandText = ({ className = "" }) => {
       <h1 
         className="text-6xl md:text-7xl lg:text-8xl font-bold text-lux-porcelain"
         style={{
-          fontFamily: '"Fraunces", "Times New Roman", serif',
+          fontFamily: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
           fontWeight: 600,
           letterSpacing: '-0.02em',
           lineHeight: '0.9',

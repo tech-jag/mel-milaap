@@ -504,8 +504,8 @@ const Home = () => {
                     {step.number}
                   </div>
                   <CardContent className="p-8 relative z-10">
-                    <div className="w-16 h-16 bg-red-600/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-red-600/20 transition-colors duration-300">
-                      <step.icon className="w-8 h-8 text-red-600" />
+                  <div className="w-16 h-16 bg-brand-burgundy/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-burgundy/20 transition-colors duration-300">
+                    <step.icon className="w-8 h-8 text-brand-burgundy" />
                     </div>
                     <h3 className="font-heading font-bold text-foreground mb-2 text-xl tracking-wider">
                       {step.title}
@@ -554,7 +554,7 @@ const Home = () => {
               Experience the premium difference in matrimonial matchmaking designed 
               specifically for South Asian communities in Australia & New Zealand.
             </p>
-            <p className="text-red-600 font-medium">
+            <p className="text-brand-burgundy font-medium">
               Unlike generic platforms like shaadi.com, we understand your regional culture 
               and premium expectations.
             </p>
@@ -600,7 +600,7 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-heading font-bold text-red-600 mb-4">
+              <h3 className="text-2xl font-heading font-bold text-brand-burgundy mb-4">
                 Trusted by Australia & New Zealand's South Asian Community
               </h3>
             </div>
@@ -634,7 +634,7 @@ const Home = () => {
                 asChild
                 variant="luxury" 
                 size="xl" 
-                className="bg-red-600 text-white hover:bg-red-700 shadow-luxury mr-4"
+                className="bg-brand-burgundy text-white hover:bg-brand-burgundy/90 shadow-luxury mr-4"
               >
                 <Link to="/register">
                   <Heart className="w-5 h-5 mr-2" />
@@ -668,13 +668,13 @@ const Home = () => {
           >
             <Badge 
               variant="secondary" 
-              className="mb-6 px-4 py-2 bg-red-600/10 text-red-600 border-red-600/20"
+              className="mb-6 px-4 py-2 bg-brand-burgundy/10 text-brand-burgundy border-brand-burgundy/20"
             >
               <Shield className="w-4 h-4 mr-2" />
               Security First
             </Badge>
             <h2 className="text-luxury-lg text-foreground mb-6">
-              Your Safety is Our <span className="text-red-600">Priority</span>
+              Your Safety is Our <span className="text-brand-burgundy">Priority</span>
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto">
               Australia and New Zealand's most trusted matrimonial platform. Every profile is 
@@ -699,8 +699,8 @@ const Home = () => {
               >
                 <Card className="luxury-card h-full text-center group-hover:shadow-luxury transition-all duration-300">
                   <CardContent className="p-8">
-                    <div className="w-16 h-16 bg-red-600/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-red-600/20 transition-colors duration-300">
-                      <feature.icon className="w-8 h-8 text-red-600" />
+                  <div className="w-16 h-16 bg-brand-burgundy/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-brand-burgundy/20 transition-colors duration-300">
+                    <feature.icon className="w-8 h-8 text-brand-burgundy" />
                     </div>
                     <h3 className="font-heading font-semibold text-foreground mb-4 text-lg">
                       {feature.title}
@@ -724,14 +724,14 @@ const Home = () => {
 
           {/* Safety Statistics */}
           <motion.div
-            className="bg-red-600/5 rounded-2xl p-12"
+            className="bg-brand-burgundy/5 rounded-2xl p-12"
             variants={fadeInUp}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
           >
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-heading font-bold text-red-600 mb-4">
+              <h3 className="text-2xl font-heading font-bold text-brand-burgundy mb-4">
                 Trusted by 50,000+ Verified Members
               </h3>
             </div>
@@ -758,8 +758,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Trust Badges Section */}
-      <section className="py-16 bg-gradient-hero">
+      {/* Trust Badges Section - Scrolling */}
+      <section className="py-16 bg-gradient-to-r from-brand-cream to-brand-ivory">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             className="text-center mb-12"
@@ -768,7 +768,7 @@ const Home = () => {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl font-heading font-bold text-foreground mb-4">
+            <h2 className="text-2xl font-heading font-bold text-brand-burgundy mb-4">
               Trusted Across Australia & New Zealand
             </h2>
             <p className="text-muted-foreground">
@@ -776,6 +776,45 @@ const Home = () => {
               communities in ANZ since 2018
             </p>
           </motion.div>
+
+          {/* Scrolling Trust Badges */}
+          <div className="overflow-hidden mb-12">
+            <motion.div
+              animate={{ x: [0, -1920] }}
+              transition={{ 
+                duration: 30, 
+                repeat: Infinity, 
+                ease: "linear" 
+              }}
+              className="flex gap-8 items-center whitespace-nowrap"
+              style={{ width: "fit-content" }}
+            >
+              {[
+                { icon: "⭐", text: "5.9★ Rating", subtitle: "User reviews" },
+                { icon: "🔒", text: "Premium Service", subtitle: "Verified profiles" },
+                { icon: "❤️", text: "50,000+ Users", subtitle: "Active community" },
+                { icon: "✅", text: "5,000+ Matches", subtitle: "Successful connections" },
+                { icon: "📍", text: "ANZ Specialised", subtitle: "Regional expertise" },
+                { icon: "📱", text: "Mobile Ready", subtitle: "iOS & Android" },
+                { icon: "🔐", text: "SSL Secured", subtitle: "256-bit encryption" },
+                { icon: "🛡️", text: "Data Protected", subtitle: "Privacy compliant" },
+                { icon: "✔️", text: "100% Verified", subtitle: "Background checks" },
+                { icon: "🇦🇺", text: "Australia Focused", subtitle: "Local expertise" },
+                { icon: "🇳🇿", text: "New Zealand", subtitle: "Nationwide coverage" },
+                { icon: "⭐", text: "5.9★ Rating", subtitle: "User reviews" },
+                { icon: "🔒", text: "Premium Service", subtitle: "Verified profiles" },
+                { icon: "❤️", text: "50,000+ Users", subtitle: "Active community" }
+              ].map((badge, index) => (
+                <div key={index} className="flex items-center gap-3 bg-white/80 backdrop-blur-sm px-6 py-3 rounded-full border border-brand-gold/20 shadow-soft">
+                  <span className="text-2xl">{badge.icon}</span>
+                  <div className="text-left">
+                    <div className="font-semibold text-brand-burgundy">{badge.text}</div>
+                    <div className="text-sm text-gray-600">{badge.subtitle}</div>
+                  </div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
 
           <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
@@ -806,7 +845,7 @@ const Home = () => {
       </section>
 
       {/* Success Stories Section */}
-      <section className="py-24 bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 text-white">
+      <section className="py-24 bg-gradient-to-br from-brand-burgundy to-brand-burgundy/90 text-white">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             className="text-center mb-16"
@@ -875,7 +914,7 @@ const Home = () => {
               asChild
               variant="luxury" 
               size="xl" 
-              className="bg-white text-red-600 hover:bg-white/90 shadow-luxury"
+              className="bg-white text-brand-burgundy hover:bg-white/90 shadow-luxury"
             >
               <Link to="/register">
                 Join Free Today
@@ -896,7 +935,7 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <div className="text-center mb-16">
-              <h2 className="text-luxury-lg text-red-600 mb-6">
+              <h2 className="text-luxury-lg text-brand-burgundy mb-6">
                 The Premium South Asian Wedding Market
               </h2>
             </div>
@@ -977,7 +1016,7 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-luxury-lg text-foreground mb-6">
-              Partner With <span className="text-red-600">Mēl Milaap</span>
+              Partner With <span className="text-brand-burgundy">Mēl Milaap</span>
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto mb-8">
               Join Australia and New Zealand's premier South Asian matrimonial platform. Connect with 
@@ -1016,7 +1055,7 @@ const Home = () => {
                     <div className="w-16 h-16 bg-lux-champagne/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-lux-champagne/20 transition-colors duration-300">
                       <category.icon className="w-8 h-8 text-lux-champagne" />
                     </div>
-                    <h3 className="font-heading font-semibold text-red-600 mb-4 text-lg">
+                    <h3 className="font-heading font-semibold text-brand-burgundy mb-4 text-lg">
                       {category.title}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed text-sm">
@@ -1029,7 +1068,7 @@ const Home = () => {
           </motion.div>
 
           <motion.div
-            className="bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl p-12 text-white text-center"
+            className="bg-gradient-to-br from-brand-burgundy to-brand-saffron rounded-2xl p-12 text-white text-center"
             variants={fadeInUp}
             initial="initial"
             whileInView="animate"
@@ -1044,12 +1083,12 @@ const Home = () => {
             </p>
             
             <div className="flex flex-wrap justify-center gap-4">
-              <Button 
-                asChild
-                variant="luxury" 
-                size="xl" 
-                className="bg-white text-red-600 hover:bg-white/90 shadow-luxury"
-              >
+                <Button 
+                  asChild
+                  variant="luxury" 
+                  size="xl" 
+                  className="bg-white text-brand-burgundy hover:bg-white/90 shadow-luxury"
+                >
                 <Link to="/supplier-signup">
                   Partner With Us
                 </Link>
@@ -1107,7 +1146,7 @@ const Home = () => {
                 asChild
                 variant="luxury" 
                 size="xl" 
-                className="bg-red-600 text-white hover:bg-red-700 shadow-luxury"
+                className="bg-brand-burgundy text-white hover:bg-brand-burgundy/90 shadow-luxury"
               >
                 <Link to="/register">
                   <Heart className="w-5 h-5 mr-2" />

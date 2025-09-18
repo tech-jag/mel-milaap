@@ -56,6 +56,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				// Brand Colors (From Brand Guide)
+				brand: {
+					burgundy: 'hsl(var(--brand-burgundy))',
+					gold: 'hsl(var(--brand-gold))',
+					cream: 'hsl(var(--brand-cream))',
+					saffron: 'hsl(var(--brand-saffron))',
+					ivory: 'hsl(var(--brand-ivory))',
+					rose: 'hsl(var(--brand-rose))'
+				},
 				// Luxury Palette
 				lux: {
 					ivory: 'hsl(var(--lux-ivory))',

@@ -6,13 +6,21 @@
 
 @layer base {
   :root {
+    /* Brand Color Palette (From Brand Guide) */
+    --brand-burgundy: 0 76% 30%;       /* #7a1c1c - Primary brand color */
+    --brand-gold: 42 68% 58%;          /* #e0b842 - Rich gold accent */
+    --brand-cream: 39 46% 89%;         /* #F7E7CE - Warm cream */
+    --brand-saffron: 20 100% 63%;      /* #FF8C42 - Deep saffron */
+    --brand-ivory: 60 100% 99%;        /* #FFFEF7 - Ivory */
+    --brand-rose: 15 38% 76%;          /* #E8B4A0 - Soft rose */
+    
     /* Luxury Color Palette */
-    --lux-ivory: 35 100% 97%;          /* #FFF8F0 - page background */
+    --lux-ivory: var(--brand-ivory);
     --lux-porcelain: 0 0% 100%;        /* #FFFFFF - surface */
-    --lux-oxblood: 0 83% 19%;          /* #5A0A0A - primary deep burgundy */
-    --lux-champagne: 45 72% 52%;       /* #D4AF37 - champagne gold accent */
+    --lux-oxblood: var(--brand-burgundy); /* Primary deep burgundy from brand */
+    --lux-champagne: var(--brand-gold);   /* Champagne gold from brand */
     --lux-onyx: 0 0% 7%;               /* #121212 - ink/headings on light */
-    --lux-blush: 13 67% 89%;           /* #F5D9D0 - soft highlight */
+    --lux-blush: var(--brand-rose);    /* Soft highlight from brand */
     --lux-emerald: 158 75% 24%;        /* #0F6A4F - success/verification accent */
     
     /* Core Design Tokens */

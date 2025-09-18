@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface MelMilaapTextProps {
   className?: string;
   melClassName?: string;
@@ -5,12 +7,12 @@ interface MelMilaapTextProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
-const MelMilaapText = ({ 
+const MelMilaapText: React.FC<MelMilaapTextProps> = ({ 
   className = "", 
   melClassName = "",
   milaapClassName = "",
   size = "md" 
-}: MelMilaapTextProps) => {
+}) => {
   const sizeClasses = {
     sm: "text-lg",
     md: "text-2xl", 

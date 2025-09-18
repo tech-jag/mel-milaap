@@ -12,7 +12,8 @@ import { PrivateRoute } from "./components/routing/PrivateRoute";
 // ... keep existing imports
 
 // Page imports
-import Index from "./pages/Index";
+import Home from "./pages/Home";
+import ComingSoon from "./pages/ComingSoon";
 import AccountCollaborators from "./pages/AccountCollaborators";
 import PlanningNotes from "./pages/PlanningNotes";
 import Match from "./pages/Match";
@@ -126,8 +127,11 @@ const App = () => (
           <BrowserRouter>
             <ScrollToTop />
             <Routes>
-              {/* Landing Page - Coming Soon */}
-              <Route path="/" element={<Index />} />
+              {/* Home Landing Page */}
+              <Route path="/" element={<Home />} />
+              
+              {/* Early Access - Coming Soon */}
+              <Route path="/early-access" element={<ComingSoon />} />
               
               {/* Public Pages */}
               <Route path="/about" element={<About />} />

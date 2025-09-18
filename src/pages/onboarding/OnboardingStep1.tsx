@@ -120,7 +120,7 @@ const OnboardingStep1 = () => {
                     variant="champagne"
                     size="lg"
                     className="w-full group"
-                    onClick={() => navigate('/onboarding/2')}
+                    onClick={() => navigate('/onboarding/3')}
                   >
                     Start My Profile
                     <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />

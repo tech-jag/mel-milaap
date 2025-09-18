@@ -256,15 +256,15 @@ const Auth = () => {
       }
 
       toast({
-        title: "Account Created!",
-        description: "Please check your email to verify your account.",
+        title: "Welcome to Mēl Milaap!",
+        description: "Account created successfully. Let's build your profile!",
         duration: 3000,
       });
 
-      console.log('Signup successful, navigating to onboarding/1');
+      console.log('Signup successful, navigating to onboarding/3 (skipping email verification)');
       
-      // Redirect to onboarding instead of switching to login tab
-      navigate('/onboarding/1');
+      // Skip email verification step and go directly to profile setup
+      navigate('/onboarding/3');
     } catch (error: any) {
       toast({
         title: "Signup Failed",

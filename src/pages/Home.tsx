@@ -20,11 +20,249 @@ import {
   Globe,
   Award,
   TrendingUp,
-  MapPin
+  MapPin,
+  Camera,
+  Building2,
+  Utensils,
+  Palette,
+  HomeIcon,
+  Crown,
+  UserCheck,
+  Lock,
+  MessageCircle,
+  AlertTriangle,
+  Clock,
+  DollarSign,
+  Target,
+  Link2,
+  Zap,
+  Phone,
+  Mail,
+  Calendar,
+  Gem
 } from "lucide-react";
 import { fadeInUp, staggerChildren, cardHover } from "@/lib/motion";
 import { SEO } from "@/utils/seo";
 import heroImage from "@/assets/hero-wedding-couple.jpg";
+
+// ANZ Platform Features
+const anzPlatformFeatures = [
+  {
+    icon: Link2,
+    title: "ANZ-Specialized Matching",
+    description: "Advanced matching designed specifically for Australia & New Zealand's South Asian diaspora, considering regional lifestyle and cultural integration"
+  },
+  {
+    icon: Star,
+    title: "Local Cultural Understanding", 
+    description: "Deep understanding of South Asian community life in Australia & New Zealand - from Diwali celebrations to weekend temple visits"
+  },
+  {
+    icon: Building2,
+    title: "Regional Wedding Expertise",
+    description: "Connected to Australia & New Zealand's best South Asian wedding vendors, venues, and cultural specialists"
+  },
+  {
+    icon: Crown,
+    title: "Local Premium Partners",
+    description: "Hand-selected Australian & New Zealand vendors who understand South Asian celebrations and cultural requirements"
+  }
+];
+
+// How It Works Steps
+const howItWorksSteps = [
+  {
+    number: "01",
+    icon: UserCheck,
+    title: "MEET",
+    subtitle: "Create your profile and browse verified matches",
+    description: "Build a comprehensive profile with photos, preferences, and cultural background. Connect with genuine, quality conscious individuals who share your values and expectations.",
+    features: ["Profile verification required", "Photo authentication", "Background checks"]
+  },
+  {
+    number: "02", 
+    icon: Heart,
+    title: "MATCH",
+    subtitle: "Connect with compatible South Asian singles in Australia & New Zealand",
+    description: "Our advanced matching algorithm considers cultural compatibility, regional preferences, and family values to suggest the most suitable matches for a lasting relationship.",
+    features: ["Advanced compatibility", "Cultural alignment", "Regional focus"]
+  },
+  {
+    number: "03",
+    icon: Crown,
+    title: "MARRY", 
+    subtitle: "Build meaningful connections that lead to marriage",
+    description: "Engage in safe, monitored communication with family involvement. Focus on serious matrimonial intentions and build trust via traditional engagement methods.",
+    features: ["Safe communication", "Family involvement", "Matrimonial focus"]
+  },
+  {
+    number: "04",
+    icon: Sparkles,
+    title: "CELEBRATE",
+    subtitle: "Plan your dream wedding with our vendor network",
+    description: "Access our curated network of premium wedding vendors across Australia & New Zealand. Dream, plan, and execute your beautiful South Asian celebration ceremony.",
+    features: ["Premium vendor network", "Wedding planning", "Celebration management"]
+  }
+];
+
+// Perfect Match Features
+const perfectMatchFeatures = [
+  {
+    icon: UserCheck,
+    title: "Verified Premium Profiles",
+    description: "Every profile undergoes thorough verification and background checks. Connect with genuine, quality conscious individuals who share your values and expectations."
+  },
+  {
+    icon: Heart,
+    title: "Cultural Compatibility", 
+    description: "Deep understanding of South Asian matrimonial traditions, family values, and cultural nuances. Find matches who truly understand your heritage and modern lifestyle."
+  },
+  {
+    icon: MapPin,
+    title: "Australia & NZ Expertise",
+    description: "Specialized focus on the unique diaspora dynamics in Australia and New Zealand. Local cultural understanding meets global South Asian heritage."
+  },
+  {
+    icon: Users,
+    title: "Personalized Matching",
+    description: "Advanced algorithms combined with human insight. Cultural preferences, regional values, and lifestyle compatibility ensure meaningful connections."
+  },
+  {
+    icon: Shield,
+    title: "Privacy & Safety First",
+    description: "Best-in-class security, complete privacy controls, and family-friendly environment. Your personal information and matching preferences stay secure."
+  },
+  {
+    icon: Crown,
+    title: "Premium Experience",
+    description: "Quality over quantity, dedicated support, and success stories that speak to our commitment to your happiness."
+  }
+];
+
+// Safety Features
+const safetyFeatures = [
+  {
+    icon: UserCheck,
+    title: "100% Profile Verification",
+    description: "Comprehensive verification process including government ID verification for authentic connections",
+    stats: ["ID verification", "Photo authentication", "Background screening"]
+  },
+  {
+    icon: Lock,
+    title: "Advanced Privacy Control", 
+    description: "You control who sees your photos and personal information with granular privacy settings",
+    stats: ["Private photo control", "Selective visibility", "Information control"]
+  },
+  {
+    icon: AlertTriangle,
+    title: "Safe Communication",
+    description: "All communications happen securely within the platform with continuous safety monitoring",
+    stats: ["Monitored messaging", "Report & block features", "Safe environment"]
+  },
+  {
+    icon: Phone,
+    title: "Scam Prevention",
+    description: "Advanced fraud detection and prevention systems help maintain an authentic community",
+    stats: ["Fraud detection", "Authentic profiles", "Scam prevention"]
+  }
+];
+
+// Trust Statistics 
+const trustStats = [
+  { value: "87%", label: "Match success rate within 6 months", sublabel: "Based on member surveys" },
+  { value: "50,000+", label: "Verified premium profiles across ANZ", sublabel: "Growing community" },
+  { value: "4.9★", label: "Average user satisfaction rating", sublabel: "From verified reviews" }
+];
+
+// Market Statistics
+const marketStats = [
+  { value: "$75,000+", label: "Average wedding budget in Australia & NZ", color: "text-lux-champagne" },
+  { value: "150,000+", label: "South Asian families across both regions", color: "text-lux-champagne" },
+  { value: "25%", label: "Annual growth in premium wedding spending", color: "text-lux-champagne" }
+];
+
+// Supplier Partnership Benefits 
+const partnerBenefits = [
+  {
+    title: "Premium Client Base",
+    description: "Access to families with higher budgets and quality expectations"
+  },
+  {
+    title: "Cultural Specialization", 
+    description: "Clients who value authentic South Asian wedding traditions"
+  },
+  {
+    title: "Regional Expertise",
+    description: "Dominate the Australia & New Zealand luxury wedding market"
+  },
+  {
+    title: "Marketing Support",
+    description: "Featured listings, promotional opportunities, and platform marketing"
+  }
+];
+
+// Platform Benefits for Suppliers
+const platformBenefits = [
+  {
+    title: "Easy Booking Management",
+    description: "Streamlined client communication and booking workflow"
+  },
+  {
+    title: "Portfolio Showcase",
+    description: "Professional gallery to display your best work to engaged couples" 
+  },
+  {
+    title: "Verified Reviews",
+    description: "Build trust with authentic client testimonials and ratings"
+  },
+  {
+    title: "Analytics & Insights", 
+    description: "Track performance and optimize your listing for better results"
+  }
+];
+
+// Supplier Service Categories
+const supplierCategories = [
+  {
+    icon: Camera,
+    title: "Photography & Videography",
+    description: "Capture premium celebrations with discerning clients who value excellence"
+  },
+  {
+    icon: Building2,
+    title: "Premium Venues",
+    description: "Showcase your venue to families planning luxury multi-day celebrations"
+  },
+  {
+    icon: Utensils,
+    title: "Catering & Events", 
+    description: "Serve authentic cuisine to guests who appreciate cultural traditions"
+  },
+  {
+    icon: Palette,
+    title: "Wedding Services",
+    description: "From decor to music - connect with premium South Asian families"
+  }
+];
+
+// Success Stories
+const successStories = [
+  {
+    quote: "We found each other through Mēl Milaap and couldn't be happier. The platform truly understands our cultural values.",
+    names: "Priya & Arjun",
+    location: "Sydney, Australia"
+  },
+  {
+    quote: "The wedding planning tools made our celebration perfect. Everything in one place!",
+    names: "Kavya & Vikram", 
+    location: "Melbourne, Australia"
+  },
+  {
+    quote: "Our families loved being involved in the process. Mēl Milaap respects our traditions.",
+    names: "Anisha & Raj",
+    location: "Auckland, New Zealand"
+  }
+];
 
 // Key features
 const features = [
@@ -52,10 +290,10 @@ const features = [
 
 // Success stats
 const stats = [
-  { icon: Users, value: "15,000+", label: "Active Members" },
-  { icon: Heart, value: "2,500+", label: "Success Stories" },
-  { icon: MapPin, value: "50+", label: "Cities Covered" },
-  { icon: Award, value: "5+", label: "Years of Trust" }
+  { icon: Users, value: "50,000+", label: "Active Members" },
+  { icon: Heart, value: "15,000+", label: "Success Stories" }, 
+  { icon: MapPin, value: "100+", label: "Cities Covered" },
+  { icon: Award, value: "6+", label: "Years of Trust" }
 ];
 
 const Home = () => {
@@ -169,7 +407,256 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Features Section */}
+      {/* ANZ Platform Features Section */}
+      <section className="py-24 bg-card">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            className="text-center mb-16"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <h2 className="text-luxury-lg text-foreground mb-6">
+              Why Choose Australia & New Zealand's #1 Platform
+            </h2>
+            <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto">
+              Unlike global platforms that treat Australia as an afterthought, we're built specifically for 
+              South Asian communities in ANZ. Local expertise meets premium matrimonial matching.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {anzPlatformFeatures.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                variants={{...fadeInUp, ...cardHover}}
+                whileHover="hover"
+                className="group"
+              >
+                <Card className="luxury-card h-full text-center group-hover:shadow-luxury transition-all duration-300">
+                  <CardContent className="p-8">
+                    <div className="w-16 h-16 bg-lux-champagne/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-lux-champagne/20 transition-colors duration-300">
+                      <feature.icon className="w-8 h-8 text-lux-champagne" />
+                    </div>
+                    <h3 className="font-heading font-semibold text-foreground mb-4 text-lg">
+                      {feature.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-24 bg-gradient-hero">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            className="text-center mb-16"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <Badge 
+              variant="secondary" 
+              className="mb-6 px-4 py-2 bg-lux-champagne/10 text-lux-champagne border-lux-champagne/20"
+            >
+              <Heart className="w-4 h-4 mr-2" />
+              Your Journey
+            </Badge>
+            <h2 className="text-luxury-lg text-foreground mb-6">
+              How Mēl Milaap Works
+            </h2>
+            <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto">
+              Your journey from meeting your perfect match to celebrating your dream wedding
+              - simplified into four elegant steps designed for serious matrimonial connections.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            variants={staggerChildren}
+            initial="initial"  
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {howItWorksSteps.map((step, index) => (
+              <motion.div
+                key={step.title}
+                variants={{...fadeInUp, ...cardHover}}
+                whileHover="hover"
+                className="group relative"
+              >
+                <Card className="luxury-card h-full text-center group-hover:shadow-luxury transition-all duration-300 relative overflow-hidden">
+                  <div className="absolute top-4 right-4 text-6xl font-bold text-lux-champagne/10 group-hover:text-lux-champagne/20 transition-colors duration-300">
+                    {step.number}
+                  </div>
+                  <CardContent className="p-8 relative z-10">
+                    <div className="w-16 h-16 bg-red-600/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-red-600/20 transition-colors duration-300">
+                      <step.icon className="w-8 h-8 text-red-600" />
+                    </div>
+                    <h3 className="font-heading font-bold text-foreground mb-2 text-xl tracking-wider">
+                      {step.title}
+                    </h3>
+                    <p className="font-medium text-accent mb-4 text-sm">
+                      {step.subtitle}
+                    </p>
+                    <p className="text-muted-foreground leading-relaxed text-sm mb-6">
+                      {step.description}
+                    </p>
+                    <div className="space-y-2">
+                      {step.features.map((feature, i) => (
+                        <div key={i} className="flex items-center justify-center text-xs text-muted-foreground">
+                          <CheckCircle className="w-3 h-3 text-lux-champagne mr-2" />
+                          {feature}
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                {/* Connector Line for larger screens */}
+                {index < howItWorksSteps.length - 1 && (
+                  <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-lux-champagne/30 transform -translate-y-1/2 z-20" />
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Perfect Match Features Section */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            className="text-center mb-16"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <h2 className="text-luxury-lg text-foreground mb-6">
+              Why Choose Mēl Milaap for Your Perfect Match?
+            </h2>
+            <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+              Experience the premium difference in matrimonial matchmaking designed 
+              specifically for South Asian communities in Australia & New Zealand.
+            </p>
+            <p className="text-red-600 font-medium">
+              Unlike generic platforms like shaadi.com, we understand your regional culture 
+              and premium expectations.
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {perfectMatchFeatures.map((feature) => (
+              <motion.div
+                key={feature.title}
+                variants={{...fadeInUp, ...cardHover}}
+                whileHover="hover"
+                className="group"
+              >
+                <Card className="luxury-card h-full text-center group-hover:shadow-luxury transition-all duration-300">
+                  <CardContent className="p-8">
+                    <div className="w-16 h-16 bg-lux-champagne/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-lux-champagne/20 transition-colors duration-300">
+                      <feature.icon className="w-8 h-8 text-lux-champagne" />
+                    </div>
+                    <h3 className="font-heading font-semibold text-foreground mb-4 text-lg">
+                      {feature.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm">
+                      {feature.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Trust Statistics */}
+          <motion.div
+            className="bg-lux-champagne/5 rounded-2xl p-12"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-heading font-bold text-red-600 mb-4">
+                Trusted by Australia & New Zealand's South Asian Community
+              </h3>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {trustStats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  className="text-center"
+                  variants={fadeInUp}
+                  custom={index}
+                >
+                  <div className="text-4xl lg:text-5xl font-bold text-lux-champagne mb-2">
+                    {stat.value}
+                  </div>
+                  <div className="font-medium text-foreground mb-1">
+                    {stat.label}
+                  </div>
+                  <div className="text-sm text-muted-foreground">
+                    {stat.sublabel}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div
+              className="text-center mt-12"
+              variants={fadeInUp}
+            >
+              <Button 
+                asChild
+                variant="luxury" 
+                size="xl" 
+                className="bg-red-600 text-white hover:bg-red-700 shadow-luxury mr-4"
+              >
+                <Link to="/register">
+                  <Heart className="w-5 h-5 mr-2" />
+                  Start Your Journey
+                </Link>
+              </Button>
+              <Button 
+                asChild
+                variant="outline" 
+                size="xl"
+                className="border-muted-foreground/30"
+              >
+                <Link to="/stories">
+                  View Success Stories
+                </Link>
+              </Button>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Safety Section */}
       <section className="py-24 bg-card">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
@@ -181,72 +668,117 @@ const Home = () => {
           >
             <Badge 
               variant="secondary" 
-              className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/20"
+              className="mb-6 px-4 py-2 bg-red-600/10 text-red-600 border-red-600/20"
             >
-              <Sparkles className="w-4 h-4 mr-2" />
-              Why Choose Mēl Milaap
+              <Shield className="w-4 h-4 mr-2" />
+              Security First
             </Badge>
             <h2 className="text-luxury-lg text-foreground mb-6">
-              Your Journey to Love Starts Here
+              Your Safety is Our <span className="text-red-600">Priority</span>
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto">
-              We combine traditional values with modern technology to help you find your life partner 
-              in a safe, secure, and authentic environment.
+              Australia and New Zealand's most trusted matrimonial platform. Every profile is 
+              verified, every message is monitored, and your privacy is protected with bank-
+              level security.
             </p>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
             variants={staggerChildren}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
           >
-            {features.map((feature) => (
+            {safetyFeatures.map((feature) => (
               <motion.div
                 key={feature.title}
                 variants={{...fadeInUp, ...cardHover}}
                 whileHover="hover"
+                className="group"
               >
-                <Card className="luxury-card h-full text-center">
+                <Card className="luxury-card h-full text-center group-hover:shadow-luxury transition-all duration-300">
                   <CardContent className="p-8">
-                    <div className="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-6">
-                      <feature.icon className="w-8 h-8 text-accent" />
+                    <div className="w-16 h-16 bg-red-600/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-red-600/20 transition-colors duration-300">
+                      <feature.icon className="w-8 h-8 text-red-600" />
                     </div>
                     <h3 className="font-heading font-semibold text-foreground mb-4 text-lg">
                       {feature.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed text-sm mb-6">
                       {feature.description}
                     </p>
+                    <div className="space-y-2">
+                      {feature.stats.map((stat, i) => (
+                        <div key={i} className="flex items-center justify-center text-xs text-muted-foreground">
+                          <CheckCircle className="w-3 h-3 text-lux-champagne mr-2" />
+                          {stat}
+                        </div>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
           </motion.div>
-        </div>
-      </section>
 
-      {/* Stats Section */}
-      <section className="py-24 bg-gradient-hero">
-        <div className="container mx-auto px-4 lg:px-8">
+          {/* Safety Statistics */}
           <motion.div
-            className="text-center mb-16"
+            className="bg-red-600/5 rounded-2xl p-12"
             variants={fadeInUp}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <h2 className="text-luxury-lg text-foreground mb-6">
-              Trusted by Thousands
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-heading font-bold text-red-600 mb-4">
+                Trusted by 50,000+ Verified Members
+              </h3>
+            </div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-lux-champagne mb-2">99.2%</div>
+                <div className="text-sm text-muted-foreground">Safety Rating</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-lux-champagne mb-2">2hrs</div>
+                <div className="text-sm text-muted-foreground">Avg Response Time</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-lux-champagne mb-2">98.8%</div>
+                <div className="text-sm text-muted-foreground">Member Satisfaction</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-lux-champagne mb-2">0%</div>
+                <div className="text-sm text-muted-foreground">Tolerance for Scams</div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Trust Badges Section */}
+      <section className="py-16 bg-gradient-hero">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            className="text-center mb-12"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <h2 className="text-2xl font-heading font-bold text-foreground mb-4">
+              Trusted Across Australia & New Zealand
             </h2>
-            <p className="text-body-lg text-muted-foreground max-w-2xl mx-auto">
-              Join Australia & New Zealand's fastest-growing South Asian matrimony community
+            <p className="text-muted-foreground">
+              The most secure and verified matrimonial platform serving South Asian 
+              communities in ANZ since 2018
             </p>
           </motion.div>
 
           <motion.div
-            className="grid grid-cols-2 lg:grid-cols-4 gap-8"
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
             variants={staggerChildren}
             initial="initial"
             whileInView="animate"
@@ -258,13 +790,13 @@ const Home = () => {
                 className="text-center"
                 variants={fadeInUp}
               >
-                <div className="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <stat.icon className="w-8 h-8 text-accent" />
+                <div className="w-16 h-16 bg-lux-champagne/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <stat.icon className="w-8 h-8 text-lux-champagne" />
                 </div>
-                <div className="text-3xl lg:text-4xl font-bold text-foreground mb-2">
+                <div className="text-2xl lg:text-3xl font-bold text-foreground mb-2">
                   {stat.value}
                 </div>
-                <div className="text-muted-foreground">
+                <div className="text-muted-foreground text-sm">
                   {stat.label}
                 </div>
               </motion.div>
@@ -273,7 +805,286 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Success Stories Section */}
+      <section className="py-24 bg-gradient-to-r from-orange-600 via-red-600 to-orange-700 text-white">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            className="text-center mb-16"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <h2 className="text-luxury-lg text-white mb-6">
+              Over 50,000 Success Stories
+            </h2>
+            <p className="text-xl text-white/90 max-w-3xl mx-auto">
+              Join thousands of couples across Australia & New Zealand who found their perfect 
+              match through Mēl Milaap's regional expertise
+            </p>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {successStories.map((story, index) => (
+              <motion.div
+                key={index}
+                variants={{...fadeInUp, ...cardHover}}
+                whileHover="hover"
+                className="group"
+              >
+                <Card className="bg-white/10 backdrop-blur-sm border-white/20 h-full group-hover:bg-white/20 transition-all duration-300">
+                  <CardContent className="p-8">
+                    <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                      <div className="w-8 h-8 bg-white/30 rounded-full" />
+                    </div>
+                    <p className="text-white/90 leading-relaxed mb-6 italic">
+                      "{story.quote}"
+                    </p>
+                    <div className="text-center">
+                      <div className="font-semibold text-lux-champagne mb-1">
+                        {story.names}
+                      </div>
+                      <div className="text-white/70 text-sm">
+                        {story.location}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            className="text-center"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <p className="text-white/90 mb-8 text-lg">
+              Join 50,000+ South Asian singles across Australia & New Zealand who trust Mēl Milaap as their premier 
+              regional matrimonial platform
+            </p>
+            <Button 
+              asChild
+              variant="luxury" 
+              size="xl" 
+              className="bg-white text-red-600 hover:bg-white/90 shadow-luxury"
+            >
+              <Link to="/register">
+                Join Free Today
+              </Link>
+            </Button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Market Statistics Section */}
+      <section className="py-24 bg-background">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            className="bg-gradient-to-br from-lux-champagne/5 to-lux-champagne/10 rounded-3xl p-12"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <div className="text-center mb-16">
+              <h2 className="text-luxury-lg text-red-600 mb-6">
+                The Premium South Asian Wedding Market
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+              {marketStats.map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  className="text-center"
+                  variants={fadeInUp}
+                  custom={index}
+                >
+                  <div className={`text-5xl lg:text-6xl font-bold mb-4 ${stat.color}`}>
+                    {stat.value}
+                  </div>
+                  <div className="text-foreground font-medium">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              <div>
+                <h3 className="text-xl font-heading font-bold text-foreground mb-6">
+                  Why Partner With Mēl Milaap?
+                </h3>
+                <div className="space-y-4">
+                  {partnerBenefits.map((benefit, index) => (
+                    <div key={index} className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-lux-champagne mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-1">
+                          {benefit.title}
+                        </h4>
+                        <p className="text-muted-foreground text-sm">
+                          {benefit.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-heading font-bold text-foreground mb-6">
+                  Platform Benefits
+                </h3>
+                <div className="space-y-4">
+                  {platformBenefits.map((benefit, index) => (
+                    <div key={index} className="flex items-start space-x-3">
+                      <CheckCircle className="w-5 h-5 text-lux-champagne mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-1">
+                          {benefit.title}
+                        </h4>
+                        <p className="text-muted-foreground text-sm">
+                          {benefit.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Supplier Partnership Section */}
+      <section className="py-24 bg-card">
+        <div className="container mx-auto px-4 lg:px-8">
+          <motion.div
+            className="text-center mb-16"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <h2 className="text-luxury-lg text-foreground mb-6">
+              Partner With <span className="text-red-600">Mēl Milaap</span>
+            </h2>
+            <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto mb-8">
+              Join Australia and New Zealand's premier South Asian matrimonial platform. Connect with 
+              premium clients planning luxury celebrations worth $50,000+ and grow your business.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-6 mb-12">
+              <Badge variant="secondary" className="px-4 py-2 bg-lux-champagne/10 text-lux-champagne border-lux-champagne/20">
+                Australia
+              </Badge>
+              <Badge variant="secondary" className="px-4 py-2 bg-lux-champagne/10 text-lux-champagne border-lux-champagne/20">
+                New Zealand  
+              </Badge>
+              <Badge variant="secondary" className="px-4 py-2 bg-lux-champagne/10 text-lux-champagne border-lux-champagne/20">
+                Premium Weddings
+              </Badge>
+            </div>
+          </motion.div>
+
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
+            variants={staggerChildren}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            {supplierCategories.map((category) => (
+              <motion.div
+                key={category.title}
+                variants={{...fadeInUp, ...cardHover}}
+                whileHover="hover"
+                className="group"
+              >
+                <Card className="luxury-card h-full text-center group-hover:shadow-luxury transition-all duration-300">
+                  <CardContent className="p-8">
+                    <div className="w-16 h-16 bg-lux-champagne/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:bg-lux-champagne/20 transition-colors duration-300">
+                      <category.icon className="w-8 h-8 text-lux-champagne" />
+                    </div>
+                    <h3 className="font-heading font-semibold text-red-600 mb-4 text-lg">
+                      {category.title}
+                    </h3>
+                    <p className="text-muted-foreground leading-relaxed text-sm">
+                      {category.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div
+            className="bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl p-12 text-white text-center"
+            variants={fadeInUp}
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true }}
+          >
+            <h3 className="text-2xl font-heading font-bold mb-4">
+              Ready to Grow Your Wedding Business?
+            </h3>
+            <p className="text-white/90 mb-8 max-w-2xl mx-auto">
+              Join the leading platform connecting premium South Asian couples with 
+              exceptional wedding vendors across Australia and New Zealand.
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button 
+                asChild
+                variant="luxury" 
+                size="xl" 
+                className="bg-white text-red-600 hover:bg-white/90 shadow-luxury"
+              >
+                <Link to="/supplier-signup">
+                  Partner With Us
+                </Link>
+              </Button>
+              <Button 
+                asChild
+                variant="outline" 
+                size="xl"
+                className="border-white/30 text-white hover:bg-white/10"
+              >
+                <Link to="/suppliers">
+                  Learn More
+                </Link>
+              </Button>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-8 mt-8 text-sm text-white/80">
+              <div className="flex items-center">
+                <CheckCircle className="w-4 h-4 mr-2" />
+                Free to join
+              </div>
+              <div className="flex items-center">
+                <CheckCircle className="w-4 h-4 mr-2" />
+                Verified partner network
+              </div>
+              <div className="flex items-center">
+                <CheckCircle className="w-4 h-4 mr-2" />
+                Premium market access
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4 lg:px-8">
           <motion.div
@@ -284,23 +1095,23 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-luxury-lg text-foreground mb-6">
-              Ready to Find Your Life Partner?
+              Ready to Begin Your Journey?
             </h2>
             <p className="text-body-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-              Join thousands of South Asian singles who have found love through Mēl Milaap. 
-              Your perfect match is waiting for you.
+              Join 50,000+ South Asian singles across Australia & New Zealand who trust Mēl Milaap as their premier 
+              regional matrimonial platform
             </p>
             
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
               <Button 
                 asChild
                 variant="luxury" 
                 size="xl" 
-                className="bg-lux-champagne text-lux-onyx hover:bg-lux-champagne/90 shadow-champagne"
+                className="bg-red-600 text-white hover:bg-red-700 shadow-luxury"
               >
                 <Link to="/register">
                   <Heart className="w-5 h-5 mr-2" />
-                  Start Your Journey Today
+                  Join Free Today
                 </Link>
               </Button>
               <Button 
@@ -310,9 +1121,20 @@ const Home = () => {
               >
                 <Link to="/stories">
                   <Star className="w-5 h-5 mr-2" />
-                  Read Success Stories
+                  See Success Stories
                 </Link>
               </Button>
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-8 text-sm text-muted-foreground">
+              <div className="flex items-center">
+                <CheckCircle className="w-4 h-4 mr-2 text-lux-champagne" />
+                Free to join • No credit card required
+              </div>
+              <div className="flex items-center">
+                <CheckCircle className="w-4 h-4 mr-2 text-lux-champagne" />
+                Australia & New Zealand's most trusted platform
+              </div>
             </div>
           </motion.div>
         </div>

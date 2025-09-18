@@ -3,7 +3,7 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Heart, Menu, X, User, LogOut, Settings } from "lucide-react";
+import { Heart, Menu, X, User, LogOut, Settings, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import Wordmark from "@/components/brand/Wordmark";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,11 +12,44 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 
 const navItems = [
-  { href: '#benefits', label: 'Benefits' },
-  { href: '#early-access', label: 'Join Founders Circle' },
+  { 
+    label: 'How It Works', 
+    href: '/how-it-works' 
+  },
+  { 
+    label: 'Features', 
+    dropdown: [
+      { href: '/tools', label: 'Planning Tools' },
+      { href: '/planning', label: 'Wedding Planning' },
+      { href: '/stories', label: 'Success Stories' },
+      { href: '/verification', label: 'Verification' },
+    ]
+  },
+  { 
+    label: 'For You', 
+    dropdown: [
+      { href: '/for-singles', label: 'For Singles' },
+      { href: '/for-parents', label: 'For Parents' },
+      { href: '/for-suppliers', label: 'For Suppliers' },
+    ]
+  },
+  { 
+    label: 'Destinations', 
+    dropdown: [
+      { href: '/destinations', label: 'All Destinations' },
+      { href: '/city/sydney', label: 'Sydney' },
+      { href: '/city/melbourne', label: 'Melbourne' },
+      { href: '/city/auckland', label: 'Auckland' },
+    ]
+  },
+  { 
+    label: 'Pricing', 
+    href: '/pricing' 
+  },
 ];
 
 export function Navigation() {
@@ -54,24 +87,45 @@ return (
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-1">
           {navItems.map((item) => (
-            <button 
-              key={item.href} 
-              onClick={() => handleNavClick(item.href)}
-              className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium"
-            >
-              {item.label}
-            </button>
+            item.dropdown ? (
+              <DropdownMenu key={item.label}>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium">
+                    {item.label}
+                    <ChevronDown className="ml-1 h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  {item.dropdown.map((subItem) => (
+                    <DropdownMenuItem key={subItem.href} asChild>
+                      <Link to={subItem.href} className="cursor-pointer">
+                        {subItem.label}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button key={item.label} variant="ghost" asChild className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium">
+                <Link to={item.href}>
+                  {item.label}
+                </Link>
+              </Button>
+            )
           ))}
         </div>
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center space-x-3">
-          <Button 
-            variant="luxury" 
-            size="sm"
-            onClick={() => handleNavClick('#early-access')}
-          >
-            Join Now
+          <Button variant="ghost" size="sm" asChild>
+            <Link to="/login">
+              Sign In
+            </Link>
+          </Button>
+          <Button variant="luxury" size="sm" asChild>
+            <Link to="/register">
+              Join Free
+            </Link>
           </Button>
         </div>
 
@@ -96,21 +150,43 @@ return (
           >
             <div className="flex flex-col space-y-2">
               {navItems.map((item) => (
-                <button 
-                  key={item.href} 
-                  onClick={() => handleNavClick(item.href)}
-                  className="px-4 py-2 text-left text-foreground hover:text-primary transition-colors"
-                >
-                  {item.label}
-                </button>
+                item.dropdown ? (
+                  <div key={item.label} className="space-y-1">
+                    <div className="px-4 py-2 text-sm font-medium text-muted-foreground">
+                      {item.label}
+                    </div>
+                    {item.dropdown.map((subItem) => (
+                      <Link 
+                        key={subItem.href}
+                        to={subItem.href}
+                        className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {subItem.label}
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  <Link 
+                    key={item.label}
+                    to={item.href}
+                    className="block px-4 py-2 text-foreground hover:text-primary transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
-                <Button 
-                  variant="luxury" 
-                  className="w-full justify-start"
-                  onClick={() => handleNavClick('#early-access')}
-                >
-                  Join Founders Circle
+                <Button variant="ghost" className="w-full justify-start" asChild>
+                  <Link to="/login" onClick={() => setIsOpen(false)}>
+                    Sign In
+                  </Link>
+                </Button>
+                <Button variant="luxury" className="w-full justify-start" asChild>
+                  <Link to="/register" onClick={() => setIsOpen(false)}>
+                    Join Free
+                  </Link>
                 </Button>
               </div>
             </div>

@@ -16,9 +16,9 @@ export default function OnboardingStep23() {
       await completeOnboarding.mutateAsync();
       toast({
         title: "Profile Complete!",
-        description: "Welcome to your matrimonial journey. You can now explore matches and connect with potential partners.",
+        description: "Welcome to Mēl Milaap! Your journey begins now.",
       });
-      navigate('/premium-plans');
+      navigate('/account');
     } catch (error) {
       toast({
         title: "Error",

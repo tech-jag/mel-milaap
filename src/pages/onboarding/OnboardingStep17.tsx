@@ -6,15 +6,62 @@ import { useNavigate } from 'react-router-dom';
 import { OnboardingLayout } from '@/components/onboarding/OnboardingLayout';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import { useOnboardingState } from '@/hooks/useOnboardingState';
 import { toast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
-  religions: z.string().optional(),
-  communities: z.string().optional(),
-  mother_tongues: z.string().optional(),
+  religions: z.array(z.string()).optional(),
+  communities: z.array(z.string()).optional(),
+  mother_tongues: z.array(z.string()).optional(),
 });
+
+const religionOptions = [
+  { value: 'hinduism', label: 'Hinduism' },
+  { value: 'islam', label: 'Islam' },
+  { value: 'christianity', label: 'Christianity' },
+  { value: 'sikhism', label: 'Sikhism' },
+  { value: 'buddhism', label: 'Buddhism' },
+  { value: 'jainism', label: 'Jainism' },
+  { value: 'judaism', label: 'Judaism' },
+  { value: 'zoroastrianism', label: 'Zoroastrianism' },
+  { value: 'other', label: 'Other' },
+];
+
+const communityOptions = [
+  { value: 'brahmin', label: 'Brahmin' },
+  { value: 'kshatriya', label: 'Kshatriya' },
+  { value: 'vaishya', label: 'Vaishya' },
+  { value: 'shudra', label: 'Shudra' },
+  { value: 'reddy', label: 'Reddy' },
+  { value: 'chettiar', label: 'Chettiar' },
+  { value: 'naidu', label: 'Naidu' },
+  { value: 'pillai', label: 'Pillai' },
+  { value: 'patel', label: 'Patel' },
+  { value: 'shah', label: 'Shah' },
+  { value: 'gupta', label: 'Gupta' },
+  { value: 'agarwal', label: 'Agarwal' },
+  { value: 'sharma', label: 'Sharma' },
+  { value: 'other', label: 'Other' },
+];
+
+const motherTongueOptions = [
+  { value: 'hindi', label: 'Hindi' },
+  { value: 'english', label: 'English' },
+  { value: 'tamil', label: 'Tamil' },
+  { value: 'telugu', label: 'Telugu' },
+  { value: 'kannada', label: 'Kannada' },
+  { value: 'malayalam', label: 'Malayalam' },
+  { value: 'marathi', label: 'Marathi' },
+  { value: 'gujarati', label: 'Gujarati' },
+  { value: 'bengali', label: 'Bengali' },
+  { value: 'punjabi', label: 'Punjabi' },
+  { value: 'urdu', label: 'Urdu' },
+  { value: 'odia', label: 'Odia' },
+  { value: 'assamese', label: 'Assamese' },
+  { value: 'other', label: 'Other' },
+];
 
 export default function OnboardingStep17() {
   const navigate = useNavigate();
@@ -23,27 +70,15 @@ export default function OnboardingStep17() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      religions: partnerPreferences?.religions?.join(', ') || '',
-      communities: partnerPreferences?.communities?.join(', ') || '',
-      mother_tongues: partnerPreferences?.mother_tongues?.join(', ') || '',
+      religions: partnerPreferences?.religions || [],
+      communities: partnerPreferences?.communities || [],
+      mother_tongues: partnerPreferences?.mother_tongues || [],
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const payload = {
-        religions: values.religions 
-          ? values.religions.split(',').map(item => item.trim()).filter(Boolean)
-          : [],
-        communities: values.communities 
-          ? values.communities.split(',').map(item => item.trim()).filter(Boolean)
-          : [],
-        mother_tongues: values.mother_tongues 
-          ? values.mother_tongues.split(',').map(item => item.trim()).filter(Boolean)
-          : [],
-      };
-      
-      await updatePartnerPreferences.mutateAsync(payload);
+      await updatePartnerPreferences.mutateAsync(values);
       navigate('/onboarding/18');
     } catch (error) {
       toast({
@@ -65,15 +100,44 @@ export default function OnboardingStep17() {
           <FormField
             control={form.control}
             name="religions"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Preferred Religions (Optional)</FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder="e.g., Hindu, Christian, Muslim (comma-separated)" 
-                    {...field} 
-                  />
-                </FormControl>
+                <div className="grid grid-cols-2 gap-3">
+                  {religionOptions.map((option) => (
+                    <FormField
+                      key={option.value}
+                      control={form.control}
+                      name="religions"
+                      render={({ field }) => {
+                        return (
+                          <FormItem
+                            key={option.value}
+                            className="flex flex-row items-start space-x-3 space-y-0"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(option.value)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...(field.value || []), option.value])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== option.value
+                                        )
+                                      )
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="text-sm font-normal">
+                              {option.label}
+                            </FormLabel>
+                          </FormItem>
+                        )
+                      }}
+                    />
+                  ))}
+                </div>
                 <div className="text-sm text-muted-foreground">
                   Leave blank to include all religions
                 </div>
@@ -85,15 +149,44 @@ export default function OnboardingStep17() {
           <FormField
             control={form.control}
             name="communities"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Preferred Communities (Optional)</FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder="e.g., Brahmin, Kshatriya, Reddy (comma-separated)" 
-                    {...field} 
-                  />
-                </FormControl>
+                <div className="grid grid-cols-2 gap-3">
+                  {communityOptions.map((option) => (
+                    <FormField
+                      key={option.value}
+                      control={form.control}
+                      name="communities"
+                      render={({ field }) => {
+                        return (
+                          <FormItem
+                            key={option.value}
+                            className="flex flex-row items-start space-x-3 space-y-0"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(option.value)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...(field.value || []), option.value])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== option.value
+                                        )
+                                      )
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="text-sm font-normal">
+                              {option.label}
+                            </FormLabel>
+                          </FormItem>
+                        )
+                      }}
+                    />
+                  ))}
+                </div>
                 <div className="text-sm text-muted-foreground">
                   Leave blank to include all communities
                 </div>
@@ -105,15 +198,44 @@ export default function OnboardingStep17() {
           <FormField
             control={form.control}
             name="mother_tongues"
-            render={({ field }) => (
+            render={() => (
               <FormItem>
                 <FormLabel>Preferred Mother Tongues (Optional)</FormLabel>
-                <FormControl>
-                  <Input 
-                    placeholder="e.g., Hindi, Tamil, Telugu (comma-separated)" 
-                    {...field} 
-                  />
-                </FormControl>
+                <div className="grid grid-cols-2 gap-3">
+                  {motherTongueOptions.map((option) => (
+                    <FormField
+                      key={option.value}
+                      control={form.control}
+                      name="mother_tongues"
+                      render={({ field }) => {
+                        return (
+                          <FormItem
+                            key={option.value}
+                            className="flex flex-row items-start space-x-3 space-y-0"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(option.value)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...(field.value || []), option.value])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== option.value
+                                        )
+                                      )
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="text-sm font-normal">
+                              {option.label}
+                            </FormLabel>
+                          </FormItem>
+                        )
+                      }}
+                    />
+                  ))}
+                </div>
                 <div className="text-sm text-muted-foreground">
                   Leave blank to include all languages
                 </div>
@@ -122,20 +244,11 @@ export default function OnboardingStep17() {
             )}
           />
 
-          <div className="bg-muted/50 p-4 rounded-lg">
+          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 p-4 rounded-lg border border-primary/10">
             <p className="text-sm text-muted-foreground">
               <strong>Note:</strong> These preferences help narrow down your search. 
               You can always update these later or leave them blank for broader results.
             </p>
-          </div>
-
-          <div className="flex justify-between pt-6">
-            <Button type="button" variant="outline" onClick={() => navigate('/onboarding/16')}>
-              Previous
-            </Button>
-            <Button type="submit" disabled={updatePartnerPreferences.isPending}>
-              {updatePartnerPreferences.isPending ? 'Saving...' : 'Continue'}
-            </Button>
           </div>
         </form>
       </Form>

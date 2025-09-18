@@ -1,8 +1,10 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { OnboardingProgress } from './OnboardingProgress';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { fadeInUp, staggerChildren } from '@/lib/motion';
 
 interface OnboardingLayoutProps {
   currentStep: number;
@@ -50,34 +52,47 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       <OnboardingProgress currentStep={currentStep} />
       
-      <div className="container mx-auto max-w-2xl px-4 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-semibold text-foreground mb-2">
+      <motion.div 
+        className="container mx-auto max-w-2xl px-4 py-8"
+        variants={staggerChildren}
+        initial="initial"
+        animate="animate"
+      >
+        <motion.div className="text-center mb-8" variants={fadeInUp}>
+          <h1 className="text-3xl font-heading font-bold text-foreground mb-2">
             {title}
           </h1>
           {subtitle && (
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-lg">
               {subtitle}
             </p>
           )}
-        </div>
+        </motion.div>
 
-        <div className="bg-card border border-border rounded-lg p-6 mb-8">
+        <motion.div 
+          className="bg-card/95 backdrop-blur-sm border border-border/50 rounded-xl p-8 mb-8 shadow-luxury"
+          variants={fadeInUp}
+          whileHover={{ y: -2 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        >
           {children}
-        </div>
+        </motion.div>
 
         {!hideNavigation && (
-          <div className="flex justify-between items-center">
+          <motion.div 
+            className="flex justify-between items-center"
+            variants={fadeInUp}
+          >
             <Button
               variant="outline"
               onClick={handlePrevious}
               disabled={currentStep === 1}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 group"
             >
-              <ChevronLeft className="w-4 h-4" />
+              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               <span>{previousLabel}</span>
             </Button>
 
@@ -85,14 +100,14 @@ export const OnboardingLayout: React.FC<OnboardingLayoutProps> = ({
               variant="luxury"
               onClick={handleNext}
               disabled={isNextDisabled || isLoading}
-              className="flex items-center space-x-2"
+              className="flex items-center space-x-2 group"
             >
               <span>{isLoading ? 'Saving...' : nextLabel}</span>
-              <ChevronRight className="w-4 h-4" />
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };

@@ -130,14 +130,7 @@ export default function OnboardingStep6() {
             />
           )}
 
-          <div className="flex justify-between pt-6">
-            <Button type="button" variant="outline" onClick={() => navigate('/onboarding/5')}>
-              Previous
-            </Button>
-            <Button type="submit" disabled={updateUserProfile.isPending}>
-              {updateUserProfile.isPending ? 'Saving...' : 'Continue'}
-            </Button>
-          </div>
+          {/* Remove duplicate navigation - OnboardingLayout handles this */}
         </form>
       </Form>
     </OnboardingLayout>

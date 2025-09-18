@@ -7,6 +7,8 @@ import { Heart, Menu, X, User, LogOut, Settings, ChevronDown } from "lucide-reac
 import { Link } from "react-router-dom";
 import Wordmark from "@/components/brand/Wordmark";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,12 +56,18 @@ const navItems = [
 
 export function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { user, loading } = useAuth();
 
   const handleNavClick = (href: string) => {
     if (href.startsWith('#')) {
       const element = document.querySelector(href);
       element?.scrollIntoView({ behavior: 'smooth' });
     }
+    setIsOpen(false);
+  };
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
     setIsOpen(false);
   };
 
@@ -117,16 +125,63 @@ return (
 
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center space-x-3">
-          <Button variant="ghost" size="sm" asChild>
-            <Link to="/login">
-              Sign In
-            </Link>
-          </Button>
-          <Button variant="luxury" size="sm" asChild>
-            <Link to="/register">
-              Join Free
-            </Link>
-          </Button>
+          {loading ? (
+            <div className="w-8 h-8 animate-spin rounded-full border-b-2 border-primary"></div>
+          ) : user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.name || user.email} />
+                    <AvatarFallback>
+                      {user.user_metadata?.name ? user.user_metadata.name[0] : user.email?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <div className="flex items-center justify-start gap-2 p-2">
+                  <div className="flex flex-col space-y-1 leading-none">
+                    <p className="font-medium">{user.user_metadata?.name || 'Account'}</p>
+                    <p className="w-[200px] truncate text-sm text-muted-foreground">
+                      {user.email}
+                    </p>
+                  </div>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/account" className="cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    Account
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/account/settings" className="cursor-pointer">
+                    <Settings className="mr-2 h-4 w-4" />
+                    Settings
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Log out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Button variant="ghost" size="sm" asChild>
+                <Link to="/auth?tab=login">
+                  Sign In
+                </Link>
+              </Button>
+              <Button variant="luxury" size="sm" asChild>
+                <Link to="/auth?tab=signup">
+                  Join Free
+                </Link>
+              </Button>
+            </>
+          )}
         </div>
 
           {/* Mobile Menu Button */}
@@ -178,16 +233,33 @@ return (
                 )
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
-                <Button variant="ghost" className="w-full justify-start" asChild>
-                  <Link to="/login" onClick={() => setIsOpen(false)}>
-                    Sign In
-                  </Link>
-                </Button>
-                <Button variant="luxury" className="w-full justify-start" asChild>
-                  <Link to="/register" onClick={() => setIsOpen(false)}>
-                    Join Free
-                  </Link>
-                </Button>
+                {user ? (
+                  <>
+                    <Button variant="ghost" className="w-full justify-start" asChild>
+                      <Link to="/account" onClick={() => setIsOpen(false)}>
+                        <User className="w-4 h-4 mr-2" />
+                        Account
+                      </Link>
+                    </Button>
+                    <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Log out
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button variant="ghost" className="w-full justify-start" asChild>
+                      <Link to="/auth?tab=login" onClick={() => setIsOpen(false)}>
+                        Sign In
+                      </Link>
+                    </Button>
+                    <Button variant="luxury" className="w-full justify-start" asChild>
+                      <Link to="/auth?tab=signup" onClick={() => setIsOpen(false)}>
+                        Join Free
+                      </Link>
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </motion.div>

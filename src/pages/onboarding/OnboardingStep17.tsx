@@ -7,7 +7,8 @@ import { OnboardingLayout } from '@/components/onboarding/OnboardingLayout';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Badge } from '@/components/ui/badge';
+import { X } from 'lucide-react';
 import { useOnboardingState } from '@/hooks/useOnboardingState';
 import { toast } from '@/hooks/use-toast';
 
@@ -63,6 +64,65 @@ const motherTongueOptions = [
   { value: 'other', label: 'Other' },
 ];
 
+interface MultiSelectFieldProps {
+  value: string[];
+  onChange: (value: string[]) => void;
+  options: { value: string; label: string }[];
+  placeholder: string;
+}
+
+const MultiSelectField: React.FC<MultiSelectFieldProps> = ({ value, onChange, options, placeholder }) => {
+  const [selectedValues, setSelectedValues] = React.useState<string[]>(value || []);
+
+  const handleSelect = (selectedValue: string) => {
+    if (!selectedValues.includes(selectedValue)) {
+      const newValues = [...selectedValues, selectedValue];
+      setSelectedValues(newValues);
+      onChange(newValues);
+    }
+  };
+
+  const handleRemove = (valueToRemove: string) => {
+    const newValues = selectedValues.filter(v => v !== valueToRemove);
+    setSelectedValues(newValues);
+    onChange(newValues);
+  };
+
+  return (
+    <div className="space-y-2">
+      <Select onValueChange={handleSelect}>
+        <SelectTrigger>
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent>
+          {options.filter(option => !selectedValues.includes(option.value)).map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+      
+      {selectedValues.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {selectedValues.map((value) => {
+            const option = options.find(opt => opt.value === value);
+            return (
+              <Badge key={value} variant="secondary" className="flex items-center gap-1">
+                {option?.label}
+                <X 
+                  className="w-3 h-3 cursor-pointer" 
+                  onClick={() => handleRemove(value)}
+                />
+              </Badge>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function OnboardingStep17() {
   const navigate = useNavigate();
   const { partnerPreferences, updatePartnerPreferences } = useOnboardingState();
@@ -94,50 +154,24 @@ export default function OnboardingStep17() {
       currentStep={17}
       title="Partner Preferences - Culture"
       subtitle="Specify your preferences for religion, community, and language"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={form.control}
             name="religions"
-            render={() => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Preferred Religions (Optional)</FormLabel>
-                <div className="grid grid-cols-2 gap-3">
-                  {religionOptions.map((option) => (
-                    <FormField
-                      key={option.value}
-                      control={form.control}
-                      name="religions"
-                      render={({ field }) => {
-                        return (
-                          <FormItem
-                            key={option.value}
-                            className="flex flex-row items-start space-x-3 space-y-0"
-                          >
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value?.includes(option.value)}
-                                onCheckedChange={(checked) => {
-                                  return checked
-                                    ? field.onChange([...(field.value || []), option.value])
-                                    : field.onChange(
-                                        field.value?.filter(
-                                          (value) => value !== option.value
-                                        )
-                                      )
-                                }}
-                              />
-                            </FormControl>
-                            <FormLabel className="text-sm font-normal">
-                              {option.label}
-                            </FormLabel>
-                          </FormItem>
-                        )
-                      }}
-                    />
-                  ))}
-                </div>
+                <FormControl>
+                  <MultiSelectField
+                    value={field.value || []}
+                    onChange={field.onChange}
+                    options={religionOptions}
+                    placeholder="Select religions"
+                  />
+                </FormControl>
                 <div className="text-sm text-muted-foreground">
                   Leave blank to include all religions
                 </div>
@@ -149,44 +183,17 @@ export default function OnboardingStep17() {
           <FormField
             control={form.control}
             name="communities"
-            render={() => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Preferred Communities (Optional)</FormLabel>
-                <div className="grid grid-cols-2 gap-3">
-                  {communityOptions.map((option) => (
-                    <FormField
-                      key={option.value}
-                      control={form.control}
-                      name="communities"
-                      render={({ field }) => {
-                        return (
-                          <FormItem
-                            key={option.value}
-                            className="flex flex-row items-start space-x-3 space-y-0"
-                          >
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value?.includes(option.value)}
-                                onCheckedChange={(checked) => {
-                                  return checked
-                                    ? field.onChange([...(field.value || []), option.value])
-                                    : field.onChange(
-                                        field.value?.filter(
-                                          (value) => value !== option.value
-                                        )
-                                      )
-                                }}
-                              />
-                            </FormControl>
-                            <FormLabel className="text-sm font-normal">
-                              {option.label}
-                            </FormLabel>
-                          </FormItem>
-                        )
-                      }}
-                    />
-                  ))}
-                </div>
+                <FormControl>
+                  <MultiSelectField
+                    value={field.value || []}
+                    onChange={field.onChange}
+                    options={communityOptions}
+                    placeholder="Select communities"
+                  />
+                </FormControl>
                 <div className="text-sm text-muted-foreground">
                   Leave blank to include all communities
                 </div>
@@ -198,44 +205,17 @@ export default function OnboardingStep17() {
           <FormField
             control={form.control}
             name="mother_tongues"
-            render={() => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Preferred Mother Tongues (Optional)</FormLabel>
-                <div className="grid grid-cols-2 gap-3">
-                  {motherTongueOptions.map((option) => (
-                    <FormField
-                      key={option.value}
-                      control={form.control}
-                      name="mother_tongues"
-                      render={({ field }) => {
-                        return (
-                          <FormItem
-                            key={option.value}
-                            className="flex flex-row items-start space-x-3 space-y-0"
-                          >
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value?.includes(option.value)}
-                                onCheckedChange={(checked) => {
-                                  return checked
-                                    ? field.onChange([...(field.value || []), option.value])
-                                    : field.onChange(
-                                        field.value?.filter(
-                                          (value) => value !== option.value
-                                        )
-                                      )
-                                }}
-                              />
-                            </FormControl>
-                            <FormLabel className="text-sm font-normal">
-                              {option.label}
-                            </FormLabel>
-                          </FormItem>
-                        )
-                      }}
-                    />
-                  ))}
-                </div>
+                <FormControl>
+                  <MultiSelectField
+                    value={field.value || []}
+                    onChange={field.onChange}
+                    options={motherTongueOptions}
+                    placeholder="Select languages"
+                  />
+                </FormControl>
                 <div className="text-sm text-muted-foreground">
                   Leave blank to include all languages
                 </div>
@@ -249,6 +229,15 @@ export default function OnboardingStep17() {
               <strong>Note:</strong> These preferences help narrow down your search. 
               You can always update these later or leave them blank for broader results.
             </p>
+          </div>
+
+          <div className="flex justify-between pt-6">
+            <Button type="button" variant="outline" onClick={() => navigate('/onboarding/16')}>
+              Previous
+            </Button>
+            <Button type="submit" disabled={updatePartnerPreferences.isPending}>
+              {updatePartnerPreferences.isPending ? 'Saving...' : 'Continue'}
+            </Button>
           </div>
         </form>
       </Form>

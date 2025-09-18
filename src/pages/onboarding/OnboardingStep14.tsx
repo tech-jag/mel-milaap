@@ -55,6 +55,7 @@ export default function OnboardingStep14() {
       currentStep={14}
       title="About You"
       subtitle="Tell us about yourself and what makes you unique"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

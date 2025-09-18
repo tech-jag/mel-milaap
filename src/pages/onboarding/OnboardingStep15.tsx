@@ -56,6 +56,7 @@ export default function OnboardingStep15() {
       currentStep={15}
       title="Partner Preferences - Basic"
       subtitle="Tell us about your ideal partner's age and height preferences"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

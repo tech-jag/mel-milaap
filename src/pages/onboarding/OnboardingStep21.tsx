@@ -52,6 +52,7 @@ export default function OnboardingStep21() {
       currentStep={21}
       title="Privacy & Contact Settings"
       subtitle="Configure your privacy preferences and how others can contact you"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

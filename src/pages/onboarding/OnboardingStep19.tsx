@@ -54,6 +54,7 @@ export default function OnboardingStep19() {
       currentStep={19}
       title="Partner Preferences - Education & Career"
       subtitle="Specify your preferences for education and professional background"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

@@ -17,6 +17,7 @@ export default function OnboardingStep22() {
       currentStep={22}
       title="Add Your Photos"
       subtitle="Upload photos to make your profile more attractive to potential matches"
+      hideNavigation={true}
     >
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

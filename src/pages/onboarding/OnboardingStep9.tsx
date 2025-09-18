@@ -66,6 +66,7 @@ export default function OnboardingStep9() {
       currentStep={9}
       title="Location Details"
       subtitle="Tell us where you currently live"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

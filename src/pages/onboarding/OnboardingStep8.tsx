@@ -61,6 +61,7 @@ export default function OnboardingStep8() {
       currentStep={8}
       title="Religion & Community"
       subtitle="Share your religious and community background"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

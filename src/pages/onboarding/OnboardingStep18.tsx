@@ -59,6 +59,7 @@ export default function OnboardingStep18() {
       currentStep={18}
       title="Partner Preferences - Location"
       subtitle="Specify your location preferences for your ideal partner"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

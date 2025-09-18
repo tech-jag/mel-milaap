@@ -58,6 +58,7 @@ export default function OnboardingStep7() {
       currentStep={7}
       title="Languages"
       subtitle="Tell us about the languages you speak"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

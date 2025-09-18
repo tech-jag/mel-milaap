@@ -53,6 +53,7 @@ export default function OnboardingStep10() {
       currentStep={10}
       title="Education"
       subtitle="Tell us about your educational background"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

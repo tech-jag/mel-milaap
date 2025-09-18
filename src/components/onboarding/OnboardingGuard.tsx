@@ -26,7 +26,7 @@ export const OnboardingGuard: React.FC<OnboardingGuardProps> = ({ children }) =>
 
   // Not authenticated - redirect to auth (only for protected routes that require OnboardingGuard)
   if (!user) {
-    return <Navigate to="/auth/login" state={{ from: location }} replace />;
+    return <Navigate to="/auth?tab=login" state={{ from: location }} replace />;
   }
 
   const isOnboardingRoute = location.pathname.startsWith('/onboarding');

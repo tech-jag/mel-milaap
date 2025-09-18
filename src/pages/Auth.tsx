@@ -110,8 +110,18 @@ const Auth = () => {
           .eq('user_id', data.user?.id)
           .maybeSingle();
           
+        // Check for returnTo parameter
+        const returnTo = searchParams.get('returnTo');
+        
         if (supplier) {
           navigate('/supplier/dashboard');
+        } else if (returnTo) {
+          // If there's a returnTo, go there (but only if profile is ready)
+          if (profile?.profile_ready) {
+            navigate(decodeURIComponent(returnTo));
+          } else {
+            navigate('/onboarding/1');
+          }
         } else if (profile?.profile_ready) {
           navigate('/account');
         } else {
@@ -164,8 +174,18 @@ const Auth = () => {
         .eq('user_id', data.user?.id)
         .maybeSingle();
         
+      // Check for returnTo parameter
+      const returnTo = searchParams.get('returnTo');
+      
       if (supplier) {
         navigate('/supplier/dashboard');
+      } else if (returnTo) {
+        // If there's a returnTo, go there (but only if profile is ready)
+        if (profile?.profile_ready) {
+          navigate(decodeURIComponent(returnTo));
+        } else {
+          navigate('/onboarding/1');
+        }
       } else if (profile?.profile_ready) {
         navigate('/account');
       } else {
@@ -241,6 +261,8 @@ const Auth = () => {
         duration: 3000,
       });
 
+      console.log('Signup successful, navigating to onboarding/1');
+      
       // Redirect to onboarding instead of switching to login tab
       navigate('/onboarding/1');
     } catch (error: any) {

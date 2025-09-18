@@ -173,7 +173,8 @@ const App = () => (
               <Route path="/suppliers/feature-listings" element={<SuppliersFeatureListings />} />
               <Route path="/suppliers/pricing" element={<SuppliersPricing />} />
               
-              {/* Auth Routes */}
+               {/* Auth Routes */}
+              <Route path="/auth" element={<Auth />} />
               <Route path="/login" element={<Auth />} />
               <Route path="/register" element={<Auth />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />

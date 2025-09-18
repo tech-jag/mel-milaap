@@ -14,8 +14,10 @@ const OnboardingStep1 = () => {
   const { user, loading } = useAuth();
 
   useEffect(() => {
+    console.log('OnboardingStep1 - Auth state:', { user: !!user, loading, userEmail: user?.email });
     if (!loading && !user) {
       // If user is not authenticated, redirect to auth page
+      console.log('OnboardingStep1 - No user found, redirecting to auth');
       navigate('/auth?tab=signup');
     }
   }, [user, loading, navigate]);

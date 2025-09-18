@@ -23,7 +23,7 @@ export function PrivateRoute({ children }: PrivateRouteProps) {
   
   if (!user) {
     const returnTo = encodeURIComponent(location.pathname + location.search);
-    return <Navigate to={`/login?returnTo=${returnTo}`} replace />;
+    return <Navigate to={`/auth?tab=login&returnTo=${returnTo}`} replace />;
   }
   
   return children;

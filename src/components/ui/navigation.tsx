@@ -293,7 +293,7 @@ return (
                       <Link to="/account/photos" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                         Photos
                       </Link>
-                      <Link to="/account/messages" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                      <Link to="/inbox" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                         Messages
                       </Link>
                       <Link to="/account/favorites" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>

@@ -60,6 +60,7 @@ export interface UserProfile {
   highlights?: string[];
   photo_visibility?: 'public' | 'members' | 'on_request';
   contact_by?: string[];
+  photo_primary_url?: string;
   updated_at?: string;
 }
 

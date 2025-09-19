@@ -12,6 +12,8 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { 
   User, 
   Shield, 
@@ -29,7 +31,12 @@ import {
   MapPin,
   Heart,
   Settings,
-  ArrowLeft
+  ArrowLeft,
+  Phone,
+  Mail,
+  Globe,
+  Building,
+  Plus
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
@@ -56,6 +63,12 @@ const AccountSettings = () => {
   const [collaborators, setCollaborators] = React.useState<any[]>([]);
   const [newCollaboratorEmail, setNewCollaboratorEmail] = React.useState('');
   const [newCollaboratorRole, setNewCollaboratorRole] = React.useState('parent');
+  const [contactPreferences, setContactPreferences] = React.useState<any>({
+    who_can_message: 'premium-only',
+    phone_visibility: 'premium-connections',
+    auto_response_enabled: false,
+    auto_response_message: ''
+  });
 
   React.useEffect(() => {
     checkAuthAndLoadData();
@@ -72,7 +85,8 @@ const AccountSettings = () => {
     await Promise.all([
       loadUserProfile(user.id),
       loadUserSettings(user.id),
-      loadCollaborators(user.id)
+      loadCollaborators(user.id),
+      loadContactPreferences(user.id)
     ]);
     setIsLoading(false);
   };
@@ -137,6 +151,24 @@ const AccountSettings = () => {
       setCollaborators(data || []);
     } catch (error) {
       console.error('Error loading collaborators:', error);
+    }
+  };
+
+  const loadContactPreferences = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('contact_preferences')
+        .select('*')
+        .eq('user_id', userId)
+        .maybeSingle();
+
+      if (error && error.code !== 'PGRST116') throw error;
+      
+      if (data) {
+        setContactPreferences(data);
+      }
+    } catch (error) {
+      console.error('Error loading contact preferences:', error);
     }
   };
 
@@ -263,6 +295,34 @@ const AccountSettings = () => {
     }
   };
 
+  const updateContactPreferences = async (updates: any) => {
+    if (!currentUser) return;
+
+    try {
+      const { error } = await supabase
+        .from('contact_preferences')
+        .upsert({
+          user_id: currentUser.id,
+          ...updates
+        })
+        .eq('user_id', currentUser.id);
+
+      if (error) throw error;
+
+      setContactPreferences(prev => ({ ...prev, ...updates }));
+      toast({
+        title: "Contact preferences updated",
+        description: "Your contact preferences have been saved.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive"
+      });
+    }
+  };
+
   // Helper function to get subscription plan display
   const getSubscriptionDisplay = () => {
     const tier = userProfile?.subscription_tier;
@@ -353,10 +413,15 @@ const AccountSettings = () => {
               <Tabs defaultValue="profile" className="space-y-6 lg:space-y-8">
                 
                 {/* Mobile-Responsive Tab List */}
-                <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 h-auto p-1">
+                <TabsList className="grid w-full grid-cols-2 lg:grid-cols-6 h-auto p-1">
                   <TabsTrigger value="profile" className="flex flex-col lg:flex-row items-center space-y-1 lg:space-y-0 lg:space-x-2 py-2 lg:py-3 text-xs lg:text-sm">
                     <User className="w-3 h-3 lg:w-4 lg:h-4" />
                     <span>Profile</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="contact-preferences" className="flex flex-col lg:flex-row items-center space-y-1 lg:space-y-0 lg:space-x-2 py-2 lg:py-3 text-xs lg:text-sm">
+                    <Heart className="w-3 h-3 lg:w-4 lg:h-4" />
+                    <span className="hidden lg:inline">Contact</span>
+                    <span className="lg:hidden">Contact</span>
                   </TabsTrigger>
                   <TabsTrigger value="security" className="flex flex-col lg:flex-row items-center space-y-1 lg:space-y-0 lg:space-x-2 py-2 lg:py-3 text-xs lg:text-sm">
                     <Shield className="w-3 h-3 lg:w-4 lg:h-4" />
@@ -473,6 +538,85 @@ const AccountSettings = () => {
                             placeholder="Enter venue location"
                             className="text-sm lg:text-base"
                           />
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                {/* Contact Preferences Tab */}
+                <TabsContent value="contact-preferences" className="space-y-4 lg:space-y-6">
+                  <Card>
+                    <CardHeader className="pb-4">
+                      <CardTitle className="flex items-center text-lg lg:text-xl">
+                        <Heart className="w-4 h-4 lg:w-5 lg:h-5 mr-2" />
+                        Contact & Privacy Controls
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4 lg:space-y-6">
+                      
+                      {/* Who can contact you */}
+                      <div className="space-y-3">
+                        <Label className="text-sm lg:text-base font-medium">Who can send you messages?</Label>
+                        <RadioGroup 
+                          value={contactPreferences.who_can_message} 
+                          onValueChange={(value) => updateContactPreferences({ who_can_message: value })}
+                        >
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="anyone" id="anyone" />
+                            <Label htmlFor="anyone" className="text-sm lg:text-base">Anyone can contact me</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="premium-only" id="premium-only" />
+                            <Label htmlFor="premium-only" className="text-sm lg:text-base">Only Premium Members</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="liked-only" id="liked-only" />
+                            <Label htmlFor="liked-only" className="text-sm lg:text-base">Only members I liked</Label>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <RadioGroupItem value="hidden" id="hidden" />
+                            <Label htmlFor="hidden" className="text-sm lg:text-base">No one (Hidden mode)</Label>
+                          </div>
+                        </RadioGroup>
+                      </div>
+
+                      {/* Phone number sharing */}
+                      <div className="space-y-3">
+                        <Label className="text-sm lg:text-base font-medium">Phone number visibility</Label>
+                        <Select 
+                          value={contactPreferences.phone_visibility} 
+                          onValueChange={(value) => updateContactPreferences({ phone_visibility: value })}
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="never">Never show</SelectItem>
+                            <SelectItem value="premium-connections">Premium connections only</SelectItem>
+                            <SelectItem value="mutual-interest">After mutual interest</SelectItem>
+                            <SelectItem value="always">Always visible</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Auto-responses */}
+                      <div className="space-y-3">
+                        <Label htmlFor="auto-response" className="text-sm lg:text-base font-medium">Auto-response message</Label>
+                        <Textarea 
+                          id="auto-response"
+                          placeholder="Thank you for your interest. I will get back to you soon..."
+                          value={contactPreferences.auto_response_message || ''}
+                          onChange={(e) => setContactPreferences(prev => ({ ...prev, auto_response_message: e.target.value }))}
+                          onBlur={(e) => updateContactPreferences({ auto_response_message: e.target.value })}
+                          className="mt-2 text-sm lg:text-base"
+                        />
+                        <div className="flex items-center space-x-2 mt-3">
+                          <Switch 
+                            checked={contactPreferences.auto_response_enabled} 
+                            onCheckedChange={(checked) => updateContactPreferences({ auto_response_enabled: checked })}
+                          />
+                          <Label className="text-sm lg:text-base">Enable auto-response</Label>
                         </div>
                       </div>
                     </CardContent>

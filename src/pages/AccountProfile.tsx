@@ -14,6 +14,7 @@ import { useOnboardingState } from "@/hooks/useOnboardingState";
 import { useAuth } from "@/hooks/useAuth";
 import { EditableProfileSection } from "@/components/profile/EditableProfileSection";
 import { AccountHeader } from "@/components/ui/account-header";
+import { ProfileCompletionTracker } from "@/components/profile/ProfileCompletionTracker";
 
 export default function AccountProfile() {
   const { user } = useAuth();
@@ -65,7 +66,9 @@ export default function AccountProfile() {
     { key: 'gothra', label: 'Gothra', type: 'text' as const },
     { key: 'nakshatra', label: 'Nakshatra', type: 'text' as const },
     { key: 'raashi', label: 'Raashi', type: 'text' as const },
-    { key: 'manglik', label: 'Manglik', type: 'select' as const, options: ['yes', 'no', 'unknown'] }
+    { key: 'manglik', label: 'Manglik', type: 'select' as const, options: ['yes', 'no', 'unknown'] },
+    { key: 'mangal_dosha', label: 'Mangal Dosha', type: 'select' as const, options: ['yes', 'no', 'anshik', 'dont_know'] },
+    { key: 'horoscope_matching_importance', label: 'Horoscope Matching', type: 'select' as const, options: ['very_important', 'important', 'not_important'] }
   ];
 
   const familyFields = [
@@ -112,9 +115,11 @@ export default function AccountProfile() {
     { key: 'religions', label: 'Religions', type: 'multi-select' as const, options: ['Hindu', 'Muslim', 'Christian', 'Sikh', 'Buddhist', 'Jain'] },
     { key: 'communities', label: 'Communities', type: 'multi-select' as const, options: ['Brahmin', 'Kshatriya', 'Vaishya', 'Other'] },
     { key: 'mother_tongues', label: 'Mother Tongues', type: 'multi-select' as const, options: ['Hindi', 'English', 'Punjabi', 'Tamil', 'Telugu', 'Bengali'] },
-    { key: 'location_countries', label: 'Countries', type: 'multi-select' as const, options: ['India', 'Australia', 'USA', 'UK', 'Canada'] },
+    { key: 'countries', label: 'Countries', type: 'multi-select' as const, options: ['India', 'Australia', 'USA', 'UK', 'Canada'] },
     { key: 'education_levels', label: 'Education Levels', type: 'multi-select' as const, options: ['Bachelor', 'Master', 'PhD', 'Diploma'] },
-    { key: 'additional', label: 'Additional Preferences', type: 'textarea' as const }
+    { key: 'willing_to_relocate', label: 'Willing to Relocate?', type: 'select' as const, options: ['yes', 'same_country', 'no'] },
+    { key: 'lifestyle_preferences', label: 'Lifestyle Preferences', type: 'multi-select' as const, options: ['non_smoker', 'non_drinker', 'vegetarian', 'fitness_oriented', 'family_oriented', 'career_oriented'] },
+    { key: 'deal_breakers', label: 'Deal Breakers (Optional)', type: 'textarea' as const }
   ];
 
   return (
@@ -197,6 +202,18 @@ export default function AccountProfile() {
                 </Card>
               </div>
 
+              {/* Profile Completion Tracker */}
+              <ProfileCompletionTracker 
+                profileData={profileData}
+                onSectionClick={(sectionKey) => {
+                  // Scroll to relevant section
+                  const element = document.getElementById(sectionKey);
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              />
+
               {/* Main Content Grid - Mobile Responsive */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
                 
@@ -221,14 +238,16 @@ export default function AccountProfile() {
                     onSave={handleProfileUpdate}
                   />
 
-                  {/* Astro Details */}
-                  <EditableProfileSection
-                    title="Astro Details"
-                    icon={Star}
-                    data={profileData}
-                    fields={astroFields}
-                    onSave={handleProfileUpdate}
-                  />
+                  {/* Enhanced Astro Details with section ID */}
+                  <div id="astro">
+                    <EditableProfileSection
+                      title="Astro Details"
+                      icon={Star}
+                      data={profileData}
+                      fields={astroFields}
+                      onSave={handleProfileUpdate}
+                    />
+                  </div>
 
                   {/* Family Details */}
                   <EditableProfileSection
@@ -270,14 +289,16 @@ export default function AccountProfile() {
                 {/* Right Column - Partner Preferences & Contact */}
                 <div className="space-y-4 lg:space-y-6">
                   
-                  {/* Partner Preferences */}
-                  <EditableProfileSection
-                    title="Partner Preferences"
-                    icon={Heart}
-                    data={preferences}
-                    fields={partnerPreferenceFields}
-                    onSave={handlePreferencesUpdate}
-                  />
+                  {/* Enhanced Partner Preferences with section ID */}
+                  <div id="partner_preferences">
+                    <EditableProfileSection
+                      title="Detailed Partner Preferences"
+                      icon={Heart}
+                      data={preferences}
+                      fields={partnerPreferenceFields}
+                      onSave={handlePreferencesUpdate}
+                    />
+                  </div>
 
                   {/* My Contact Detail */}
                   <Card>

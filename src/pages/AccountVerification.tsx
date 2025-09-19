@@ -20,7 +20,11 @@ import {
   Camera,
   Star,
   Users,
-  ArrowLeft
+  ArrowLeft,
+  Phone,
+  Mail,
+  Globe,
+  Building
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
@@ -298,6 +302,70 @@ const AccountVerification = () => {
                       </Button>
                     </div>
                   )}
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Additional Verification Options */}
+            <motion.div variants={fadeInUp} className="max-w-4xl mx-auto">
+              <Card className="luxury-card">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-lg lg:text-xl">Additional Verifications</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    {/* Phone verification */}
+                    <div className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-2">
+                          <Phone className="w-4 h-4" />
+                          <span className="font-medium text-sm lg:text-base">Phone Number</span>
+                        </div>
+                        <Badge variant="outline" className="text-xs">
+                          Pending
+                        </Badge>
+                      </div>
+                      <Button size="sm" variant="outline" className="text-xs lg:text-sm">Verify Phone</Button>
+                    </div>
+
+                    {/* Email verification */}
+                    <div className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-2">
+                          <Mail className="w-4 h-4" />
+                          <span className="font-medium text-sm lg:text-base">Email Address</span>
+                        </div>
+                        <Badge variant="default" className="text-xs">
+                          Verified
+                        </Badge>
+                      </div>
+                    </div>
+
+                    {/* Social media verification */}
+                    <div className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-2">
+                          <Globe className="w-4 h-4" />
+                          <span className="font-medium text-sm lg:text-base">Social Media</span>
+                        </div>
+                        <Badge variant="outline" className="text-xs">Optional</Badge>
+                      </div>
+                      <Button size="sm" variant="outline" className="text-xs lg:text-sm">Link LinkedIn</Button>
+                    </div>
+
+                    {/* Professional verification */}
+                    <div className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-2">
+                          <Building className="w-4 h-4" />
+                          <span className="font-medium text-sm lg:text-base">Professional</span>
+                        </div>
+                        <Badge variant="outline" className="text-xs">Optional</Badge>
+                      </div>
+                      <Button size="sm" variant="outline" className="text-xs lg:text-sm">Verify Workplace</Button>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>

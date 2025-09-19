@@ -41,6 +41,7 @@ import {
   getCollaborators,
   calculatePlanningProgress
 } from "@/lib/planning";
+import { ActivityTracker } from "@/components/profile/ActivityTracker";
 
 interface DashboardStats {
   budget: {

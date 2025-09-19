@@ -25,6 +25,7 @@ import { supabase } from "@/integrations/supabase/client";
 import ProtectedImage from "@/components/ui/protected-image";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { AccountHeader } from "@/components/ui/account-header";
 
 interface Favorite {
   id: string;
@@ -135,7 +136,14 @@ const AccountFavorites = () => {
   const supplierFavorites = favorites.filter(f => f.subject_type === 'supplier');
 
   if (!currentUser) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -146,212 +154,220 @@ const AccountFavorites = () => {
         <div className="flex-1">
           <Navigation />
           
-          {/* Header */}
-          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
-            <div className="container mx-auto px-4 lg:px-8 py-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-                    <Heart className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Favorites</h1>
-                    <p className="text-muted-foreground">Your saved profiles and suppliers</p>
-                  </div>
-                </div>
-                <Link to="/account">
-                  <Button variant="outline">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to Dashboard
-                  </Button>
-                </Link>
+          {/* REPLACED INLINE HEADER WITH ACCOUNTHEADER */}
+          <AccountHeader
+            title="Favorites"
+            description="Your saved profiles and suppliers"
+            icon={Heart}
+            backUrl="/account"
+            backText="Back to Dashboard"
+          />
+
+          {/* Favorites Content - Mobile Optimized */}
+          <section className="py-4 lg:py-8 bg-background">
+            <div className="container mx-auto px-4 lg:px-8">
+              <div className="max-w-6xl mx-auto">
+                
+                {/* Mobile-Responsive Tabs */}
+                <Tabs defaultValue="profiles" className="space-y-6 lg:space-y-8">
+                  <TabsList className="grid w-full grid-cols-2">
+                    <TabsTrigger value="profiles" className="text-sm">
+                      <span className="hidden sm:inline">Profiles</span>
+                      <span className="sm:hidden">Profiles</span>
+                      <span className="ml-1">({profileFavorites.length})</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="suppliers" className="text-sm">
+                      <span className="hidden sm:inline">Suppliers</span>
+                      <span className="sm:hidden">Suppliers</span>
+                      <span className="ml-1">({supplierFavorites.length})</span>
+                    </TabsTrigger>
+                  </TabsList>
+
+                  {/* Profile Favorites - Mobile Responsive Grid */}
+                  <TabsContent value="profiles">
+                    <motion.div
+                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"
+                      variants={staggerChildren}
+                      initial="initial"
+                      whileInView="animate"
+                      viewport={{ once: true }}
+                    >
+                      {profileFavorites.map((favorite) => (
+                        <motion.div key={favorite.id} variants={fadeInUp}>
+                          <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                            <div className="relative">
+                              <ProtectedImage
+                                src={favorite.profile?.photos[0] || '/api/placeholder/300/400'}
+                                profileId={favorite.subject_id}
+                                alt={favorite.profile?.name || 'Profile'}
+                                className="w-full h-40 sm:h-48 object-cover"
+                              />
+                              
+                              {favorite.profile?.verified && (
+                                <Badge className="absolute top-2 left-2 bg-green-500 text-white text-xs">
+                                  <Shield className="w-3 h-3 mr-1" />
+                                  <span className="hidden sm:inline">Verified</span>
+                                  <span className="sm:hidden">✓</span>
+                                </Badge>
+                              )}
+                              
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="absolute top-2 right-2 bg-white/90 h-8 w-8"
+                                onClick={() => removeFavorite(favorite.id)}
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            </div>
+                            
+                            <CardContent className="p-3 sm:p-4">
+                              <div className="space-y-2 sm:space-y-3">
+                                <div>
+                                  <h3 className="font-semibold text-sm sm:text-base truncate">
+                                    {favorite.profile?.name}, {favorite.profile?.age}
+                                  </h3>
+                                  <p className="text-xs sm:text-sm text-muted-foreground flex items-center truncate">
+                                    <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
+                                    {favorite.profile?.location}
+                                  </p>
+                                </div>
+                                
+                                <p className="text-xs sm:text-sm text-muted-foreground truncate">
+                                  {favorite.profile?.profession}
+                                </p>
+                                
+                                <div className="flex gap-2">
+                                  <Button size="sm" variant="outline" className="flex-1 text-xs">
+                                    <Eye className="w-3 h-3 mr-1" />
+                                    <span className="hidden sm:inline">View</span>
+                                    <span className="sm:hidden">View</span>
+                                  </Button>
+                                  <Button size="sm" className="flex-1 text-xs">
+                                    <MessageCircle className="w-3 h-3 mr-1" />
+                                    <span className="hidden sm:inline">Message</span>
+                                    <span className="sm:hidden">Msg</span>
+                                  </Button>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </motion.div>
+                      ))}
+                      
+                      {profileFavorites.length === 0 && (
+                        <div className="col-span-full text-center py-8 lg:py-12">
+                          <Heart className="w-8 h-8 lg:w-12 lg:h-12 text-muted-foreground mx-auto mb-4" />
+                          <p className="text-muted-foreground text-sm lg:text-base">No favorite profiles yet</p>
+                          <Link to="/matches">
+                            <Button className="mt-4" size="sm">
+                              <span className="hidden sm:inline">Find Matches</span>
+                              <span className="sm:hidden">Find Matches</span>
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+                    </motion.div>
+                  </TabsContent>
+
+                  {/* Supplier Favorites - Mobile Responsive Grid */}
+                  <TabsContent value="suppliers">
+                    <motion.div
+                      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"
+                      variants={staggerChildren}
+                      initial="initial"
+                      whileInView="animate"
+                      viewport={{ once: true }}
+                    >
+                      {supplierFavorites.map((favorite) => (
+                        <motion.div key={favorite.id} variants={fadeInUp}>
+                          <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                            <div className="relative">
+                              <img
+                                src={favorite.supplier?.photos[0] || '/api/placeholder/300/400'}
+                                alt={favorite.supplier?.business_name}
+                                className="w-full h-40 sm:h-48 object-cover"
+                              />
+                              
+                              {favorite.supplier?.verified && (
+                                <Badge className="absolute top-2 left-2 bg-green-500 text-white text-xs">
+                                  <Shield className="w-3 h-3 mr-1" />
+                                  <span className="hidden sm:inline">Verified</span>
+                                  <span className="sm:hidden">✓</span>
+                                </Badge>
+                              )}
+                              
+                              <Button
+                                variant="outline"
+                                size="icon"
+                                className="absolute top-2 right-2 bg-white/90 h-8 w-8"
+                                onClick={() => removeFavorite(favorite.id)}
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            </div>
+                            
+                            <CardContent className="p-3 sm:p-4">
+                              <div className="space-y-2 sm:space-y-3">
+                                <div>
+                                  <h3 className="font-semibold text-sm sm:text-base truncate">
+                                    {favorite.supplier?.business_name}
+                                  </h3>
+                                  <p className="text-xs sm:text-sm text-muted-foreground flex items-center truncate">
+                                    <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
+                                    {favorite.supplier?.city}
+                                  </p>
+                                </div>
+                                
+                                <div className="flex flex-wrap gap-1">
+                                  {favorite.supplier?.categories.slice(0, 2).map((category) => (
+                                    <Badge key={category} variant="secondary" className="text-xs">
+                                      {category}
+                                    </Badge>
+                                  ))}
+                                  {favorite.supplier?.categories.length > 2 && (
+                                    <Badge variant="secondary" className="text-xs">
+                                      +{favorite.supplier.categories.length - 2}
+                                    </Badge>
+                                  )}
+                                </div>
+                                
+                                <div className="flex gap-2">
+                                  <Button size="sm" variant="outline" className="flex-1 text-xs">
+                                    <Eye className="w-3 h-3 mr-1" />
+                                    <span className="hidden sm:inline">View</span>
+                                    <span className="sm:hidden">View</span>
+                                  </Button>
+                                  <Button size="sm" className="flex-1 text-xs">
+                                    <span className="hidden sm:inline">Contact</span>
+                                    <span className="sm:hidden">Contact</span>
+                                  </Button>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </motion.div>
+                      ))}
+                      
+                      {supplierFavorites.length === 0 && (
+                        <div className="col-span-full text-center py-8 lg:py-12">
+                          <Star className="w-8 h-8 lg:w-12 lg:h-12 text-muted-foreground mx-auto mb-4" />
+                          <p className="text-muted-foreground text-sm lg:text-base">No favorite suppliers yet</p>
+                          <Link to="/suppliers">
+                            <Button className="mt-4" size="sm">
+                              <span className="hidden sm:inline">Browse Suppliers</span>
+                              <span className="sm:hidden">Browse</span>
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+                    </motion.div>
+                  </TabsContent>
+                </Tabs>
+                
               </div>
             </div>
-          </div>
-
-      {/* Favorites Content */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            
-            <Tabs defaultValue="profiles" className="space-y-8">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="profiles">
-                  Profiles ({profileFavorites.length})
-                </TabsTrigger>
-                <TabsTrigger value="suppliers">
-                  Suppliers ({supplierFavorites.length})
-                </TabsTrigger>
-              </TabsList>
-
-              {/* Profile Favorites */}
-              <TabsContent value="profiles">
-                <motion.div
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                  variants={staggerChildren}
-                  initial="initial"
-                  whileInView="animate"
-                  viewport={{ once: true }}
-                >
-                  {profileFavorites.map((favorite) => (
-                    <motion.div key={favorite.id} variants={fadeInUp}>
-                      <Card className="luxury-card overflow-hidden">
-                        <div className="relative">
-                          <ProtectedImage
-                            src={favorite.profile?.photos[0] || '/api/placeholder/300/400'}
-                            profileId={favorite.subject_id}
-                            alt={favorite.profile?.name || 'Profile'}
-                            className="w-full h-48"
-                          />
-                          
-                          {favorite.profile?.verified && (
-                            <Badge className="absolute top-3 left-3 bg-success text-success-foreground">
-                              <Shield className="w-3 h-3 mr-1" />
-                              Verified
-                            </Badge>
-                          )}
-                          
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="absolute top-3 right-3 bg-white/90"
-                            onClick={() => removeFavorite(favorite.id)}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                        
-                        <CardContent className="p-4">
-                          <div className="space-y-3">
-                            <div>
-                              <h3 className="font-semibold text-foreground">
-                                {favorite.profile?.name}, {favorite.profile?.age}
-                              </h3>
-                              <p className="text-sm text-muted-foreground flex items-center">
-                                <MapPin className="w-3 h-3 mr-1" />
-                                {favorite.profile?.location}
-                              </p>
-                            </div>
-                            
-                            <p className="text-sm text-muted-foreground">
-                              {favorite.profile?.profession}
-                            </p>
-                            
-                            <div className="flex gap-2">
-                              <Button size="sm" variant="outline" className="flex-1">
-                                <Eye className="w-3 h-3 mr-1" />
-                                View
-                              </Button>
-                              <Button size="sm" variant="premium" className="flex-1">
-                                <MessageCircle className="w-3 h-3 mr-1" />
-                                Message
-                              </Button>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
-                  
-                  {profileFavorites.length === 0 && (
-                    <div className="col-span-full text-center py-12">
-                      <Heart className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-muted-foreground">No favorite profiles yet</p>
-                      <Link to="/match">
-                        <Button className="mt-4">Find Matches</Button>
-                      </Link>
-                    </div>
-                  )}
-                </motion.div>
-              </TabsContent>
-
-              {/* Supplier Favorites */}
-              <TabsContent value="suppliers">
-                <motion.div
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                  variants={staggerChildren}
-                  initial="initial"
-                  whileInView="animate"
-                  viewport={{ once: true }}
-                >
-                  {supplierFavorites.map((favorite) => (
-                    <motion.div key={favorite.id} variants={fadeInUp}>
-                      <Card className="luxury-card overflow-hidden">
-                        <div className="relative">
-                          <img
-                            src={favorite.supplier?.photos[0] || '/api/placeholder/300/400'}
-                            alt={favorite.supplier?.business_name}
-                            className="w-full h-48 object-cover"
-                          />
-                          
-                          {favorite.supplier?.verified && (
-                            <Badge className="absolute top-3 left-3 bg-success text-success-foreground">
-                              <Shield className="w-3 h-3 mr-1" />
-                              Verified
-                            </Badge>
-                          )}
-                          
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            className="absolute top-3 right-3 bg-white/90"
-                            onClick={() => removeFavorite(favorite.id)}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </div>
-                        
-                        <CardContent className="p-4">
-                          <div className="space-y-3">
-                            <div>
-                              <h3 className="font-semibold text-foreground">
-                                {favorite.supplier?.business_name}
-                              </h3>
-                              <p className="text-sm text-muted-foreground flex items-center">
-                                <MapPin className="w-3 h-3 mr-1" />
-                                {favorite.supplier?.city}
-                              </p>
-                            </div>
-                            
-                            <div className="flex flex-wrap gap-1">
-                              {favorite.supplier?.categories.map((category) => (
-                                <Badge key={category} variant="secondary" className="text-xs">
-                                  {category}
-                                </Badge>
-                              ))}
-                            </div>
-                            
-                            <div className="flex gap-2">
-                              <Button size="sm" variant="outline" className="flex-1">
-                                <Eye className="w-3 h-3 mr-1" />
-                                View
-                              </Button>
-                              <Button size="sm" variant="premium" className="flex-1">
-                                Contact
-                              </Button>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  ))}
-                  
-                  {supplierFavorites.length === 0 && (
-                    <div className="col-span-full text-center py-12">
-                      <Star className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                      <p className="text-muted-foreground">No favorite suppliers yet</p>
-                      <Link to="/suppliers">
-                        <Button className="mt-4">Browse Suppliers</Button>
-                      </Link>
-                    </div>
-                  )}
-                </motion.div>
-              </TabsContent>
-            </Tabs>
-            
-          </div>
-        </div>
-      </section>
+          </section>
 
           <Footer />
         </div>

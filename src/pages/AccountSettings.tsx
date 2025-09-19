@@ -51,7 +51,9 @@ import { AccountHeader } from "@/components/ui/account-header";
 const AccountSettings = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { preferences: contactPreferences, updatePreferences: updateContactPreferences } = useContactPreferences();
+  const contactPreferencesHook = useContactPreferences();
+  const contactPreferences = contactPreferencesHook.preferences;
+  const updateContactPreferences = contactPreferencesHook.updatePreferences;
   const [isLoading, setIsLoading] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState<any>(null);
   const [userProfile, setUserProfile] = React.useState<any>(null);

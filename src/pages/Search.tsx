@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Slider } from "@/components/ui/slider";
+import { AccountHeader } from "@/components/ui/account-header";
 import { 
   Search as SearchIcon, 
   Filter,
@@ -34,7 +35,6 @@ const Search = () => {
   const { user } = useAuth();
   const [ageRange, setAgeRange] = React.useState([25, 35]);
   const [heightRange, setHeightRange] = React.useState([150, 180]);
-  const [showFilters, setShowFilters] = React.useState(false);
   
   // Mock search results
   const searchResults = [
@@ -113,24 +113,24 @@ const Search = () => {
   ];
 
   if (!user) {
-    return (
-      <SidebarProvider>
-        <div className="min-h-screen bg-background flex w-full">
-          <AccountSidebar />
-          
-          <div className="flex-1">
-            <Navigation />
-            <div className="container mx-auto px-4 py-16 text-center">
-              <h1 className="text-3xl font-bold mb-4">Please sign in to search profiles</h1>
-              <Button asChild>
-                <Link to="/auth">Sign In</Link>
-              </Button>
-            </div>
-            <Footer />
-          </div>
+  return (
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
+        <div className="container mx-auto px-4 py-16 text-center">
+          <h1 className="text-3xl font-bold mb-4">Please sign in to search profiles</h1>
+          <Button asChild>
+            <Link to="/auth">Sign In</Link>
+          </Button>
         </div>
-      </SidebarProvider>
-    );
+          <Footer />
+        </div>
+      </div>
+    </SidebarProvider>
+  );
   }
 
   return (
@@ -141,331 +141,282 @@ const Search = () => {
         <div className="flex-1">
           <Navigation />
           
-          {/* Header - Mobile Optimized */}
-          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
-            <div className="container mx-auto px-4 lg:px-8 py-4 lg:py-6">
-              {/* Mobile: Stack vertically, Desktop: Horizontal */}
-              <div className="flex flex-col gap-4 sm:gap-3">
-                
-                {/* Top Row: Title and Back Button */}
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center flex-shrink-0">
-                      <SearchIcon className="h-5 w-5 text-white" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                        Find Your Ideal Partner
-                      </h1>
-                      <p className="text-muted-foreground text-sm lg:text-base mt-1 hidden sm:block">
-                        Use advanced filters to discover profiles that match your preferences
-                      </p>
-                      <p className="text-muted-foreground text-xs sm:hidden">
-                        Advanced search & filters
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Back Button - Always visible */}
-                  <Link to="/account" className="flex-shrink-0">
-                    <Button variant="outline" size="sm" className="px-2 sm:px-4">
-                      <ArrowLeft className="w-4 h-4 sm:mr-2" />
-                      <span className="hidden sm:inline">Back to Dashboard</span>
-                      <span className="sm:hidden sr-only">Back</span>
-                    </Button>
-                  </Link>
-                </div>
-                
-                {/* Mobile Filters Toggle - Only on mobile */}
-                <div className="lg:hidden">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    className="w-full"
-                    onClick={() => setShowFilters(!showFilters)}
-                  >
-                    <Filter className="w-4 h-4 mr-2" />
-                    {showFilters ? 'Hide Filters' : 'Show Filters'}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Header */}
+<AccountHeader
+  title="Find Your Ideal Partner"
+  description="Use advanced filters to discover profiles that match your preferences"
+  icon={SearchIcon}
+  backUrl="/account"
+  backText="Back to Dashboard"
+/>
 
           {/* Search Content */}
-          <section className="py-4 lg:py-8">
+          <section className="py-8">
             <div className="container mx-auto px-4 lg:px-8">
               <div className="max-w-7xl mx-auto">
                 
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
               
-                  {/* Search Filters Sidebar */}
-                  <div className={`lg:col-span-1 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-                    <motion.div
-                      variants={fadeInUp}
-                      initial="initial"
-                      whileInView="animate"
-                      viewport={{ once: true }}
-                    >
-                      <Card className="lg:sticky lg:top-8">
-                        <CardContent className="p-4 lg:p-6">
-                          <div className="flex items-center gap-2 mb-4 lg:mb-6">
-                            <Filter className="w-5 h-5" />
-                            <h2 className="text-lg font-semibold">Search Filters</h2>
+              {/* Search Filters Sidebar */}
+              <div className="lg:col-span-1">
+                <motion.div
+                  variants={fadeInUp}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                >
+                  <Card className="sticky top-8">
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-2 mb-6">
+                        <Filter className="w-5 h-5" />
+                        <h2 className="text-lg font-semibold">Search Filters</h2>
+                      </div>
+                      
+                      <div className="space-y-6">
+                        {/* Profile ID Search */}
+                        <div>
+                          <Label>Profile ID</Label>
+                          <Input placeholder="Enter Profile ID" />
+                        </div>
+                        
+                        {/* Age Range */}
+                        <div>
+                          <Label>Age: {ageRange[0]} - {ageRange[1]} years</Label>
+                          <Slider
+                            value={ageRange}
+                            onValueChange={setAgeRange}
+                            max={60}
+                            min={18}
+                            step={1}
+                            className="mt-2"
+                          />
+                        </div>
+                        
+                        {/* Height Range */}
+                        <div>
+                          <Label>Height: {heightRange[0]} - {heightRange[1]} cm</Label>
+                          <Slider
+                            value={heightRange}
+                            onValueChange={setHeightRange}
+                            max={200}
+                            min={140}
+                            step={1}
+                            className="mt-2"
+                          />
+                        </div>
+                        
+                        {/* Marital Status */}
+                        <div>
+                          <Label>Marital Status</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="never_married">Never Married</SelectItem>
+                              <SelectItem value="divorced">Divorced</SelectItem>
+                              <SelectItem value="widowed">Widowed</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        {/* Religion */}
+                        <div>
+                          <Label>Religion</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select religion" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="hindu">Hindu</SelectItem>
+                              <SelectItem value="muslim">Muslim</SelectItem>
+                              <SelectItem value="christian">Christian</SelectItem>
+                              <SelectItem value="sikh">Sikh</SelectItem>
+                              <SelectItem value="buddhist">Buddhist</SelectItem>
+                              <SelectItem value="jain">Jain</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        {/* Mother Tongue */}
+                        <div>
+                          <Label>Mother Tongue</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select language" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="hindi">Hindi</SelectItem>
+                              <SelectItem value="english">English</SelectItem>
+                              <SelectItem value="punjabi">Punjabi</SelectItem>
+                              <SelectItem value="tamil">Tamil</SelectItem>
+                              <SelectItem value="telugu">Telugu</SelectItem>
+                              <SelectItem value="bengali">Bengali</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        {/* Location */}
+                        <div>
+                          <Label>Country Living In</Label>
+                          <Select>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select country" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="australia">Australia</SelectItem>
+                              <SelectItem value="india">India</SelectItem>
+                              <SelectItem value="usa">USA</SelectItem>
+                              <SelectItem value="uk">UK</SelectItem>
+                              <SelectItem value="canada">Canada</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        
+                        {/* Photo Settings */}
+                        <div>
+                          <Label>Photo Settings</Label>
+                          <div className="space-y-2 mt-2">
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="visible-to-all" />
+                              <Label htmlFor="visible-to-all" className="text-sm">Visible to all</Label>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <Checkbox id="protected-photo" />
+                              <Label htmlFor="protected-photo" className="text-sm">Protected Photo</Label>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Search Button */}
+                        <Button className="w-full">
+                          <SearchIcon className="w-4 h-4 mr-2" />
+                          Search
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              </div>
+              
+              {/* Search Results */}
+              <div className="lg:col-span-3">
+                <motion.div
+                  variants={staggerChildren}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true }}
+                >
+                  {/* Results Header */}
+                  <motion.div variants={fadeInUp} className="flex items-center justify-between mb-6">
+                    <h2 className="text-xl font-semibold">
+                      {searchResults.length} profiles found • Female, 18 - 35, 5ft 0in - 5ft 11in, 160, Sikh, Never Married
+                    </h2>
+                    <Select defaultValue="default">
+                      <SelectTrigger className="w-48">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="default">Default Order</SelectItem>
+                        <SelectItem value="newest">Newest First</SelectItem>
+                        <SelectItem value="active">Most Active</SelectItem>
+                        <SelectItem value="compatibility">Best Match</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </motion.div>
+                  
+                  {/* Results Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {searchResults.map((profile) => (
+                      <motion.div key={profile.id} variants={fadeInUp}>
+                        <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+                          <div className="relative">
+                            <img 
+                              src={profile.photos[0]} 
+                              alt={profile.name}
+                              className="w-full h-64 object-cover"
+                            />
+                            
+                            {/* Premium Badge */}
+                            {profile.premium && (
+                              <Badge className="absolute top-3 left-3 bg-purple-500 text-white">
+                                VIP
+                              </Badge>
+                            )}
+                            
+                            {/* Verified Badge */}
+                            {profile.verified && (
+                              <Badge className="absolute top-3 right-3 bg-green-500 text-white">
+                                <Shield className="w-3 h-3 mr-1" />
+                                Verified
+                              </Badge>
+                            )}
+                            
+                            {/* Compatibility Score */}
+                            <div className="absolute bottom-3 left-3">
+                              <Badge className="bg-blue-500 text-white">
+                                {profile.compatibility}% Match
+                              </Badge>
+                            </div>
+                            
+                            {/* Quick Actions */}
+                            <div className="absolute bottom-3 right-3 flex gap-1">
+                              <Button size="sm" variant="outline" className="h-8 w-8 p-0 bg-white/90">
+                                <Heart className="w-4 h-4" />
+                              </Button>
+                              <Button size="sm" variant="outline" className="h-8 w-8 p-0 bg-white/90">
+                                <MessageCircle className="w-4 h-4" />
+                              </Button>
+                            </div>
                           </div>
                           
-                          <div className="space-y-4 lg:space-y-6">
-                            {/* Profile ID Search */}
-                            <div>
-                              <Label className="text-sm">Profile ID</Label>
-                              <Input placeholder="Enter Profile ID" className="mt-1" />
-                            </div>
-                            
-                            {/* Age Range */}
-                            <div>
-                              <Label className="text-sm">Age: {ageRange[0]} - {ageRange[1]} years</Label>
-                              <Slider
-                                value={ageRange}
-                                onValueChange={setAgeRange}
-                                max={60}
-                                min={18}
-                                step={1}
-                                className="mt-2"
-                              />
-                            </div>
-                            
-                            {/* Height Range */}
-                            <div>
-                              <Label className="text-sm">Height: {heightRange[0]} - {heightRange[1]} cm</Label>
-                              <Slider
-                                value={heightRange}
-                                onValueChange={setHeightRange}
-                                max={200}
-                                min={140}
-                                step={1}
-                                className="mt-2"
-                              />
-                            </div>
-                            
-                            {/* Marital Status */}
-                            <div>
-                              <Label className="text-sm">Marital Status</Label>
-                              <Select>
-                                <SelectTrigger className="mt-1">
-                                  <SelectValue placeholder="Select status" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="never_married">Never Married</SelectItem>
-                                  <SelectItem value="divorced">Divorced</SelectItem>
-                                  <SelectItem value="widowed">Widowed</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                            
-                            {/* Religion */}
-                            <div>
-                              <Label className="text-sm">Religion</Label>
-                              <Select>
-                                <SelectTrigger className="mt-1">
-                                  <SelectValue placeholder="Select religion" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="hindu">Hindu</SelectItem>
-                                  <SelectItem value="muslim">Muslim</SelectItem>
-                                  <SelectItem value="christian">Christian</SelectItem>
-                                  <SelectItem value="sikh">Sikh</SelectItem>
-                                  <SelectItem value="buddhist">Buddhist</SelectItem>
-                                  <SelectItem value="jain">Jain</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                            
-                            {/* Mother Tongue */}
-                            <div>
-                              <Label className="text-sm">Mother Tongue</Label>
-                              <Select>
-                                <SelectTrigger className="mt-1">
-                                  <SelectValue placeholder="Select language" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="hindi">Hindi</SelectItem>
-                                  <SelectItem value="english">English</SelectItem>
-                                  <SelectItem value="punjabi">Punjabi</SelectItem>
-                                  <SelectItem value="tamil">Tamil</SelectItem>
-                                  <SelectItem value="telugu">Telugu</SelectItem>
-                                  <SelectItem value="bengali">Bengali</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                            
-                            {/* Location */}
-                            <div>
-                              <Label className="text-sm">Country Living In</Label>
-                              <Select>
-                                <SelectTrigger className="mt-1">
-                                  <SelectValue placeholder="Select country" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="australia">Australia</SelectItem>
-                                  <SelectItem value="india">India</SelectItem>
-                                  <SelectItem value="usa">USA</SelectItem>
-                                  <SelectItem value="uk">UK</SelectItem>
-                                  <SelectItem value="canada">Canada</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                            
-                            {/* Photo Settings */}
-                            <div>
-                              <Label className="text-sm">Photo Settings</Label>
-                              <div className="space-y-2 mt-2">
-                                <div className="flex items-center space-x-2">
-                                  <Checkbox id="visible-to-all" />
-                                  <Label htmlFor="visible-to-all" className="text-sm">Visible to all</Label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                  <Checkbox id="protected-photo" />
-                                  <Label htmlFor="protected-photo" className="text-sm">Protected Photo</Label>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            {/* Search Button */}
-                            <Button className="w-full" onClick={() => setShowFilters(false)}>
-                              <SearchIcon className="w-4 h-4 mr-2" />
-                              Search Profiles
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
-                  </div>
-                  
-                  {/* Search Results */}
-                  <div className="lg:col-span-3">
-                    <motion.div
-                      variants={staggerChildren}
-                      initial="initial"
-                      whileInView="animate"
-                      viewport={{ once: true }}
-                    >
-                      {/* Results Header */}
-                      <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                        <div className="min-w-0 flex-1">
-                          <h2 className="text-lg lg:text-xl font-semibold">
-                            {searchResults.length} profiles found
-                          </h2>
-                          <p className="text-sm text-muted-foreground mt-1 hidden sm:block">
-                            Female, 18 - 35, 5ft 0in - 5ft 11in, 160, Sikh, Never Married
-                          </p>
-                        </div>
-                        <Select defaultValue="default">
-                          <SelectTrigger className="w-full sm:w-48">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="default">Default Order</SelectItem>
-                            <SelectItem value="newest">Newest First</SelectItem>
-                            <SelectItem value="active">Most Active</SelectItem>
-                            <SelectItem value="compatibility">Best Match</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </motion.div>
-                      
-                      {/* Results Grid */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
-                        {searchResults.map((profile) => (
-                          <motion.div key={profile.id} variants={fadeInUp}>
-                            <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                              <div className="relative">
-                                <img 
-                                  src={profile.photos[0]} 
-                                  alt={profile.name}
-                                  className="w-full h-48 sm:h-64 object-cover"
-                                />
-                                
-                                {/* Premium Badge */}
-                                {profile.premium && (
-                                  <Badge className="absolute top-3 left-3 bg-purple-500 text-white text-xs">
-                                    VIP
-                                  </Badge>
-                                )}
-                                
-                                {/* Verified Badge */}
-                                {profile.verified && (
-                                  <Badge className="absolute top-3 right-3 bg-green-500 text-white text-xs">
-                                    <Shield className="w-3 h-3 mr-1" />
-                                    Verified
-                                  </Badge>
-                                )}
-                                
-                                {/* Compatibility Score */}
-                                <div className="absolute bottom-3 left-3">
-                                  <Badge className="bg-blue-500 text-white text-xs">
-                                    {profile.compatibility}% Match
-                                  </Badge>
-                                </div>
-                                
-                                {/* Quick Actions */}
-                                <div className="absolute bottom-3 right-3 flex gap-1">
-                                  <Button size="sm" variant="outline" className="h-7 w-7 p-0 bg-white/90">
-                                    <Heart className="w-3 h-3" />
-                                  </Button>
-                                  <Button size="sm" variant="outline" className="h-7 w-7 p-0 bg-white/90">
-                                    <MessageCircle className="w-3 h-3" />
-                                  </Button>
+                          <CardContent className="p-4">
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <h3 className="font-semibold text-lg">{profile.name}</h3>
+                                <div className="flex items-center gap-1 text-sm text-green-600">
+                                  <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                                  Online {profile.lastSeen}
                                 </div>
                               </div>
                               
-                              <CardContent className="p-3 sm:p-4">
-                                <div className="space-y-2">
-                                  <div className="flex items-center justify-between">
-                                    <h3 className="font-semibold text-base lg:text-lg truncate">{profile.name}</h3>
-                                    <div className="flex items-center gap-1 text-xs text-green-600 flex-shrink-0">
-                                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                                      <span className="hidden sm:inline">Online {profile.lastSeen}</span>
-                                      <span className="sm:hidden">Online</span>
-                                    </div>
-                                  </div>
-                                  
-                                  <p className="text-sm text-muted-foreground">{profile.age} yrs, 5' 2"</p>
-                                  
-                                  <p className="text-sm text-muted-foreground flex items-center gap-1 truncate">
-                                    <MapPin className="w-3 h-3 flex-shrink-0" />
-                                    {profile.location}
-                                  </p>
-                                  
-                                  <p className="text-sm text-muted-foreground flex items-center gap-1 truncate">
-                                    <Briefcase className="w-3 h-3 flex-shrink-0" />
-                                    {profile.profession}
-                                  </p>
-                                  
-                                  <div className="flex gap-2 pt-2">
-                                    <Button size="sm" variant="outline" className="flex-1 text-xs">
-                                      <Eye className="w-3 h-3 mr-1" />
-                                      <span className="hidden sm:inline">View Profile</span>
-                                      <span className="sm:hidden">View</span>
-                                    </Button>
-                                    <Button size="sm" className="flex-1 text-xs">
-                                      <MessageCircle className="w-3 h-3 mr-1" />
-                                      Connect
-                                    </Button>
-                                  </div>
-                                </div>
-                              </CardContent>
-                            </Card>
-                          </motion.div>
-                        ))}
-                      </div>
-                      
-                      {/* Load More */}
-                      <motion.div variants={fadeInUp} className="text-center mt-6 lg:mt-8">
-                        <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                          Load More Profiles
-                        </Button>
+                              <p className="text-sm text-muted-foreground">{profile.age} yrs, 5' 2"</p>
+                              
+                              <p className="text-sm text-muted-foreground flex items-center gap-1">
+                                <MapPin className="w-3 h-3" />
+                                {profile.location}
+                              </p>
+                              
+                              <p className="text-sm text-muted-foreground flex items-center gap-1">
+                                <Briefcase className="w-3 h-3" />
+                                {profile.profession}
+                              </p>
+                              
+                              <div className="flex gap-2 pt-2">
+                                <Button size="sm" variant="outline" className="flex-1">
+                                  <Eye className="w-3 h-3 mr-1" />
+                                  View Profile
+                                </Button>
+                                <Button size="sm" className="flex-1">
+                                  <MessageCircle className="w-3 h-3 mr-1" />
+                                  Connect
+                                </Button>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
                       </motion.div>
-                    </motion.div>
+                    ))}
                   </div>
+                  
+                  {/* Load More */}
+                  <motion.div variants={fadeInUp} className="text-center mt-8">
+                    <Button variant="outline" size="lg">
+                      Load More Profiles
+                    </Button>
+                  </motion.div>
+                </motion.div>
+              </div>
                 </div>
               </div>
             </div>

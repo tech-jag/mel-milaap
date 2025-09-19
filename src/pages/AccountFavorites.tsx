@@ -15,7 +15,8 @@ import {
   Shield,
   Trash2,
   Eye,
-  MessageCircle
+  MessageCircle,
+  ArrowLeft
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
@@ -146,15 +147,21 @@ const AccountFavorites = () => {
           <Navigation />
           
           {/* Header */}
-          <div className="bg-background border-b">
+          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
             <div className="container mx-auto px-4 lg:px-8 py-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-2xl font-bold text-foreground">Favorites</h1>
-                  <p className="text-muted-foreground">Your saved profiles and suppliers</p>
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                    <Heart className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Favorites</h1>
+                    <p className="text-muted-foreground">Your saved profiles and suppliers</p>
+                  </div>
                 </div>
                 <Link to="/account">
                   <Button variant="outline">
+                    <ArrowLeft className="w-4 h-4 mr-2" />
                     Back to Dashboard
                   </Button>
                 </Link>

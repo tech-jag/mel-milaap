@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Camera, MapPin, Briefcase, GraduationCap, Heart, Home, Users, Star, Eye } from "lucide-react";
+import { ArrowLeft, Camera, MapPin, Briefcase, GraduationCap, Heart, Home, Users, Star, Eye, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useOnboardingState } from "@/hooks/useOnboardingState";
 import { useAuth } from "@/hooks/useAuth";
@@ -128,9 +128,14 @@ export default function AccountProfile() {
           <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
             <div className="container mx-auto px-4 lg:px-8 py-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Profile</h1>
-                  <p className="text-muted-foreground">Manage your profile information</p>
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                    <User className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Profile</h1>
+                    <p className="text-muted-foreground">Manage your profile information</p>
+                  </div>
                 </div>
                 <Link to="/account">
                   <Button variant="outline">

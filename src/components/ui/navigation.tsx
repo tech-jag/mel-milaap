@@ -214,7 +214,7 @@ return (
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden z-50"
+            className="lg:hidden z-50 relative"
             onClick={() => setIsOpen(!isOpen)}
           >
             {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -227,7 +227,7 @@ return (
              initial={{ opacity: 0, height: 0 }}
              animate={{ opacity: 1, height: "auto" }}
              exit={{ opacity: 0, height: 0 }}
-             className="lg:hidden border-t border-border/50 py-4 bg-background/95 backdrop-blur-md z-40"
+             className="lg:hidden border-t border-border/50 py-4 bg-background/95 backdrop-blur-md z-40 absolute top-full left-0 right-0"
            >
              <div className="flex flex-col space-y-2">
                {/* Show different mobile menu based on login status */}

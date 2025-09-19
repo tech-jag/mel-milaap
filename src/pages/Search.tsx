@@ -23,7 +23,8 @@ import {
   Heart,
   MessageCircle,
   Eye,
-  User
+  User,
+  ArrowLeft
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
@@ -132,40 +133,44 @@ const Search = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      {/* Header */}
-      <section className="py-8 bg-gradient-hero">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="max-w-4xl mx-auto text-center"
-            variants={staggerChildren}
-            initial="initial"
-            animate="animate"
-          >
-            <motion.div variants={fadeInUp}>
-              <Badge variant="outline" className="mb-4">
-                <SearchIcon className="w-4 h-4 mr-2" />
-                Advanced Search
-              </Badge>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Find Your Ideal Partner
-              </h1>
-              <p className="text-muted-foreground text-lg">
-                Use advanced filters to discover profiles that match your preferences
-              </p>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
+          
+          {/* Header */}
+          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
+            <div className="container mx-auto px-4 lg:px-8 py-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                    <SearchIcon className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                      Find Your Ideal Partner
+                    </h1>
+                    <p className="text-muted-foreground">Use advanced filters to discover profiles that match your preferences</p>
+                  </div>
+                </div>
+                <Link to="/account">
+                  <Button variant="outline">
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Back to Dashboard
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
 
-      {/* Search Content */}
-      <section className="py-8">
-        <div className="container mx-auto px-4">
-          <div className="max-w-7xl mx-auto">
-            
-            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Search Content */}
+          <section className="py-8">
+            <div className="container mx-auto px-4 lg:px-8">
+              <div className="max-w-7xl mx-auto">
+                
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
               
               {/* Search Filters Sidebar */}
               <div className="lg:col-span-1">
@@ -427,13 +432,15 @@ const Search = () => {
                   </motion.div>
                 </motion.div>
               </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 

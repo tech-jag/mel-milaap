@@ -4,54 +4,58 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 import { Navigation } from '@/components/ui/navigation';
 import { Footer } from '@/components/ui/footer';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Camera } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { PhotoManager } from '@/components/PhotoManager';
 
 export default function AccountPhotos() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full">
-          <AccountSidebar />
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
           
-          <main className="flex-1 p-8">
-            <div className="max-w-6xl mx-auto">
-              {/* Header */}
-              <div className="mb-8">
-                <Link to="/account">
-                  <Button variant="ghost" className="mb-4">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to Dashboard
-                  </Button>
-                </Link>
-                
-                <div className="flex items-center justify-between">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
+            <div className="container mx-auto px-4 lg:px-8 py-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                    <Camera className="h-5 w-5 text-white" />
+                  </div>
                   <div>
-                    <Badge variant="outline" className="mb-2">Photo Management</Badge>
-                    <h1 className="text-3xl font-bold text-foreground">Profile Photos</h1>
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Profile Photos</h1>
                     <p className="text-muted-foreground">Manage your profile photos to attract potential matches</p>
                   </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" asChild>
-                      <Link to="/account/profile">
-                        Manage Profile
-                      </Link>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Link to="/account/profile">
+                    <Button variant="outline">
+                      Manage Profile
                     </Button>
-                  </div>
+                  </Link>
+                  <Link to="/account">
+                    <Button variant="outline">
+                      <ArrowLeft className="w-4 h-4 mr-2" />
+                      Back to Dashboard
+                    </Button>
+                  </Link>
                 </div>
               </div>
-              
+            </div>
+          </div>
+
+          <div className="container mx-auto px-4 lg:px-8 py-8">
+            <div className="max-w-6xl mx-auto">
               <PhotoManager />
             </div>
-          </main>
-        </div>
-      </SidebarProvider>
+          </div>
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }

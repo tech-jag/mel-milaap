@@ -19,7 +19,8 @@ import {
   MessageCircle,
   Eye,
   Filter,
-  Users
+  Users,
+  ArrowLeft
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
@@ -119,28 +120,40 @@ const Matches = () => {
           {/* Header */}
           <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
             <div className="container mx-auto px-4 lg:px-8 py-6">
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Your Matches</h1>
-                    <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">24 New</Badge>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
+                    <Heart className="h-5 w-5 text-white" />
                   </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1 sm:flex-none"
-                    >
-                      Advanced
-                    </Button>
-                    <Button
-                      variant="default"
-                      size="sm"
-                      className="flex-1 sm:flex-none"
-                    >
-                      Refine
-                    </Button>
+                  <div>
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent flex items-center gap-2">
+                      Your Matches
+                      <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">24 New</Badge>
+                    </h1>
+                    <p className="text-muted-foreground">Discover your compatible matches</p>
                   </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="hidden sm:flex"
+                  >
+                    Advanced
+                  </Button>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="hidden sm:flex"
+                  >
+                    Refine
+                  </Button>
+                  <Link to="/account">
+                    <Button variant="outline">
+                      <ArrowLeft className="w-4 h-4 mr-2" />
+                      Back to Dashboard
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -153,13 +166,13 @@ const Matches = () => {
             
             {/* Stats Bar */}
             <motion.div 
-              className="flex items-center justify-between mb-8 p-4 bg-card rounded-lg border"
+              className="flex flex-col sm:flex-row items-center justify-between mb-8 p-4 bg-card rounded-lg border gap-4"
               variants={fadeInUp}
               initial="initial"
               whileInView="animate"
               viewport={{ once: true }}
             >
-              <div className="flex items-center gap-6">
+              <div className="flex items-center gap-4 sm:gap-6">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-primary">{matches.length}</div>
                   <div className="text-sm text-muted-foreground">New Matches</div>
@@ -174,15 +187,17 @@ const Matches = () => {
                 </div>
               </div>
               
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm">
+              <div className="flex gap-2 w-full sm:w-auto">
+                <Button variant="outline" size="sm" className="flex-1 sm:flex-none">
                   <Filter className="w-4 h-4 mr-2" />
-                  Refine Preferences
+                  <span className="hidden sm:inline">Refine Preferences</span>
+                  <span className="sm:hidden">Refine</span>
                 </Button>
-                <Button asChild>
+                <Button asChild className="flex-1 sm:flex-none">
                   <Link to="/search">
                     <Users className="w-4 h-4 mr-2" />
-                    Advanced Search
+                    <span className="hidden sm:inline">Advanced Search</span>
+                    <span className="sm:hidden">Search</span>
                   </Link>
                 </Button>
               </div>
@@ -264,38 +279,38 @@ const Matches = () => {
                   </Card>
                   
                   {/* Action Buttons */}
-                  <div className="flex justify-center gap-4 mt-6">
+                  <div className="flex justify-center gap-2 sm:gap-4 mt-6">
                     <Button 
                       size="lg" 
                       variant="outline" 
-                      className="rounded-full w-16 h-16 p-0"
+                      className="rounded-full w-12 h-12 sm:w-16 sm:h-16 p-0"
                       onClick={handlePass}
                     >
-                      <X className="w-6 h-6" />
+                      <X className="w-4 h-4 sm:w-6 sm:h-6" />
                     </Button>
                     
                     <Button 
                       size="lg" 
                       variant="outline" 
-                      className="rounded-full w-16 h-16 p-0"
+                      className="rounded-full w-12 h-12 sm:w-16 sm:h-16 p-0"
                     >
-                      <Eye className="w-6 h-6" />
+                      <Eye className="w-4 h-4 sm:w-6 sm:h-6" />
                     </Button>
                     
                     <Button 
                       size="lg" 
                       variant="outline" 
-                      className="rounded-full w-16 h-16 p-0"
+                      className="rounded-full w-12 h-12 sm:w-16 sm:h-16 p-0"
                     >
-                      <MessageCircle className="w-6 h-6" />
+                      <MessageCircle className="w-4 h-4 sm:w-6 sm:h-6" />
                     </Button>
                     
                     <Button 
                       size="lg" 
-                      className="rounded-full w-16 h-16 p-0 bg-red-500 hover:bg-red-600"
+                      className="rounded-full w-12 h-12 sm:w-16 sm:h-16 p-0 bg-red-500 hover:bg-red-600"
                       onClick={handleLike}
                     >
-                      <Heart className="w-6 h-6" />
+                      <Heart className="w-4 h-4 sm:w-6 sm:h-6" />
                     </Button>
                   </div>
                 </motion.div>

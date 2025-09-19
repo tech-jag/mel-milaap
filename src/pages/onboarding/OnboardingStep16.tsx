@@ -7,12 +7,11 @@ import { OnboardingLayout } from '@/components/onboarding/OnboardingLayout';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useOnboardingState } from '@/hooks/useOnboardingState';
 import { toast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
-  marital_statuses: z.array(z.string()).optional(),
+  marital_statuses: z.string().optional(),
   has_children: z.enum(['yes', 'no', 'unknown']).optional(),
 });
 
@@ -30,17 +29,21 @@ export default function OnboardingStep16() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      marital_statuses: partnerPreferences?.marital_statuses || [],
+      marital_statuses: partnerPreferences?.marital_statuses?.join(',') || '',
       has_children: partnerPreferences?.has_children || undefined,
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await updatePartnerPreferences.mutateAsync({
-        marital_statuses: values.marital_statuses,
+      const payload = {
+        marital_statuses: values.marital_statuses 
+          ? values.marital_statuses.split(',').map(item => item.trim()).filter(Boolean)
+          : [],
         has_children: values.has_children,
-      });
+      };
+      
+      await updatePartnerPreferences.mutateAsync(payload);
       navigate('/onboarding/17');
     } catch (error) {
       toast({
@@ -63,43 +66,27 @@ export default function OnboardingStep16() {
           <FormField
             control={form.control}
             name="marital_statuses"
-            render={() => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Acceptable Marital Status (Optional)</FormLabel>
-                <div className="space-y-3">
-                  {maritalStatusOptions.map((option) => (
-                    <FormField
-                      key={option.value}
-                      control={form.control}
-                      name="marital_statuses"
-                      render={({ field }) => {
-                        return (
-                          <FormItem
-                            key={option.value}
-                            className="flex flex-row items-start space-x-3 space-y-0"
-                          >
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value?.includes(option.value)}
-                                onCheckedChange={(checked) => {
-                                  return checked
-                                    ? field.onChange([...(field.value || []), option.value])
-                                    : field.onChange(
-                                        field.value?.filter(
-                                          (value) => value !== option.value
-                                        )
-                                      )
-                                }}
-                              />
-                            </FormControl>
-                            <FormLabel className="text-sm font-normal">
-                              {option.label}
-                            </FormLabel>
-                          </FormItem>
-                        )
-                      }}
-                    />
-                  ))}
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select marital status preferences (comma-separated)" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="never_married">Never Married</SelectItem>
+                    <SelectItem value="divorced">Divorced</SelectItem>
+                    <SelectItem value="widowed">Widowed</SelectItem>
+                    <SelectItem value="annulled">Annulled</SelectItem>
+                    <SelectItem value="never_married,divorced">Never Married, Divorced</SelectItem>
+                    <SelectItem value="never_married,divorced,widowed">Never Married, Divorced, Widowed</SelectItem>
+                    <SelectItem value="never_married,divorced,widowed,annulled">All Marital Statuses</SelectItem>
+                  </SelectContent>
+                </Select>
+                <div className="text-sm text-muted-foreground">
+                  Select your acceptable marital status preferences
                 </div>
                 <FormMessage />
               </FormItem>

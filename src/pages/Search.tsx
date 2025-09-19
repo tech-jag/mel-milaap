@@ -35,6 +35,7 @@ const Search = () => {
   const { user } = useAuth();
   const [ageRange, setAgeRange] = React.useState([25, 35]);
   const [heightRange, setHeightRange] = React.useState([150, 180]);
+  const [showFilters, setShowFilters] = React.useState(false);
   
   // Mock search results
   const searchResults = [

@@ -30,11 +30,7 @@ import { Badge } from "./badge";
 import { Button } from "./button";
 import { supabase } from "@/integrations/supabase/client";
 
-const planningItems = [
-  { title: "Guest List", url: "/account/planning/guests", icon: Users },
-  { title: "To-Do List", url: "/account/planning/todo", icon: CheckSquare },
-  { title: "Budget", url: "/account/planning/budget", icon: DollarSign },
-];
+// Planning items removed as requested
 
 const accountItems = [
   { title: "Overview", url: "/account", icon: Home },
@@ -124,24 +120,7 @@ export function AccountSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* Planning Section */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Planning</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {planningItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link to={item.url} className={getNavClasses(item.url)}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {/* Planning Section Removed */}
 
         {/* Logout */}
         <div className="p-4 border-t mt-auto">

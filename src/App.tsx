@@ -20,6 +20,7 @@ import Match from "./pages/Match";
 import Matches from "./pages/Matches";
 import Search from "./pages/Search";
 import Inbox from "./pages/Inbox";
+import InboxReceived from "./pages/InboxReceived";
 import Suppliers from "./pages/Suppliers";
 import PublicPlanning from "./pages/PublicPlanning";
 import AccountPlanning from "./pages/AccountPlanning";
@@ -225,6 +226,11 @@ const App = () => (
               <Route path="/inbox" element={
                 <PrivateRoute>
                   <Inbox />
+                </PrivateRoute>
+              } />
+              <Route path="/inbox/received" element={
+                <PrivateRoute>
+                  <InboxReceived />
                 </PrivateRoute>
               } />
               

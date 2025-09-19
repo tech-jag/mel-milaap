@@ -92,36 +92,38 @@ return (
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center space-x-1">
-          {navItems.map((item) => (
-            item.dropdown ? (
-              <DropdownMenu key={item.label}>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium">
+        {/* Desktop Navigation - Show different menu based on login status */}
+        {!user && (
+          <div className="hidden lg:flex items-center space-x-1">
+            {navItems.filter(item => item.label !== 'Pricing').map((item) => (
+              item.dropdown ? (
+                <DropdownMenu key={item.label}>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium">
+                      {item.label}
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start" className="w-48">
+                    {item.dropdown.map((subItem) => (
+                      <DropdownMenuItem key={subItem.href} asChild>
+                        <Link to={subItem.href} className="cursor-pointer">
+                          {subItem.label}
+                        </Link>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button key={item.label} variant="ghost" asChild className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium">
+                  <Link to={item.href}>
                     {item.label}
-                    <ChevronDown className="ml-1 h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="w-48">
-                  {item.dropdown.map((subItem) => (
-                    <DropdownMenuItem key={subItem.href} asChild>
-                      <Link to={subItem.href} className="cursor-pointer">
-                        {subItem.label}
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Button key={item.label} variant="ghost" asChild className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium">
-                <Link to={item.href}>
-                  {item.label}
-                </Link>
-              </Button>
-            )
-          ))}
-        </div>
+                  </Link>
+                </Button>
+              )
+            ))}
+          </div>
+        )}
 
         {/* Desktop Navigation - Logged Users */}
         {user && (
@@ -158,7 +160,13 @@ return (
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
-                <div className="flex items-center justify-start gap-2 p-2">
+                <div className="flex items-center justify-start gap-3 p-3">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.name || user.email} />
+                    <AvatarFallback>
+                      {user.user_metadata?.name ? user.user_metadata.name[0] : user.email?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
                   <div className="flex flex-col space-y-1 leading-none">
                     <p className="font-medium">{user.user_metadata?.name || 'Account'}</p>
                     <p className="w-[200px] truncate text-sm text-muted-foreground">
@@ -213,75 +221,95 @@ return (
           </Button>
         </div>
 
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden border-t border-border/50 py-4"
-          >
-            <div className="flex flex-col space-y-2">
-              {navItems.map((item) => (
-                item.dropdown ? (
-                  <div key={item.label} className="space-y-1">
-                    <div className="px-4 py-2 text-sm font-medium text-muted-foreground">
-                      {item.label}
-                    </div>
-                    {item.dropdown.map((subItem) => (
-                      <Link 
-                        key={subItem.href}
-                        to={subItem.href}
-                        className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors"
-                        onClick={() => setIsOpen(false)}
-                      >
-                        {subItem.label}
-                      </Link>
-                    ))}
-                  </div>
-                ) : (
-                  <Link 
-                    key={item.label}
-                    to={item.href}
-                    className="block px-4 py-2 text-foreground hover:text-primary transition-colors"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                )
-              ))}
-              <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
-                {user ? (
-                  <>
-                    <Button variant="ghost" className="w-full justify-start" asChild>
-                      <Link to="/account" onClick={() => setIsOpen(false)}>
-                        <User className="w-4 h-4 mr-2" />
-                        Account
-                      </Link>
-                    </Button>
-                    <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
-                      <LogOut className="w-4 h-4 mr-2" />
-                      Log out
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button variant="ghost" className="w-full justify-start" asChild>
-                      <Link to="/auth?tab=login" onClick={() => setIsOpen(false)}>
-                        Sign In
-                      </Link>
-                    </Button>
-                    <Button variant="luxury" className="w-full justify-start" asChild>
-                      <Link to="/auth?tab=signup" onClick={() => setIsOpen(false)}>
-                        Join Free
-                      </Link>
-                    </Button>
-                  </>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        )}
+         {/* Mobile Navigation */}
+         {isOpen && (
+           <motion.div
+             initial={{ opacity: 0, height: 0 }}
+             animate={{ opacity: 1, height: "auto" }}
+             exit={{ opacity: 0, height: 0 }}
+             className="lg:hidden border-t border-border/50 py-4"
+           >
+             <div className="flex flex-col space-y-2">
+               {/* Show different mobile menu based on login status */}
+               {!user && navItems.filter(item => item.label !== 'Pricing').map((item) => (
+                 item.dropdown ? (
+                   <div key={item.label} className="space-y-1">
+                     <div className="px-4 py-2 text-sm font-medium text-muted-foreground">
+                       {item.label}
+                     </div>
+                     {item.dropdown.map((subItem) => (
+                       <Link 
+                         key={subItem.href}
+                         to={subItem.href}
+                         className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors"
+                         onClick={() => setIsOpen(false)}
+                       >
+                         {subItem.label}
+                       </Link>
+                     ))}
+                   </div>
+                 ) : (
+                   <Link 
+                     key={item.label}
+                     to={item.href}
+                     className="block px-4 py-2 text-foreground hover:text-primary transition-colors"
+                     onClick={() => setIsOpen(false)}
+                   >
+                     {item.label}
+                   </Link>
+                 )
+               ))}
+               
+               {/* Logged user mobile menu */}
+               {user && (
+                 <>
+                   <Link to="/account" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                     My Milaap
+                   </Link>
+                   <Link to="/matches" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                     Matches
+                   </Link>
+                   <Link to="/search" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                     Search
+                   </Link>
+                   <Link to="/inbox" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                     Inbox
+                   </Link>
+                 </>
+               )}
+               
+               <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
+                 {user ? (
+                   <>
+                     <Button variant="ghost" className="w-full justify-start" asChild>
+                       <Link to="/account" onClick={() => setIsOpen(false)}>
+                         <User className="w-4 h-4 mr-2" />
+                         Account
+                       </Link>
+                     </Button>
+                     <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
+                       <LogOut className="w-4 h-4 mr-2" />
+                       Log out
+                     </Button>
+                   </>
+                 ) : (
+                   <>
+                     <Button variant="ghost" className="w-full justify-start" asChild>
+                       <Link to="/auth?tab=login" onClick={() => setIsOpen(false)}>
+                         Sign In
+                       </Link>
+                     </Button>
+                     <Button variant="luxury" className="w-full justify-start" asChild>
+                       <Link to="/auth?tab=signup" onClick={() => setIsOpen(false)}>
+                         Join Free
+                       </Link>
+                     </Button>
+                   </>
+                 )}
+               </div>
+             </div>
+           </motion.div>
+         )}
       </div>
     </nav>
   );

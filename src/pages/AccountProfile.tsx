@@ -121,7 +121,7 @@ export default function AccountProfile() {
           <main className="flex-1 p-8">
             <div className="max-w-6xl mx-auto">
               {/* Header */}
-              <div className="mb-8">
+              <div className="mb-6">
                 <Link to="/account">
                   <Button variant="ghost" className="mb-4">
                     <ArrowLeft className="w-4 h-4 mr-2" />
@@ -129,27 +129,30 @@ export default function AccountProfile() {
                   </Button>
                 </Link>
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Users className="w-5 h-5 text-primary" />
+                  </div>
                   <div>
-                    <Badge variant="outline" className="mb-2">Profile Management</Badge>
-                    <h1 className="text-3xl font-bold text-foreground">My Profile</h1>
+                    <h1 className="text-2xl font-bold text-foreground">My Profile</h1>
                     <p className="text-muted-foreground">Manage your personal information and preferences</p>
                   </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" onClick={() => {
-                      const profileId = profileData.profile_id;
-                      window.open(`/profile/${profileId}`, '_blank');
-                    }}>
-                      <Eye className="w-4 h-4 mr-2" />
-                      Preview My Profile
-                    </Button>
-                    <Button asChild>
-                      <Link to="/account/photos">
-                        <Camera className="w-4 h-4 mr-2" />
-                        Manage Photos
-                      </Link>
-                    </Button>
-                  </div>
+                </div>
+                
+                <div className="flex gap-2">
+                  <Button variant="outline" onClick={() => {
+                    const profileId = profileData.profile_id;
+                    window.open(`/profile/${profileId}`, '_blank');
+                  }}>
+                    <Eye className="w-4 h-4 mr-2" />
+                    Preview
+                  </Button>
+                  <Button asChild>
+                    <Link to="/account/photos">
+                      <Camera className="w-4 h-4 mr-2" />
+                      Photos
+                    </Link>
+                  </Button>
                 </div>
               </div>
 

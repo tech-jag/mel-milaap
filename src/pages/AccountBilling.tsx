@@ -23,7 +23,7 @@ export default function AccountBilling() {
           <main className="flex-1 p-8">
             <div className="max-w-4xl mx-auto">
               {/* Header */}
-              <div className="mb-8">
+              <div className="mb-6">
                 <Link to="/account">
                   <Button variant="ghost" className="mb-4">
                     <ArrowLeft className="w-4 h-4 mr-2" />
@@ -31,10 +31,12 @@ export default function AccountBilling() {
                   </Button>
                 </Link>
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <CreditCard className="w-5 h-5 text-primary" />
+                  </div>
                   <div>
-                    <Badge variant="outline" className="mb-2">Billing & Subscription</Badge>
-                    <h1 className="text-3xl font-bold text-foreground">Billing</h1>
+                    <h1 className="text-2xl font-bold text-foreground">Billing</h1>
                     <p className="text-muted-foreground">Manage your subscription and payment methods</p>
                   </div>
                 </div>

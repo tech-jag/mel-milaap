@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useContactPreferences } from "@/hooks/useContactPreferences";
 import { 
   User, 
   Shield, 
@@ -50,6 +51,7 @@ import { AccountHeader } from "@/components/ui/account-header";
 const AccountSettings = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { preferences: contactPreferences, updatePreferences: updateContactPreferences } = useContactPreferences();
   const [isLoading, setIsLoading] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState<any>(null);
   const [userProfile, setUserProfile] = React.useState<any>(null);
@@ -63,12 +65,6 @@ const AccountSettings = () => {
   const [collaborators, setCollaborators] = React.useState<any[]>([]);
   const [newCollaboratorEmail, setNewCollaboratorEmail] = React.useState('');
   const [newCollaboratorRole, setNewCollaboratorRole] = React.useState('parent');
-  const [contactPreferences, setContactPreferences] = React.useState<any>({
-    who_can_message: 'premium-only',
-    phone_visibility: 'premium-connections',
-    auto_response_enabled: false,
-    auto_response_message: ''
-  });
 
   React.useEffect(() => {
     checkAuthAndLoadData();
@@ -85,8 +81,7 @@ const AccountSettings = () => {
     await Promise.all([
       loadUserProfile(user.id),
       loadUserSettings(user.id),
-      loadCollaborators(user.id),
-      loadContactPreferences(user.id)
+      loadCollaborators(user.id)
     ]);
     setIsLoading(false);
   };
@@ -151,24 +146,6 @@ const AccountSettings = () => {
       setCollaborators(data || []);
     } catch (error) {
       console.error('Error loading collaborators:', error);
-    }
-  };
-
-  const loadContactPreferences = async (userId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('contact_preferences')
-        .select('*')
-        .eq('user_id', userId)
-        .maybeSingle();
-
-      if (error && error.code !== 'PGRST116') throw error;
-      
-      if (data) {
-        setContactPreferences(data);
-      }
-    } catch (error) {
-      console.error('Error loading contact preferences:', error);
     }
   };
 
@@ -285,34 +262,6 @@ const AccountSettings = () => {
       toast({
         title: "Invitation sent",
         description: `Invitation sent to ${newCollaboratorEmail} as ${newCollaboratorRole}.`,
-      });
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive"
-      });
-    }
-  };
-
-  const updateContactPreferences = async (updates: any) => {
-    if (!currentUser) return;
-
-    try {
-      const { error } = await supabase
-        .from('contact_preferences')
-        .upsert({
-          user_id: currentUser.id,
-          ...updates
-        })
-        .eq('user_id', currentUser.id);
-
-      if (error) throw error;
-
-      setContactPreferences(prev => ({ ...prev, ...updates }));
-      toast({
-        title: "Contact preferences updated",
-        description: "Your contact preferences have been saved.",
       });
     } catch (error: any) {
       toast({
@@ -607,8 +556,7 @@ const AccountSettings = () => {
                           id="auto-response"
                           placeholder="Thank you for your interest. I will get back to you soon..."
                           value={contactPreferences.auto_response_message || ''}
-                          onChange={(e) => setContactPreferences(prev => ({ ...prev, auto_response_message: e.target.value }))}
-                          onBlur={(e) => updateContactPreferences({ auto_response_message: e.target.value })}
+                          onChange={(e) => updateContactPreferences({ auto_response_message: e.target.value })}
                           className="mt-2 text-sm lg:text-base"
                         />
                         <div className="flex items-center space-x-2 mt-3">

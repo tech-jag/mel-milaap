@@ -42,6 +42,9 @@ import {
   calculatePlanningProgress
 } from "@/lib/planning";
 import { ActivityTracker } from "@/components/profile/ActivityTracker";
+import { ProfileCompletionTracker } from "@/components/profile/ProfileCompletionTracker";
+import { useVerificationStatus } from "@/hooks/useVerificationStatus";
+import { calculateProfileCompletion } from "@/utils/profileCompletion";
 
 interface DashboardStats {
   budget: {
@@ -95,6 +98,7 @@ const getBadgeVariant = (tier: string) => {
 const AccountDashboard = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { getOverallVerificationScore } = useVerificationStatus();
   const [isLoading, setIsLoading] = React.useState(true);
   const [currentUser, setCurrentUser] = React.useState<any>(null);
   const [userProfile, setUserProfile] = React.useState<any>(null);

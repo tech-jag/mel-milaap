@@ -33,16 +33,22 @@ import { supabase } from "@/integrations/supabase/client";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AccountHeader } from "@/components/ui/account-header";
+import { useVerificationStatus } from "@/hooks/useVerificationStatus";
 
 const AccountVerification = () => {
   const { toast } = useToast();
+  const { 
+    submitVerification, 
+    getVerificationStatus, 
+    isVerified,
+    verifications 
+  } = useVerificationStatus();
   const [currentUser, setCurrentUser] = React.useState<any>(null);
   const [isLoading, setIsLoading] = React.useState(true);
   const [uploadedFiles, setUploadedFiles] = React.useState<{[key: string]: File | null}>({
     idDocument: null,
     selfie: null
   });
-  const [verificationStatus, setVerificationStatus] = React.useState<'none' | 'pending' | 'verified' | 'rejected'>('none');
   const [notes, setNotes] = React.useState('');
 
   React.useEffect(() => {
@@ -54,19 +60,6 @@ const AccountVerification = () => {
     if (!user) return;
     
     setCurrentUser(user);
-    
-    // Check existing verification status from users table
-    const { data: userData } = await supabase
-      .from('users')
-      .select('*')
-      .eq('id', user.id)
-      .single();
-    
-    // For demo purposes, set random status
-    if (userData) {
-      setVerificationStatus('none'); // Default to none for now
-    }
-    
     setIsLoading(false);
   };
 
@@ -79,14 +72,11 @@ const AccountVerification = () => {
 
     try {
       // In a real implementation, you would upload files to Supabase Storage
-      // and store verification request in database
+      await submitVerification('id_document', notes);
       
-      setVerificationStatus('pending');
-      
-      toast({
-        title: "Verification submitted!",
-        description: "Your documents have been submitted for review. You'll hear back within 24-48 hours.",
-      });
+      // Reset form
+      setUploadedFiles({ idDocument: null, selfie: null });
+      setNotes('');
     } catch (error: any) {
       toast({
         title: "Submission failed",
@@ -180,7 +170,7 @@ const AccountVerification = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4 lg:space-y-6">
-                  {verificationStatus === 'none' && (
+                  {getVerificationStatus('id_document') === 'none' && (
                     <>
                       {/* ID Document Upload */}
                       <div className="space-y-2">
@@ -252,7 +242,7 @@ const AccountVerification = () => {
                     </>
                   )}
 
-                  {verificationStatus === 'pending' && (
+                  {getVerificationStatus('id_document') === 'pending' && (
                     <div className="text-center py-6 lg:py-8">
                       <Clock className="w-12 h-12 lg:w-16 lg:h-16 text-accent mx-auto mb-3 lg:mb-4" />
                       <h3 className="font-heading font-semibold text-foreground mb-2 text-lg lg:text-xl">
@@ -268,7 +258,7 @@ const AccountVerification = () => {
                     </div>
                   )}
 
-                  {verificationStatus === 'verified' && (
+                  {getVerificationStatus('id_document') === 'verified' && (
                     <div className="text-center py-6 lg:py-8">
                       <CheckCircle className="w-12 h-12 lg:w-16 lg:h-16 text-success mx-auto mb-3 lg:mb-4" />
                       <h3 className="font-heading font-semibold text-foreground mb-2 text-lg lg:text-xl">
@@ -284,7 +274,7 @@ const AccountVerification = () => {
                     </div>
                   )}
 
-                  {verificationStatus === 'rejected' && (
+                  {getVerificationStatus('id_document') === 'rejected' && (
                     <div className="text-center py-6 lg:py-8">
                       <AlertCircle className="w-12 h-12 lg:w-16 lg:h-16 text-destructive mx-auto mb-3 lg:mb-4" />
                       <h3 className="font-heading font-semibold text-foreground mb-2 text-lg lg:text-xl">
@@ -295,7 +285,10 @@ const AccountVerification = () => {
                       </p>
                       <Button 
                         variant="outline" 
-                        onClick={() => setVerificationStatus('none')}
+                        onClick={() => {
+                          setUploadedFiles({ idDocument: null, selfie: null });
+                          setNotes('');
+                        }}
                         className="text-sm lg:text-base"
                       >
                         Try Again
@@ -322,8 +315,8 @@ const AccountVerification = () => {
                           <Phone className="w-4 h-4" />
                           <span className="font-medium text-sm lg:text-base">Phone Number</span>
                         </div>
-                        <Badge variant="outline" className="text-xs">
-                          Pending
+                        <Badge variant={isVerified('phone') ? 'default' : 'outline'} className="text-xs">
+                          {isVerified('phone') ? 'Verified' : 'Pending'}
                         </Badge>
                       </div>
                       <Button size="sm" variant="outline" className="text-xs lg:text-sm">Verify Phone</Button>
@@ -336,8 +329,8 @@ const AccountVerification = () => {
                           <Mail className="w-4 h-4" />
                           <span className="font-medium text-sm lg:text-base">Email Address</span>
                         </div>
-                        <Badge variant="default" className="text-xs">
-                          Verified
+                        <Badge variant={isVerified('email') ? 'default' : 'outline'} className="text-xs">
+                          {isVerified('email') ? 'Verified' : 'Pending'}
                         </Badge>
                       </div>
                     </div>

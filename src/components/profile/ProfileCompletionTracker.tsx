@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
+import { calculateProfileCompletion } from "@/utils/profileCompletion";
 
 interface ProfileCompletionTrackerProps {
   profileData: any;
@@ -12,17 +13,7 @@ interface ProfileCompletionTrackerProps {
 
 export function ProfileCompletionTracker({ profileData, onSectionClick }: ProfileCompletionTrackerProps) {
   const calculateCompletionPercentage = () => {
-    const requiredFields = [
-      'first_name', 'last_name', 'gender', 'birth_date', 'religion', 'mother_tongue',
-      'education_level', 'occupation', 'location_city', 'location_country'
-    ];
-    
-    const completedFields = requiredFields.filter(field => {
-      const value = profileData[field];
-      return value && value.toString().trim() !== '';
-    });
-    
-    return Math.round((completedFields.length / requiredFields.length) * 100);
+    return calculateProfileCompletion(profileData);
   };
 
   const getIncompleteSections = () => {

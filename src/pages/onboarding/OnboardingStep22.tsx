@@ -45,6 +45,8 @@ export default function OnboardingStep22() {
       const fileExt = file.name.split('.').pop();
       const fileName = `${userId}/${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
       
+      console.log('Uploading to storage:', fileName);
+      
       const { data, error } = await supabase.storage
         .from('profile-photos')
         .upload(fileName, file, {
@@ -53,17 +55,30 @@ export default function OnboardingStep22() {
         });
 
       if (error) {
-        console.error('Upload error:', error);
+        console.error('Storage upload error:', error);
+        toast({
+          title: "Upload Failed",
+          description: error.message || "Failed to upload to storage",
+          variant: "destructive",
+        });
         return null;
       }
+
+      console.log('Upload successful:', data);
 
       const { data: urlData } = supabase.storage
         .from('profile-photos')
         .getPublicUrl(data.path);
 
+      console.log('Public URL:', urlData.publicUrl);
       return urlData.publicUrl;
     } catch (error) {
       console.error('Error uploading photo:', error);
+      toast({
+        title: "Upload Error",
+        description: error instanceof Error ? error.message : "Unknown error occurred",
+        variant: "destructive",
+      });
       return null;
     }
   };
@@ -80,12 +95,12 @@ export default function OnboardingStep22() {
 
       if (error) {
         console.error('Error saving photo record:', error);
-        return false;
+        throw error;
       }
       return true;
     } catch (error) {
       console.error('Error saving photo record:', error);
-      return false;
+      throw error;
     }
   };
 
@@ -145,7 +160,7 @@ export default function OnboardingStep22() {
 
       toast({
         title: "Photo Uploaded",
-        description: "Your photo has been uploaded successfully",
+        description: `Your ${slotId === 'profile' ? 'profile' : 'additional'} photo has been uploaded successfully`,
       });
 
     } catch (error) {

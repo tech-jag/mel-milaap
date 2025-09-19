@@ -197,6 +197,11 @@ const App = () => (
               
               {/* Development Route */}
               <Route path="/dev-onboarding" element={<DevOnboarding />} />
+              <Route path="/partner-preferences" element={
+                <PrivateRoute>
+                  <PartnerPreferences />
+                </PrivateRoute>
+              } />
               
               {/* Protected Routes */}
               <Route path="/match" element={
@@ -205,11 +210,6 @@ const App = () => (
                 </PrivateRoute>
               } />
               
-              <Route path="/partner-preferences" element={
-                <PrivateRoute>
-                  <PartnerPreferences />
-                </PrivateRoute>
-              } />
               
               {/* Account Routes */}
               <Route path="/account" element={

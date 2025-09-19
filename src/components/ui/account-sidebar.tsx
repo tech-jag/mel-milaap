@@ -40,7 +40,7 @@ const accountItems = [
   { title: "Overview", url: "/account", icon: Home },
   { title: "Profile", url: "/account/profile", icon: User },
   { title: "Photos", url: "/account/photos", icon: Camera },
-  { title: "Partner Preferences", url: "/account/partner-preferences", icon: Heart },
+  { title: "Partner Preferences", url: "/partner-preferences", icon: Heart },
   { title: "Messages", url: "/account/messages", icon: MessageCircle },
   { title: "Verification", url: "/account/verification", icon: Shield },
   { title: "Favorites", url: "/account/favorites", icon: Heart },

@@ -29,7 +29,7 @@ export default function OnboardingStep16() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      marital_statuses: partnerPreferences?.marital_statuses?.join(',') || '',
+      marital_statuses: partnerPreferences?.marital_statuses?.[0] || '',
       has_children: partnerPreferences?.has_children || undefined,
     },
   });
@@ -37,9 +37,7 @@ export default function OnboardingStep16() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const payload = {
-        marital_statuses: values.marital_statuses 
-          ? values.marital_statuses.split(',').map(item => item.trim()).filter(Boolean)
-          : [],
+        marital_statuses: values.marital_statuses ? [values.marital_statuses] : [],
         has_children: values.has_children,
       };
       
@@ -72,21 +70,19 @@ export default function OnboardingStep16() {
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select marital status preferences (comma-separated)" />
+                      <SelectValue placeholder="Select preferred marital status" />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
+                    <SelectItem value="">No preference</SelectItem>
                     <SelectItem value="never_married">Never Married</SelectItem>
                     <SelectItem value="divorced">Divorced</SelectItem>
                     <SelectItem value="widowed">Widowed</SelectItem>
                     <SelectItem value="annulled">Annulled</SelectItem>
-                    <SelectItem value="never_married,divorced">Never Married, Divorced</SelectItem>
-                    <SelectItem value="never_married,divorced,widowed">Never Married, Divorced, Widowed</SelectItem>
-                    <SelectItem value="never_married,divorced,widowed,annulled">All Marital Statuses</SelectItem>
                   </SelectContent>
                 </Select>
                 <div className="text-sm text-muted-foreground">
-                  Select your acceptable marital status preferences
+                  Select your preferred marital status for your partner
                 </div>
                 <FormMessage />
               </FormItem>

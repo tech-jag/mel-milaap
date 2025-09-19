@@ -21,28 +21,43 @@ export default function Inbox() {
         <div className="flex-1">
           <Navigation />
       
-          {/* Header */}
-          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
-            <div className="container mx-auto px-4 lg:px-8 py-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-                    <MessageCircle className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Messages & Interests</h1>
-                    <p className="text-muted-foreground">Connect with your matches and manage your conversations</p>
-                  </div>
-                </div>
-                <Link to="/account">
-                  <Button variant="outline">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to Dashboard
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
+{/* Header - Mobile Optimized */}
+<div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
+  <div className="container mx-auto px-4 lg:px-8 py-6">
+    {/* Mobile Layout: Stack vertically on small screens */}
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      
+      {/* Title Section */}
+      <div className="flex items-center gap-3 min-w-0 flex-1">
+        <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center flex-shrink-0">
+          <MessageCircle className="h-5 w-5 text-white" />
+        </div>
+        <div className="min-w-0 flex-1">
+          <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent truncate">
+            Messages & Interests
+          </h1>
+          <p className="text-sm sm:text-base text-muted-foreground hidden sm:block">
+            Connect with your matches and manage your conversations
+          </p>
+          <p className="text-xs text-muted-foreground sm:hidden">
+            Manage conversations
+          </p>
+        </div>
+      </div>
+      
+      {/* Button Section */}
+      <div className="flex-shrink-0">
+        <Link to="/account">
+          <Button variant="outline" className="w-full sm:w-auto">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            <span className="hidden sm:inline">Back to Dashboard</span>
+            <span className="sm:hidden">Back</span>
+          </Button>
+        </Link>
+      </div>
+    </div>
+  </div>
+</div>
 
           <div className="container mx-auto px-4 lg:px-8 py-8">
             <div className="max-w-6xl mx-auto">

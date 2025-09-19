@@ -14,6 +14,7 @@ import { useOnboardingState } from "@/hooks/useOnboardingState";
 import { useAuth } from "@/hooks/useAuth";
 import { EditableProfileSection } from "@/components/profile/EditableProfileSection";
 import { AccountHeader } from "@/components/ui/account-header";
+import { ProfileCompletionTracker } from "@/components/profile/ProfileCompletionTracker";
 
 export default function AccountProfile() {
   const { user } = useAuth();
@@ -65,7 +66,9 @@ export default function AccountProfile() {
     { key: 'gothra', label: 'Gothra', type: 'text' as const },
     { key: 'nakshatra', label: 'Nakshatra', type: 'text' as const },
     { key: 'raashi', label: 'Raashi', type: 'text' as const },
-    { key: 'manglik', label: 'Manglik', type: 'select' as const, options: ['yes', 'no', 'unknown'] }
+    { key: 'manglik', label: 'Manglik', type: 'select' as const, options: ['yes', 'no', 'unknown'] },
+    { key: 'mangal_dosha', label: 'Mangal Dosha', type: 'select' as const, options: ['yes', 'no', 'anshik', 'dont_know'] },
+    { key: 'horoscope_matching_importance', label: 'Horoscope Matching', type: 'select' as const, options: ['very_important', 'important', 'not_important'] }
   ];
 
   const familyFields = [
@@ -112,9 +115,11 @@ export default function AccountProfile() {
     { key: 'religions', label: 'Religions', type: 'multi-select' as const, options: ['Hindu', 'Muslim', 'Christian', 'Sikh', 'Buddhist', 'Jain'] },
     { key: 'communities', label: 'Communities', type: 'multi-select' as const, options: ['Brahmin', 'Kshatriya', 'Vaishya', 'Other'] },
     { key: 'mother_tongues', label: 'Mother Tongues', type: 'multi-select' as const, options: ['Hindi', 'English', 'Punjabi', 'Tamil', 'Telugu', 'Bengali'] },
-    { key: 'location_countries', label: 'Countries', type: 'multi-select' as const, options: ['India', 'Australia', 'USA', 'UK', 'Canada'] },
+    { key: 'countries', label: 'Countries', type: 'multi-select' as const, options: ['India', 'Australia', 'USA', 'UK', 'Canada'] },
     { key: 'education_levels', label: 'Education Levels', type: 'multi-select' as const, options: ['Bachelor', 'Master', 'PhD', 'Diploma'] },
-    { key: 'additional', label: 'Additional Preferences', type: 'textarea' as const }
+    { key: 'willing_to_relocate', label: 'Willing to Relocate?', type: 'select' as const, options: ['yes', 'same_country', 'no'] },
+    { key: 'lifestyle_preferences', label: 'Lifestyle Preferences', type: 'multi-select' as const, options: ['non_smoker', 'non_drinker', 'vegetarian', 'fitness_oriented', 'family_oriented', 'career_oriented'] },
+    { key: 'deal_breakers', label: 'Deal Breakers (Optional)', type: 'textarea' as const }
   ];
 
   return (
@@ -159,107 +164,55 @@ export default function AccountProfile() {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="max-w-6xl mx-auto py-4 lg:py-8">
 
-{/* Profile Summary Card - ADVANCED DESKTOP FIX */}
-<div className="mb-6">
-  <Card>
-    <CardContent className="pt-4 lg:pt-6">
-      {/* DESKTOP LAYOUT - Fixed Width Container */}
-      <div className="hidden lg:flex items-center justify-between w-full">
-        {/* Left Section - Avatar + Info */}
-        <div className="flex items-center gap-6 flex-1 min-w-0 pr-6">
-          <div className="h-20 w-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
-            <Camera className="h-8 w-8 text-white" />
-          </div>
-          
-          <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-semibold truncate">
-              {profileData.first_name} {profileData.last_name}
-            </h2>
-            <p className="text-muted-foreground text-base mb-2 truncate">
-              Profile ID: {profileData.profile_id}
-            </p>
-            <div className="flex items-center gap-2">
-              <Badge variant={profileData.profile_ready ? "default" : "secondary"} className="text-xs">
-                {profileData.profile_ready ? "Complete" : "Incomplete"}
-              </Badge>
-              {profileData.onboarding_completed && (
-                <Badge variant="outline" className="text-xs">Verified</Badge>
-              )}
-            </div>
-          </div>
-        </div>
-        
-        {/* Right Section - Action Buttons */}
-        <div className="flex items-center gap-2 flex-shrink-0">
-          <Button 
-            variant="outline" 
-            size="sm"
-            onClick={() => {
-              const profileId = profileData.profile_id;
-              window.open(`/profile/${profileId}`, '_blank');
-            }}
-          >
-            <Eye className="w-4 h-4 mr-2" />
-            Preview Profile
-          </Button>
-          <Button asChild size="sm">
-            <Link to="/account/photos">
-              <Camera className="w-4 h-4 mr-2" />
-              Manage Photos
-            </Link>
-          </Button>
-        </div>
-      </div>
-      
-      {/* MOBILE LAYOUT - Stacked */}
-      <div className="flex lg:hidden flex-col gap-4">
-        <div className="flex items-center gap-4">
-          <div className="h-16 w-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
-            <Camera className="h-6 w-6 text-white" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h2 className="text-lg font-semibold truncate">
-              {profileData.first_name} {profileData.last_name}
-            </h2>
-            <p className="text-muted-foreground text-sm truncate">
-              Profile ID: {profileData.profile_id}
-            </p>
-          </div>
-        </div>
-        
-        <div className="flex flex-wrap items-center gap-2 mb-2">
-          <Badge variant={profileData.profile_ready ? "default" : "secondary"} className="text-xs">
-            {profileData.profile_ready ? "Complete" : "Incomplete"}
-          </Badge>
-          {profileData.onboarding_completed && (
-            <Badge variant="outline" className="text-xs">Verified</Badge>
-          )}
-        </div>
-        
-        <div className="flex flex-col gap-2">
-          <Button 
-            variant="outline" 
-            size="sm"
-            className="w-full"
-            onClick={() => {
-              const profileId = profileData.profile_id;
-              window.open(`/profile/${profileId}`, '_blank');
-            }}
-          >
-            <Eye className="w-4 h-4 mr-2" />
-            Preview
-          </Button>
-          <Button asChild size="sm" className="w-full">
-            <Link to="/account/photos">
-              <Camera className="w-4 h-4 mr-2" />
-              Photos
-            </Link>
-          </Button>
-        </div>
-      </div>
-    </CardContent>
-  </Card>
-</div>
+              {/* Profile Summary Card - Mobile Optimized */}
+              <div className="mb-6">
+                <Card>
+                  <CardContent className="pt-4 lg:pt-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                      <div className="h-16 w-16 lg:h-20 lg:w-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                        <Camera className="h-6 w-6 lg:h-8 lg:w-8 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h2 className="text-lg lg:text-xl font-semibold truncate">
+                          {profileData.first_name} {profileData.last_name}
+                        </h2>
+                        <p className="text-muted-foreground text-sm lg:text-base">
+                          Profile ID: {profileData.profile_id}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-2 mt-2">
+                          <Badge variant={profileData.profile_ready ? "default" : "secondary"} className="text-xs">
+                            {profileData.profile_ready ? "Complete" : "Incomplete"}
+                          </Badge>
+                          {profileData.onboarding_completed && (
+                            <Badge variant="outline" className="text-xs">Verified</Badge>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex gap-2 w-full sm:w-auto">
+                        <Button variant="outline" size="sm" asChild className="flex-1 sm:flex-none">
+                          <Link to="/account/photos">
+                            <Camera className="w-4 h-4 mr-2" />
+                            <span className="hidden sm:inline">Edit Photos</span>
+                            <span className="sm:hidden">Edit</span>
+                          </Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Profile Completion Tracker */}
+              <ProfileCompletionTracker 
+                profileData={profileData}
+                onSectionClick={(sectionKey) => {
+                  // Scroll to relevant section
+                  const element = document.getElementById(sectionKey);
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              />
 
               {/* Main Content Grid - Mobile Responsive */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -285,14 +238,16 @@ export default function AccountProfile() {
                     onSave={handleProfileUpdate}
                   />
 
-                  {/* Astro Details */}
-                  <EditableProfileSection
-                    title="Astro Details"
-                    icon={Star}
-                    data={profileData}
-                    fields={astroFields}
-                    onSave={handleProfileUpdate}
-                  />
+                  {/* Enhanced Astro Details with section ID */}
+                  <div id="astro">
+                    <EditableProfileSection
+                      title="Astro Details"
+                      icon={Star}
+                      data={profileData}
+                      fields={astroFields}
+                      onSave={handleProfileUpdate}
+                    />
+                  </div>
 
                   {/* Family Details */}
                   <EditableProfileSection
@@ -334,14 +289,16 @@ export default function AccountProfile() {
                 {/* Right Column - Partner Preferences & Contact */}
                 <div className="space-y-4 lg:space-y-6">
                   
-                  {/* Partner Preferences */}
-                  <EditableProfileSection
-                    title="Partner Preferences"
-                    icon={Heart}
-                    data={preferences}
-                    fields={partnerPreferenceFields}
-                    onSave={handlePreferencesUpdate}
-                  />
+                  {/* Enhanced Partner Preferences with section ID */}
+                  <div id="partner_preferences">
+                    <EditableProfileSection
+                      title="Detailed Partner Preferences"
+                      icon={Heart}
+                      data={preferences}
+                      fields={partnerPreferenceFields}
+                      onSave={handlePreferencesUpdate}
+                    />
+                  </div>
 
                   {/* My Contact Detail */}
                   <Card>

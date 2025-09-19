@@ -84,11 +84,17 @@ return (
           >
             <Heart className="w-5 h-5 text-primary-foreground" aria-hidden="true" />
           </motion.div>
-          <div className="hidden md:flex md:flex-col">
+          <div className="hidden sm:flex sm:flex-col">
             <Wordmark className="h-6 text-foreground group-hover:text-primary transition-colors" />
             <p className="text-xs text-muted-foreground">
               Find &bull; Match &bull; Marry &bull; Celebrate
             </p>
+          </div>
+          {/* Mobile Logo Text */}
+          <div className="flex sm:hidden items-center">
+            <span className="text-lg font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Mel Milaap
+            </span>
           </div>
         </Link>
 
@@ -260,23 +266,57 @@ return (
                  )
                ))}
                
-               {/* Logged user mobile menu */}
-               {user && (
-                 <>
-                   <Link to="/account" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
-                     My Milaap
-                   </Link>
-                   <Link to="/matches" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
-                     Matches
-                   </Link>
-                   <Link to="/search" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
-                     Search
-                   </Link>
-                   <Link to="/inbox" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
-                     Inbox
-                   </Link>
-                 </>
-               )}
+                {/* Logged user mobile menu */}
+                {user && (
+                  <>
+                    <Link to="/account" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                      My Milaap
+                    </Link>
+                    <Link to="/matches" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                      Matches
+                    </Link>
+                    <Link to="/search" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                      Search
+                    </Link>
+                    <Link to="/inbox" className="block px-4 py-2 text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                      Inbox
+                    </Link>
+                    
+                    {/* Account Submenu */}
+                    <div className="border-t border-border/50 mt-2 pt-2">
+                      <div className="px-4 py-2 text-sm font-medium text-muted-foreground">
+                        Account
+                      </div>
+                      <Link to="/account/profile" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                        Profile
+                      </Link>
+                      <Link to="/account/photos" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                        Photos
+                      </Link>
+                      <Link to="/account/messages" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                        Messages
+                      </Link>
+                      <Link to="/account/favorites" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                        Favorites
+                      </Link>
+                      <Link to="/account/verification" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                        Verification
+                      </Link>
+                      <Link to="/account/settings" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                        Settings
+                      </Link>
+                      <Link to="/account/billing" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                        Billing
+                      </Link>
+                      <Link to="/account/security" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                        Security
+                      </Link>
+                      <Link to="/account/collaborators" className="block px-6 py-2 text-sm text-foreground hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                        Collaborators
+                      </Link>
+                    </div>
+                  </>
+                )}
                
                <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
                  {user ? (

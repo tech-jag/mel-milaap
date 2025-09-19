@@ -119,21 +119,21 @@ const Matches = () => {
       
           {/* Header */}
           <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
-            <div className="container mx-auto px-4 lg:px-8 py-6">
-              <div className="flex items-center justify-between">
+            <div className="container mx-auto px-4 lg:px-8 py-4 lg:py-6">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
                     <Heart className="h-5 w-5 text-white" />
                   </div>
-                  <div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent flex items-center gap-2">
+                  <div className="min-w-0 flex-1">
+                    <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent flex items-center gap-2 flex-wrap">
                       Your Matches
-                      <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">24 New</Badge>
+                      <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20 text-xs">24 New</Badge>
                     </h1>
-                    <p className="text-muted-foreground">Discover your compatible matches</p>
+                    <p className="text-muted-foreground text-sm lg:text-base">Discover your compatible matches</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 self-end lg:self-auto">
                   <Button
                     variant="outline"
                     size="sm"
@@ -148,10 +148,11 @@ const Matches = () => {
                   >
                     Refine
                   </Button>
-                  <Link to="/account">
-                    <Button variant="outline">
-                      <ArrowLeft className="w-4 h-4 mr-2" />
-                      Back to Dashboard
+                  <Link to="/account" className="shrink-0">
+                    <Button variant="outline" size="sm" className="lg:px-4 px-2">
+                      <ArrowLeft className="w-4 h-4 lg:mr-2" />
+                      <span className="hidden lg:inline">Back to Dashboard</span>
+                      <span className="lg:hidden">Back</span>
                     </Button>
                   </Link>
                 </div>
@@ -160,30 +161,30 @@ const Matches = () => {
           </div>
 
           {/* Matches Content */}
-          <section className="py-8">
+          <section className="py-4 lg:py-8">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="w-full">
             
             {/* Stats Bar */}
             <motion.div 
-              className="flex flex-col sm:flex-row items-center justify-between mb-8 p-4 bg-card rounded-lg border gap-4"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between mb-6 lg:mb-8 p-3 lg:p-4 bg-card rounded-lg border gap-3 lg:gap-4"
               variants={fadeInUp}
               initial="initial"
               whileInView="animate"
               viewport={{ once: true }}
             >
-              <div className="flex items-center gap-4 sm:gap-6">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">{matches.length}</div>
-                  <div className="text-sm text-muted-foreground">New Matches</div>
+              <div className="flex items-center justify-center sm:justify-start gap-3 sm:gap-6 overflow-x-auto">
+                <div className="text-center flex-shrink-0">
+                  <div className="text-xl lg:text-2xl font-bold text-primary">{matches.length}</div>
+                  <div className="text-xs lg:text-sm text-muted-foreground">New Matches</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-green-600">5</div>
-                  <div className="text-sm text-muted-foreground">Mutual Interests</div>
+                <div className="text-center flex-shrink-0">
+                  <div className="text-xl lg:text-2xl font-bold text-green-600">5</div>
+                  <div className="text-xs lg:text-sm text-muted-foreground">Mutual Interests</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-600">12</div>
-                  <div className="text-sm text-muted-foreground">Profile Views</div>
+                <div className="text-center flex-shrink-0">
+                  <div className="text-xl lg:text-2xl font-bold text-blue-600">12</div>
+                  <div className="text-xs lg:text-sm text-muted-foreground">Profile Views</div>
                 </div>
               </div>
               
@@ -203,7 +204,7 @@ const Matches = () => {
               </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
               
               {/* Main Match Card */}
               <div className="lg:col-span-2">
@@ -219,7 +220,7 @@ const Matches = () => {
                       <img 
                         src={currentMatch.photos[0]} 
                         alt={currentMatch.name}
-                        className="w-full h-96 object-cover"
+                        className="w-full h-64 sm:h-80 lg:h-96 object-cover"
                       />
                       
                       {/* Overlay Info */}
@@ -279,38 +280,38 @@ const Matches = () => {
                   </Card>
                   
                   {/* Action Buttons */}
-                  <div className="flex justify-center gap-2 sm:gap-4 mt-6">
+                  <div className="flex justify-center gap-3 sm:gap-4 mt-4 lg:mt-6 px-4">
                     <Button 
                       size="lg" 
                       variant="outline" 
-                      className="rounded-full w-12 h-12 sm:w-16 sm:h-16 p-0"
+                      className="rounded-full w-14 h-14 sm:w-16 sm:h-16 p-0"
                       onClick={handlePass}
                     >
-                      <X className="w-4 h-4 sm:w-6 sm:h-6" />
+                      <X className="w-5 h-5 sm:w-6 sm:h-6" />
                     </Button>
                     
                     <Button 
                       size="lg" 
                       variant="outline" 
-                      className="rounded-full w-12 h-12 sm:w-16 sm:h-16 p-0"
+                      className="rounded-full w-14 h-14 sm:w-16 sm:h-16 p-0"
                     >
-                      <Eye className="w-4 h-4 sm:w-6 sm:h-6" />
+                      <Eye className="w-5 h-5 sm:w-6 sm:h-6" />
                     </Button>
                     
                     <Button 
                       size="lg" 
                       variant="outline" 
-                      className="rounded-full w-12 h-12 sm:w-16 sm:h-16 p-0"
+                      className="rounded-full w-14 h-14 sm:w-16 sm:h-16 p-0"
                     >
-                      <MessageCircle className="w-4 h-4 sm:w-6 sm:h-6" />
+                      <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
                     </Button>
                     
                     <Button 
                       size="lg" 
-                      className="rounded-full w-12 h-12 sm:w-16 sm:h-16 p-0 bg-red-500 hover:bg-red-600"
+                      className="rounded-full w-14 h-14 sm:w-16 sm:h-16 p-0 bg-red-500 hover:bg-red-600"
                       onClick={handleLike}
                     >
-                      <Heart className="w-4 h-4 sm:w-6 sm:h-6" />
+                      <Heart className="w-5 h-5 sm:w-6 sm:h-6" />
                     </Button>
                   </div>
                 </motion.div>

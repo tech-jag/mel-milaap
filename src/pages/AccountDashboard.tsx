@@ -413,24 +413,24 @@ const AccountDashboard = () => {
             >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Left Column - Activity Stats */}
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-card rounded-2xl shadow-elegant -rotate-1"></div>
-                  <div className="relative bg-card rounded-2xl border shadow-soft p-6">
-                    <h2 className="text-2xl font-heading font-semibold text-foreground mb-6">Your Activity Summary</h2>
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-2xl shadow-xl -rotate-1 transition-all duration-300 group-hover:-rotate-2 group-hover:shadow-2xl"></div>
+                  <div className="relative bg-card/95 backdrop-blur-sm rounded-2xl border border-white/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-6 transition-all duration-300 hover:shadow-[0_16px_40px_rgb(0,0,0,0.16)] hover:border-white/30">
+                    <h2 className="text-2xl font-heading font-semibold text-foreground mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Your Activity Summary</h2>
                     
                     {/* Top Stats Grid */}
                     <div className="grid grid-cols-3 gap-4 mb-8">
-                      <div className="text-center p-4 bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-xl border border-secondary/30">
-                        <div className="text-3xl font-bold text-muted-foreground mb-2">0</div>
-                        <div className="text-sm text-muted-foreground">Pending Invitations</div>
+                      <div className="text-center p-4 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-xl border border-primary/20 shadow-[0_4px_20px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_25px_rgb(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1">
+                        <div className="text-2xl lg:text-3xl font-bold text-primary mb-2">0</div>
+                        <div className="text-xs lg:text-sm text-muted-foreground">Pending Invitations</div>
                       </div>
-                      <div className="text-center p-4 bg-gradient-to-br from-accent/20 to-accent/10 rounded-xl border border-accent/30">
-                        <div className="text-3xl font-bold text-muted-foreground mb-2">0</div>
-                        <div className="text-sm text-muted-foreground">Accepted Invitations</div>
+                      <div className="text-center p-4 bg-gradient-to-br from-accent/10 via-accent/5 to-transparent rounded-xl border border-accent/20 shadow-[0_4px_20px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_25px_rgb(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1">
+                        <div className="text-2xl lg:text-3xl font-bold text-accent mb-2">0</div>
+                        <div className="text-xs lg:text-sm text-muted-foreground">Accepted Invitations</div>
                       </div>
-                      <div className="text-center p-4 bg-gradient-to-br from-success/20 to-success/10 rounded-xl border border-success/30">
-                        <div className="text-3xl font-bold text-muted-foreground mb-2">0</div>
-                        <div className="text-sm text-muted-foreground">Recent Visitors</div>
+                      <div className="text-center p-4 bg-gradient-to-br from-green-500/10 via-green-500/5 to-transparent rounded-xl border border-green-500/20 shadow-[0_4px_20px_rgb(0,0,0,0.08)] hover:shadow-[0_8px_25px_rgb(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1">
+                        <div className="text-2xl lg:text-3xl font-bold text-green-600 mb-2">0</div>
+                        <div className="text-xs lg:text-sm text-muted-foreground">Recent Visitors</div>
                       </div>
                     </div>
                     
@@ -463,10 +463,10 @@ const AccountDashboard = () => {
                 </div>
 
                 {/* Right Column - Profile Improvement */}
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-champagne rounded-2xl shadow-champagne rotate-1"></div>
-                  <div className="relative bg-card rounded-2xl border shadow-soft p-6 h-full">
-                    <h3 className="text-2xl font-heading font-semibold mb-6">Improve your Profile</h3>
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/20 to-secondary/20 rounded-2xl shadow-xl rotate-1 transition-all duration-300 group-hover:rotate-2 group-hover:shadow-2xl"></div>
+                  <div className="relative bg-card/95 backdrop-blur-sm rounded-2xl border border-white/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)] p-6 h-full transition-all duration-300 hover:shadow-[0_16px_40px_rgb(0,0,0,0.16)] hover:border-white/30">
+                    <h3 className="text-2xl font-heading font-semibold mb-6 bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">Improve your Profile</h3>
                     
                     <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-xl p-6 shadow-soft">
                       <div className="flex items-start justify-between mb-4">

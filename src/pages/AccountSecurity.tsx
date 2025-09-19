@@ -27,6 +27,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { Link } from "react-router-dom";
 
 const AccountSecurity = () => {
   const { toast } = useToast();
@@ -325,30 +326,22 @@ const AccountSecurity = () => {
         <div className="flex-1">
           <Navigation />
           
-          {/* Hero Section */}
-          <section className="py-24 bg-gradient-hero">
-            <div className="container mx-auto px-4 lg:px-8">
-              <motion.div
-                className="max-w-4xl mx-auto text-center"
-                variants={staggerChildren}
-                initial="initial"
-                animate="animate"
-              >
-                <motion.div variants={fadeInUp}>
-                  <Badge variant="outline" className="mb-6">
-                    <Shield className="w-4 h-4 mr-2" />
-                    Account Security
-                  </Badge>
-                  <h1 className="text-luxury-xl text-foreground mb-6">
-                    Secure Your Account
-                  </h1>
-                  <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                    Manage your security settings and protect your account with two-factor authentication.
-                  </p>
-                </motion.div>
-              </motion.div>
+          {/* Header */}
+          <div className="bg-background border-b">
+            <div className="container mx-auto px-4 lg:px-8 py-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-2xl font-bold text-foreground">Account Security</h1>
+                  <p className="text-muted-foreground">Manage your security settings and protect your account</p>
+                </div>
+                <Link to="/account">
+                  <Button variant="outline">
+                    Back to Dashboard
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </section>
+          </div>
 
       {/* Security Settings */}
       <section className="py-16 bg-background">

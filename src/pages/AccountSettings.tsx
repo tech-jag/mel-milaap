@@ -647,33 +647,31 @@ const AccountSettings = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between p-4 border rounded-lg">
-                        <div>
-                          <h4 className="font-medium capitalize">{userProfile?.plan || 'Free'} Plan</h4>
-                          <p className="text-sm text-muted-foreground">
-                            {userProfile?.plan === 'free' ? 'Basic features included' : 'Full access to premium features'}
-                          </p>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between p-4 border rounded-lg">
+                          <div>
+                            <h4 className="font-medium">Free Plan</h4>
+                            <p className="text-sm text-muted-foreground">
+                              Basic features included
+                            </p>
+                          </div>
+                          <Badge variant="secondary">
+                            Current Plan
+                          </Badge>
                         </div>
-                        <Badge variant={userProfile?.plan === 'free' ? 'secondary' : 'default'}>
-                          {userProfile?.plan === 'free' ? 'Current Plan' : 'Premium'}
-                        </Badge>
-                      </div>
                       
-                      {userProfile?.plan === 'free' && (
                         <div className="text-center p-6 bg-muted/30 rounded-lg">
                           <Crown className="w-12 h-12 text-primary mx-auto mb-4" />
                           <h3 className="text-lg font-semibold mb-2">Upgrade to Premium</h3>
                           <p className="text-muted-foreground mb-4">
                             Unlock advanced features, priority support, and more matches
                           </p>
-                          <Link to="/pricing">
+                          <Link to="/premium-plans">
                             <Button>
                               View Pricing Plans
                             </Button>
                           </Link>
                         </div>
-                      )}
                     </div>
                   </CardContent>
                 </Card>

@@ -4,6 +4,8 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Navigation } from "@/components/ui/navigation";
 import { Footer } from "@/components/ui/footer";
+import { AccountSidebar } from "@/components/ui/account-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -87,50 +89,63 @@ const Matches = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
-        <div className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-3xl font-bold mb-4">Please sign in to view matches</h1>
-          <Button asChild>
-            <Link to="/auth">Sign In</Link>
-          </Button>
+      <SidebarProvider>
+        <div className="min-h-screen bg-background flex w-full">
+          <AccountSidebar />
+          
+          <div className="flex-1">
+            <Navigation />
+            <div className="container mx-auto px-4 py-16 text-center">
+              <h1 className="text-3xl font-bold mb-4">Please sign in to view matches</h1>
+              <Button asChild>
+                <Link to="/auth">Sign In</Link>
+              </Button>
+            </div>
+            <Footer />
+          </div>
         </div>
-        <Footer />
-      </div>
+      </SidebarProvider>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
       
-      {/* Header */}
-      <section className="py-8 bg-gradient-hero">
-        <div className="container mx-auto px-4">
-          <motion.div
-            className="max-w-4xl mx-auto text-center"
-            variants={staggerChildren}
-            initial="initial"
-            animate="animate"
-          >
-            <motion.div variants={fadeInUp}>
-              <Badge variant="outline" className="mb-4">
-                <Heart className="w-4 h-4 mr-2" />
-                Your Matches
-              </Badge>
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Discover Your Perfect Match
-              </h1>
-              <p className="text-muted-foreground text-lg">
-                Curated profiles based on your preferences and compatibility
-              </p>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+          {/* Header */}
+          <div className="bg-background border-b">
+            <div className="container mx-auto px-4 lg:px-8 py-6">
+              <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+                <div className="flex items-center gap-4">
+                  <h1 className="text-2xl font-bold text-foreground">Your Matches</h1>
+                  <Badge variant="secondary">24 New</Badge>
+                </div>
+                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-full sm:w-auto"
+                  >
+                    Advanced
+                  </Button>
+                  <Button
+                    variant="default"
+                    size="sm"
+                    className="w-full sm:w-auto"
+                  >
+                    Refine
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      {/* Matches Content */}
-      <section className="py-8">
+          {/* Matches Content */}
+          <section className="py-8">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             
@@ -326,11 +341,13 @@ const Matches = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+          </div>
+          </section>
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 };
 

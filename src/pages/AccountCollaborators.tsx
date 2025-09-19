@@ -208,28 +208,21 @@ const AccountCollaborators = () => {
           <div className="container mx-auto px-4 lg:px-8 py-8">
             <div className="max-w-4xl mx-auto">
               {/* Header */}
-              <motion.div
-                className="mb-8"
-                variants={fadeInUp}
-                initial="initial"
-                animate="animate"
-              >
-                <div className="mb-4">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <Users className="w-6 h-6 text-primary" />
-                    </div>
+              <div className="bg-background border-b -mx-4 lg:-mx-8 mb-8">
+                <div className="container mx-auto px-4 lg:px-8 py-6">
+                  <div className="flex items-center justify-between">
                     <div>
-                      <h1 className="text-3xl font-heading font-bold text-foreground">
-                        Family Collaboration
-                      </h1>
-                      <p className="text-muted-foreground">
-                        Invite family members to help with your wedding planning
-                      </p>
+                      <h1 className="text-2xl font-bold text-foreground">Collaborators</h1>
+                      <p className="text-muted-foreground">Invite family members to help with planning</p>
                     </div>
+                    <Link to="/account">
+                      <Button variant="outline">
+                        Back to Dashboard
+                      </Button>
+                    </Link>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Invite Form */}

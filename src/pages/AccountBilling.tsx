@@ -13,37 +13,35 @@ import { Link } from "react-router-dom";
 
 export default function AccountBilling() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full">
-          <AccountSidebar />
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
           
-          <main className="flex-1 p-8">
-            <div className="max-w-4xl mx-auto">
-              {/* Header */}
-              <div className="mb-6">
+          {/* Header */}
+          <div className="bg-background border-b">
+            <div className="container mx-auto px-4 lg:px-8 py-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-2xl font-bold text-foreground">Billing</h1>
+                  <p className="text-muted-foreground">Manage your subscription and billing</p>
+                </div>
                 <Link to="/account">
-                  <Button variant="ghost" className="mb-4">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
+                  <Button variant="outline">
                     Back to Dashboard
                   </Button>
                 </Link>
-                
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <CreditCard className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h1 className="text-2xl font-bold text-foreground">Billing</h1>
-                    <p className="text-muted-foreground">Manage your subscription and payment methods</p>
-                  </div>
-                </div>
               </div>
+            </div>
+          </div>
+
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-4xl mx-auto">
 
               {/* Content */}
-              <div className="space-y-6">
+              <div className="space-y-6 py-8">
                 <Card>
                   <CardHeader>
                     <CardTitle>Current Plan</CardTitle>
@@ -79,11 +77,11 @@ export default function AccountBilling() {
                 </Card>
               </div>
             </div>
-          </main>
-        </div>
-      </SidebarProvider>
+          </div>
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }

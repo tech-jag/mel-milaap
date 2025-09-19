@@ -106,31 +106,21 @@ const AccountVerification = () => {
           <Navigation />
           
           {/* Header */}
-          <section className="py-16 bg-gradient-hero">
-            <div className="container mx-auto px-4 lg:px-8">
-              <motion.div
-                className="max-w-4xl mx-auto"
-                variants={staggerChildren}
-                initial="initial"
-                animate="animate"
-              >
-                <motion.div variants={fadeInUp}>
-                  <div>
-                    <Badge variant="outline" className="mb-4">
-                      <Shield className="w-4 h-4 mr-2" />
-                      Identity Verification
-                    </Badge>
-                    <h1 className="text-luxury-xl text-foreground mb-4">
-                      Verify Your Identity
-                    </h1>
-                    <p className="text-body-lg text-muted-foreground">
-                      Get verified to build trust, increase visibility, and connect with serious members.
-                    </p>
-                  </div>
-                </motion.div>
-              </motion.div>
+          <div className="bg-background border-b">
+            <div className="container mx-auto px-4 lg:px-8 py-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-2xl font-bold text-foreground">Verification</h1>
+                  <p className="text-muted-foreground">Verify your identity for enhanced trust</p>
+                </div>
+                <Link to="/account">
+                  <Button variant="outline">
+                    Back to Dashboard
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </section>
+          </div>
 
       {/* Verification Benefits */}
       <section className="py-16 bg-background">

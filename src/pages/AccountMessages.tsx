@@ -45,31 +45,21 @@ const AccountMessages = () => {
           <Navigation />
           
           {/* Header */}
-          <section className="py-16 bg-gradient-hero">
-            <div className="container mx-auto px-4 lg:px-8">
-              <motion.div
-                className="max-w-6xl mx-auto"
-                variants={staggerChildren}
-                initial="initial"
-                animate="animate"
-              >
-                <motion.div variants={fadeInUp} className="flex items-center justify-between">
-                  <div>
-                    <Badge variant="outline" className="mb-4">
-                      <MessageCircle className="w-4 h-4 mr-2" />
-                      Messaging Center
-                    </Badge>
-                    <h1 className="text-luxury-xl text-foreground mb-4">
-                      Messages
-                    </h1>
-                    <p className="text-body-lg text-muted-foreground">
-                      Connect and communicate with your matches.
-                    </p>
-                  </div>
-                </motion.div>
-              </motion.div>
+          <div className="bg-background border-b">
+            <div className="container mx-auto px-4 lg:px-8 py-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-2xl font-bold text-foreground">Messages</h1>
+                  <p className="text-muted-foreground">Connect and communicate with your matches</p>
+                </div>
+                <Link to="/account">
+                  <Button variant="outline">
+                    Back to Dashboard
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </section>
+          </div>
 
           {/* Messaging Interface */}
           <section className="py-16 bg-background">

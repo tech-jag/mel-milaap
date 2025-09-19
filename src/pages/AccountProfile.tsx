@@ -111,35 +111,34 @@ export default function AccountProfile() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      <SidebarProvider>
-        <div className="flex min-h-screen w-full">
-          <AccountSidebar />
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
           
-          <main className="flex-1 p-8">
-            <div className="max-w-6xl mx-auto">
-              {/* Header */}
-              <div className="mb-6">
+          {/* Header */}
+          <div className="bg-background border-b">
+            <div className="container mx-auto px-4 lg:px-8 py-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h1 className="text-2xl font-bold text-foreground">Profile</h1>
+                  <p className="text-muted-foreground">Manage your profile information</p>
+                </div>
                 <Link to="/account">
-                  <Button variant="ghost" className="mb-4">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
+                  <Button variant="outline">
                     Back to Dashboard
                   </Button>
                 </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="container mx-auto px-4 lg:px-8">
+            <div className="max-w-6xl mx-auto py-8">
                 
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Users className="w-5 h-5 text-primary" />
-                  </div>
-                  <div>
-                    <h1 className="text-2xl font-bold text-foreground">My Profile</h1>
-                    <p className="text-muted-foreground">Manage your personal information and preferences</p>
-                  </div>
-                </div>
-                
-                <div className="flex gap-2">
+                <div className="flex gap-2 mb-6">
                   <Button variant="outline" onClick={() => {
                     const profileId = profileData.profile_id;
                     window.open(`/profile/${profileId}`, '_blank');
@@ -154,10 +153,9 @@ export default function AccountProfile() {
                     </Link>
                   </Button>
                 </div>
-              </div>
 
               {/* Profile ID */}
-              <div className="mb-6">
+              <div>
                 <Card>
                   <CardContent className="pt-6">
                     <div className="flex items-center gap-4">
@@ -283,11 +281,11 @@ export default function AccountProfile() {
                 </div>
               </div>
             </div>
-          </main>
-        </div>
-      </SidebarProvider>
+          </div>
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }

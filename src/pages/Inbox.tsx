@@ -3,6 +3,8 @@
 import * as React from "react";
 import { Navigation } from "@/components/ui/navigation";
 import { Footer } from "@/components/ui/footer";
+import { AccountSidebar } from "@/components/ui/account-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,8 +14,12 @@ import { Link } from "react-router-dom";
 
 export default function Inbox() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
       
       <main className="container mx-auto px-4 lg:px-8 py-8">
         <div className="max-w-6xl mx-auto">
@@ -125,7 +131,9 @@ export default function Inbox() {
         </div>
       </main>
 
-      <Footer />
-    </div>
+          <Footer />
+        </div>
+      </div>
+    </SidebarProvider>
   );
 }

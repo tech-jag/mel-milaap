@@ -4,6 +4,8 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { Navigation } from "@/components/ui/navigation";
 import { Footer } from "@/components/ui/footer";
+import { AccountSidebar } from "@/components/ui/account-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -109,18 +111,24 @@ const Search = () => {
   ];
 
   if (!user) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navigation />
+  return (
+    <SidebarProvider>
+      <div className="min-h-screen bg-background flex w-full">
+        <AccountSidebar />
+        
+        <div className="flex-1">
+          <Navigation />
         <div className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-3xl font-bold mb-4">Please sign in to search profiles</h1>
           <Button asChild>
             <Link to="/auth">Sign In</Link>
           </Button>
         </div>
-        <Footer />
+          <Footer />
+        </div>
       </div>
-    );
+    </SidebarProvider>
+  );
   }
 
   return (

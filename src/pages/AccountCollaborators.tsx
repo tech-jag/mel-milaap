@@ -231,14 +231,8 @@ const AccountCollaborators = () => {
 
           <div className="container mx-auto px-4 lg:px-8 py-8">
             <div className="max-w-4xl mx-auto">
-                        Back to Dashboard
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Invite Form */}
             <motion.div
               variants={fadeInUp}
@@ -388,7 +382,7 @@ const AccountCollaborators = () => {
                 </CardContent>
               </Card>
             </motion.div>
-          </div>
+              </div>
             </div>
           </div>
 

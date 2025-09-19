@@ -124,73 +124,99 @@ export default function AccountProfile() {
         <div className="flex-1">
           <Navigation />
           
-          {/* Header */}
+          {/* Header - Mobile Optimized */}
           <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
-            <div className="container mx-auto px-4 lg:px-8 py-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-                    <User className="h-5 w-5 text-white" />
+            <div className="container mx-auto px-4 lg:px-8 py-4 lg:py-6">
+              {/* Mobile: Stack vertically, Desktop: Horizontal */}
+              <div className="flex flex-col gap-4 sm:gap-3">
+                
+                {/* Top Row: Title and Back Button */}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center flex-shrink-0">
+                      <User className="h-5 w-5 text-white" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                        Profile
+                      </h1>
+                      <p className="text-muted-foreground text-sm lg:text-base mt-1">
+                        <span className="hidden sm:inline">Manage your profile information</span>
+                        <span className="sm:hidden">Manage profile</span>
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Profile</h1>
-                    <p className="text-muted-foreground">Manage your profile information</p>
-                  </div>
+                  
+                  {/* Back Button - Always visible */}
+                  <Link to="/account" className="flex-shrink-0">
+                    <Button variant="outline" size="sm" className="px-2 sm:px-4">
+                      <ArrowLeft className="w-4 h-4 sm:mr-2" />
+                      <span className="hidden sm:inline">Back to Dashboard</span>
+                      <span className="sm:hidden sr-only">Back</span>
+                    </Button>
+                  </Link>
                 </div>
-                <Link to="/account">
-                  <Button variant="outline">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to Dashboard
-                  </Button>
-                </Link>
               </div>
             </div>
           </div>
 
           <div className="container mx-auto px-4 lg:px-8">
-            <div className="max-w-6xl mx-auto py-8">
+            <div className="max-w-6xl mx-auto py-4 lg:py-8">
                 
-                <div className="flex gap-2 mb-6">
-                  <Button variant="outline" onClick={() => {
-                    const profileId = profileData.profile_id;
-                    window.open(`/profile/${profileId}`, '_blank');
-                  }}>
+                {/* Action Buttons - Mobile Optimized */}
+                <div className="flex flex-col sm:flex-row gap-2 mb-4 lg:mb-6">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="w-full sm:w-auto"
+                    onClick={() => {
+                      const profileId = profileData.profile_id;
+                      window.open(`/profile/${profileId}`, '_blank');
+                    }}
+                  >
                     <Eye className="w-4 h-4 mr-2" />
-                    Preview
+                    <span className="hidden sm:inline">Preview Profile</span>
+                    <span className="sm:hidden">Preview</span>
                   </Button>
-                  <Button asChild>
+                  <Button asChild size="sm" className="w-full sm:w-auto">
                     <Link to="/account/photos">
                       <Camera className="w-4 h-4 mr-2" />
-                      Photos
+                      <span className="hidden sm:inline">Manage Photos</span>
+                      <span className="sm:hidden">Photos</span>
                     </Link>
                   </Button>
                 </div>
 
-              {/* Profile ID */}
-              <div>
+              {/* Profile Summary Card - Mobile Optimized */}
+              <div className="mb-6">
                 <Card>
-                  <CardContent className="pt-6">
-                    <div className="flex items-center gap-4">
-                      <div className="h-20 w-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center">
-                        <Camera className="h-8 w-8 text-white" />
+                  <CardContent className="pt-4 lg:pt-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                      <div className="h-16 w-16 lg:h-20 lg:w-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+                        <Camera className="h-6 w-6 lg:h-8 lg:w-8 text-white" />
                       </div>
-                      <div className="flex-1">
-                        <h2 className="text-xl font-semibold">{profileData.first_name} {profileData.last_name}</h2>
-                        <p className="text-muted-foreground">Profile ID: {profileData.profile_id}</p>
-                        <div className="flex items-center gap-2 mt-1">
-                          <Badge variant={profileData.profile_ready ? "default" : "secondary"}>
+                      <div className="flex-1 min-w-0">
+                        <h2 className="text-lg lg:text-xl font-semibold truncate">
+                          {profileData.first_name} {profileData.last_name}
+                        </h2>
+                        <p className="text-muted-foreground text-sm lg:text-base">
+                          Profile ID: {profileData.profile_id}
+                        </p>
+                        <div className="flex flex-wrap items-center gap-2 mt-2">
+                          <Badge variant={profileData.profile_ready ? "default" : "secondary"} className="text-xs">
                             {profileData.profile_ready ? "Complete" : "Incomplete"}
                           </Badge>
                           {profileData.onboarding_completed && (
-                            <Badge variant="outline">Verified</Badge>
+                            <Badge variant="outline" className="text-xs">Verified</Badge>
                           )}
                         </div>
                       </div>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm" asChild>
+                      <div className="flex gap-2 w-full sm:w-auto">
+                        <Button variant="outline" size="sm" asChild className="flex-1 sm:flex-none">
                           <Link to="/account/photos">
                             <Camera className="w-4 h-4 mr-2" />
-                            Edit Photos
+                            <span className="hidden sm:inline">Edit Photos</span>
+                            <span className="sm:hidden">Edit</span>
                           </Link>
                         </Button>
                       </div>
@@ -199,9 +225,12 @@ export default function AccountProfile() {
                 </Card>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Main Content Grid - Mobile Responsive */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+                
                 {/* Left Column - Personal Details */}
-                <div className="lg:col-span-2 space-y-6">
+                <div className="lg:col-span-2 space-y-4 lg:space-y-6">
+                  
                   {/* Basic & Lifestyle */}
                   <EditableProfileSection
                     title="Basic & Lifestyle"
@@ -266,8 +295,10 @@ export default function AccountProfile() {
                   />
                 </div>
 
-                {/* Right Column - Partner Preferences */}
-                <div className="space-y-6">
+                {/* Right Column - Partner Preferences & Contact */}
+                <div className="space-y-4 lg:space-y-6">
+                  
+                  {/* Partner Preferences */}
                   <EditableProfileSection
                     title="Partner Preferences"
                     icon={Heart}
@@ -278,14 +309,17 @@ export default function AccountProfile() {
 
                   {/* My Contact Detail */}
                   <Card>
-                    <CardHeader>
-                      <CardTitle>My Contact Detail</CardTitle>
+                    <CardHeader className="pb-3 lg:pb-4">
+                      <CardTitle className="text-lg lg:text-xl">My Contact Detail</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-3 lg:space-y-4">
                       <div>
                         <Label className="text-sm font-medium text-muted-foreground">Email</Label>
-                        <p className="font-medium">{user?.email}</p>
-                        <Badge variant={profileData.email_verified ? "default" : "secondary"} className="mt-1">
+                        <p className="font-medium text-sm lg:text-base truncate">{user?.email}</p>
+                        <Badge 
+                          variant={profileData.email_verified ? "default" : "secondary"} 
+                          className="mt-1 text-xs"
+                        >
                           {profileData.email_verified ? "Verified" : "Not Verified"}
                         </Badge>
                       </div>
@@ -294,8 +328,8 @@ export default function AccountProfile() {
                       
                       <div>
                         <Label className="text-sm font-medium text-muted-foreground">Phone</Label>
-                        <p className="font-medium">Not provided</p>
-                        <Badge variant="secondary" className="mt-1">Not Verified</Badge>
+                        <p className="font-medium text-sm lg:text-base">Not provided</p>
+                        <Badge variant="secondary" className="mt-1 text-xs">Not Verified</Badge>
                       </div>
                     </CardContent>
                   </Card>

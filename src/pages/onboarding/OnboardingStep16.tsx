@@ -41,9 +41,12 @@ export default function OnboardingStep16() {
         has_children: values.has_children,
       };
       
+      console.log('OnboardingStep16 payload:', payload);
+      
       await updatePartnerPreferences.mutateAsync(payload);
       navigate('/onboarding/17');
     } catch (error) {
+      console.error('OnboardingStep16 error:', error);
       toast({
         title: "Error",
         description: "Failed to save preferences. Please try again.",

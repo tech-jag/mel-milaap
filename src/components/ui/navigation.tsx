@@ -318,30 +318,27 @@ return (
                   </>
                 )}
                
-               <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
-                 {user ? (
-                   <>
-                     </Button>
-                     <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
-                       <LogOut className="w-4 h-4 mr-2" />
-                       Log out
-                     </Button>
-                   </>
-                 ) : (
-                   <>
-                     <Button variant="ghost" className="w-full justify-start" asChild>
-                       <Link to="/auth?tab=login" onClick={() => setIsOpen(false)}>
-                         Sign In
-                       </Link>
-                     </Button>
-                     <Button variant="luxury" className="w-full justify-start" asChild>
-                       <Link to="/auth?tab=signup" onClick={() => setIsOpen(false)}>
-                         Join Free
-                       </Link>
-                     </Button>
-                   </>
-                 )}
-               </div>
+                <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
+                  {user ? (
+                    <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Log out
+                    </Button>
+                  ) : (
+                    <>
+                      <Button variant="ghost" className="w-full justify-start" asChild>
+                        <Link to="/auth?tab=login" onClick={() => setIsOpen(false)}>
+                          Sign In
+                        </Link>
+                      </Button>
+                      <Button variant="luxury" className="w-full justify-start" asChild>
+                        <Link to="/auth?tab=signup" onClick={() => setIsOpen(false)}>
+                          Join Free
+                        </Link>
+                      </Button>
+                    </>
+                  )}
+                </div>
              </div>
            </motion.div>
          )}

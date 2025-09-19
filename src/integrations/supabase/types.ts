@@ -370,6 +370,39 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_preferences: {
+        Row: {
+          auto_response_enabled: boolean | null
+          auto_response_message: string | null
+          created_at: string | null
+          id: string
+          phone_visibility: string | null
+          updated_at: string | null
+          user_id: string
+          who_can_message: string | null
+        }
+        Insert: {
+          auto_response_enabled?: boolean | null
+          auto_response_message?: string | null
+          created_at?: string | null
+          id?: string
+          phone_visibility?: string | null
+          updated_at?: string | null
+          user_id: string
+          who_can_message?: string | null
+        }
+        Update: {
+          auto_response_enabled?: boolean | null
+          auto_response_message?: string | null
+          created_at?: string | null
+          id?: string
+          phone_visibility?: string | null
+          updated_at?: string | null
+          user_id?: string
+          who_can_message?: string | null
+        }
+        Relationships: []
+      }
       early_access_suppliers: {
         Row: {
           additional_comments: string | null
@@ -1033,22 +1066,28 @@ export type Database = {
           communities: string[] | null
           countries: string[] | null
           created_at: string | null
+          deal_breakers: string | null
           diet: string[] | null
           drink: string[] | null
           education_levels: string[] | null
           has_children: string | null
           height_max_cm: number | null
           height_min_cm: number | null
+          horoscope_matching_importance: string | null
           industries: string[] | null
+          lifestyle_preferences: Json | null
+          mangal_dosha: string | null
           marital_statuses: string[] | null
           mother_tongues: string[] | null
           notes: string | null
+          preferred_countries: string[] | null
           professions: string[] | null
           religions: string[] | null
           smoke: string[] | null
           states: string[] | null
           updated_at: string | null
           user_id: string
+          willing_to_relocate: string | null
         }
         Insert: {
           age_max?: number | null
@@ -1057,22 +1096,28 @@ export type Database = {
           communities?: string[] | null
           countries?: string[] | null
           created_at?: string | null
+          deal_breakers?: string | null
           diet?: string[] | null
           drink?: string[] | null
           education_levels?: string[] | null
           has_children?: string | null
           height_max_cm?: number | null
           height_min_cm?: number | null
+          horoscope_matching_importance?: string | null
           industries?: string[] | null
+          lifestyle_preferences?: Json | null
+          mangal_dosha?: string | null
           marital_statuses?: string[] | null
           mother_tongues?: string[] | null
           notes?: string | null
+          preferred_countries?: string[] | null
           professions?: string[] | null
           religions?: string[] | null
           smoke?: string[] | null
           states?: string[] | null
           updated_at?: string | null
           user_id: string
+          willing_to_relocate?: string | null
         }
         Update: {
           age_max?: number | null
@@ -1081,22 +1126,28 @@ export type Database = {
           communities?: string[] | null
           countries?: string[] | null
           created_at?: string | null
+          deal_breakers?: string | null
           diet?: string[] | null
           drink?: string[] | null
           education_levels?: string[] | null
           has_children?: string | null
           height_max_cm?: number | null
           height_min_cm?: number | null
+          horoscope_matching_importance?: string | null
           industries?: string[] | null
+          lifestyle_preferences?: Json | null
+          mangal_dosha?: string | null
           marital_statuses?: string[] | null
           mother_tongues?: string[] | null
           notes?: string | null
+          preferred_countries?: string[] | null
           professions?: string[] | null
           religions?: string[] | null
           smoke?: string[] | null
           states?: string[] | null
           updated_at?: string | null
           user_id?: string
+          willing_to_relocate?: string | null
         }
         Relationships: []
       }
@@ -1738,6 +1789,36 @@ export type Database = {
         }
         Relationships: []
       }
+      user_activity_stats: {
+        Row: {
+          id: string
+          interests_received_count: number | null
+          interests_sent_count: number | null
+          last_updated: string | null
+          matches_count: number | null
+          profile_views_count: number | null
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          interests_received_count?: number | null
+          interests_sent_count?: number | null
+          last_updated?: string | null
+          matches_count?: number | null
+          profile_views_count?: number | null
+          user_id: string
+        }
+        Update: {
+          id?: string
+          interests_received_count?: number | null
+          interests_sent_count?: number | null
+          last_updated?: string | null
+          matches_count?: number | null
+          profile_views_count?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       user_profiles: {
         Row: {
           about_me: string | null
@@ -1778,7 +1859,10 @@ export type Database = {
           mother_tongue: string | null
           nakshatra: string | null
           occupation: string | null
+          phone_verified: boolean | null
           photo_visibility: string | null
+          professional_verified: boolean | null
+          profile_completion_percentage: number | null
           profile_id: string | null
           profile_ready: boolean | null
           religion: string | null
@@ -1786,6 +1870,7 @@ export type Database = {
           siblings_brothers: number | null
           siblings_sisters: number | null
           smoking: Database["public"]["Enums"]["freq_t"] | null
+          social_media_verified: boolean | null
           sub_community: string | null
           university: string | null
           updated_at: string | null
@@ -1833,7 +1918,10 @@ export type Database = {
           mother_tongue?: string | null
           nakshatra?: string | null
           occupation?: string | null
+          phone_verified?: boolean | null
           photo_visibility?: string | null
+          professional_verified?: boolean | null
+          profile_completion_percentage?: number | null
           profile_id?: string | null
           profile_ready?: boolean | null
           religion?: string | null
@@ -1841,6 +1929,7 @@ export type Database = {
           siblings_brothers?: number | null
           siblings_sisters?: number | null
           smoking?: Database["public"]["Enums"]["freq_t"] | null
+          social_media_verified?: boolean | null
           sub_community?: string | null
           university?: string | null
           updated_at?: string | null
@@ -1888,7 +1977,10 @@ export type Database = {
           mother_tongue?: string | null
           nakshatra?: string | null
           occupation?: string | null
+          phone_verified?: boolean | null
           photo_visibility?: string | null
+          professional_verified?: boolean | null
+          profile_completion_percentage?: number | null
           profile_id?: string | null
           profile_ready?: boolean | null
           religion?: string | null
@@ -1896,6 +1988,7 @@ export type Database = {
           siblings_brothers?: number | null
           siblings_sisters?: number | null
           smoking?: Database["public"]["Enums"]["freq_t"] | null
+          social_media_verified?: boolean | null
           sub_community?: string | null
           university?: string | null
           updated_at?: string | null
@@ -1991,6 +2084,39 @@ export type Database = {
           updated_at?: string
           venue_location?: string | null
           wedding_date?: string | null
+        }
+        Relationships: []
+      }
+      verification_records: {
+        Row: {
+          document_url: string | null
+          id: string
+          notes: string | null
+          status: string | null
+          submitted_at: string | null
+          user_id: string
+          verification_type: string
+          verified_at: string | null
+        }
+        Insert: {
+          document_url?: string | null
+          id?: string
+          notes?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          user_id: string
+          verification_type: string
+          verified_at?: string | null
+        }
+        Update: {
+          document_url?: string | null
+          id?: string
+          notes?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          user_id?: string
+          verification_type?: string
+          verified_at?: string | null
         }
         Relationships: []
       }

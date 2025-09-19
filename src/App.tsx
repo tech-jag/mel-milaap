@@ -17,6 +17,9 @@ import ComingSoon from "./pages/ComingSoon";
 import AccountCollaborators from "./pages/AccountCollaborators";
 import PlanningNotes from "./pages/PlanningNotes";
 import Match from "./pages/Match";
+import Matches from "./pages/Matches";
+import Search from "./pages/Search";
+import Inbox from "./pages/Inbox";
 import Suppliers from "./pages/Suppliers";
 import PublicPlanning from "./pages/PublicPlanning";
 import AccountPlanning from "./pages/AccountPlanning";
@@ -207,6 +210,21 @@ const App = () => (
               <Route path="/match" element={
                 <PrivateRoute>
                   <Match />
+                </PrivateRoute>
+              } />
+              <Route path="/matches" element={
+                <PrivateRoute>
+                  <Matches />
+                </PrivateRoute>
+              } />
+              <Route path="/search" element={
+                <PrivateRoute>
+                  <Search />
+                </PrivateRoute>
+              } />
+              <Route path="/inbox" element={
+                <PrivateRoute>
+                  <Inbox />
                 </PrivateRoute>
               } />
               

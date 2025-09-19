@@ -123,6 +123,24 @@ return (
           ))}
         </div>
 
+        {/* Desktop Navigation - Logged Users */}
+        {user && (
+          <div className="hidden lg:flex items-center space-x-1">
+            <Button variant="ghost" asChild className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium">
+              <Link to="/account">My Milaap</Link>
+            </Button>
+            <Button variant="ghost" asChild className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium">
+              <Link to="/matches">Matches</Link>
+            </Button>
+            <Button variant="ghost" asChild className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium">
+              <Link to="/search">Search</Link>
+            </Button>
+            <Button variant="ghost" asChild className="px-4 py-2 text-foreground hover:text-primary transition-colors text-sm font-medium">
+              <Link to="/inbox">Inbox</Link>
+            </Button>
+          </div>
+        )}
+
         {/* Desktop CTA */}
         <div className="hidden lg:flex items-center space-x-3">
           {loading ? (

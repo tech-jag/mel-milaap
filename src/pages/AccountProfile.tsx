@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { useOnboardingState } from "@/hooks/useOnboardingState";
 import { useAuth } from "@/hooks/useAuth";
 import { EditableProfileSection } from "@/components/profile/EditableProfileSection";
+import { AccountHeader } from "@/components/ui/account-header";
 
 export default function AccountProfile() {
   const { user } = useAuth();
@@ -124,68 +125,39 @@ export default function AccountProfile() {
         <div className="flex-1">
           <Navigation />
           
-          {/* Header - Mobile Optimized */}
-          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
-            <div className="container mx-auto px-4 lg:px-8 py-4 lg:py-6">
-              {/* Mobile: Stack vertically, Desktop: Horizontal */}
-              <div className="flex flex-col gap-4 sm:gap-3">
-                
-                {/* Top Row: Title and Back Button */}
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center flex-shrink-0">
-                      <User className="h-5 w-5 text-white" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                        Profile
-                      </h1>
-                      <p className="text-muted-foreground text-sm lg:text-base mt-1">
-                        <span className="hidden sm:inline">Manage your profile information</span>
-                        <span className="sm:hidden">Manage profile</span>
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Back Button - Always visible */}
-                  <Link to="/account" className="flex-shrink-0">
-                    <Button variant="outline" size="sm" className="px-2 sm:px-4">
-                      <ArrowLeft className="w-4 h-4 sm:mr-2" />
-                      <span className="hidden sm:inline">Back to Dashboard</span>
-                      <span className="sm:hidden sr-only">Back</span>
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* REPLACED INLINE HEADER WITH ACCOUNTHEADER */}
+          <AccountHeader
+            title="Profile"
+            description="Manage your profile information"
+            icon={User}
+            backUrl="/account"
+            backText="Back to Dashboard"
+          >
+            {/* ACTION BUTTONS AS CHILDREN */}
+            <Button 
+              variant="outline" 
+              size="sm"
+              className="w-full sm:w-auto"
+              onClick={() => {
+                const profileId = profileData.profile_id;
+                window.open(`/profile/${profileId}`, '_blank');
+              }}
+            >
+              <Eye className="w-4 h-4 mr-2" />
+              <span className="hidden sm:inline">Preview Profile</span>
+              <span className="sm:hidden">Preview</span>
+            </Button>
+            <Button asChild size="sm" className="w-full sm:w-auto">
+              <Link to="/account/photos">
+                <Camera className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">Manage Photos</span>
+                <span className="sm:hidden">Photos</span>
+              </Link>
+            </Button>
+          </AccountHeader>
 
           <div className="container mx-auto px-4 lg:px-8">
             <div className="max-w-6xl mx-auto py-4 lg:py-8">
-                
-                {/* Action Buttons - Mobile Optimized */}
-                <div className="flex flex-col sm:flex-row gap-2 mb-4 lg:mb-6">
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="w-full sm:w-auto"
-                    onClick={() => {
-                      const profileId = profileData.profile_id;
-                      window.open(`/profile/${profileId}`, '_blank');
-                    }}
-                  >
-                    <Eye className="w-4 h-4 mr-2" />
-                    <span className="hidden sm:inline">Preview Profile</span>
-                    <span className="sm:hidden">Preview</span>
-                  </Button>
-                  <Button asChild size="sm" className="w-full sm:w-auto">
-                    <Link to="/account/photos">
-                      <Camera className="w-4 h-4 mr-2" />
-                      <span className="hidden sm:inline">Manage Photos</span>
-                      <span className="sm:hidden">Photos</span>
-                    </Link>
-                  </Button>
-                </div>
 
               {/* Profile Summary Card - Mobile Optimized */}
               <div className="mb-6">

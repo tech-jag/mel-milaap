@@ -159,41 +159,100 @@ export default function AccountProfile() {
           <div className="container mx-auto px-4 lg:px-8">
             <div className="max-w-6xl mx-auto py-4 lg:py-8">
 
-{/* Profile Summary Card - FIXED VERSION */}
+{/* Profile Summary Card - ADVANCED DESKTOP FIX */}
 <div className="mb-6">
   <Card>
     <CardContent className="pt-4 lg:pt-6">
-      <div className="flex flex-col lg:flex-row items-start lg:items-center gap-4 lg:gap-6">
-        {/* Profile Avatar */}
-        <div className="h-16 w-16 lg:h-20 lg:w-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
-          <Camera className="h-6 w-6 lg:h-8 lg:w-8 text-white" />
-        </div>
-        
-        {/* Profile Info - with proper flex growth */}
-        <div className="flex-1 min-w-0 lg:mr-4">
-          <h2 className="text-lg lg:text-xl font-semibold truncate">
-            {profileData.first_name} {profileData.last_name}
-          </h2>
-          <p className="text-muted-foreground text-sm lg:text-base mb-2">
-            Profile ID: {profileData.profile_id}
-          </p>
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant={profileData.profile_ready ? "default" : "secondary"} className="text-xs">
-              {profileData.profile_ready ? "Complete" : "Incomplete"}
-            </Badge>
-            {profileData.onboarding_completed && (
-              <Badge variant="outline" className="text-xs">Verified</Badge>
-            )}
+      {/* DESKTOP LAYOUT - Fixed Width Container */}
+      <div className="hidden lg:flex items-center justify-between w-full">
+        {/* Left Section - Avatar + Info */}
+        <div className="flex items-center gap-6 flex-1 min-w-0 pr-6">
+          <div className="h-20 w-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+            <Camera className="h-8 w-8 text-white" />
+          </div>
+          
+          <div className="flex-1 min-w-0">
+            <h2 className="text-xl font-semibold truncate">
+              {profileData.first_name} {profileData.last_name}
+            </h2>
+            <p className="text-muted-foreground text-base mb-2 truncate">
+              Profile ID: {profileData.profile_id}
+            </p>
+            <div className="flex items-center gap-2">
+              <Badge variant={profileData.profile_ready ? "default" : "secondary"} className="text-xs">
+                {profileData.profile_ready ? "Complete" : "Incomplete"}
+              </Badge>
+              {profileData.onboarding_completed && (
+                <Badge variant="outline" className="text-xs">Verified</Badge>
+              )}
+            </div>
           </div>
         </div>
         
-        {/* Action Buttons - properly constrained */}
-        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto lg:w-auto lg:flex-shrink-0">
-          <Button variant="outline" size="sm" asChild className="flex-1 sm:flex-none lg:min-w-[120px]">
+        {/* Right Section - Action Buttons */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => {
+              const profileId = profileData.profile_id;
+              window.open(`/profile/${profileId}`, '_blank');
+            }}
+          >
+            <Eye className="w-4 h-4 mr-2" />
+            Preview Profile
+          </Button>
+          <Button asChild size="sm">
             <Link to="/account/photos">
               <Camera className="w-4 h-4 mr-2" />
-              <span className="hidden sm:inline">Edit Photos</span>
-              <span className="sm:hidden">Edit</span>
+              Manage Photos
+            </Link>
+          </Button>
+        </div>
+      </div>
+      
+      {/* MOBILE LAYOUT - Stacked */}
+      <div className="flex lg:hidden flex-col gap-4">
+        <div className="flex items-center gap-4">
+          <div className="h-16 w-16 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
+            <Camera className="h-6 w-6 text-white" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h2 className="text-lg font-semibold truncate">
+              {profileData.first_name} {profileData.last_name}
+            </h2>
+            <p className="text-muted-foreground text-sm truncate">
+              Profile ID: {profileData.profile_id}
+            </p>
+          </div>
+        </div>
+        
+        <div className="flex flex-wrap items-center gap-2 mb-2">
+          <Badge variant={profileData.profile_ready ? "default" : "secondary"} className="text-xs">
+            {profileData.profile_ready ? "Complete" : "Incomplete"}
+          </Badge>
+          {profileData.onboarding_completed && (
+            <Badge variant="outline" className="text-xs">Verified</Badge>
+          )}
+        </div>
+        
+        <div className="flex flex-col gap-2">
+          <Button 
+            variant="outline" 
+            size="sm"
+            className="w-full"
+            onClick={() => {
+              const profileId = profileData.profile_id;
+              window.open(`/profile/${profileId}`, '_blank');
+            }}
+          >
+            <Eye className="w-4 h-4 mr-2" />
+            Preview
+          </Button>
+          <Button asChild size="sm" className="w-full">
+            <Link to="/account/photos">
+              <Camera className="w-4 h-4 mr-2" />
+              Photos
             </Link>
           </Button>
         </div>

@@ -56,6 +56,7 @@ export default function OnboardingStep16() {
       currentStep={16}
       title="Partner Preferences - Marital Status"
       subtitle="Specify your preferences for marital status and children"
+      hideNavigation={true}
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

@@ -11,9 +11,9 @@ import { useOnboardingState } from '@/hooks/useOnboardingState';
 import { toast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
-  location_countries: z.string().optional(),
-  location_states: z.string().optional(),
-  location_cities: z.string().optional(),
+  countries: z.string().optional(),
+  states: z.string().optional(),
+  cities: z.string().optional(),
 });
 
 export default function OnboardingStep18() {
@@ -23,23 +23,23 @@ export default function OnboardingStep18() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      location_countries: partnerPreferences?.location_countries?.join(', ') || '',
-      location_states: partnerPreferences?.location_states?.join(', ') || '',
-      location_cities: partnerPreferences?.location_cities?.join(', ') || '',
+      countries: partnerPreferences?.countries?.join(', ') || '',
+      states: partnerPreferences?.states?.join(', ') || '',
+      cities: partnerPreferences?.cities?.join(', ') || '',
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const payload = {
-        location_countries: values.location_countries 
-          ? values.location_countries.split(',').map(item => item.trim()).filter(Boolean)
+        countries: values.countries 
+          ? values.countries.split(',').map(item => item.trim()).filter(Boolean)
           : [],
-        location_states: values.location_states 
-          ? values.location_states.split(',').map(item => item.trim()).filter(Boolean)
+        states: values.states 
+          ? values.states.split(',').map(item => item.trim()).filter(Boolean)
           : [],
-        location_cities: values.location_cities 
-          ? values.location_cities.split(',').map(item => item.trim()).filter(Boolean)
+        cities: values.cities 
+          ? values.cities.split(',').map(item => item.trim()).filter(Boolean)
           : [],
       };
       
@@ -65,7 +65,7 @@ export default function OnboardingStep18() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={form.control}
-            name="location_countries"
+            name="countries"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Preferred Countries (Optional)</FormLabel>
@@ -85,7 +85,7 @@ export default function OnboardingStep18() {
 
           <FormField
             control={form.control}
-            name="location_states"
+            name="states"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Preferred States/Provinces (Optional)</FormLabel>
@@ -105,7 +105,7 @@ export default function OnboardingStep18() {
 
           <FormField
             control={form.control}
-            name="location_cities"
+            name="cities"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Preferred Cities (Optional)</FormLabel>

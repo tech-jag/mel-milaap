@@ -74,9 +74,9 @@ export interface PartnerPreferences {
   religions?: string[];
   communities?: string[];
   mother_tongues?: string[];
-  location_countries?: string[];
-  location_states?: string[];
-  location_cities?: string[];
+  countries?: string[];
+  states?: string[];
+  cities?: string[];
   education_levels?: string[];
   occupations?: string[];
   lifestyle_diet?: string[];

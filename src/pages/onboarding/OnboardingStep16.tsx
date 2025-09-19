@@ -37,7 +37,7 @@ export default function OnboardingStep16() {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const payload = {
-        marital_statuses: values.marital_statuses ? [values.marital_statuses] : [],
+        marital_statuses: values.marital_statuses && values.marital_statuses !== 'no_preference' ? [values.marital_statuses] : [],
         has_children: values.has_children,
       };
       
@@ -74,7 +74,7 @@ export default function OnboardingStep16() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="">No preference</SelectItem>
+                    <SelectItem value="no_preference">No preference</SelectItem>
                     <SelectItem value="never_married">Never Married</SelectItem>
                     <SelectItem value="divorced">Divorced</SelectItem>
                     <SelectItem value="widowed">Widowed</SelectItem>

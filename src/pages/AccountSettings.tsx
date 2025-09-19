@@ -344,13 +344,6 @@ const AccountSettings = () => {
                   {subscriptionInfo.label}
                 </Badge>
               )}
-              <Link to="/account">
-                <Button variant="outline" size="sm" className="w-full sm:w-auto text-xs lg:text-sm">
-                  <ArrowLeft className="w-3 h-3 lg:w-4 lg:h-4 mr-2" />
-                  <span className="hidden sm:inline">Back to Dashboard</span>
-                  <span className="sm:hidden">Back</span>
-                </Button>
-              </Link>
             </div>
           </AccountHeader>
 

@@ -213,13 +213,6 @@ const AccountCollaborators = () => {
             description="Invite family members to help with planning"
             icon={Users}
           >
-            <Link to="/account">
-              <Button variant="outline" className="w-full sm:w-auto">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                <span className="hidden sm:inline">Back to Dashboard</span>
-                <span className="sm:hidden">Back</span>
-              </Button>
-            </Link>
           </AccountHeader>
 
           {/* Main Content */}

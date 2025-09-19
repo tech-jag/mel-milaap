@@ -55,9 +55,15 @@ export default function AccountProfile() {
     { key: 'religion', label: 'Religion', type: 'text' as const },
     { key: 'community', label: 'Community', type: 'text' as const },
     { key: 'sub_community', label: 'Sub Community', type: 'text' as const },
-    { key: 'mother_tongue', label: 'Mother Tongue', type: 'text' as const },
+    { key: 'mother_tongue', label: 'Mother Tongue', type: 'text' as const }
+  ];
+
+  const astroFields = [
+    { key: 'birth_time', label: 'Time of Birth', type: 'text' as const },
+    { key: 'birth_place', label: 'Place of Birth', type: 'text' as const },
     { key: 'gothra', label: 'Gothra', type: 'text' as const },
     { key: 'nakshatra', label: 'Nakshatra', type: 'text' as const },
+    { key: 'raashi', label: 'Raashi', type: 'text' as const },
     { key: 'manglik', label: 'Manglik', type: 'select' as const, options: ['yes', 'no', 'unknown'] }
   ];
 
@@ -119,15 +125,16 @@ export default function AccountProfile() {
           <Navigation />
           
           {/* Header */}
-          <div className="bg-background border-b">
+          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
             <div className="container mx-auto px-4 lg:px-8 py-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-2xl font-bold text-foreground">Profile</h1>
+                  <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Profile</h1>
                   <p className="text-muted-foreground">Manage your profile information</p>
                 </div>
                 <Link to="/account">
                   <Button variant="outline">
+                    <ArrowLeft className="w-4 h-4 mr-2" />
                     Back to Dashboard
                   </Button>
                 </Link>
@@ -205,6 +212,15 @@ export default function AccountProfile() {
                     icon={Star}
                     data={profileData}
                     fields={religiousFields}
+                    onSave={handleProfileUpdate}
+                  />
+
+                  {/* Astro Details */}
+                  <EditableProfileSection
+                    title="Astro Details"
+                    icon={Star}
+                    data={profileData}
+                    fields={astroFields}
                     onSave={handleProfileUpdate}
                   />
 

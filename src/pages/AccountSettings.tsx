@@ -303,9 +303,17 @@ const AccountSettings = () => {
                       Manage your account, privacy, and security settings
                     </p>
                     <div className="flex items-center space-x-2 mt-4">
-                      <Badge variant={userProfile?.subscription_tier === 'free' ? 'secondary' : 'default'}>
-                        {userProfile?.subscription_tier === 'free' ? 'Free Plan' : 'Premium Plan'}
-                      </Badge>
+                      {userProfile?.subscription_tier === 'free' ? (
+                        <Link to="/premium-plans">
+                          <Badge variant="outline" className="text-primary bg-primary/5 border-primary/20 cursor-pointer hover:bg-primary/10">
+                            Upgrade Plan
+                          </Badge>
+                        </Link>
+                      ) : (
+                        <Badge variant="default" className="bg-green-100 text-green-800 border-green-200">
+                          {userProfile?.subscription_tier?.toUpperCase()} Plan
+                        </Badge>
+                      )}
                     </div>
                   </div>
                 </motion.div>

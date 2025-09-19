@@ -21,15 +21,16 @@ export default function AccountBilling() {
           <Navigation />
           
           {/* Header */}
-          <div className="bg-background border-b">
+          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
             <div className="container mx-auto px-4 lg:px-8 py-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h1 className="text-2xl font-bold text-foreground">Billing</h1>
+                  <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Billing</h1>
                   <p className="text-muted-foreground">Manage your subscription and billing</p>
                 </div>
                 <Link to="/account">
                   <Button variant="outline">
+                    <ArrowLeft className="w-4 h-4 mr-2" />
                     Back to Dashboard
                   </Button>
                 </Link>

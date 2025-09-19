@@ -80,7 +80,7 @@ export function AccountSidebar() {
       : "hover:bg-muted/50";
 
   return (
-    <Sidebar className="w-64">
+    <Sidebar className="w-64 hidden lg:flex">
       <SidebarContent>
         {/* Plan Status */}
         <div className="p-4 border-b">

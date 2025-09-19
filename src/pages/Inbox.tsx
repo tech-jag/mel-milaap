@@ -24,14 +24,16 @@ export default function Inbox() {
       <main className="container mx-auto px-4 lg:px-8 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="mb-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-3 bg-primary/10 rounded-lg">
-                <MessageCircle className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">Messages & Interests</h1>
-                <p className="text-muted-foreground">Connect with your matches and manage your conversations</p>
+          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b mb-6">
+            <div className="container mx-auto px-4 lg:px-8 py-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-primary/10 rounded-lg">
+                  <MessageCircle className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Messages & Interests</h1>
+                  <p className="text-muted-foreground">Connect with your matches and manage your conversations</p>
+                </div>
               </div>
             </div>
           </div>

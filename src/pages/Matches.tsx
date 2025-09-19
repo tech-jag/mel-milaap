@@ -117,28 +117,30 @@ const Matches = () => {
           <Navigation />
       
           {/* Header */}
-          <div className="bg-background border-b">
+          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
             <div className="container mx-auto px-4 lg:px-8 py-6">
-              <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
-                <div className="flex items-center gap-4">
-                  <h1 className="text-2xl font-bold text-foreground">Your Matches</h1>
-                  <Badge variant="secondary">24 New</Badge>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full sm:w-auto"
-                  >
-                    Advanced
-                  </Button>
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="w-full sm:w-auto"
-                  >
-                    Refine
-                  </Button>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Your Matches</h1>
+                    <Badge variant="secondary" className="bg-primary/10 text-primary border-primary/20">24 New</Badge>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1 sm:flex-none"
+                    >
+                      Advanced
+                    </Button>
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="flex-1 sm:flex-none"
+                    >
+                      Refine
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -146,8 +148,8 @@ const Matches = () => {
 
           {/* Matches Content */}
           <section className="py-8">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="w-full">
             
             {/* Stats Bar */}
             <motion.div 

@@ -12,7 +12,7 @@ import { toast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
   education_levels: z.string().optional(),
-  occupations: z.string().optional(),
+  professions: z.string().optional(),
 });
 
 export default function OnboardingStep19() {
@@ -23,7 +23,7 @@ export default function OnboardingStep19() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       education_levels: partnerPreferences?.education_levels?.join(', ') || '',
-      occupations: partnerPreferences?.occupations?.join(', ') || '',
+      professions: partnerPreferences?.professions?.join(', ') || '',
     },
   });
 
@@ -33,8 +33,8 @@ export default function OnboardingStep19() {
         education_levels: values.education_levels 
           ? values.education_levels.split(',').map(item => item.trim()).filter(Boolean)
           : [],
-        occupations: values.occupations 
-          ? values.occupations.split(',').map(item => item.trim()).filter(Boolean)
+        professions: values.professions 
+          ? values.professions.split(',').map(item => item.trim()).filter(Boolean)
           : [],
       };
       
@@ -80,7 +80,7 @@ export default function OnboardingStep19() {
 
           <FormField
             control={form.control}
-            name="occupations"
+            name="professions"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Preferred Occupations (Optional)</FormLabel>

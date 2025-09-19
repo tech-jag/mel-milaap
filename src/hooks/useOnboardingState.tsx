@@ -78,7 +78,7 @@ export interface PartnerPreferences {
   states?: string[];
   cities?: string[];
   education_levels?: string[];
-  occupations?: string[];
+  professions?: string[];
   lifestyle_diet?: string[];
   lifestyle_drinking?: string[];
   lifestyle_smoking?: string[];

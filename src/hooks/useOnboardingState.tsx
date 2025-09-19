@@ -79,10 +79,10 @@ export interface PartnerPreferences {
   cities?: string[];
   education_levels?: string[];
   professions?: string[];
-  lifestyle_diet?: string[];
-  lifestyle_drinking?: string[];
-  lifestyle_smoking?: string[];
-  additional?: string;
+  diet?: string[];
+  drink?: string[];
+  smoke?: string[];
+  notes?: string;
   updated_at?: string;
 }
 

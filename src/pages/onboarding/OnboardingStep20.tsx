@@ -14,10 +14,10 @@ import { useOnboardingState } from '@/hooks/useOnboardingState';
 import { toast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
-  lifestyle_diet: z.array(z.string()).optional(),
-  lifestyle_drinking: z.array(z.string()).optional(),
-  lifestyle_smoking: z.array(z.string()).optional(),
-  additional: z.string().optional(),
+  diet: z.array(z.string()).optional(),
+  drink: z.array(z.string()).optional(),
+  smoke: z.array(z.string()).optional(),
+  notes: z.string().optional(),
 });
 
 const dietOptions = [
@@ -116,10 +116,10 @@ export default function OnboardingStep20() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      lifestyle_diet: partnerPreferences?.lifestyle_diet || [],
-      lifestyle_drinking: partnerPreferences?.lifestyle_drinking || [],
-      lifestyle_smoking: partnerPreferences?.lifestyle_smoking || [],
-      additional: partnerPreferences?.additional || '',
+      diet: partnerPreferences?.diet || [],
+      drink: partnerPreferences?.drink || [],
+      smoke: partnerPreferences?.smoke || [],
+      notes: partnerPreferences?.notes || '',
     },
   });
 
@@ -147,7 +147,7 @@ export default function OnboardingStep20() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={form.control}
-            name="lifestyle_diet"
+            name="diet"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Preferred Diet Types (Optional)</FormLabel>
@@ -169,7 +169,7 @@ export default function OnboardingStep20() {
 
           <FormField
             control={form.control}
-            name="lifestyle_drinking"
+            name="drink"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Drinking Preferences (Optional)</FormLabel>
@@ -191,7 +191,7 @@ export default function OnboardingStep20() {
 
           <FormField
             control={form.control}
-            name="lifestyle_smoking"
+            name="smoke"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Smoking Preferences (Optional)</FormLabel>
@@ -213,7 +213,7 @@ export default function OnboardingStep20() {
 
           <FormField
             control={form.control}
-            name="additional"
+            name="notes"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Additional Preferences (Optional)</FormLabel>

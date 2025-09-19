@@ -321,11 +321,6 @@ return (
                <div className="flex flex-col space-y-2 pt-4 border-t border-border/50">
                  {user ? (
                    <>
-                     <Button variant="ghost" className="w-full justify-start" asChild>
-                       <Link to="/account" onClick={() => setIsOpen(false)}>
-                         <User className="w-4 h-4 mr-2" />
-                         Account
-                       </Link>
                      </Button>
                      <Button variant="ghost" className="w-full justify-start" onClick={handleLogout}>
                        <LogOut className="w-4 h-4 mr-2" />

@@ -141,7 +141,6 @@ const Search = () => {
         <div className="flex-1">
           <Navigation />
           
-          {/* Header */}
 <AccountHeader
   title="Find Your Ideal Partner"
   description="Use advanced filters to discover profiles that match your preferences"
@@ -149,6 +148,21 @@ const Search = () => {
   backUrl="/account"
   backText="Back to Dashboard"
 />
+
+{/* Add this mobile filter toggle section */}
+<div className="lg:hidden bg-background border-b">
+  <div className="container mx-auto px-4 py-3">
+    <Button 
+      variant="outline" 
+      size="sm"
+      className="w-full"
+      onClick={() => setShowFilters(!showFilters)}
+    >
+      <Filter className="w-4 h-4 mr-2" />
+      {showFilters ? 'Hide Filters' : 'Show Filters'}
+    </Button>
+  </div>
+</div>
 
           {/* Search Content */}
           <section className="py-8">

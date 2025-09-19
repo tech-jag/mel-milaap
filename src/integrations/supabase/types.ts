@@ -1036,9 +1036,11 @@ export type Database = {
           diet: string[] | null
           drink: string[] | null
           education_levels: string[] | null
+          has_children: string | null
           height_max_cm: number | null
           height_min_cm: number | null
           industries: string[] | null
+          marital_statuses: string[] | null
           mother_tongues: string[] | null
           notes: string | null
           professions: string[] | null
@@ -1058,9 +1060,11 @@ export type Database = {
           diet?: string[] | null
           drink?: string[] | null
           education_levels?: string[] | null
+          has_children?: string | null
           height_max_cm?: number | null
           height_min_cm?: number | null
           industries?: string[] | null
+          marital_statuses?: string[] | null
           mother_tongues?: string[] | null
           notes?: string | null
           professions?: string[] | null
@@ -1080,9 +1084,11 @@ export type Database = {
           diet?: string[] | null
           drink?: string[] | null
           education_levels?: string[] | null
+          has_children?: string | null
           height_max_cm?: number | null
           height_min_cm?: number | null
           industries?: string[] | null
+          marital_statuses?: string[] | null
           mother_tongues?: string[] | null
           notes?: string | null
           professions?: string[] | null

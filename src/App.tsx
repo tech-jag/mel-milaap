@@ -107,6 +107,7 @@ import OnboardingStep22 from "./pages/onboarding/OnboardingStep22";
 import OnboardingStep23 from "./pages/onboarding/OnboardingStep23";
 import PremiumPlans from "./pages/PremiumPlans";
 import PublicProfile from "./pages/PublicProfile";
+import DevOnboarding from "./pages/DevOnboarding";
 
 const queryClient = new QueryClient();
 
@@ -193,6 +194,9 @@ const App = () => (
               {/* Public Profiles */}
               <Route path="/profile/:id" element={<PublicProfile />} />
               <Route path="/profile/preview" element={<ProfilePreviewPage />} />
+              
+              {/* Development Route */}
+              <Route path="/dev-onboarding" element={<DevOnboarding />} />
               
               {/* Protected Routes */}
               <Route path="/match" element={

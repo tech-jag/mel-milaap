@@ -203,7 +203,7 @@ export default function AccountBilling() {
                         {subscriptionInfo.showUpgrade && (
                           <Button 
                             onClick={handleUpgrade}
-                            className="w-full lg:w-auto text-sm lg:text-base"
+                            className="w-full sm:w-auto lg:max-w-xs text-sm lg:text-base"
                           >
                             <Crown className="w-4 h-4 mr-2" />
                             Upgrade to Premium

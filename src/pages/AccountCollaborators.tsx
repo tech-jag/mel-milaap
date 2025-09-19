@@ -18,8 +18,7 @@ import {
   Copy,
   CheckCircle,
   Clock,
-  XCircle,
-  ArrowLeft
+  XCircle
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
@@ -29,6 +28,7 @@ import { getCollaborators, inviteCollaborator } from "@/lib/planning";
 import { Helmet } from "react-helmet-async";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { AccountHeader } from "@/components/ui/account-header";
 
 interface Collaborator {
   id: string;
@@ -206,28 +206,13 @@ const AccountCollaborators = () => {
         <div className="flex-1">
           <Navigation />
           
-          {/* Header */}
-          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
-            <div className="container mx-auto px-4 lg:px-8 py-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-                    <Users className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Collaborators</h1>
-                    <p className="text-muted-foreground">Invite family members to help with planning</p>
-                  </div>
-                </div>
-                <Link to="/account">
-                  <Button variant="outline">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to Dashboard
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
+          <AccountHeader 
+            title="Collaborators"
+            description="Invite family members to help with planning"
+            icon={Users}
+            backUrl="/account"
+            backText="Back to Dashboard"
+          />
 
           <div className="container mx-auto px-4 lg:px-8 py-8">
             <div className="max-w-4xl mx-auto">

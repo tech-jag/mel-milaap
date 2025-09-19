@@ -28,6 +28,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { AccountHeader } from "@/components/ui/account-header";
 import { Link } from "react-router-dom";
 
 const AccountSecurity = () => {
@@ -316,7 +317,14 @@ const AccountSecurity = () => {
   };
 
   if (!user) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 lg:h-12 lg:w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-sm lg:text-base">Loading security settings...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -327,270 +335,258 @@ const AccountSecurity = () => {
         <div className="flex-1">
           <Navigation />
           
-          {/* Header */}
-          <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
-            <div className="container mx-auto px-4 lg:px-8 py-6">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center">
-                    <Shield className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Account Security</h1>
-                    <p className="text-muted-foreground">Manage your security settings and protect your account</p>
-                  </div>
-                </div>
-                <Link to="/account">
-                  <Button variant="outline">
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back to Dashboard
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
+          {/* Account Header */}
+          <AccountHeader
+            title="Account Security"
+            description="Manage your security settings and protect your account"
+            icon={Shield}
+          />
 
-      {/* Security Settings */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-2xl mx-auto space-y-8">
-            
-            {/* Two-Factor Authentication */}
-            <motion.div
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-            >
-              <Card className="luxury-card">
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-3">
-                    <Smartphone className="w-6 h-6 text-primary" />
-                    <span>Two-Factor Authentication</span>
-                    {twoFactorEnabled && (
-                      <Badge variant="default" className="bg-success text-success-foreground">
-                        <CheckCircle className="w-3 h-3 mr-1" />
-                        Enabled
-                      </Badge>
-                    )}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium text-foreground">
-                        Email-based 2FA
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        Receive verification codes via email for additional security
-                      </p>
-                    </div>
-                    <Switch
-                      checked={twoFactorEnabled}
-                      onCheckedChange={twoFactorEnabled ? disable2FA : enable2FA}
-                      disabled={isLoading}
-                    />
-                  </div>
-
-                  {isEnabling2FA && (
-                    <div className="space-y-4 p-4 bg-card border border-border rounded-lg">
-                      <div className="flex items-center space-x-2 text-amber-600">
-                        <AlertTriangle className="w-4 h-4" />
-                        <span className="text-sm font-medium">Action Required</span>
-                      </div>
-                      
-                      <div className="space-y-3">
-                        <Label htmlFor="otp-verify">Enter verification code from email</Label>
-                        <Input
-                          id="otp-verify"
-                          type="text"
-                          placeholder="123456"
-                          maxLength={6}
-                          value={otpCode}
-                          onChange={(e) => setOtpCode(e.target.value)}
-                          className="max-w-xs"
-                        />
-                        <Button
-                          onClick={verify2FA}
-                          disabled={isLoading || otpCode.length !== 6}
-                          className="w-full sm:w-auto"
-                        >
-                          {isLoading ? "Verifying..." : "Verify & Enable 2FA"}
-                        </Button>
-                      </div>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Recovery Codes */}
-            {showRecoveryCodes && (
+          {/* Main Content */}
+          <div className="container mx-auto px-4 lg:px-8 py-6">
+            <div className="max-w-2xl mx-auto space-y-6 lg:space-y-8">
+              
+              {/* Two-Factor Authentication */}
               <motion.div
                 variants={fadeInUp}
                 initial="initial"
-                animate="animate"
+                whileInView="animate"
+                viewport={{ once: true }}
               >
-                <Card className="luxury-card border-amber-200">
-                  <CardHeader>
-                    <CardTitle className="flex items-center space-x-3 text-amber-700">
-                      <Key className="w-6 h-6" />
-                      <span>Recovery Codes</span>
+                <Card className="luxury-card">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-center space-x-3 text-lg lg:text-xl">
+                      <Smartphone className="w-5 h-5 lg:w-6 lg:h-6 text-primary" />
+                      <span>Two-Factor Authentication</span>
+                      {twoFactorEnabled && (
+                        <Badge variant="default" className="bg-success text-success-foreground text-xs">
+                          <CheckCircle className="w-3 h-3 mr-1" />
+                          Enabled
+                        </Badge>
+                      )}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="p-4 bg-amber-50 border border-amber-200 rounded-lg">
-                      <p className="text-sm text-amber-800 mb-3 font-medium">
-                        Save these recovery codes in a safe place. You can use them to access your account if you lose access to your email.
-                      </p>
-                      <div className="grid grid-cols-2 gap-2 mb-4">
-                        {recoveryCodes.map((code, index) => (
-                          <div
-                            key={index}
-                            className="flex items-center justify-between bg-white p-2 rounded border"
+                  <CardContent className="space-y-4 lg:space-y-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-3 sm:space-y-0">
+                      <div className="flex-1 mr-0 sm:mr-4">
+                        <p className="font-medium text-foreground text-sm lg:text-base">
+                          Email-based 2FA
+                        </p>
+                        <p className="text-xs lg:text-sm text-muted-foreground">
+                          Receive verification codes via email for additional security
+                        </p>
+                      </div>
+                      <Switch
+                        checked={twoFactorEnabled}
+                        onCheckedChange={twoFactorEnabled ? disable2FA : enable2FA}
+                        disabled={isLoading}
+                      />
+                    </div>
+
+                    {isEnabling2FA && (
+                      <div className="space-y-4 p-3 lg:p-4 bg-card border border-border rounded-lg">
+                        <div className="flex items-center space-x-2 text-amber-600">
+                          <AlertTriangle className="w-3 h-3 lg:w-4 lg:h-4" />
+                          <span className="text-xs lg:text-sm font-medium">Action Required</span>
+                        </div>
+                        
+                        <div className="space-y-3">
+                          <Label htmlFor="otp-verify" className="text-sm lg:text-base">Enter verification code from email</Label>
+                          <Input
+                            id="otp-verify"
+                            type="text"
+                            placeholder="123456"
+                            maxLength={6}
+                            value={otpCode}
+                            onChange={(e) => setOtpCode(e.target.value)}
+                            className="max-w-xs text-sm lg:text-base"
+                          />
+                          <Button
+                            onClick={verify2FA}
+                            disabled={isLoading || otpCode.length !== 6}
+                            className="w-full sm:w-auto text-sm lg:text-base"
                           >
-                            <code className="text-sm font-mono">{code}</code>
-                            <button
-                              onClick={() => copyRecoveryCode(code)}
-                              className="text-amber-600 hover:text-amber-800"
+                            {isLoading ? "Verifying..." : "Verify & Enable 2FA"}
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Recovery Codes */}
+              {showRecoveryCodes && (
+                <motion.div
+                  variants={fadeInUp}
+                  initial="initial"
+                  animate="animate"
+                >
+                  <Card className="luxury-card border-amber-200">
+                    <CardHeader className="pb-4">
+                      <CardTitle className="flex items-center space-x-3 text-amber-700 text-lg lg:text-xl">
+                        <Key className="w-5 h-5 lg:w-6 lg:h-6" />
+                        <span>Recovery Codes</span>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="p-3 lg:p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                        <p className="text-xs lg:text-sm text-amber-800 mb-3 font-medium">
+                          Save these recovery codes in a safe place. You can use them to access your account if you lose access to your email.
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4">
+                          {recoveryCodes.map((code, index) => (
+                            <div
+                              key={index}
+                              className="flex items-center justify-between bg-white p-2 lg:p-3 rounded border"
                             >
-                              <Copy className="w-3 h-3" />
-                            </button>
+                              <code className="text-xs lg:text-sm font-mono">{code}</code>
+                              <button
+                                onClick={() => copyRecoveryCode(code)}
+                                className="text-amber-600 hover:text-amber-800 flex-shrink-0 ml-2"
+                              >
+                                <Copy className="w-3 h-3" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                          <Button
+                            onClick={downloadRecoveryCodes}
+                            variant="outline"
+                            size="sm"
+                            className="text-xs lg:text-sm"
+                          >
+                            Download Codes
+                          </Button>
+                          <Button
+                            onClick={() => setShowRecoveryCodes(false)}
+                            variant="outline"
+                            size="sm"
+                            className="text-xs lg:text-sm"
+                          >
+                            I've Saved Them
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )}
+
+              {/* Password Settings */}
+              <motion.div
+                variants={fadeInUp}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+              >
+                <Card className="luxury-card">
+                  <CardHeader className="pb-4">
+                    <CardTitle className="flex items-center space-x-3 text-lg lg:text-xl">
+                      <Key className="w-5 h-5 lg:w-6 lg:h-6 text-primary" />
+                      <span>Password</span>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-3 sm:space-y-0">
+                        <div className="flex-1 mr-0 sm:mr-4">
+                          <p className="font-medium text-foreground text-sm lg:text-base">Change Password</p>
+                          <p className="text-xs lg:text-sm text-muted-foreground">
+                            {user?.app_metadata?.provider === 'email' 
+                              ? "Update your account password" 
+                              : "Password change not available for OAuth accounts"
+                            }
+                          </p>
+                        </div>
+                        {user?.app_metadata?.provider === 'email' && (
+                          <Button 
+                            variant="outline" 
+                            onClick={handleChangePassword}
+                            disabled={isLoading}
+                            className="w-full sm:w-auto text-sm lg:text-base"
+                          >
+                            Change Password
+                          </Button>
+                        )}
+                      </div>
+
+                      {showPasswordChange && (
+                        <div className="space-y-4 p-3 lg:p-4 bg-card border border-border rounded-lg">
+                          <div className="space-y-3">
+                            <div className="space-y-2">
+                              <Label htmlFor="new-password" className="text-sm lg:text-base">New Password</Label>
+                              <div className="relative">
+                                <Input
+                                  id="new-password"
+                                  type={showPassword ? "text" : "password"}
+                                  placeholder="••••••••"
+                                  className="pr-10 text-sm lg:text-base"
+                                  autoComplete="new-password"
+                                  value={newPassword}
+                                  onChange={(e) => setNewPassword(e.target.value)}
+                                  required
+                                  minLength={8}
+                                />
+                                <button
+                                  type="button"
+                                  className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                >
+                                  {showPassword ? (
+                                    <EyeOff className="w-3 h-3 lg:w-4 lg:h-4 text-muted-foreground" />
+                                  ) : (
+                                    <Eye className="w-3 h-3 lg:w-4 lg:h-4 text-muted-foreground" />
+                                  )}
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="space-y-2">
+                              <Label htmlFor="confirm-password" className="text-sm lg:text-base">Confirm New Password</Label>
+                              <Input
+                                id="confirm-password"
+                                type="password"
+                                placeholder="••••••••"
+                                autoComplete="new-password"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                required
+                                className="text-sm lg:text-base"
+                              />
+                            </div>
+
+                            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                              <Button
+                                onClick={changePassword}
+                                disabled={isLoading || !newPassword || !confirmPassword}
+                                className="text-sm lg:text-base"
+                              >
+                                {isLoading ? "Updating..." : "Update Password"}
+                              </Button>
+                              <Button
+                                variant="outline"
+                                onClick={() => {
+                                  setShowPasswordChange(false);
+                                  setNewPassword('');
+                                  setConfirmPassword('');
+                                }}
+                                className="text-sm lg:text-base"
+                              >
+                                Cancel
+                              </Button>
+                            </div>
                           </div>
-                        ))}
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button
-                          onClick={downloadRecoveryCodes}
-                          variant="outline"
-                          size="sm"
-                        >
-                          Download Codes
-                        </Button>
-                        <Button
-                          onClick={() => setShowRecoveryCodes(false)}
-                          variant="outline"
-                          size="sm"
-                        >
-                          I've Saved Them
-                        </Button>
-                      </div>
+                        </div>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
               </motion.div>
-            )}
 
-            {/* Password Settings */}
-            <motion.div
-              variants={fadeInUp}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-            >
-              <Card className="luxury-card">
-                <CardHeader>
-                  <CardTitle className="flex items-center space-x-3">
-                    <Key className="w-6 h-6 text-primary" />
-                    <span>Password</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-foreground">Change Password</p>
-                        <p className="text-sm text-muted-foreground">
-                          {user?.app_metadata?.provider === 'email' 
-                            ? "Update your account password" 
-                            : "Password change not available for OAuth accounts"
-                          }
-                        </p>
-                      </div>
-                      {user?.app_metadata?.provider === 'email' && (
-                        <Button 
-                          variant="outline" 
-                          onClick={handleChangePassword}
-                          disabled={isLoading}
-                        >
-                          Change Password
-                        </Button>
-                      )}
-                    </div>
-
-                    {showPasswordChange && (
-                      <div className="space-y-4 p-4 bg-card border border-border rounded-lg">
-                        <div className="space-y-3">
-                          <div className="space-y-2">
-                            <Label htmlFor="new-password">New Password</Label>
-                            <div className="relative">
-                              <Input
-                                id="new-password"
-                                type={showPassword ? "text" : "password"}
-                                placeholder="••••••••"
-                                className="pr-10"
-                                autoComplete="new-password"
-                                value={newPassword}
-                                onChange={(e) => setNewPassword(e.target.value)}
-                                required
-                                minLength={8}
-                              />
-                              <button
-                                type="button"
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2"
-                                onClick={() => setShowPassword(!showPassword)}
-                              >
-                                {showPassword ? (
-                                  <EyeOff className="w-4 h-4 text-muted-foreground" />
-                                ) : (
-                                  <Eye className="w-4 h-4 text-muted-foreground" />
-                                )}
-                              </button>
-                            </div>
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label htmlFor="confirm-password">Confirm New Password</Label>
-                            <Input
-                              id="confirm-password"
-                              type="password"
-                              placeholder="••••••••"
-                              autoComplete="new-password"
-                              value={confirmPassword}
-                              onChange={(e) => setConfirmPassword(e.target.value)}
-                              required
-                            />
-                          </div>
-
-                          <div className="flex space-x-2">
-                            <Button
-                              onClick={changePassword}
-                              disabled={isLoading || !newPassword || !confirmPassword}
-                            >
-                              {isLoading ? "Updating..." : "Update Password"}
-                            </Button>
-                            <Button
-                              variant="outline"
-                              onClick={() => {
-                                setShowPasswordChange(false);
-                                setNewPassword('');
-                                setConfirmPassword('');
-                              }}
-                            >
-                              Cancel
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
+            </div>
           </div>
-        </div>
-      </section>
 
           <Footer />
           

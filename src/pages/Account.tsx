@@ -112,6 +112,9 @@ const Account = () => {
 
   return (
     <SidebarProvider>
+      {/* Floral Branding for Account Pages */}
+      <FloralBranding variant="account" />
+      
       <div className="min-h-screen bg-background flex w-full">
         <AccountSidebar />
         

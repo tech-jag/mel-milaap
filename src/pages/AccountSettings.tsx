@@ -46,6 +46,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { SEO } from "@/utils/seo";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { FloralBranding } from "@/components/ui/FloralBranding";
 import { AccountHeader } from "@/components/ui/account-header";
 
 const AccountSettings = () => {
@@ -319,6 +320,9 @@ const AccountSettings = () => {
 
   return (
     <SidebarProvider>
+      {/* Floral Branding for Account Pages */}
+      <FloralBranding variant="account" />
+      
       <div className="min-h-screen bg-background flex w-full">
         <SEO 
           title="Account Settings – Mēl Milaap"

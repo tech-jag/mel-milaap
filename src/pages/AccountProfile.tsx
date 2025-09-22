@@ -15,6 +15,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { EditableProfileSection } from "@/components/profile/EditableProfileSection";
 import { AccountHeader } from "@/components/ui/account-header";
 import { ProfileCompletionTracker } from "@/components/profile/ProfileCompletionTracker";
+import { FloralBranding } from "@/components/ui/FloralBranding";
 
 export default function AccountProfile() {
   const { user } = useAuth();
@@ -124,6 +125,9 @@ export default function AccountProfile() {
 
   return (
     <SidebarProvider>
+      {/* Floral Branding for Account Pages */}
+      <FloralBranding variant="account" />
+      
       <div className="min-h-screen bg-background flex w-full">
         <AccountSidebar />
         

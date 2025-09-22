@@ -45,6 +45,7 @@ import { ActivityTracker } from "@/components/profile/ActivityTracker";
 import { ProfileCompletionTracker } from "@/components/profile/ProfileCompletionTracker";
 import { useVerificationStatus } from "@/hooks/useVerificationStatus";
 import { calculateProfileCompletion } from "@/utils/profileCompletion";
+import { FloralBranding } from "@/components/ui/FloralBranding";
 
 interface DashboardStats {
   budget: {
@@ -316,6 +317,9 @@ const AccountDashboard = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Floral Branding for Account Pages */}
+      <FloralBranding variant="account" />
+      
       <Navigation />
       
       {/* Header */}

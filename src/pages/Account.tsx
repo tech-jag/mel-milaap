@@ -113,14 +113,10 @@ const Account = () => {
 
   return (
     <SidebarProvider>
-      {/* Floral Branding for Account Pages */}
-      <FloralBranding variant="account" />
-      
       <div className="min-h-screen bg-background flex w-full">
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
           
           {/* Hero Section */}
           <section className="py-24 bg-gradient-hero">
@@ -289,8 +285,6 @@ const Account = () => {
           </div>
         </div>
       </section>
-
-          <Footer />
         </div>
       </div>
     </SidebarProvider>

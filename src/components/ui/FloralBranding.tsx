@@ -20,16 +20,16 @@ export const FloralBranding: React.FC<FloralBrandingProps> = ({
       <div className={wrapperClasses}>
         <FloralAccent 
           variant="lotus-corner" 
-          position="top-0 left-0 -ml-12 -mt-12" 
+          position="top-0 left-0 ml-8 mt-8" 
           size="w-72 h-72" 
-          opacity={0.15} 
+          opacity={0.3} 
           scrollParallax={true} 
         />
         <FloralAccent 
           variant="peony-bloom" 
-          position="bottom-0 right-0 -mr-16 -mb-16" 
+          position="bottom-0 right-0 mr-8 mb-8" 
           size="w-80 h-80" 
-          opacity={0.18} 
+          opacity={0.35} 
           scrollParallax={true} 
         />
       </div>
@@ -41,15 +41,15 @@ export const FloralBranding: React.FC<FloralBrandingProps> = ({
       <div className={wrapperClasses}>
         <FloralAccent 
           variant="mandala-corner" 
-          position="top-0 right-0 -mr-8 -mt-8" 
+          position="top-0 right-0 mr-4 mt-4" 
           size="w-24 h-24" 
-          opacity={0.08} 
+          opacity={0.2} 
         />
         <FloralAccent 
           variant="jasmine-spray" 
-          position="bottom-0 left-0 -ml-4 -mb-12" 
+          position="bottom-0 left-0 ml-4 mb-4" 
           size="w-16 h-32" 
-          opacity={0.06} 
+          opacity={0.15} 
         />
       </div>
     );
@@ -60,9 +60,9 @@ export const FloralBranding: React.FC<FloralBrandingProps> = ({
     <div className={wrapperClasses}>
       <FloralAccent 
         variant="mandala-corner" 
-        position="top-0 right-0 -mr-6 -mt-6" 
+        position="top-0 right-0 mr-4 mt-4" 
         size="w-16 h-16" 
-        opacity={0.05} 
+        opacity={0.12} 
       />
     </div>
   );

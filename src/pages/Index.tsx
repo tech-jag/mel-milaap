@@ -251,3 +251,17 @@ const Index = () => {
               variants={fadeInUp}
               initial="initial"
               whileInView="animate"
+              viewport={{ once: true }}
+            >
+              <EarlyAccessForm />
+            </motion.div>
+          </div>
+        </section>
+
+        <Footer />
+      </main>
+    </div>
+  );
+};
+
+export default Index;

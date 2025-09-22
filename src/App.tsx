@@ -8,6 +8,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { ErrorBoundary } from "./components/system/ErrorBoundary";
 import { AuthProvider } from "./hooks/useAuth";
 import { PrivateRoute } from "./components/routing/PrivateRoute";
+import { MainLayout } from "./components/layout/MainLayout";
 
 // ... keep existing imports
 
@@ -132,225 +133,228 @@ const App = () => (
           <BrowserRouter>
             <ScrollToTop />
             <Routes>
-              {/* Home Landing Page */}
-              <Route path="/" element={<Home />} />
-              
-              {/* Early Access - Coming Soon */}
-              <Route path="/early-access" element={<ComingSoon />} />
-              
-              {/* Public Pages */}
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/faqs" element={<Faqs />} />
-              <Route path="/help" element={<Help />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              <Route path="/pricing" element={<Pricing />} />
-              <Route path="/premium" element={<Premium />} />
-              <Route path="/premium-plans" element={<PremiumPlans />} />
-              <Route path="/trust" element={<Trust />} />
-              <Route path="/verification" element={<Verification />} />
-              <Route path="/stories" element={<Stories />} />
-              <Route path="/story/:id" element={<StoryDetail />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/data-rights" element={<DataRights />} />
-              <Route path="/careers" element={<Careers />} />
-              <Route path="/press" element={<Press />} />
-              <Route path="/health" element={<Health />} />
-              
-              {/* Target Pages */}
-              <Route path="/for-parents" element={<ForParents />} />
-              <Route path="/for-singles" element={<ForSingles />} />
-              <Route path="/for-suppliers" element={<ForSuppliers />} />
-              
-              {/* Destinations */}
-              <Route path="/destinations" element={<Destinations />} />
-              <Route path="/city/sydney" element={<CitySydney />} />
-              <Route path="/city/melbourne" element={<CityMelbourne />} />
-              <Route path="/city/auckland" element={<CityAuckland />} />
-              
-              {/* Suppliers */}
-              <Route path="/suppliers" element={<Suppliers />} />
-              <Route path="/suppliers/signup" element={<SupplierSignup />} />
-              <Route path="/suppliers/feature-listings" element={<SuppliersFeatureListings />} />
-              <Route path="/suppliers/pricing" element={<SuppliersPricing />} />
-              
+              {/* Routes WITH floral branding, header, and footer */}
+              <Route element={<MainLayout />}>
+                {/* Home Landing Page */}
+                <Route path="/" element={<Home />} />
+                
+                {/* Early Access - Coming Soon */}
+                <Route path="/early-access" element={<ComingSoon />} />
+                
+                {/* Public Pages */}
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/faqs" element={<Faqs />} />
+                <Route path="/help" element={<Help />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/premium" element={<Premium />} />
+                <Route path="/premium-plans" element={<PremiumPlans />} />
+                <Route path="/trust" element={<Trust />} />
+                <Route path="/verification" element={<Verification />} />
+                <Route path="/stories" element={<Stories />} />
+                <Route path="/story/:id" element={<StoryDetail />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/blog/:slug" element={<BlogPost />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/data-rights" element={<DataRights />} />
+                <Route path="/careers" element={<Careers />} />
+                <Route path="/press" element={<Press />} />
+                <Route path="/health" element={<Health />} />
+                
+                {/* Target Pages */}
+                <Route path="/for-parents" element={<ForParents />} />
+                <Route path="/for-singles" element={<ForSingles />} />
+                <Route path="/for-suppliers" element={<ForSuppliers />} />
+                
+                {/* Destinations */}
+                <Route path="/destinations" element={<Destinations />} />
+                <Route path="/city/sydney" element={<CitySydney />} />
+                <Route path="/city/melbourne" element={<CityMelbourne />} />
+                <Route path="/city/auckland" element={<CityAuckland />} />
+                
+                {/* Suppliers */}
+                <Route path="/suppliers" element={<Suppliers />} />
+                <Route path="/suppliers/signup" element={<SupplierSignup />} />
+                <Route path="/suppliers/feature-listings" element={<SuppliersFeatureListings />} />
+                <Route path="/suppliers/pricing" element={<SuppliersPricing />} />
+                
+                {/* Tools and Features */}
+                <Route path="/tools" element={<Tools />} />
+                <Route path="/planning" element={<WeddingPlanning />} />
+                <Route path="/planning/public" element={<PublicPlanning />} />
+                <Route path="/planning/dashboard" element={<PlanningDashboard />} />
+                <Route path="/planning/timeline" element={<PlanningTimeline />} />
+                <Route path="/planning/registry" element={<PlanningRegistry />} />
+                <Route path="/planning/checklist" element={<PlanningChecklist />} />
+                <Route path="/planning/notes" element={<PlanningNotes />} />
+                
+                {/* Public Profiles */}
+                <Route path="/profile/:id" element={<PublicProfile />} />
+                <Route path="/profile/preview" element={<ProfilePreviewPage />} />
+                
+                {/* Development Route */}
+                <Route path="/dev-onboarding" element={<DevOnboarding />} />
+                <Route path="/partner-preferences" element={
+                  <PrivateRoute>
+                    <PartnerPreferences />
+                  </PrivateRoute>
+                } />
+                
+                {/* Protected Routes */}
+                <Route path="/match" element={
+                  <PrivateRoute>
+                    <Match />
+                  </PrivateRoute>
+                } />
+                <Route path="/matches" element={
+                  <PrivateRoute>
+                    <Matches />
+                  </PrivateRoute>
+                } />
+                <Route path="/search" element={
+                  <PrivateRoute>
+                    <Search />
+                  </PrivateRoute>
+                } />
+                <Route path="/inbox" element={
+                  <PrivateRoute>
+                    <Inbox />
+                  </PrivateRoute>
+                } />
+                <Route path="/inbox/received" element={
+                  <PrivateRoute>
+                    <InboxReceived />
+                  </PrivateRoute>
+                } />
+                
+                {/* Account Routes */}
+                <Route path="/account" element={
+                  <PrivateRoute>
+                    <Account />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/dashboard" element={
+                  <PrivateRoute>
+                    <AccountDashboard />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/profile" element={
+                  <PrivateRoute>
+                    <AccountProfile />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/photos" element={
+                  <PrivateRoute>
+                    <AccountPhotos />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/security" element={
+                  <PrivateRoute>
+                    <AccountSecurity />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/settings" element={
+                  <PrivateRoute>
+                    <AccountSettings />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/billing" element={
+                  <PrivateRoute>
+                    <AccountBilling />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/favorites" element={
+                  <PrivateRoute>
+                    <AccountFavorites />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/messages" element={
+                  <PrivateRoute>
+                    <AccountMessages />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/verification" element={
+                  <PrivateRoute>
+                    <AccountVerification />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/collaborators" element={
+                  <PrivateRoute>
+                    <AccountCollaborators />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/invites" element={
+                  <PrivateRoute>
+                    <AccountInvites />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/guests" element={
+                  <PrivateRoute>
+                    <AccountGuests />
+                  </PrivateRoute>
+                } />
+                
+                {/* Account Planning Routes */}
+                <Route path="/account/planning" element={
+                  <PrivateRoute>
+                    <AccountPlanning />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/planning/budget" element={
+                  <PrivateRoute>
+                    <AccountPlanningBudget />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/planning/guests" element={
+                  <PrivateRoute>
+                    <AccountPlanningGuests />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/planning/todo" element={
+                  <PrivateRoute>
+                    <AccountPlanningTodo />
+                  </PrivateRoute>
+                } />
+                
+                <Route path="/account/planning/seating" element={
+                  <PrivateRoute>
+                    <AccountPlanningSeating />
+                  </PrivateRoute>
+                } />
+                
+                {/* Supplier Dashboard */}
+                <Route path="/supplier/dashboard" element={
+                  <PrivateRoute>
+                    <SupplierDashboard />
+                  </PrivateRoute>
+                } />
+              </Route>
+
+              {/* Routes WITHOUT floral branding */}
                {/* Auth Routes */}
               <Route path="/auth" element={<Auth />} />
               <Route path="/login" element={<Auth />} />
               <Route path="/register" element={<Auth />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/reset-password" element={<ResetPassword />} />
-              
-              {/* Tools and Features */}
-              <Route path="/tools" element={<Tools />} />
-              <Route path="/planning" element={<WeddingPlanning />} />
-              <Route path="/planning/public" element={<PublicPlanning />} />
-              <Route path="/planning/dashboard" element={<PlanningDashboard />} />
-              <Route path="/planning/timeline" element={<PlanningTimeline />} />
-              <Route path="/planning/registry" element={<PlanningRegistry />} />
-              <Route path="/planning/checklist" element={<PlanningChecklist />} />
-              <Route path="/planning/notes" element={<PlanningNotes />} />
-              
-              {/* Public Profiles */}
-              <Route path="/profile/:id" element={<PublicProfile />} />
-              <Route path="/profile/preview" element={<ProfilePreviewPage />} />
-              
-              {/* Development Route */}
-              <Route path="/dev-onboarding" element={<DevOnboarding />} />
-              <Route path="/partner-preferences" element={
-                <PrivateRoute>
-                  <PartnerPreferences />
-                </PrivateRoute>
-              } />
-              
-              {/* Protected Routes */}
-              <Route path="/match" element={
-                <PrivateRoute>
-                  <Match />
-                </PrivateRoute>
-              } />
-              <Route path="/matches" element={
-                <PrivateRoute>
-                  <Matches />
-                </PrivateRoute>
-              } />
-              <Route path="/search" element={
-                <PrivateRoute>
-                  <Search />
-                </PrivateRoute>
-              } />
-              <Route path="/inbox" element={
-                <PrivateRoute>
-                  <Inbox />
-                </PrivateRoute>
-              } />
-              <Route path="/inbox/received" element={
-                <PrivateRoute>
-                  <InboxReceived />
-                </PrivateRoute>
-              } />
-              
-              
-              {/* Account Routes */}
-              <Route path="/account" element={
-                <PrivateRoute>
-                  <Account />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/dashboard" element={
-                <PrivateRoute>
-                  <AccountDashboard />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/profile" element={
-                <PrivateRoute>
-                  <AccountProfile />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/photos" element={
-                <PrivateRoute>
-                  <AccountPhotos />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/security" element={
-                <PrivateRoute>
-                  <AccountSecurity />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/settings" element={
-                <PrivateRoute>
-                  <AccountSettings />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/billing" element={
-                <PrivateRoute>
-                  <AccountBilling />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/favorites" element={
-                <PrivateRoute>
-                  <AccountFavorites />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/messages" element={
-                <PrivateRoute>
-                  <AccountMessages />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/verification" element={
-                <PrivateRoute>
-                  <AccountVerification />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/collaborators" element={
-                <PrivateRoute>
-                  <AccountCollaborators />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/invites" element={
-                <PrivateRoute>
-                  <AccountInvites />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/guests" element={
-                <PrivateRoute>
-                  <AccountGuests />
-                </PrivateRoute>
-              } />
-              
-              {/* Account Planning Routes */}
-              <Route path="/account/planning" element={
-                <PrivateRoute>
-                  <AccountPlanning />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/planning/budget" element={
-                <PrivateRoute>
-                  <AccountPlanningBudget />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/planning/guests" element={
-                <PrivateRoute>
-                  <AccountPlanningGuests />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/planning/todo" element={
-                <PrivateRoute>
-                  <AccountPlanningTodo />
-                </PrivateRoute>
-              } />
-              
-              <Route path="/account/planning/seating" element={
-                <PrivateRoute>
-                  <AccountPlanningSeating />
-                </PrivateRoute>
-              } />
-              
-              {/* Supplier Dashboard */}
-              <Route path="/supplier/dashboard" element={
-                <PrivateRoute>
-                  <SupplierDashboard />
-                </PrivateRoute>
-              } />
               
               {/* Onboarding Routes */}
               <Route path="/onboarding" element={
@@ -360,6 +364,8 @@ const App = () => (
                   </OnboardingGuard>
                 </PrivateRoute>
               } />
+              
+              {/* ... keep existing onboarding routes exactly as they were ... */}
               
               {/* Numbered onboarding routes */}
               <Route path="/onboarding/1" element={

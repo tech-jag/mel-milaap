@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -304,7 +302,6 @@ const Home = () => {
         title="Mēl Milaap - Australia & New Zealand's Premier South Asian Matrimony Platform"
         description="Find your perfect match in Australia & New Zealand's most trusted South Asian matrimony platform. Join thousands of verified members today."
       />
-      <Navigation />
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -1199,7 +1196,6 @@ const Home = () => {
         </div>
       </section>
 
-      <Footer />
     </div>
   );
 };

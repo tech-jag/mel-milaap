@@ -70,13 +70,13 @@ export const FloralAccent: React.FC<FloralAccentProps> = ({
   
   const y = useTransform(scrollYProgress, [0, 1], [0, scrollParallax ? -100 : 0]);
   
-  const hoverVariants = hoverEffect ? {
+  const hoverVariants = {
     hover: {
-      scale: 1.05,
-      filter: 'drop-shadow(0 0 12px hsl(var(--lux-champagne) / 0.5))',
+      scale: hoverEffect ? 1.05 : 1,
+      filter: hoverEffect ? 'drop-shadow(0 0 12px hsl(var(--lux-champagne) / 0.5))' : 'none',
       transition: { type: "spring" as const, stiffness: 300, damping: 20 }
     }
-  } : {};
+  };
 
   const SVGComponent = FloralSVGs[variant];
 
@@ -96,7 +96,7 @@ export const FloralAccent: React.FC<FloralAccentProps> = ({
         color, // --> Apply color here so the SVG can inherit it.
       }}
       variants={hoverVariants}
-      whileHover={hoverEffect ? "hover" : undefined}
+      whileHover="hover"
       aria-hidden="true"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{

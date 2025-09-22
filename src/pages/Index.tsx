@@ -7,12 +7,11 @@ import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-
-import { 
-  Heart, 
-  Shield, 
-  Users, 
-  Star, 
+import {
+  Heart,
+  Shield,
+  Users,
+  Star,
   Sparkles,
   CheckCircle,
   Crown,
@@ -29,123 +28,125 @@ import { FloralAccent } from "@/components/ui/FloralAccent";
 
 // Founder benefits
 const founderBenefits = [
-  { 
-    icon: Crown, 
-    title: "3 Months Premium Free", 
+  {
+    icon: Crown,
+    title: "3 Months Premium Free",
     description: "Full access to all premium features at launch"
   },
-  { 
-    icon: Gift, 
-    title: "Exclusive Features", 
+  {
+    icon: Gift,
+    title: "Exclusive Features",
     description: "First access to new features and updates"
   },
-  { 
-    icon: Calendar, 
-    title: "Priority Support", 
+  {
+    icon: Calendar,
+    title: "Priority Support",
     description: "Direct line to our support team"
   },
-  { 
-    icon: Zap, 
-    title: "Early Access", 
+  {
+    icon: Zap,
+    title: "Early Access",
     description: "Be the first to use the platform before public launch"
   },
 ];
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <SEO 
+    // --> FIX 1: Add `relative` to the main container to establish a stacking context.
+    <div className="min-h-screen bg-background relative">
+      <SEO
         title="Mēl Milaap - Coming Soon | Join Our Founders Circle"
         description="Be the first to experience Australia & New Zealand's most exclusive South Asian matrimony platform. Join our founders circle for 3 months free premium access."
       />
-      <Navigation />
       
+      {/* --> FIX 2: All main page content is wrapped in a div with a higher z-index (z-20) to ensure it's on top. */}
+      <div className="relative z-20">
+        <Navigation />
+      </div>
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Floral Accents for Hero */}
-        <FloralAccent 
+        {/* --> FIX 3: Floral Accents are given a z-index of 10 and made "click-through". */}
+        <FloralAccent
           variant="lotus-corner"
           position="top-0 left-0 -ml-12 -mt-12"
           size="w-72 h-72"
           opacity={0.15}
           scrollParallax={true}
           hoverEffect={true}
+          className="z-10 pointer-events-none"
         />
-        
-        <FloralAccent 
+        <FloralAccent
           variant="peony-bloom"
           position="bottom-0 right-0 -mr-16 -mb-16"
           size="w-80 h-80"
           opacity={0.18}
           scrollParallax={true}
           hoverEffect={true}
+          className="z-10 pointer-events-none"
         />
-        
-        <FloralAccent 
+        <FloralAccent
           variant="mandala-corner"
           position="top-1/4 right-1/4"
           size="w-32 h-32"
           opacity={0.12}
           scrollParallax={false}
           hoverEffect={true}
+          className="z-10 pointer-events-none"
         />
-        
-        {/* Background Image */}
+
+        {/* --> FIX 4: Background Image is placed on the lowest layer (z-0). */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src={heroImage} 
+          <img
+            src={heroImage}
             alt="Luxury South Asian wedding couple"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-lux-onyx/80 via-lux-onyx/60 to-transparent" />
         </div>
-        
-        {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-4 lg:px-8 text-center">
+
+        {/* --> FIX 5: Hero Content is given a higher z-index to sit on top of flowers and background. */}
+        <div className="relative z-20 container mx-auto px-4 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="max-w-4xl mx-auto"
           >
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className="mb-8 px-6 py-2 text-base bg-lux-porcelain/20 text-lux-porcelain border-lux-champagne/30"
             >
               <Crown className="w-4 h-4 mr-2" />
               Exclusive Founders Circle Now Open
             </Badge>
 
-            {/* Centered brand text with proper macron */}
-
-<div className="mb-8 w-full text-center">
-  <div className="mb-8 flex justify-center">
-    <h1 
-      className="text-lux-porcelain font-bold"
-      style={{ 
-        fontFamily: 'Georgia, "Times New Roman", serif',
-        fontSize: 'clamp(4rem, 12vw, 10rem)', // Responsive: min 4rem, scales with viewport, max 10rem
-        letterSpacing: '-0.02em',
-        lineHeight: '0.9'
-      }}
-    >
-      Mēl <span className="text-lux-champagne">Milaap</span>
-    </h1>
-  </div>
-  <h2 
-    className="font-heading font-medium text-lux-porcelain text-center"
-    style={{
-      fontSize: 'clamp(2.5rem, 6vw, 5rem)' // Responsive Coming Soon text
-    }}
-  >
-    Coming Soon
-  </h2>
-</div>
-
-
+            <div className="mb-8 w-full text-center">
+              <div className="mb-8 flex justify-center">
+                <h1
+                  className="text-lux-porcelain font-bold"
+                  style={{
+                    fontFamily: 'Georgia, "Times New Roman", serif',
+                    fontSize: 'clamp(4rem, 12vw, 10rem)',
+                    letterSpacing: '-0.02em',
+                    lineHeight: '0.9'
+                  }}
+                >
+                  Mēl <span className="text-lux-champagne">Milaap</span>
+                </h1>
+              </div>
+              <h2
+                className="font-heading font-medium text-lux-porcelain text-center"
+                style={{
+                  fontSize: 'clamp(2.5rem, 6vw, 5rem)'
+                }}
+              >
+                Coming Soon
+              </h2>
+            </div>
             
             <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 mt-8 leading-relaxed max-w-3xl mx-auto font-light">
-              Australia & New Zealand's most exclusive South Asian matrimony platform. 
+              Australia & New Zealand's most exclusive South Asian matrimony platform.
               <br className="hidden md:block" />
               Be among the first to find your perfect match with our founding members.
             </p>
@@ -156,18 +157,18 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="flex flex-wrap justify-center gap-4"
             >
-              <Button 
-                variant="luxury" 
-                size="xl" 
+              <Button
+                variant="luxury"
+                size="xl"
                 className="bg-lux-champagne text-lux-onyx hover:bg-lux-champagne/90 shadow-champagne"
                 onClick={() => document.getElementById('early-access')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <Heart className="w-5 h-5 mr-2" />
                 Join Founders Circle
               </Button>
-              <Button 
-                variant="glass" 
-                size="xl" 
+              <Button
+                variant="glass"
+                size="xl"
                 className="text-lux-porcelain border-lux-porcelain/30 hover:bg-lux-porcelain/10"
                 onClick={() => document.getElementById('benefits')?.scrollIntoView({ behavior: 'smooth' })}
               >
@@ -178,9 +179,8 @@ const Index = () => {
           </motion.div>
         </div>
 
-        {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20" // --> Set z-index here too
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1, duration: 0.5 }}
@@ -196,27 +196,29 @@ const Index = () => {
       </section>
 
       {/* Founder Benefits Section */}
-      <section id="benefits" className="py-24 bg-card relative overflow-hidden">        
+      <section id="benefits" className="py-24 bg-card relative overflow-hidden">
         {/* Floral Accents for Benefits Section */}
-        <FloralAccent 
+        <FloralAccent
           variant="jasmine-spray"
           position="top-0 left-0 -ml-8"
           size="w-40 h-80"
           opacity={0.1}
           scrollParallax={true}
           hoverEffect={false}
+          className="z-0 pointer-events-none" // --> Use z-0 to place behind content
         />
-        
-        <FloralAccent 
+        <FloralAccent
           variant="rose-border"
           position="top-16 right-0 -mr-20"
           size="w-96 h-32"
           opacity={0.12}
           scrollParallax={false}
           hoverEffect={true}
+          className="z-0 pointer-events-none" // --> Use z-0 to place behind content
         />
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          {/* Rest of the section remains the same */}
           <motion.div
             className="text-center mb-16"
             variants={fadeInUp}
@@ -224,8 +226,8 @@ const Index = () => {
             whileInView="animate"
             viewport={{ once: true }}
           >
-            <Badge 
-              variant="secondary" 
+            <Badge
+              variant="secondary"
               className="mb-6 px-4 py-2 bg-accent/10 text-accent border-accent/20"
             >
               <Crown className="w-4 h-4 mr-2" />
@@ -235,11 +237,10 @@ const Index = () => {
               Join Our Founding Members
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto">
-              Be part of an exclusive community of early adopters who will shape the future of South Asian matchmaking in ANZ. 
+              Be part of an exclusive community of early adopters who will shape the future of South Asian matchmaking in ANZ.
               Enjoy premium benefits worth $300+ absolutely free.
             </p>
           </motion.div>
-
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
             variants={staggerChildren}
@@ -269,8 +270,6 @@ const Index = () => {
               </motion.div>
             ))}
           </motion.div>
-
-          {/* Trust Indicators */}
           <motion.div
             className="flex flex-wrap justify-center items-center gap-8 lg:gap-16"
             variants={staggerChildren}
@@ -299,17 +298,18 @@ const Index = () => {
 
       {/* Early Access Form Section */}
       <section id="early-access" className="py-24 bg-background relative overflow-hidden">
-        {/* Floral Accent for Form Section */}
-        <FloralAccent 
+        <FloralAccent
           variant="lotus-corner"
           position="bottom-0 left-1/4 -mb-20"
           size="w-48 h-48"
           opacity={0.08}
           scrollParallax={true}
           hoverEffect={false}
+          className="z-0 pointer-events-none" // --> Use z-0 to place behind content
         />
         
         <div className="container mx-auto px-4 lg:px-8 relative z-10">
+          {/* Rest of the section remains the same */}
           <motion.div
             className="text-center mb-16"
             variants={fadeInUp}
@@ -324,7 +324,6 @@ const Index = () => {
               Join thousands who are already on the waiting list. Limited founding memberships available.
             </p>
           </motion.div>
-
           <motion.div
             variants={fadeInUp}
             initial="initial"
@@ -337,16 +336,19 @@ const Index = () => {
       </section>
 
       {/* Footer with Floral Border */}
-      <div className="relative">
-        <FloralAccent 
-          variant="rose-border"
-          position="top-0 left-1/2 transform -translate-x-1/2 -mt-4"
-          size="w-full max-w-2xl h-24"
-          opacity={0.2}
-          scrollParallax={false}
-          hoverEffect={false}
-        />
-        <Footer />
+      <div className="relative z-20"> {/* Ensure footer content is on top */}
+        <div className="relative">
+          <FloralAccent
+            variant="rose-border"
+            position="top-0 left-1/2 transform -translate-x-1/2 -mt-4"
+            size="w-full max-w-2xl h-24"
+            opacity={0.2}
+            scrollParallax={false}
+            hoverEffect={false}
+            className="z-0 pointer-events-none" // --> Use z-0 to place behind footer bg
+          />
+          <Footer />
+        </div>
       </div>
     </div>
   );

@@ -25,6 +25,7 @@ import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { supabase } from "@/integrations/supabase/client";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { FloralBranding } from "@/components/ui/FloralBranding";
 
 const Account = () => {
   const [user, setUser] = React.useState<any>(null);

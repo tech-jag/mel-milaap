@@ -74,7 +74,7 @@ export const FloralAccent: React.FC<FloralAccentProps> = ({
     hover: {
       scale: 1.05,
       filter: 'drop-shadow(0 0 12px hsl(var(--lux-champagne) / 0.5))',
-      transition: { type: "spring", stiffness: 300, damping: 20 }
+      transition: { type: "spring" as const, stiffness: 300, damping: 20 }
     }
   } : {};
 

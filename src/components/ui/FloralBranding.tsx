@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { FloralAccent } from './FloralAccent';
-import { cn } from "@/lib/utils"; 
+import { cn } from "@/lib/utils";
 
 interface FloralBrandingProps {
   variant?: 'homepage' | 'account' | 'minimal';
@@ -13,8 +13,6 @@ export const FloralBranding: React.FC<FloralBrandingProps> = ({
   variant = 'minimal',
   className = ""
 }) => {
-  // CRITICAL FIX: Use 'absolute' positioning to respect the parent container's layout.
-  // The z-index is now controlled by the className passed from the page.
   const wrapperClasses = cn(
     "absolute inset-0 pointer-events-none",
     className

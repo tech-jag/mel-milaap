@@ -311,7 +311,6 @@ const Home = () => {
 
       {/* Wrap all page content in a main tag with a higher z-index */}
       <main className="relative z-10 flex flex-col min-h-screen">
-        <Navigation />
         
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">

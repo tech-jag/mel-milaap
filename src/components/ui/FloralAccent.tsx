@@ -102,11 +102,11 @@ export const FloralAccent: React.FC<FloralAccentProps> = ({
   variant,
   position,
   size,
-  opacity = 0.4,
+  opacity = 0.2,
   scrollParallax = false,
   hoverEffect = false,
   className = "",
-  color = "hsl(var(--accent))"
+  color = "hsl(var(--muted-foreground))"
 }) => {
   const ref = useRef(null);
   
@@ -142,7 +142,7 @@ export const FloralAccent: React.FC<FloralAccentProps> = ({
     >
       <SVGComponent
         className="w-full h-full"
-        style={{ filter: 'none' }}
+        style={{ filter: 'blur(0.5px)' }}
       />
     </motion.div>
   );

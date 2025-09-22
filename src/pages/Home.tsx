@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { MinimalAccent } from "@/components/ui/MinimalAccent";
+import { FloralBranding } from "@/components/ui/FloralBranding";
 
 import { 
   Heart, 
@@ -300,16 +300,18 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-background">
 
-      {/* --- ADD THIS TEST COMPONENT --- */}
-      {/* We are forcing it to be visible in the top right corner */}
-      <MinimalAccent className="absolute top-5 right-5 w-32 h-32 z-50 opacity-100" />
-      {/* ----------------------------- */}
-      
       <SEO 
         title="Mēl Milaap - Australia & New Zealand's Premier South Asian Matrimony Platform"
         description="Find your perfect match in Australia & New Zealand's most trusted South Asian matrimony platform. Join thousands of verified members today."
       />
-      
+
+            {/* Place the single branding component here with z-0 */}
+      <FloralBranding variant="homepage" className="z-0" />
+
+      {/* Wrap all page content in a main tag with a higher z-index */}
+      <main className="relative z-10 flex flex-col min-h-screen">
+        <Navigation />
+        
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image */}

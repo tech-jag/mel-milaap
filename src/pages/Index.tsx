@@ -25,6 +25,7 @@ import { SEO } from "@/utils/seo";
 import { EarlyAccessForm } from "@/components/EarlyAccessForm";
 import heroImage from "@/assets/hero-coming-soon.jpg";
 import Wordmark from "@/components/brand/Wordmark";
+import { FloralAccent } from "@/components/ui/FloralAccent";
 
 // Founder benefits
 const founderBenefits = [
@@ -61,6 +62,34 @@ const Index = () => {
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Floral Accents for Hero */}
+        <FloralAccent 
+          svgSrc="/florals/lotus-corner.svg"
+          position="top-0 left-0 -ml-12 -mt-12"
+          size="w-72 h-72"
+          opacity={0.15}
+          scrollParallax={true}
+          hoverEffect={true}
+        />
+        
+        <FloralAccent 
+          svgSrc="/florals/peony-bloom.svg"
+          position="bottom-0 right-0 -mr-16 -mb-16"
+          size="w-80 h-80"
+          opacity={0.18}
+          scrollParallax={true}
+          hoverEffect={true}
+        />
+        
+        <FloralAccent 
+          svgSrc="/florals/mandala-corner.svg"
+          position="top-1/4 right-1/4"
+          size="w-32 h-32"
+          opacity={0.12}
+          scrollParallax={false}
+          hoverEffect={true}
+        />
+        
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 
@@ -167,8 +196,27 @@ const Index = () => {
       </section>
 
       {/* Founder Benefits Section */}
-      <section id="benefits" className="py-24 bg-card">
-        <div className="container mx-auto px-4 lg:px-8">
+      <section id="benefits" className="py-24 bg-card relative overflow-hidden">        
+        {/* Floral Accents for Benefits Section */}
+        <FloralAccent 
+          svgSrc="/florals/jasmine-spray.svg"
+          position="top-0 left-0 -ml-8"
+          size="w-40 h-80"
+          opacity={0.1}
+          scrollParallax={true}
+          hoverEffect={false}
+        />
+        
+        <FloralAccent 
+          svgSrc="/florals/rose-border.svg"
+          position="top-16 right-0 -mr-20"
+          size="w-96 h-32"
+          opacity={0.12}
+          scrollParallax={false}
+          hoverEffect={true}
+        />
+        
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-16"
             variants={fadeInUp}
@@ -250,8 +298,18 @@ const Index = () => {
       </section>
 
       {/* Early Access Form Section */}
-      <section id="early-access" className="py-24 bg-background">
-        <div className="container mx-auto px-4 lg:px-8">
+      <section id="early-access" className="py-24 bg-background relative overflow-hidden">
+        {/* Floral Accent for Form Section */}
+        <FloralAccent 
+          svgSrc="/florals/lotus-corner.svg"
+          position="bottom-0 left-1/4 -mb-20"
+          size="w-48 h-48"
+          opacity={0.08}
+          scrollParallax={true}
+          hoverEffect={false}
+        />
+        
+        <div className="container mx-auto px-4 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-16"
             variants={fadeInUp}
@@ -278,7 +336,18 @@ const Index = () => {
         </div>
       </section>
 
-      <Footer />
+      {/* Footer with Floral Border */}
+      <div className="relative">
+        <FloralAccent 
+          svgSrc="/florals/rose-border.svg"
+          position="top-0 left-1/2 transform -translate-x-1/2 -mt-4"
+          size="w-full max-w-2xl h-24"
+          opacity={0.2}
+          scrollParallax={false}
+          hoverEffect={false}
+        />
+        <Footer />
+      </div>
     </div>
   );
 };

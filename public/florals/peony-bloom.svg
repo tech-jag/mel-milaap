@@ -1,0 +1,35 @@
+<svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <style>
+      .peony-petal { stroke: currentColor; fill: currentColor; stroke-width: 0.8; opacity: 0.25; }
+      .peony-outline { stroke: currentColor; fill: none; stroke-width: 1; opacity: 0.4; }
+    </style>
+  </defs>
+  
+  <!-- Outer layer petals -->
+  <path class="peony-petal" d="M90 20 Q70 40 60 70 Q80 60 90 40 Q100 60 120 70 Q110 40 90 20 Z" />
+  <path class="peony-petal" d="M160 90 Q140 70 110 60 Q120 80 140 90 Q120 100 110 120 Q140 110 160 90 Z" />
+  <path class="peony-petal" d="M90 160 Q110 140 120 110 Q100 120 90 140 Q80 120 60 110 Q70 140 90 160 Z" />
+  <path class="peony-petal" d="M20 90 Q40 110 70 120 Q60 100 40 90 Q60 80 70 60 Q40 70 20 90 Z" />
+  
+  <!-- Middle layer petals -->
+  <path class="peony-petal" d="M90 40 Q80 55 75 75 Q85 70 90 60 Q95 70 105 75 Q100 55 90 40 Z" />
+  <path class="peony-petal" d="M140 90 Q125 80 105 75 Q110 85 120 90 Q110 95 105 105 Q125 100 140 90 Z" />
+  <path class="peony-petal" d="M90 140 Q100 125 105 105 Q95 110 90 120 Q85 110 75 105 Q80 125 90 140 Z" />
+  <path class="peony-petal" d="M40 90 Q55 100 75 105 Q70 95 60 90 Q70 85 75 75 Q55 80 40 90 Z" />
+  
+  <!-- Inner petals -->
+  <path class="peony-petal" d="M90 60 Q85 70 82 80 Q87 78 90 75 Q93 78 98 80 Q95 70 90 60 Z" />
+  <path class="peony-petal" d="M120 90 Q110 85 100 82 Q102 87 105 90 Q102 93 100 98 Q110 95 120 90 Z" />
+  <path class="peony-petal" d="M90 120 Q95 110 98 100 Q93 102 90 105 Q87 102 82 100 Q85 110 90 120 Z" />
+  <path class="peony-petal" d="M60 90 Q70 95 80 98 Q78 93 75 90 Q78 87 80 82 Q70 85 60 90 Z" />
+  
+  <!-- Center -->
+  <circle class="peony-petal" cx="90" cy="90" r="8" />
+  
+  <!-- Outline details -->
+  <path class="peony-outline" d="M90 30 Q75 45 70 70" />
+  <path class="peony-outline" d="M150 90 Q135 75 110 70" />
+  <path class="peony-outline" d="M90 150 Q105 135 110 110" />
+  <path class="peony-outline" d="M30 90 Q45 105 70 110" />
+</svg>

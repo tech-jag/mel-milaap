@@ -1,0 +1,36 @@
+<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <style>
+      .mandala-line { stroke: currentColor; fill: none; stroke-width: 0.8; opacity: 0.3; }
+      .mandala-fill { fill: currentColor; opacity: 0.1; }
+    </style>
+  </defs>
+  
+  <!-- Outer decorative corner -->
+  <path class="mandala-line" d="M10 10 Q30 5 50 10 Q45 30 50 50 Q30 45 10 50 Q15 30 10 10 Z" />
+  <path class="mandala-line" d="M20 20 Q35 17 45 20 Q42 35 45 45 Q35 42 20 45 Q23 35 20 20 Z" />
+  
+  <!-- Geometric patterns -->
+  <circle class="mandala-line" cx="30" cy="30" r="15" />
+  <circle class="mandala-line" cx="30" cy="30" r="10" />
+  <circle class="mandala-line" cx="30" cy="30" r="5" />
+  
+  <!-- Petal-like elements -->
+  <path class="mandala-fill" d="M30 15 Q35 20 30 25 Q25 20 30 15 Z" />
+  <path class="mandala-fill" d="M45 30 Q40 35 35 30 Q40 25 45 30 Z" />
+  <path class="mandala-fill" d="M30 45 Q25 40 30 35 Q35 40 30 45 Z" />
+  <path class="mandala-fill" d="M15 30 Q20 25 25 30 Q20 35 15 30 Z" />
+  
+  <!-- Intricate corner details -->
+  <path class="mandala-line" d="M5 5 L15 5 L15 15 L5 15 Z" />
+  <path class="mandala-line" d="M8 8 L12 8 L12 12 L8 12 Z" />
+  <circle class="mandala-fill" cx="10" cy="10" r="2" />
+  
+  <!-- Connecting swirls -->
+  <path class="mandala-line" d="M50 25 Q60 20 70 25 Q65 35 60 30" />
+  <path class="mandala-line" d="M25 50 Q20 60 25 70 Q35 65 30 60" />
+  
+  <!-- Additional decorative elements -->
+  <path class="mandala-line" d="M60 10 Q70 8 80 12 Q75 20 70 18" />
+  <path class="mandala-line" d="M10 60 Q8 70 12 80 Q20 75 18 70" />
+</svg>

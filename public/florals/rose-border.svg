@@ -1,0 +1,37 @@
+<svg viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <defs>
+    <style>
+      .rose-element { stroke: currentColor; fill: none; stroke-width: 1.2; opacity: 0.5; }
+      .rose-fill { fill: currentColor; opacity: 0.2; }
+    </style>
+  </defs>
+  
+  <!-- Rose 1 -->
+  <g transform="translate(50, 50)">
+    <path class="rose-element" d="M0 0 Q-10 -5 -15 0 Q-10 5 0 0 Q10 -5 15 0 Q10 5 0 0" />
+    <path class="rose-element" d="M0 0 Q-8 -8 0 -15 Q8 -8 0 0 Q-8 8 0 15 Q8 8 0 0" />
+    <circle class="rose-fill" cx="0" cy="0" r="3" />
+  </g>
+  
+  <!-- Rose 2 -->
+  <g transform="translate(150, 30)">
+    <path class="rose-element" d="M0 0 Q-12 -6 -18 0 Q-12 6 0 0 Q12 -6 18 0 Q12 6 0 0" />
+    <path class="rose-element" d="M0 0 Q-10 -10 0 -18 Q10 -10 0 0 Q-10 10 0 18 Q10 10 0 0" />
+    <circle class="rose-fill" cx="0" cy="0" r="4" />
+  </g>
+  
+  <!-- Rose 3 -->
+  <g transform="translate(250, 60)">
+    <path class="rose-element" d="M0 0 Q-8 -4 -12 0 Q-8 4 0 0 Q8 -4 12 0 Q8 4 0 0" />
+    <path class="rose-element" d="M0 0 Q-6 -6 0 -12 Q6 -6 0 0 Q-6 6 0 12 Q6 6 0 0" />
+    <circle class="rose-fill" cx="0" cy="0" r="2" />
+  </g>
+  
+  <!-- Connecting vines -->
+  <path class="rose-element" d="M65 50 Q100 40 135 30" />
+  <path class="rose-element" d="M165 30 Q200 45 235 60" />
+  
+  <!-- Small leaves -->
+  <path class="rose-element" d="M80 45 Q85 40 90 45 Q85 50 80 45" />
+  <path class="rose-element" d="M200 50 Q205 45 210 50 Q205 55 200 50" />
+</svg>

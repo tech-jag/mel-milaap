@@ -43,6 +43,7 @@ import {
 import { fadeInUp, staggerChildren, cardHover } from "@/lib/motion";
 import { SEO } from "@/utils/seo";
 import MelMilaapText from "@/components/brand/MelMilaapText";
+import { Navigation } from "@/components/ui/navigation";
 import heroImage from "@/assets/hero-wedding-couple.jpg";
 
 // ANZ Platform Features
@@ -1205,6 +1206,7 @@ const Home = () => {
         </div>
       </section>
 
+      </main>
     </div>
   );
 };

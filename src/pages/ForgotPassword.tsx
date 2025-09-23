@@ -33,7 +33,7 @@ const ForgotPassword = () => {
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: 'https://melmilaap.com/account/reset-password',
+        redirectTo: 'https://melmilaap.com/reset-password',
       });
 
       if (error) throw error;

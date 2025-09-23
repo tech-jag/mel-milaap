@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -87,13 +85,12 @@ const Blog = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <SEO 
         title="Blog & Stories – Mēl Milaap"
         description="Read inspiring wedding stories, planning tips, and relationship advice from the Mēl Milaap community."
         keywords="wedding blog, south asian wedding tips, marriage advice, wedding planning guide, relationship stories"
       />
-      <Navigation />
       
       {/* Hero Section */}
       <section className="py-16 bg-gradient-hero">
@@ -393,9 +390,7 @@ const Blog = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

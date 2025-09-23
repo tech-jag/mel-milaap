@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -152,8 +150,6 @@ const AccountFavorites = () => {
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
-          
           {/* REPLACED INLINE HEADER WITH ACCOUNTHEADER */}
           <AccountHeader
             title="Favorites"
@@ -368,8 +364,6 @@ const AccountFavorites = () => {
               </div>
             </div>
           </section>
-
-          <Footer />
         </div>
       </div>
     </SidebarProvider>

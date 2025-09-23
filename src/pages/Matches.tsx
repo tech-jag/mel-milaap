@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -96,14 +94,12 @@ const Matches = () => {
           <AccountSidebar />
           
           <div className="flex-1">
-            <Navigation />
             <div className="container mx-auto px-4 py-16 text-center">
               <h1 className="text-3xl font-bold mb-4">Please sign in to view matches</h1>
               <Button asChild>
                 <Link to="/auth">Sign In</Link>
               </Button>
             </div>
-            <Footer />
           </div>
         </div>
       </SidebarProvider>
@@ -116,8 +112,6 @@ const Matches = () => {
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
-      
 <AccountHeader
   title="Your Matches"
   description="Discover your compatible matches"
@@ -330,8 +324,6 @@ const Matches = () => {
           </div>
           </div>
           </section>
-
-          <Footer />
         </div>
       </div>
     </SidebarProvider>

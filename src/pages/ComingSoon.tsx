@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -52,12 +50,11 @@ const founderBenefits = [
 
 const ComingSoon = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <>
       <SEO 
         title="Mēl Milaap - Coming Soon | Join Our Founders Circle"
         description="Be the first to experience Australia & New Zealand's most exclusive South Asian matrimony platform. Join our founders circle for 3 months free premium access."
       />
-      <Navigation />
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -276,9 +273,7 @@ const ComingSoon = () => {
           </motion.div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

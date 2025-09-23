@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, Shield, Users, Sparkles, ArrowRight } from "lucide-react";
@@ -42,9 +40,7 @@ const journeySteps = [
 
 const HowItWorks = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
+    <>
       {/* Hero Section */}
       <section className="py-24 bg-gradient-hero">
         <div className="container mx-auto px-4 lg:px-8">
@@ -154,9 +150,7 @@ const HowItWorks = () => {
           </motion.div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

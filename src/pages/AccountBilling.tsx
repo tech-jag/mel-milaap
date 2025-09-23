@@ -1,8 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AccountHeader } from "@/components/ui/account-header";
@@ -159,8 +157,6 @@ export default function AccountBilling() {
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
-          
           {/* Account Header */}
           <AccountHeader
             title="Billing"
@@ -369,8 +365,6 @@ export default function AccountBilling() {
               </div>
             </div>
           </div>
-          
-          <Footer />
         </div>
       </div>
     </SidebarProvider>

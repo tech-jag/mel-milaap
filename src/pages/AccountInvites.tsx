@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -163,8 +161,6 @@ const AccountInvites = () => {
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
-          
           {/* Header */}
           <section className="py-16 bg-gradient-hero">
             <div className="container mx-auto px-4 lg:px-8">
@@ -369,8 +365,6 @@ const AccountInvites = () => {
           </div>
         </div>
       </section>
-
-          <Footer />
         </div>
       </div>
     </SidebarProvider>

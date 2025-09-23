@@ -1,8 +1,6 @@
 import React from "react";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Camera } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -16,8 +14,6 @@ export default function AccountPhotos() {
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
-      
           {/* Mobile-Optimized Header using updated AccountHeader component */}
           <AccountHeader
             title="Profile Photos"
@@ -117,8 +113,6 @@ export default function AccountPhotos() {
               </div>
             </div>
           </div>
-
-          <Footer />
         </div>
       </div>
     </SidebarProvider>

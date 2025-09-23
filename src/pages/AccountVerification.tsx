@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -101,8 +99,6 @@ const AccountVerification = () => {
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
-          
           {/* Account Header */}
           <AccountHeader
             title="Verification"
@@ -363,8 +359,6 @@ const AccountVerification = () => {
               </Card>
             </motion.div>
           </div>
-
-          <Footer />
         </div>
       </div>
     </SidebarProvider>

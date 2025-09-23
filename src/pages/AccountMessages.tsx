@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle, ArrowLeft } from "lucide-react";
@@ -42,8 +40,6 @@ const AccountMessages = () => {
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
-          
           {/* Header */}
           <div className="bg-gradient-to-r from-primary/5 to-secondary/5 border-b">
             <div className="container mx-auto px-4 lg:px-8 py-6">
@@ -75,8 +71,6 @@ const AccountMessages = () => {
               </div>
             </div>
           </section>
-
-          <Footer />
         </div>
       </div>
     </SidebarProvider>

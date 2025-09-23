@@ -2,8 +2,6 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -316,11 +314,9 @@ const AccountDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <>
       {/* Floral Branding for Account Pages */}
       <FloralBranding variant="account" />
-      
-      <Navigation />
       
       {/* Header */}
       <section className="py-8 bg-gradient-hero">
@@ -675,9 +671,7 @@ const AccountDashboard = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
-    </div>
+    </>
   );
 };
 

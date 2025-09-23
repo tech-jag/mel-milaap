@@ -75,7 +75,7 @@ const howItWorksSteps = [
   {
     number: "01",
     icon: UserCheck,
-    title: "MEET",
+    title: "FIND",
     subtitle: "Create your profile and browse verified matches",
     description: "Build a comprehensive profile with photos, preferences, and cultural background. Connect with genuine, quality conscious individuals who share your values and expectations.",
     features: ["Profile verification required", "Photo authentication", "Background checks"]

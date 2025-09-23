@@ -325,12 +325,12 @@ const Home = () => {
         </div>
         
         {/* Hero Content */}
-        <div className="relative z-10 container mx-auto px-4 lg:px-8">
+        <div className="relative z-10 container mx-auto px-4 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl"
+            className="max-w-4xl mx-auto"
           >
             <Badge 
               variant="secondary" 
@@ -359,7 +359,7 @@ const Home = () => {
               Find Your Perfect Match
             </h2>
             
-            <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 leading-relaxed max-w-3xl font-light">
+            <p className="text-xl md:text-2xl text-lux-porcelain/90 mb-12 leading-relaxed max-w-3xl font-light mx-auto">
               Join thousands of verified South Asian singles in Australia & New Zealand. 
               <br className="hidden md:block" />
               Discover meaningful connections with those who share your values and traditions.
@@ -369,7 +369,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-4 justify-center"
             >
               <Button 
                 asChild
@@ -484,7 +484,7 @@ const Home = () => {
               Your Journey
             </Badge>
             <h2 className="text-luxury-lg text-foreground mb-6">
-              How <MelMilaapText size="lg" melClassName="text-foreground" /> Works
+              How <MelMilaapText size="xl" melClassName="text-lux-champagne" /> Works
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto">
               Your journey from meeting your perfect match to celebrating your dream wedding
@@ -555,7 +555,7 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-luxury-lg text-foreground mb-6">
-              Why Choose <MelMilaapText size="lg" melClassName="text-foreground" /> for Your Perfect Match?
+              Why Choose <MelMilaapText size="xl" melClassName="text-lux-champagne" /> for Your Perfect Match?
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto mb-8">
               Experience the premium difference in matrimonial matchmaking designed 
@@ -783,65 +783,67 @@ const Home = () => {
               communities in ANZ since 2018
             </p>
           </motion.div>
+        </div>
 
-          {/* Scrolling Trust Badges */}
-          <div className="w-full overflow-hidden mb-12 -mx-8 px-8">
-            <motion.div
-              animate={{ x: [0, -2400] }}
-              transition={{ 
-                duration: 40, 
-                repeat: Infinity, 
-                ease: "linear" 
-              }}
-              className="flex gap-6 items-center whitespace-nowrap min-w-max"
-            >
-              {[
-                { icon: "⭐", text: "5.9★ Rating", subtitle: "User reviews", bg: "bg-blue-50" },
-                { icon: "🔒", text: "SSL Secured", subtitle: "256-bit encryption", bg: "bg-green-50" },
-                { icon: "🛡️", text: "Data Protected", subtitle: "Privacy compliant", bg: "bg-purple-50" },
-                { icon: "✔️", text: "100% Verified", subtitle: "Background checks", bg: "bg-indigo-50" },
-                { 
-                  icon: "🇦🇺", 
-                  text: "Australia Focused", 
-                  subtitle: "Local expertise", 
-                  bg: "bg-orange-50",
-                  flag: "🇦🇺"
-                },
-                { 
-                  icon: "🇳🇿", 
-                  text: "New Zealand", 
-                  subtitle: "Nationwide coverage", 
-                  bg: "bg-pink-50",
-                  flag: "🇳🇿"
-                },
-                { icon: "❤️", text: "50,000+ Users", subtitle: "Active community", bg: "bg-rose-50" },
-                { icon: "✅", text: "15,000+ Matches", subtitle: "Success stories", bg: "bg-emerald-50" },
-                { icon: "📍", text: "100+ Cities", subtitle: "Cities covered", bg: "bg-yellow-50" },
-                { icon: "🎯", text: "6+ Years", subtitle: "Years of trust", bg: "bg-cyan-50" },
-                { icon: "📱", text: "Mobile Ready", subtitle: "iOS & Android", bg: "bg-teal-50" },
-                { icon: "🏆", text: "Premium Service", subtitle: "Verified profiles", bg: "bg-amber-50" },
-                // Repeat for seamless loop
-                { icon: "⭐", text: "5.9★ Rating", subtitle: "User reviews", bg: "bg-blue-50" },
-                { icon: "🔒", text: "SSL Secured", subtitle: "256-bit encryption", bg: "bg-green-50" },
-                { icon: "🛡️", text: "Data Protected", subtitle: "Privacy compliant", bg: "bg-purple-50" },
-                { icon: "✔️", text: "100% Verified", subtitle: "Background checks", bg: "bg-indigo-50" }
-              ].map((badge, index) => (
-                <div 
-                  key={index} 
-                  className={`flex items-center gap-3 ${badge.bg} backdrop-blur-sm px-6 py-4 rounded-2xl border border-white/50 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105`}
-                >
-                  <span className="text-2xl">
-                    {badge.flag ? badge.flag : badge.icon}
-                  </span>
-                  <div className="text-left">
-                    <div className="font-semibold text-brand-burgundy text-sm">{badge.text}</div>
-                    <div className="text-xs text-gray-600">{badge.subtitle}</div>
-                  </div>
+        {/* Scrolling Trust Badges - Full Width */}
+        <div className="w-full overflow-hidden mb-12">
+          <motion.div
+            animate={{ x: [0, -2400] }}
+            transition={{ 
+              duration: 40, 
+              repeat: Infinity, 
+              ease: "linear" 
+            }}
+            className="flex gap-6 items-center whitespace-nowrap min-w-max"
+          >
+            {[
+              { icon: "⭐", text: "5.9★ Rating", subtitle: "User reviews", bg: "bg-blue-50" },
+              { icon: "🔒", text: "SSL Secured", subtitle: "256-bit encryption", bg: "bg-green-50" },
+              { icon: "🛡️", text: "Data Protected", subtitle: "Privacy compliant", bg: "bg-purple-50" },
+              { icon: "✔️", text: "100% Verified", subtitle: "Background checks", bg: "bg-indigo-50" },
+              { 
+                icon: "🇦🇺", 
+                text: "Australia Focused", 
+                subtitle: "Local expertise", 
+                bg: "bg-orange-50",
+                flag: "🇦🇺"
+              },
+              { 
+                icon: "🇳🇿", 
+                text: "New Zealand", 
+                subtitle: "Nationwide coverage", 
+                bg: "bg-pink-50",
+                flag: "🇳🇿"
+              },
+              { icon: "❤️", text: "50,000+ Users", subtitle: "Active community", bg: "bg-rose-50" },
+              { icon: "✅", text: "15,000+ Matches", subtitle: "Success stories", bg: "bg-emerald-50" },
+              { icon: "📍", text: "100+ Cities", subtitle: "Cities covered", bg: "bg-yellow-50" },
+              { icon: "🎯", text: "6+ Years", subtitle: "Years of trust", bg: "bg-cyan-50" },
+              { icon: "📱", text: "Mobile Ready", subtitle: "iOS & Android", bg: "bg-teal-50" },
+              { icon: "🏆", text: "Premium Service", subtitle: "Verified profiles", bg: "bg-amber-50" },
+              // Repeat for seamless loop
+              { icon: "⭐", text: "5.9★ Rating", subtitle: "User reviews", bg: "bg-blue-50" },
+              { icon: "🔒", text: "SSL Secured", subtitle: "256-bit encryption", bg: "bg-green-50" },
+              { icon: "🛡️", text: "Data Protected", subtitle: "Privacy compliant", bg: "bg-purple-50" },
+              { icon: "✔️", text: "100% Verified", subtitle: "Background checks", bg: "bg-indigo-50" }
+            ].map((badge, index) => (
+              <div 
+                key={index} 
+                className={`flex items-center gap-3 ${badge.bg} backdrop-blur-sm px-6 py-4 rounded-2xl border border-white/50 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105`}
+              >
+                <span className="text-2xl">
+                  {badge.flag ? badge.flag : badge.icon}
+                </span>
+                <div className="text-left">
+                  <div className="font-semibold text-brand-burgundy text-sm">{badge.text}</div>
+                  <div className="text-xs text-gray-600">{badge.subtitle}</div>
                 </div>
-              ))}
-            </motion.div>
-          </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
 
+        <div className="container mx-auto px-4 lg:px-8">
           <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
             variants={staggerChildren}
@@ -987,7 +989,7 @@ const Home = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div>
                 <h3 className="text-xl font-heading font-bold text-foreground mb-6">
-                  Why Partner With <MelMilaapText size="md" melClassName="text-foreground" />?
+                  Why Partner With <MelMilaapText size="lg" melClassName="text-lux-champagne" />?
                 </h3>
                 <div className="space-y-4">
                   {partnerBenefits.map((benefit, index) => (
@@ -1042,7 +1044,7 @@ const Home = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-luxury-lg text-foreground mb-6">
-              Partner With <MelMilaapText size="lg" melClassName="text-brand-burgundy" />
+              Partner With <MelMilaapText size="xl" melClassName="text-lux-champagne" />
             </h2>
             <p className="text-body-lg text-muted-foreground max-w-3xl mx-auto mb-8">
               Join Australia and New Zealand's premier South Asian matrimonial platform. Connect with 
@@ -1123,7 +1125,7 @@ const Home = () => {
                 asChild
                 variant="outline" 
                 size="xl"
-                className="border-white/30 text-white hover:bg-white/10"
+                className="border-white/30 text-white hover:bg-white/20 hover:text-white"
               >
                 <Link to="/suppliers">
                   Learn More

@@ -1125,7 +1125,7 @@ const Home = () => {
                 asChild
                 variant="outline" 
                 size="xl"
-                className="border-white/30 text-white hover:bg-white/20 hover:text-white"
+                className="text-lux-porcelain border-lux-porcelain/30 hover:bg-lux-porcelain/10"
               >
                 <Link to="/suppliers">
                   Learn More

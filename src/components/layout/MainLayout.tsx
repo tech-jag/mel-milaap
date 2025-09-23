@@ -5,8 +5,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Navigation } from '@/components/ui/navigation';
 import { Footer } from '@/components/ui/footer';
 import { FloralBranding } from '@/components/ui/FloralBranding';
-import { Toaster } from '@/components/ui/toaster';
-import { Toaster as Sonner } from '@/components/ui/sonner';
 
 export function MainLayout() {
   const location = useLocation();
@@ -29,8 +27,6 @@ export function MainLayout() {
         </div>
         <Footer />
       </main>
-      <Toaster />
-      <Sonner />
     </div>
   );
 }

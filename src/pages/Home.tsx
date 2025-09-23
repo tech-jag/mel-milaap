@@ -1123,9 +1123,9 @@ const Home = () => {
               </Button>
               <Button 
                 asChild
-                variant="luxury" 
+                variant="glass" 
                 size="xl"
-                className="bg-white text-brand-burgundy hover:bg-white/90 shadow-luxury"
+                className="text-lux-porcelain border-lux-porcelain/30 hover:bg-lux-porcelain/10"
               >
                 <Link to="/suppliers">
                   Learn More

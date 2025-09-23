@@ -1123,7 +1123,7 @@ const Home = () => {
               </Button>
               <Button 
                 asChild
-                variant="outline" 
+                variant="luxury" 
                 size="xl"
                 className="bg-white text-brand-burgundy hover:bg-white/90 shadow-luxury"
               >

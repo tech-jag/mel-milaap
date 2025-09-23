@@ -75,7 +75,7 @@ const howItWorksSteps = [
   {
     number: "01",
     icon: UserCheck,
-    title: "FIND",
+    title: "MEET",
     subtitle: "Create your profile and browse verified matches",
     description: "Build a comprehensive profile with photos, preferences, and cultural background. Connect with genuine, quality conscious individuals who share your values and expectations.",
     features: ["Profile verification required", "Photo authentication", "Background checks"]
@@ -313,7 +313,7 @@ const Home = () => {
       <main className="relative z-10 flex flex-col min-h-screen">
         
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex justify-center items-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <img 

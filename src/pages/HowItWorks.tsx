@@ -10,7 +10,7 @@ import { fadeInUp, staggerChildren } from "@/lib/motion";
 const journeySteps = [
   {
     step: "01",
-    title: "Meet",
+    title: "Find",
     description: "Create your verified profile and discover compatible matches in our trusted community",
     icon: Users,
     color: "text-primary"

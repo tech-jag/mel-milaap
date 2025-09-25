@@ -18,6 +18,8 @@ import {
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { emailSchema, sanitizeInput } from "@/lib/validation";
+import { checkPasswordResetRateLimit, recordPasswordResetAttempt, logSecurityEvent } from "@/lib/rateLimiting";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -29,7 +31,35 @@ const ForgotPassword = () => {
 
   const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate email
+    try {
+      emailSchema.parse(email);
+    } catch (error) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return;
+    }
+
+    // Check rate limiting
+    const rateLimitCheck = checkPasswordResetRateLimit(email);
+    if (rateLimitCheck.limited) {
+      toast({
+        title: "Too Many Attempts",
+        description: rateLimitCheck.message,
+        variant: "destructive",
+        duration: 5000,
+      });
+      logSecurityEvent('password_reset_rate_limited', { email: sanitizeInput(email) });
+      return;
+    }
+
     setIsLoading(true);
+    recordPasswordResetAttempt(email);
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -133,8 +163,8 @@ const ForgotPassword = () => {
                             placeholder="your@email.com"
                             className="pl-10"
                             autoComplete="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                      value={email}
+                      onChange={(e) => setEmail(sanitizeInput(e.target.value))}
                             required
                           />
                         </div>

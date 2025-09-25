@@ -26,6 +26,23 @@ import {
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { 
+  registrationSchema, 
+  loginSchema, 
+  sanitizeInput,
+  validateAndSanitize,
+  nameSchema,
+  emailSchema,
+  passwordSchema 
+} from "@/lib/validation";
+import { 
+  checkLoginRateLimit, 
+  recordLoginAttempt, 
+  checkSignupRateLimit, 
+  recordSignupAttempt,
+  logSecurityEvent 
+} from "@/lib/rateLimiting";
+import { PasswordStrength } from "@/components/ui/password-strength";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -60,7 +77,35 @@ const Auth = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Check rate limiting
+    const rateLimitCheck = checkLoginRateLimit();
+    if (rateLimitCheck.limited) {
+      toast({
+        title: "Too Many Attempts",
+        description: rateLimitCheck.message,
+        variant: "destructive",
+        duration: 5000,
+      });
+      logSecurityEvent('login_rate_limited', { email: loginData.email });
+      return;
+    }
+
+    // Validate input
+    try {
+      loginSchema.parse(loginData);
+    } catch (error: any) {
+      toast({
+        title: "Invalid Input",
+        description: error.errors?.[0]?.message || "Please check your input and try again.",
+        variant: "destructive",
+        duration: 3000,
+      });
+      return;
+    }
+
     setIsLoading(true);
+    recordLoginAttempt();
 
     try {
       // First check if user has 2FA enabled
@@ -129,6 +174,11 @@ const Auth = () => {
         }
       }
     } catch (error: any) {
+      logSecurityEvent('login_failed', { 
+        email: sanitizeInput(loginData.email), 
+        error: error.message 
+      });
+      
       toast({
         title: "Login Failed",
         description: error.message || "Please check your credentials and try again.",
@@ -206,20 +256,26 @@ const Auth = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (signupData.password !== signupData.confirmPassword) {
+    // Check rate limiting
+    const rateLimitCheck = checkSignupRateLimit();
+    if (rateLimitCheck.limited) {
       toast({
-        title: "Password Mismatch",
-        description: "Please make sure your passwords match.",
+        title: "Too Many Attempts",
+        description: rateLimitCheck.message,
         variant: "destructive",
-        duration: 3000,
+        duration: 5000,
       });
+      logSecurityEvent('signup_rate_limited', { email: signupData.email });
       return;
     }
 
-    if (!signupData.agreeToTerms) {
+    // Validate and sanitize input
+    try {
+      registrationSchema.parse(signupData);
+    } catch (error: any) {
       toast({
-        title: "Terms Required",
-        description: "Please agree to our terms and conditions.",
+        title: "Invalid Input",
+        description: error.errors?.[0]?.message || "Please check your input and try again.",
         variant: "destructive",
         duration: 3000,
       });
@@ -227,6 +283,7 @@ const Auth = () => {
     }
 
     setIsLoading(true);
+    recordSignupAttempt();
 
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -235,8 +292,8 @@ const Auth = () => {
         options: {
           emailRedirectTo: `${window.location.origin}/`,
           data: {
-            name: signupData.name,
-            phone: signupData.phone,
+            name: sanitizeInput(signupData.name),
+            phone: sanitizeInput(signupData.phone || ''),
           }
         }
       });
@@ -281,6 +338,11 @@ const Auth = () => {
         return;
       }
     } catch (error: any) {
+      logSecurityEvent('signup_failed', { 
+        email: sanitizeInput(signupData.email), 
+        error: error.message 
+      });
+      
       toast({
         title: "Signup Failed",
         description: error.message || "Please try again.",
@@ -380,7 +442,7 @@ const Auth = () => {
                               className="pl-10"
                               autoComplete="email"
                               value={loginData.email}
-                              onChange={(e) => setLoginData({...loginData, email: e.target.value})}
+                              onChange={(e) => setLoginData({...loginData, email: sanitizeInput(e.target.value)})}
                               required
                             />
                           </div>
@@ -442,15 +504,15 @@ const Auth = () => {
                       <form onSubmit={handleSignup} className="space-y-4">
                         <div className="space-y-2">
                           <Label htmlFor="signup-name">Full Name</Label>
-                          <Input
-                            id="signup-name"
-                            type="text"
-                            placeholder="Your full name"
-                            autoComplete="name"
-                            value={signupData.name}
-                            onChange={(e) => setSignupData({...signupData, name: e.target.value})}
-                            required
-                          />
+                            <Input
+                              id="signup-name"
+                              type="text"
+                              placeholder="Your full name"
+                              autoComplete="name"
+                              value={signupData.name}
+                              onChange={(e) => setSignupData({...signupData, name: sanitizeInput(e.target.value)})}
+                              required
+                            />
                         </div>
 
                         <div className="space-y-2">
@@ -464,21 +526,22 @@ const Auth = () => {
                               className="pl-10"
                               autoComplete="email"
                               value={signupData.email}
-                              onChange={(e) => setSignupData({...signupData, email: e.target.value})}
+                              onChange={(e) => setSignupData({...signupData, email: sanitizeInput(e.target.value)})}
                               required
-                            />
-                          </div>
-                        </div>
+                             />
+                           </div>
+                           <PasswordStrength password={signupData.password} className="mt-2" />
+                         </div>
 
                         <div className="space-y-2">
                           <Label htmlFor="signup-phone">Phone Number</Label>
-                          <Input
-                            id="signup-phone"
-                            type="tel"
-                            placeholder="+61 xxx xxx xxx"
-                            value={signupData.phone}
-                            onChange={(e) => setSignupData({...signupData, phone: e.target.value})}
-                          />
+                            <Input
+                              id="signup-phone"
+                              type="tel"
+                              placeholder="+61 xxx xxx xxx"
+                              value={signupData.phone}
+                              onChange={(e) => setSignupData({...signupData, phone: sanitizeInput(e.target.value)})}
+                            />
                         </div>
 
                         <div className="space-y-2">

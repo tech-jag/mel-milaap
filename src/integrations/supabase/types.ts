@@ -1262,6 +1262,7 @@ export type Database = {
           updated_at: string | null
           user_id: string
           visa_status: string | null
+          visibility: string | null
           visibility_last_seen: boolean | null
           visibility_photos: string | null
           willing_to_relocate: boolean | null
@@ -1310,6 +1311,7 @@ export type Database = {
           updated_at?: string | null
           user_id: string
           visa_status?: string | null
+          visibility?: string | null
           visibility_last_seen?: boolean | null
           visibility_photos?: string | null
           willing_to_relocate?: boolean | null
@@ -1358,6 +1360,7 @@ export type Database = {
           updated_at?: string | null
           user_id?: string
           visa_status?: string | null
+          visibility?: string | null
           visibility_last_seen?: boolean | null
           visibility_photos?: string | null
           willing_to_relocate?: boolean | null

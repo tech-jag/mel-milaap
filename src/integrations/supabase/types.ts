@@ -1302,6 +1302,7 @@ export type Database = {
           citizenship: string | null
           city: string | null
           company: string | null
+          contact_visibility: string | null
           country_of_residence: string | null
           created_at: string | null
           diet: string | null
@@ -1332,6 +1333,7 @@ export type Database = {
           onboarding_completed: boolean | null
           phone_verified: boolean | null
           photo_primary_url: string | null
+          photo_visibility: string | null
           profession_title: string | null
           profile_manager: string | null
           religion: string | null
@@ -1339,6 +1341,7 @@ export type Database = {
           smoke: string | null
           updated_at: string | null
           user_id: string
+          view_tracking_enabled: boolean | null
           visa_status: string | null
           visibility: string | null
           visibility_last_seen: boolean | null
@@ -1351,6 +1354,7 @@ export type Database = {
           citizenship?: string | null
           city?: string | null
           company?: string | null
+          contact_visibility?: string | null
           country_of_residence?: string | null
           created_at?: string | null
           diet?: string | null
@@ -1381,6 +1385,7 @@ export type Database = {
           onboarding_completed?: boolean | null
           phone_verified?: boolean | null
           photo_primary_url?: string | null
+          photo_visibility?: string | null
           profession_title?: string | null
           profile_manager?: string | null
           religion?: string | null
@@ -1388,6 +1393,7 @@ export type Database = {
           smoke?: string | null
           updated_at?: string | null
           user_id: string
+          view_tracking_enabled?: boolean | null
           visa_status?: string | null
           visibility?: string | null
           visibility_last_seen?: boolean | null
@@ -1400,6 +1406,7 @@ export type Database = {
           citizenship?: string | null
           city?: string | null
           company?: string | null
+          contact_visibility?: string | null
           country_of_residence?: string | null
           created_at?: string | null
           diet?: string | null
@@ -1430,6 +1437,7 @@ export type Database = {
           onboarding_completed?: boolean | null
           phone_verified?: boolean | null
           photo_primary_url?: string | null
+          photo_visibility?: string | null
           profession_title?: string | null
           profile_manager?: string | null
           religion?: string | null
@@ -1437,6 +1445,7 @@ export type Database = {
           smoke?: string | null
           updated_at?: string | null
           user_id?: string
+          view_tracking_enabled?: boolean | null
           visa_status?: string | null
           visibility?: string | null
           visibility_last_seen?: boolean | null

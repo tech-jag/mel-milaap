@@ -5,18 +5,12 @@ import { toast } from '@/hooks/use-toast';
 
 export interface PrivacySettings {
   visibility: 'public' | 'community' | 'premium' | 'private';
-  photo_visibility: 'all' | 'premium' | 'mutual';
-  contact_visibility: 'all' | 'premium' | 'mutual';
-  view_tracking_enabled: boolean;
 }
 
 export const usePrivacy = () => {
   const { user } = useAuth();
   const [settings, setSettings] = useState<PrivacySettings>({
     visibility: 'community',
-    photo_visibility: 'all',
-    contact_visibility: 'premium',
-    view_tracking_enabled: true,
   });
   const [loading, setLoading] = useState(true);
 
@@ -32,18 +26,15 @@ export const usePrivacy = () => {
     try {
       const { data, error } = await supabase
         .from('profiles')
-        .select('visibility, photo_visibility, contact_visibility, view_tracking_enabled')
+        .select('visibility')
         .eq('user_id', user.id)
         .single();
 
-      if (error) throw error;
+      if (error && error.code !== 'PGRST116') throw error;
 
       if (data) {
         setSettings({
-          visibility: data.visibility || 'community',
-          photo_visibility: data.photo_visibility || 'all',
-          contact_visibility: data.contact_visibility || 'premium',
-          view_tracking_enabled: data.view_tracking_enabled ?? true,
+          visibility: (data.visibility as 'public' | 'community' | 'premium' | 'private') || 'community',
         });
       }
     } catch (error) {
@@ -106,7 +97,7 @@ export const usePrivacy = () => {
       // Get target profile settings
       const { data: targetProfile } = await supabase
         .from('profiles')
-        .select('visibility, photo_visibility, contact_visibility')
+        .select('visibility')
         .eq('user_id', profileId)
         .single();
 
@@ -144,46 +135,24 @@ export const usePrivacy = () => {
       switch (targetProfile.visibility) {
         case 'public':
           canView = true;
+          canViewPhotos = true;
+          canViewContact = true;
           break;
         case 'community':
           canView = true;
+          canViewPhotos = isPremium || hasMutualInterest;
+          canViewContact = isPremium || hasMutualInterest;
           break;
         case 'premium':
           canView = isPremium || hasMutualInterest;
+          canViewPhotos = isPremium || hasMutualInterest;
+          canViewContact = isPremium || hasMutualInterest;
           break;
         case 'private':
           canView = hasMutualInterest;
+          canViewPhotos = hasMutualInterest;
+          canViewContact = hasMutualInterest;
           break;
-      }
-
-      // Photo visibility
-      if (canView) {
-        switch (targetProfile.photo_visibility) {
-          case 'all':
-            canViewPhotos = true;
-            break;
-          case 'premium':
-            canViewPhotos = isPremium || hasMutualInterest;
-            break;
-          case 'mutual':
-            canViewPhotos = hasMutualInterest;
-            break;
-        }
-      }
-
-      // Contact visibility
-      if (canView) {
-        switch (targetProfile.contact_visibility) {
-          case 'all':
-            canViewContact = true;
-            break;
-          case 'premium':
-            canViewContact = isPremium || hasMutualInterest;
-            break;
-          case 'mutual':
-            canViewContact = hasMutualInterest;
-            break;
-        }
       }
 
       return { canView, canViewPhotos, canViewContact };

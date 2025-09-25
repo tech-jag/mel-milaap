@@ -113,6 +113,7 @@ import OnboardingStep23 from "./pages/onboarding/OnboardingStep23";
 import PremiumPlans from "./pages/PremiumPlans";
 import PublicProfile from "./pages/PublicProfile";
 import DevOnboarding from "./pages/DevOnboarding";
+import MatrimonialSecurity from "./pages/MatrimonialSecurity";
 
 const queryClient = new QueryClient();
 
@@ -344,6 +345,13 @@ const App = () => (
                 <Route path="/supplier/dashboard" element={
                   <PrivateRoute>
                     <SupplierDashboard />
+                  </PrivateRoute>
+                } />
+                
+                {/* Matrimonial Security Center */}
+                <Route path="/matrimonial-security" element={
+                  <PrivateRoute>
+                    <MatrimonialSecurity />
                   </PrivateRoute>
                 } />
               </Route>

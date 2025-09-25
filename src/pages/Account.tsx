@@ -94,9 +94,9 @@ const Account = () => {
     },
     {
       icon: Shield,
-      title: "Security Center",
-      description: "Privacy & security controls",
-      href: "/matrimonial-security",
+      title: "Privacy Settings",
+      description: "Visibility & privacy controls",
+      href: "/privacy-settings",
       color: "text-green-500"
     }
   ];

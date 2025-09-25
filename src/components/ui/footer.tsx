@@ -67,8 +67,8 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 lg:px-8 py-16">
+    <footer className="bg-card border-t border-border mb-0">
+      <div className="container mx-auto px-4 lg:px-8 lg:pl-80 py-16">
         {/* Brand Section */}
         <div className="text-center mb-12">
           <Link to="/" className="inline-flex items-center space-x-3 group mb-6">

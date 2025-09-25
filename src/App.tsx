@@ -114,6 +114,7 @@ import PremiumPlans from "./pages/PremiumPlans";
 import PublicProfile from "./pages/PublicProfile";
 import DevOnboarding from "./pages/DevOnboarding";
 import MatrimonialSecurity from "./pages/MatrimonialSecurity";
+import PrivacySettings from "./pages/PrivacySettings";
 
 const queryClient = new QueryClient();
 
@@ -348,10 +349,17 @@ const App = () => (
                   </PrivateRoute>
                 } />
                 
-                {/* Matrimonial Security Center */}
+                {/* Admin-Only Security Center */}
                 <Route path="/matrimonial-security" element={
                   <PrivateRoute>
                     <MatrimonialSecurity />
+                  </PrivateRoute>
+                } />
+                
+                {/* User Privacy Settings */}
+                <Route path="/privacy-settings" element={
+                  <PrivateRoute>
+                    <PrivacySettings />
                   </PrivateRoute>
                 } />
               </Route>

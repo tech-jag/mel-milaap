@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Camera } from "lucide-react";
 import { Link } from "react-router-dom";
 import { PhotoManager } from "@/components/PhotoManager";
+import { PhotoPrivacyControls } from "@/components/PhotoPrivacyControls";
 import { AccountHeader } from "@/components/ui/account-header";
 
 export default function AccountPhotos() {
@@ -57,6 +58,11 @@ export default function AccountPhotos() {
                 
                 {/* Photo Manager Component */}
                 <PhotoManager />
+                
+                {/* Photo Privacy Controls */}
+                <div className="mt-8">
+                  <PhotoPrivacyControls />
+                </div>
               </div>
 
               {/* Photo Guidelines - Mobile Optimized */}

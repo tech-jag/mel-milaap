@@ -159,6 +159,7 @@ const App = () => (
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogPost />} />
                 <Route path="/terms" element={<Terms />} />
+                <Route path="/terms-of-service" element={<Terms />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/data-rights" element={<DataRights />} />

@@ -23,10 +23,16 @@ export default function AccountPhotos() {
             backUrl="/account"
             backText="Back to Dashboard"
           >
-            {/* Additional action buttons can go here if needed */}
-            <Button asChild size="sm" className="w-full sm:w-auto">
-              <Link to="/account/profile">
-                Profile
+          {/* Upgrade Button for Free Users */}
+            <Button 
+              asChild 
+              size="sm" 
+              variant="outline"
+              className="w-full sm:w-auto bg-gradient-to-r from-primary to-primary-glow text-white border-0 hover:opacity-90"
+            >
+              <Link to="/pricing">
+                <Crown className="mr-2 h-4 w-4" />
+                Upgrade to Premium
               </Link>
             </Button>
           </AccountHeader>

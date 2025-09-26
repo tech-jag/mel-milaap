@@ -1,59 +1,49 @@
-# Test User Accounts
+# Test Accounts for MelMilaap
 
-I've created test user profiles in the database that you can use for testing. However, these accounts don't have authentication credentials yet because Supabase manages the auth table separately.
+## Database Tables Used for Profiles
+- **Primary Table**: `user_profiles` - Contains all profile data (currently 8 profiles)
+- **Photos Table**: `profile_photos` - Contains profile photo URLs  
+- **Auth Table**: `auth.users` - Supabase authentication (1 user)
 
-## Created Test Profiles (Database Only)
+## Current Test Data Status
+- ❌ **Authentication**: Only 1 real auth user exists
+- ✅ **Profile Data**: 8+ test profiles exist in `user_profiles` table
+- ✅ **Photos**: Profile photos linked to test user IDs
+- ❌ **Logins**: No authentication credentials for test profiles
 
-The following test profiles have been created in the user_profiles table:
+## Available Test Profiles in Database
+1. **Jag Singh** (Your current user) - Engineer, Melbourne
+2. **Additional profiles needed**: 20-30 more profiles for comprehensive testing
 
-1. **User ID**: 11111111-1111-1111-1111-111111111111
-   - **Name**: Priya S.
-   - **Profession**: Software Engineer
-   - **Location**: Sydney, NSW
-   - **Subscription**: Premium
-   - **Photo**: /src/assets/profile-1.jpg
+## Test Account Requirements
+To properly test the matrimonial features, we need:
 
-2. **User ID**: 22222222-2222-2222-2222-222222222222
-   - **Name**: Anjali K.
-   - **Profession**: Doctor
-   - **Location**: Melbourne, VIC
-   - **Subscription**: Free
-   - **Photo**: /src/assets/profile-2.jpg
+### Authentication Setup Required
+- Create actual Supabase auth users for test profiles
+- Link auth users to existing profile data
+- Provide login credentials (email/password) for all test accounts
 
-3. **User ID**: 33333333-3333-3333-3333-333333333333
-   - **Name**: Shreya M.
-   - **Profession**: Marketing Manager
-   - **Location**: Brisbane, QLD
-   - **Subscription**: Premium
-   - **Photo**: /src/assets/profile-3.jpg
+### Test Coverage Needed
+- **User Types**: Free tier users, Premium users, Family accounts
+- **Gender Distribution**: Equal male/female profiles 
+- **Geographic Diversity**: Different cities/states
+- **Age Range**: 22-35 years for realistic matching
+- **Profession Variety**: Different occupations and income levels
 
-4. **User ID**: 44444444-4444-4444-4444-444444444444
-   - **Name**: Kavya R.
-   - **Profession**: Teacher
-   - **Location**: Perth, WA
-   - **Subscription**: Free
-   - **Photo**: /src/assets/profile-4.jpg
+## Manual Setup Required
+Since automated auth user creation failed, test accounts need to be created manually:
 
-5. **User ID**: 55555555-5555-5555-5555-555555555555
-   - **Name**: Meera T.
-   - **Profession**: Architect
-   - **Location**: Adelaide, SA
-   - **Subscription**: Premium
-   - **Photo**: /src/assets/profile-5.jpg
+1. **Method 1**: Use Supabase Dashboard Auth section to create users
+2. **Method 2**: Create accounts through the app's signup flow
+3. **Method 3**: Use Supabase CLI or direct API calls
 
-## Next Steps for Testing
+## Next Steps
+1. ✅ Fix profile photo display for current user
+2. ✅ Fix upgrade button functionality
+3. ❌ Create 25+ test auth accounts with credentials
+4. ❌ Test matching and messaging between accounts
 
-To create full test accounts with login credentials, you would need to:
-
-1. Use Supabase Dashboard to manually create auth users
-2. Or use Supabase Auth API to programmatically create accounts
-3. Link these auth users to the existing profiles using the user_id
-
-## Current Functionality
-
-- ✅ Profile data loads from database in Matches and Search pages
-- ✅ Profile photos display correctly  
-- ✅ Upgrade button now links to premium page
-- ✅ Fixed database constraints for user activity stats
-
-The profiles will now appear in your Matches and Search pages using real database data instead of static dummy data.
+## Current Issues
+- PhotoManager not showing current user's photos properly
+- Upgrade button not functional
+- Insufficient test data for comprehensive feature testing

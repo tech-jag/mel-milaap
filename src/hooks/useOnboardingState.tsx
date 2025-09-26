@@ -152,6 +152,8 @@ export const useOnboardingState = () => {
           user_id: user.id,
           current_step: step,
           last_saved_at: new Date().toISOString(),
+        }, {
+          onConflict: 'user_id'
         });
 
       if (error) throw error;
@@ -171,6 +173,8 @@ export const useOnboardingState = () => {
           user_id: user.id,
           ...updates,
           updated_at: new Date().toISOString(),
+        }, {
+          onConflict: 'user_id'
         });
 
       if (error) throw error;
@@ -190,6 +194,8 @@ export const useOnboardingState = () => {
           user_id: user.id,
           ...updates,
           updated_at: new Date().toISOString(),
+        }, {
+          onConflict: 'user_id'
         });
 
       if (error) throw error;

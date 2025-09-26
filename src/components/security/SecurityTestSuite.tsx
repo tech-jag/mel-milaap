@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
-import { toast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 interface SecurityTest {
   id: string;
@@ -38,6 +38,7 @@ interface SecurityTest {
 
 export const SecurityTestSuite: React.FC = () => {
   const { user } = useAuth();
+  const { toast } = useToast();
   const [tests, setTests] = useState<SecurityTest[]>([
     {
       id: 'profile_privacy_isolation',
@@ -477,8 +478,7 @@ export const SecurityTestSuite: React.FC = () => {
     
     toast({
       title: "Security Tests Complete",
-      description: `${passedTests}/${totalTests} tests passed`,
-      variant: passedTests === totalTests ? "default" : "destructive",
+      description: `${passedTests}/${totalTests} tests passed`
     });
   };
 

@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
-import { toast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/use-toast';
 
 interface PhotoUploadProps {
   onPhotoUploaded?: (photo: any) => void;
@@ -50,6 +50,7 @@ export const EnterprisePhotoUpload: React.FC<PhotoUploadProps> = ({
   requireApproval = true
 }) => {
   const { user } = useAuth();
+  const { toast } = useToast();
   const [photos, setPhotos] = useState<PhotoFile[]>([]);
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -265,8 +266,7 @@ export const EnterprisePhotoUpload: React.FC<PhotoUploadProps> = ({
         .insert({
           user_id: user!.id,
           event_type: 'photo_upload',
-          severity: 'info',
-          details: {
+          event_data: {
             photo_id: dbData.id,
             file_size: compressedFile.size,
             compression_ratio: compressionRatio,

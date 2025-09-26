@@ -553,6 +553,39 @@ export type Database = {
         }
         Relationships: []
       }
+      email_notifications: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          notification_type: Database["public"]["Enums"]["notification_type"]
+          sent_at: string | null
+          status: string
+          subject: string
+          user_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          notification_type: Database["public"]["Enums"]["notification_type"]
+          sent_at?: string | null
+          status?: string
+          subject: string
+          user_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          notification_type?: Database["public"]["Enums"]["notification_type"]
+          sent_at?: string | null
+          status?: string
+          subject?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           created_at: string
@@ -1202,6 +1235,90 @@ export type Database = {
           updated_at?: string | null
           user_id?: string
           willing_to_relocate?: string | null
+        }
+        Relationships: []
+      }
+      photo_moderation: {
+        Row: {
+          created_at: string
+          id: string
+          moderator_id: string | null
+          photo_id: string
+          rejection_reason: string | null
+          status: Database["public"]["Enums"]["moderation_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          moderator_id?: string | null
+          photo_id: string
+          rejection_reason?: string | null
+          status?: Database["public"]["Enums"]["moderation_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          moderator_id?: string | null
+          photo_id?: string
+          rejection_reason?: string | null
+          status?: Database["public"]["Enums"]["moderation_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      photos: {
+        Row: {
+          created_at: string | null
+          id: string
+          is_approved: boolean | null
+          is_primary: boolean | null
+          photo_url: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          is_approved?: boolean | null
+          is_primary?: boolean | null
+          photo_url: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          is_approved?: boolean | null
+          is_primary?: boolean | null
+          photo_url?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      platform_analytics: {
+        Row: {
+          id: string
+          metadata: Json | null
+          metric_name: string
+          metric_value: number
+          recorded_at: string
+        }
+        Insert: {
+          id?: string
+          metadata?: Json | null
+          metric_name: string
+          metric_value: number
+          recorded_at?: string
+        }
+        Update: {
+          id?: string
+          metadata?: Json | null
+          metric_name?: string
+          metric_value?: number
+          recorded_at?: string
         }
         Relationships: []
       }
@@ -2374,7 +2491,20 @@ export type Database = {
         | "other"
       interest_status: "pending" | "accepted" | "declined"
       marital_status_t: "never_married" | "divorced" | "widowed" | "annulled"
+      moderation_status: "pending" | "approved" | "rejected" | "flagged"
+      notification_type:
+        | "security_alert"
+        | "moderation_update"
+        | "system_notification"
       onboarding_status_t: "in_progress" | "complete"
+      security_event_type:
+        | "login_attempt"
+        | "profile_access"
+        | "photo_upload"
+        | "message_sent"
+        | "profile_update"
+        | "suspicious_activity"
+        | "admin_action"
       supplier_plan: "free" | "featured" | "premium"
       user_role: "guest" | "member" | "parent" | "supplier" | "admin"
       yes_no_unknown_t: "yes" | "no" | "unknown"
@@ -2530,7 +2660,22 @@ export const Constants = {
       ],
       interest_status: ["pending", "accepted", "declined"],
       marital_status_t: ["never_married", "divorced", "widowed", "annulled"],
+      moderation_status: ["pending", "approved", "rejected", "flagged"],
+      notification_type: [
+        "security_alert",
+        "moderation_update",
+        "system_notification",
+      ],
       onboarding_status_t: ["in_progress", "complete"],
+      security_event_type: [
+        "login_attempt",
+        "profile_access",
+        "photo_upload",
+        "message_sent",
+        "profile_update",
+        "suspicious_activity",
+        "admin_action",
+      ],
       supplier_plan: ["free", "featured", "premium"],
       user_role: ["guest", "member", "parent", "supplier", "admin"],
       yes_no_unknown_t: ["yes", "no", "unknown"],

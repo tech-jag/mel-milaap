@@ -30,6 +30,7 @@ import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useAuth } from "@/hooks/useAuth";
 import { AccountHeader } from "@/components/ui/account-header";
+import { allProfiles } from "@/data/dummyProfiles";
 
 const Search = () => {
   const { user } = useAuth();
@@ -38,81 +39,8 @@ const Search = () => {
   // ADD MOBILE FILTER TOGGLE STATE
   const [showFilters, setShowFilters] = React.useState(false);
   
-  // Mock search results
-  const searchResults = [
-    {
-      id: 1,
-      name: "Priya S.",
-      age: 28,
-      location: "Sydney, NSW",
-      profession: "Software Engineer",
-      photos: ["/api/placeholder/300/400"],
-      verified: true,
-      lastSeen: "2 hours ago",
-      compatibility: 92,
-      premium: true
-    },
-    {
-      id: 2,
-      name: "Anjali K.",
-      age: 26,
-      location: "Melbourne, VIC",
-      profession: "Doctor",
-      photos: ["/api/placeholder/300/400"],
-      verified: true,
-      lastSeen: "1 day ago",
-      compatibility: 88,
-      premium: false
-    },
-    {
-      id: 3,
-      name: "Shreya M.",
-      age: 30,
-      location: "Brisbane, QLD",
-      profession: "Marketing Manager",
-      photos: ["/api/placeholder/300/400"],
-      verified: false,
-      lastSeen: "3 hours ago",
-      compatibility: 85,
-      premium: true
-    },
-    {
-      id: 4,
-      name: "Kavya R.",
-      age: 27,
-      location: "Perth, WA",
-      profession: "Teacher",
-      photos: ["/api/placeholder/300/400"],
-      verified: true,
-      lastSeen: "5 hours ago",
-      compatibility: 90,
-      premium: false
-    },
-    {
-      id: 5,
-      name: "Meera T.",
-      age: 29,
-      location: "Adelaide, SA",
-      profession: "Architect",
-      photos: ["/api/placeholder/300/400"],
-      verified: true,
-      lastSeen: "1 hour ago",
-      compatibility: 87,
-      premium: true
-    },
-    {
-      id: 6,
-      name: "Divya P.",
-      age: 31,
-      location: "Canberra, ACT",
-      profession: "Lawyer",
-      photos: ["/api/placeholder/300/400"],
-      verified: false,
-      lastSeen: "6 hours ago",
-      compatibility: 83,
-      premium: false
-    }
-  ];
+  // Use dummy profiles for search results
+  const searchResults = allProfiles;
 
   if (!user) {
     return (
@@ -121,14 +49,12 @@ const Search = () => {
           <AccountSidebar />
           
           <div className="flex-1">
-            <Navigation />
             <div className="container mx-auto px-4 py-16 text-center">
               <h1 className="text-3xl font-bold mb-4">Please sign in to search profiles</h1>
               <Button asChild>
                 <Link to="/auth">Sign In</Link>
               </Button>
             </div>
-            <Footer />
           </div>
         </div>
       </SidebarProvider>
@@ -141,8 +67,6 @@ const Search = () => {
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
-          
           {/* REPLACE OLD HEADER WITH ACCOUNTHEADER */}
           <AccountHeader
             title="Find Your Ideal Partner"
@@ -444,8 +368,6 @@ const Search = () => {
               </div>
             </div>
           </section>
-
-          <Footer />
         </div>
       </div>
     </SidebarProvider>

@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
+import { allProfiles, dummyProfiles } from "@/data/dummyProfiles";
 import { useAuth } from "@/hooks/useAuth";
 
 const Matches = () => {
@@ -180,11 +181,11 @@ const Matches = () => {
                 >
                   <Card className="overflow-hidden shadow-xl">
                     <div className="relative">
-                      <img 
-                        src={currentMatch.photos[0]} 
-                        alt={currentMatch.name}
-                        className="w-full h-64 sm:h-80 lg:h-96 object-cover"
-                      />
+                    <img 
+                      src={currentMatch.photos[0]} 
+                      alt={currentMatch.name}
+                      className="w-full h-64 sm:h-80 lg:h-96 object-cover"
+                    />
                       
                       {/* Overlay Info */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />

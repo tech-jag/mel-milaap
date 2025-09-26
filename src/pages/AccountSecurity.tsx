@@ -333,8 +333,6 @@ const AccountSecurity = () => {
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
-          
           {/* Account Header */}
           <AccountHeader
             title="Account Security"

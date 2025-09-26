@@ -35,35 +35,16 @@ export default function AccountPhotos() {
           <div className="container mx-auto px-4 lg:px-8 py-4 lg:py-8">
             <div className="max-w-4xl mx-auto">
               
-              {/* Photo Management Section */}
-              <div className="mb-6 lg:mb-8">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4 lg:mb-6">
-                  <div>
-                    <h2 className="text-lg lg:text-xl font-semibold">Profile Photos</h2>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Manage your profile photos (5/5)
-                    </p>
-                  </div>
-                  
-                  {/* Action buttons - mobile responsive */}
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="flex-1 sm:flex-none">
-                      Add Photos
-                    </Button>
-                    <Button size="sm" className="flex-1 sm:flex-none">
-                      Reorder
-                    </Button>
-                  </div>
-                </div>
-                
-                {/* Photo Manager Component */}
-                <PhotoManager />
-                
-                {/* Photo Privacy Controls */}
-                <div className="mt-8">
-                  <PhotoPrivacyControls />
-                </div>
-              </div>
+               {/* Photo Management Section - Let PhotoManager handle its own buttons */}
+               <div className="mb-6 lg:mb-8">
+                 {/* Photo Manager Component */}
+                 <PhotoManager />
+                 
+                 {/* Photo Privacy Controls */}
+                 <div className="mt-8">
+                   <PhotoPrivacyControls />
+                 </div>
+               </div>
 
               {/* Photo Guidelines - Mobile Optimized */}
               <div className="bg-muted/30 rounded-lg p-4 lg:p-6 mb-6">
@@ -92,31 +73,7 @@ export default function AccountPhotos() {
                 </div>
               </div>
 
-              {/* Privacy Settings - Mobile Optimized */}
-              <div className="bg-card border rounded-lg p-4 lg:p-6">
-                <h3 className="font-semibold mb-4 text-base lg:text-lg">Photo Privacy Settings</h3>
-                <div className="space-y-4">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                    <div className="flex-1">
-                      <h4 className="font-medium">Profile Photo Visibility</h4>
-                      <p className="text-sm text-muted-foreground">Control who can see your photos</p>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full sm:w-auto">
-                      Configure
-                    </Button>
-                  </div>
-                  
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                    <div className="flex-1">
-                      <h4 className="font-medium">Photo Watermark</h4>
-                      <p className="text-sm text-muted-foreground">Add protection to your photos</p>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full sm:w-auto">
-                      Enable
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              {/* Privacy Settings - Mobile Optimized - REMOVED REDUNDANT SECTION */}
             </div>
           </div>
         </div>

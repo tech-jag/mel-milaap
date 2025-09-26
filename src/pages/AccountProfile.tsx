@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
@@ -132,8 +130,6 @@ export default function AccountProfile() {
         <AccountSidebar />
         
         <div className="flex-1">
-          <Navigation />
-          
           {/* REPLACED INLINE HEADER WITH ACCOUNTHEADER */}
           <AccountHeader
             title="Profile"
@@ -334,8 +330,6 @@ export default function AccountProfile() {
               </div>
             </div>
           </div>
-
-          <Footer />
         </div>
       </div>
     </SidebarProvider>

@@ -396,8 +396,14 @@ export const PhotoPrivacyControls: React.FC = () => {
                   </p>
                 </div>
               </div>
-              <Button variant="outline" size="sm">
-                Upgrade Now
+              <Button 
+                variant="outline" 
+                size="sm"
+                asChild
+              >
+                <Link to="/premium-plans">
+                  Upgrade Now
+                </Link>
               </Button>
             </div>
           </CardContent>

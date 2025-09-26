@@ -32,16 +32,27 @@ export const PhotoManager: React.FC = () => {
   }, [user?.id]);
 
   const loadPhotos = async () => {
+    if (!user?.id) return;
+    
     try {
       setIsLoading(true);
       const { data, error } = await supabase
         .from('profile_photos')
         .select('*')
-        .eq('user_id', user?.id)
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
       setPhotos(data || []);
+      
+      // Also update user_profiles.photo_primary_url if we have a primary photo
+      const primaryPhoto = (data || []).find(photo => photo.is_primary);
+      if (primaryPhoto) {
+        await supabase
+          .from('user_profiles')
+          .update({ photo_primary_url: primaryPhoto.url })
+          .eq('user_id', user.id);
+      }
     } catch (error) {
       console.error('Error loading photos:', error);
       toast({

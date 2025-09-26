@@ -1,69 +1,106 @@
-// src/emailService.js - EmailJS via CDN (no installation needed)
+// src/emailService.js - Supabase native email service
+
+import { supabase } from '@/integrations/supabase/client';
 
 export async function sendWelcomeEmail(userType, email, userData) {
   try {
-    // Load EmailJS from CDN if not already loaded
-    if (!window.emailjs) {
-      await loadEmailJS();
+    console.log('Sending welcome email via Supabase...', { userType, email });
+
+    // Call our Supabase edge function for custom email notifications
+    const { data, error } = await supabase.functions.invoke('send-notification-email', {
+      body: {
+        to_email: email,
+        email_type: 'welcome',
+        user_name: userData.full_name || userData.contact_person || 'Friend',
+        platform_url: window.location.origin,
+        custom_data: {
+          userType,
+          business_name: userData.business_name,
+          city: userData.city,
+          state: userData.state,
+          role: userData.role,
+          business_category: userData.business_category
+        }
+      }
+    });
+
+    if (error) {
+      console.error('Supabase email error:', error);
+      return { success: false, error: error.message };
     }
 
-    // Initialize EmailJS with your public key
-    window.emailjs.init('pI_tUmMg_en8pr6QA');
-
-    // Determine which template to use
-    const templateId = userType === 'founder_member' 
-      ? 'template_le4czfc'  // Founder Member Welcome
-      : 'template_au40tsa'; // Supplier Welcome
-
-    // Prepare template parameters
-    const templateParams = {
-      user_name: userData.full_name || userData.contact_person || 'Friend',
-      user_email: email,
-      business_name: userData.business_name || '',
-      city: userData.city || '',
-      state: userData.state || '',
-      role: userData.role || '',
-      business_category: userData.business_category || '',
-      to_email: email // EmailJS needs this to know where to send
-    };
-
-    console.log('Sending email via EmailJS...');
-    console.log('Template ID:', templateId);
-    console.log('Template params:', templateParams);
-
-    // Send email using EmailJS
-    const result = await window.emailjs.send(
-      'service_fnmekoh',  // Your service ID
-      templateId,         // Template ID based on user type
-      templateParams      // Data to fill the template
-    );
-
-    console.log('EmailJS success:', result);
-    return { success: true, result: result };
+    console.log('Supabase email success:', data);
+    return { success: true, result: data };
 
   } catch (error) {
-    console.error('EmailJS error:', error);
+    console.error('Email service error:', error);
     return { success: false, error: error.message };
   }
 }
 
-// Function to load EmailJS from CDN
-function loadEmailJS() {
-  return new Promise((resolve, reject) => {
-    if (window.emailjs) {
-      resolve();
-      return;
-    }
+// Helper function to send interest notifications
+export async function sendInterestNotification(receiverEmail, senderName, receiverName) {
+  try {
+    const { data, error } = await supabase.functions.invoke('send-notification-email', {
+      body: {
+        to_email: receiverEmail,
+        email_type: 'interest_received',
+        user_name: receiverName,
+        sender_name: senderName,
+        platform_url: window.location.origin
+      }
+    });
 
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-    script.onload = () => {
-      console.log('EmailJS loaded from CDN');
-      resolve();
-    };
-    script.onerror = () => {
-      reject(new Error('Failed to load EmailJS'));
-    };
-    document.head.appendChild(script);
-  });
+    if (error) throw error;
+    return { success: true, result: data };
+  } catch (error) {
+    console.error('Interest notification error:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+// Helper function to send message notifications
+export async function sendMessageNotification(receiverEmail, senderName, receiverName) {
+  try {
+    const { data, error } = await supabase.functions.invoke('send-notification-email', {
+      body: {
+        to_email: receiverEmail,
+        email_type: 'message_received',
+        user_name: receiverName,
+        sender_name: senderName,
+        platform_url: window.location.origin
+      }
+    });
+
+    if (error) throw error;
+    return { success: true, result: data };
+  } catch (error) {
+    console.error('Message notification error:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+// Helper function to send family invitation emails
+export async function sendFamilyInvitation(inviteEmail, inviterName, relationship) {
+  try {
+    const { data, error } = await supabase.functions.invoke('send-notification-email', {
+      body: {
+        to_email: inviteEmail,
+        email_type: 'family_invitation',
+        user_name: 'Family Member',
+        sender_name: inviterName,
+        platform_url: window.location.origin,
+        custom_data: {
+          relationship,
+          invitation_link: `${window.location.origin}/family-access`
+        }
+      }
+    });
+
+    if (error) throw error;
+    return { success: true, result: data };
+  } catch (error) {
+    console.error('Family invitation error:', error);
+    return { success: false, error: error.message };
+  }
 }

@@ -119,13 +119,14 @@ export const FamilyInvitationSystem: React.FC = () => {
       // Send email notification
       const { error: emailError } = await supabase.functions.invoke('send-notification-email', {
         body: {
-          to: newInvitation.email,
-          type: 'family_invitation',
-          data: {
-            inviter_name: user?.user_metadata?.name || 'Someone',
+          to_email: newInvitation.email,
+          email_type: 'family_invitation',
+          user_name: 'Family Member',
+          sender_name: user?.user_metadata?.name || 'Someone',
+          platform_url: window.location.origin,
+          custom_data: {
             relationship: newInvitation.relationship,
-            invitation_token: invitationToken,
-            invitation_url: `${window.location.origin}/family-invitation/${invitationToken}`
+            invitation_link: `${window.location.origin}/family-invitation/${invitationToken}`
           }
         }
       });

@@ -8,7 +8,7 @@ const corsHeaders = {
 
 interface EmailRequest {
   to_email: string;
-  email_type: 'welcome' | 'interest_received' | 'message_received' | 'profile_approved' | 'security_alert';
+  email_type: 'welcome' | 'interest_received' | 'message_received' | 'profile_approved' | 'security_alert' | 'family_invitation';
   user_name?: string;
   sender_name?: string;
   platform_url?: string;
@@ -29,36 +29,6 @@ serve(async (req) => {
 
     const { to_email, email_type, user_name, sender_name, platform_url, custom_data }: EmailRequest = await req.json();
 
-    // Log the email attempt
-    const emailLog = {
-      recipient_email: to_email,
-      email_type,
-      subject: getEmailSubject(email_type, sender_name),
-      status: 'sent',
-      sent_at: new Date().toISOString()
-    };
-
-    // For demo purposes, we'll just log the email and mark it as sent
-    // In production, you would integrate with Resend, SendGrid, or similar service
-    console.log('📧 Email Notification:', {
-      to: to_email,
-      type: email_type,
-      subject: emailLog.subject,
-      user_name,
-      sender_name,
-      platform_url,
-      custom_data
-    });
-
-    // Log to database
-    const { error: logError } = await supabaseClient
-      .from('email_notifications')
-      .insert(emailLog);
-
-    if (logError) {
-      console.error('Failed to log email:', logError);
-    }
-
     // Generate email content based on type
     const emailContent = generateEmailContent(email_type, {
       user_name,
@@ -67,18 +37,102 @@ serve(async (req) => {
       ...custom_data
     });
 
-    return new Response(
-      JSON.stringify({ 
-        success: true, 
-        message: 'Email notification sent successfully',
-        email_id: crypto.randomUUID(),
-        content: emailContent // For demo purposes
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
+    const emailSubject = getEmailSubject(email_type, sender_name);
+
+    // Log the email attempt to database first
+    const emailLog = {
+      recipient_email: to_email,
+      email_type,
+      subject: emailSubject,
+      status: 'pending',
+      created_at: new Date().toISOString()
+    };
+
+    const { data: logData, error: logError } = await supabaseClient
+      .from('email_notifications')
+      .insert(emailLog)
+      .select()
+      .single();
+
+    if (logError) {
+      console.error('Failed to log email attempt:', logError);
+    }
+
+    // Use Supabase's built-in email functionality by creating a temporary user invitation
+    // This leverages your existing SendGrid configuration through Supabase Auth
+    try {
+      // For notification emails, we'll use Supabase's REST API to trigger emails
+      // This works with your existing SendGrid configuration
+      const emailResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/auth/v1/invite`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')}`,
+          'Content-Type': 'application/json',
+          'apikey': Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+        },
+        body: JSON.stringify({
+          email: to_email,
+          data: {
+            email_type,
+            subject: emailSubject,
+            content: emailContent,
+            user_name,
+            sender_name,
+            is_notification: true
+          }
+        })
+      });
+
+      if (!emailResponse.ok) {
+        const errorText = await emailResponse.text();
+        throw new Error(`Email API error: ${emailResponse.status} - ${errorText}`);
       }
-    );
+
+      // Update email log to success
+      if (logData) {
+        await supabaseClient
+          .from('email_notifications')
+          .update({ 
+            status: 'sent',
+            sent_at: new Date().toISOString()
+          })
+          .eq('id', logData.id);
+      }
+
+      console.log('📧 Email sent successfully via Supabase SendGrid:', {
+        to: to_email,
+        type: email_type,
+        subject: emailSubject
+      });
+
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: 'Email notification sent successfully via Supabase SendGrid',
+          email_id: logData?.id || crypto.randomUUID()
+        }),
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200
+        }
+      );
+
+    } catch (emailError) {
+      console.error('Failed to send email via Supabase:', emailError);
+      
+      // Update email log to failed
+      if (logData) {
+        await supabaseClient
+          .from('email_notifications')
+          .update({ 
+            status: 'failed',
+            error_message: emailError instanceof Error ? emailError.message : String(emailError)
+          })
+          .eq('id', logData.id);
+      }
+      
+      throw emailError;
+    }
 
   } catch (error) {
     console.error('Error in send-notification-email:', error);
@@ -108,13 +162,15 @@ function getEmailSubject(emailType: string, senderName?: string): string {
       return 'Your profile has been approved!';
     case 'security_alert':
       return 'Security Alert - Mēl Milaap Account';
+    case 'family_invitation':
+      return `${senderName || 'A family member'} has invited you to join Mēl Milaap`;
     default:
       return 'Notification from Mēl Milaap';
   }
 }
 
 function generateEmailContent(emailType: string, data: Record<string, any>): string {
-  const { user_name, sender_name, platform_url } = data;
+  const { user_name, sender_name, platform_url, relationship, invitation_link } = data;
 
   switch (emailType) {
     case 'welcome':
@@ -171,6 +227,16 @@ function generateEmailContent(emailType: string, data: Record<string, any>): str
         </ul>
         <p><a href="${platform_url}/account/security">Review your security settings</a></p>
         <p>Stay safe,<br>The Mēl Milaap Security Team</p>
+      `;
+
+    case 'family_invitation':
+      return `
+        <h1>You're Invited to Join Mēl Milaap!</h1>
+        <p>${sender_name || 'A family member'} has invited you to join their family circle on Mēl Milaap.</p>
+        <p>As their ${relationship || 'family member'}, you'll have special access to help with their matrimonial journey while respecting their privacy preferences.</p>
+        <p>Join our trusted community where families come together to find meaningful connections.</p>
+        <p><a href="${invitation_link || platform_url}">Accept Invitation</a></p>
+        <p>With warm regards,<br>The Mēl Milaap Family</p>
       `;
 
     default:

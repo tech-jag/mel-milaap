@@ -133,9 +133,9 @@ export const RATE_LIMITS = {
     blockDurationMs: 15 * 60 * 1000 // 15 minutes
   },
   SIGNUP: {
-    maxAttempts: 3,
-    windowMs: 60 * 60 * 1000, // 1 hour
-    blockDurationMs: 60 * 60 * 1000 // 1 hour
+    maxAttempts: 10,
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    blockDurationMs: 30 * 1000 // 30 seconds
   },
   PASSWORD_RESET: {
     maxAttempts: 3,

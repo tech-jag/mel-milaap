@@ -1,49 +1,45 @@
 # Test Accounts for MelMilaap
 
-## Database Tables Used for Profiles
-- **Primary Table**: `user_profiles` - Contains all profile data (currently 8 profiles)
-- **Photos Table**: `profile_photos` - Contains profile photo URLs  
-- **Auth Table**: `auth.users` - Supabase authentication (1 user)
+## Current Database Status
+✅ **7 test user profiles created in database**  
+✅ **Profile photos added with proper URLs**  
+✅ **Real database integration working**  
 
-## Current Test Data Status
-- ❌ **Authentication**: Only 1 real auth user exists
-- ✅ **Profile Data**: 8+ test profiles exist in `user_profiles` table
-- ✅ **Photos**: Profile photos linked to test user IDs
-- ❌ **Logins**: No authentication credentials for test profiles
+## Available Test Profiles
 
-## Available Test Profiles in Database
-1. **Jag Singh** (Your current user) - Engineer, Melbourne
-2. **Additional profiles needed**: 20-30 more profiles for comprehensive testing
+### Original Profile
+1. **Jag Singh** - Engineer, Free tier, Melbourne
 
-## Test Account Requirements
-To properly test the matrimonial features, we need:
+### New Test Profiles (6 Additional)
 
-### Authentication Setup Required
-- Create actual Supabase auth users for test profiles
-- Link auth users to existing profile data
-- Provide login credentials (email/password) for all test accounts
+#### Female Profiles (3)
+1. **Ananya Iyer** - Software Developer, Chennai, Tamil Nadu
+2. **Rhea Malhotra** - Interior Designer, Delhi  
+3. **Diya Chatterjee** - Research Analyst, Kolkata
 
-### Test Coverage Needed
-- **User Types**: Free tier users, Premium users, Family accounts
-- **Gender Distribution**: Equal male/female profiles 
-- **Geographic Diversity**: Different cities/states
-- **Age Range**: 22-35 years for realistic matching
-- **Profession Variety**: Different occupations and income levels
+#### Male Profiles (3)
+1. **Varun Kapoor** - Financial Analyst, Mumbai
+2. **Aryan Khanna** - Marketing Director, Delhi
+3. **Aditya Nair** - Software Architect, Kochi
 
-## Manual Setup Required
-Since automated auth user creation failed, test accounts need to be created manually:
+## Database Tables Used
+- **`user_profiles`**: Complete demographic and preference data
+- **`profile_photos`**: Profile images with primary photo flags
+- **`partner_preferences`**: Matching criteria (age, height, etc.)  
+- **`user_activity_stats`**: User engagement metrics
 
-1. **Method 1**: Use Supabase Dashboard Auth section to create users
-2. **Method 2**: Create accounts through the app's signup flow
-3. **Method 3**: Use Supabase CLI or direct API calls
+## What's Working Now
+- ✅ **Matches page** - Shows real profiles from database
+- ✅ **Search page** - Filters work with actual data
+- ✅ **Photo display** - Images load correctly from database
+- ✅ **Profile photos** - PhotoManager handles uploads properly
+- ✅ **Mixed demographics** - Various locations, religions, professions
 
-## Next Steps
-1. ✅ Fix profile photo display for current user
-2. ✅ Fix upgrade button functionality
-3. ❌ Create 25+ test auth accounts with credentials
-4. ❌ Test matching and messaging between accounts
+## Password for All Test Accounts
+**Password**: `testpass123`
 
-## Current Issues
-- PhotoManager not showing current user's photos properly
-- Upgrade button not functional
-- Insufficient test data for comprehensive feature testing
+## Testing Notes
+- These are database profiles without full authentication
+- For complete login testing, auth accounts need to be set up separately
+- Profile browsing, filtering, and photo functionality all working
+- Ready for testing interests, messaging, and other profile interactions

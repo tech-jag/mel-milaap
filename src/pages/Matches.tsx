@@ -30,51 +30,8 @@ const Matches = () => {
   const { user } = useAuth();
   const [currentIndex, setCurrentIndex] = React.useState(0);
 
-  // Mock data for matches
-  const matches = [
-    {
-      id: 1,
-      name: "Priya S.",
-      age: 28,
-      location: "Sydney, NSW",
-      profession: "Software Engineer",
-      education: "Master's in Computer Science",
-      photos: ["/api/placeholder/400/600"],
-      verified: true,
-      lastSeen: "2 hours ago",
-      bio: "Looking for a life partner who shares similar values and dreams.",
-      interests: ["Travel", "Photography", "Cooking", "Reading"],
-      compatibility: 92
-    },
-    {
-      id: 2,
-      name: "Anjali K.",
-      age: 26,
-      location: "Melbourne, VIC",
-      profession: "Doctor",
-      education: "MBBS",
-      photos: ["/api/placeholder/400/600"],
-      verified: true,
-      lastSeen: "1 day ago",
-      bio: "Family-oriented person seeking meaningful connections.",
-      interests: ["Music", "Dancing", "Yoga", "Volunteering"],
-      compatibility: 88
-    },
-    {
-      id: 3,
-      name: "Shreya M.",
-      age: 30,
-      location: "Brisbane, QLD",
-      profession: "Marketing Manager",
-      education: "MBA",
-      photos: ["/api/placeholder/400/600"],
-      verified: false,
-      lastSeen: "3 hours ago",
-      bio: "Adventurous spirit looking for someone to explore life with.",
-      interests: ["Hiking", "Movies", "Art", "Fitness"],
-      compatibility: 85
-    }
-  ];
+  // Use dummy profiles data
+  const matches = allProfiles.slice(0, 5);
 
   const handleLike = () => {
     console.log("Liked profile:", matches[currentIndex]);
@@ -131,40 +88,49 @@ const Matches = () => {
             
             {/* Stats Bar */}
             <motion.div 
-              className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between mb-6 lg:mb-8 p-3 lg:p-4 bg-card rounded-lg border gap-3 lg:gap-4"
+              className="mb-6 lg:mb-8 p-3 lg:p-4 bg-card rounded-lg border"
               variants={fadeInUp}
               initial="initial"
               whileInView="animate"
               viewport={{ once: true }}
             >
-              <div className="flex items-center justify-center sm:justify-start gap-3 sm:gap-6 overflow-x-auto">
-                <div className="text-center flex-shrink-0">
-                  <div className="text-xl lg:text-2xl font-bold text-primary">{matches.length}</div>
-                  <div className="text-xs lg:text-sm text-muted-foreground">New Matches</div>
+              <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+                <div className="flex items-center justify-center lg:justify-start gap-4 lg:gap-6 overflow-x-auto">
+                  <div className="text-center flex-shrink-0">
+                    <div className="text-xl lg:text-2xl font-bold text-primary">{allProfiles.length}</div>
+                    <div className="text-xs lg:text-sm text-muted-foreground">New Matches</div>
+                  </div>
+                  <div className="text-center flex-shrink-0">
+                    <div className="text-xl lg:text-2xl font-bold text-green-600">5</div>
+                    <div className="text-xs lg:text-sm text-muted-foreground">Mutual Interests</div>
+                  </div>
+                  <div className="text-center flex-shrink-0">
+                    <div className="text-xl lg:text-2xl font-bold text-blue-600">12</div>
+                    <div className="text-xs lg:text-sm text-muted-foreground">Profile Views</div>
+                  </div>
                 </div>
-                <div className="text-center flex-shrink-0">
-                  <div className="text-xl lg:text-2xl font-bold text-green-600">5</div>
-                  <div className="text-xs lg:text-sm text-muted-foreground">Mutual Interests</div>
+                
+                <div className="flex gap-2 justify-center lg:justify-end">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex-1 lg:flex-none max-w-[140px]"
+                    onClick={() => console.log('Refine preferences')}
+                  >
+                    <Filter className="w-4 h-4 mr-2" />
+                    Refine
+                  </Button>
+                  <Button 
+                    asChild 
+                    size="sm"
+                    className="flex-1 lg:flex-none max-w-[140px]"
+                  >
+                    <Link to="/search">
+                      <Users className="w-4 h-4 mr-2" />
+                      Search
+                    </Link>
+                  </Button>
                 </div>
-                <div className="text-center flex-shrink-0">
-                  <div className="text-xl lg:text-2xl font-bold text-blue-600">12</div>
-                  <div className="text-xs lg:text-sm text-muted-foreground">Profile Views</div>
-                </div>
-              </div>
-              
-              <div className="flex gap-2 w-full sm:w-auto">
-                <Button variant="outline" size="sm" className="flex-1 sm:flex-none">
-                  <Filter className="w-4 h-4 mr-2" />
-                  <span className="hidden sm:inline">Refine Preferences</span>
-                  <span className="sm:hidden">Refine</span>
-                </Button>
-                <Button asChild className="flex-1 sm:flex-none">
-                  <Link to="/search">
-                    <Users className="w-4 h-4 mr-2" />
-                    <span className="hidden sm:inline">Advanced Search</span>
-                    <span className="sm:hidden">Search</span>
-                  </Link>
-                </Button>
               </div>
             </motion.div>
 
@@ -239,6 +205,11 @@ const Matches = () => {
                           <h3 className="font-semibold mb-2">Education</h3>
                           <p className="text-muted-foreground">{currentMatch.education}</p>
                         </div>
+                        
+                        <div>
+                          <h3 className="font-semibold mb-2">Community</h3>
+                          <p className="text-muted-foreground">{currentMatch.religion}</p>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
@@ -299,7 +270,7 @@ const Matches = () => {
                             <p className="text-xs text-muted-foreground">{match.location}</p>
                           </div>
                           <Badge variant="outline" className="text-xs">
-                            {match.compatibility}%
+                            92%
                           </Badge>
                         </div>
                       ))}

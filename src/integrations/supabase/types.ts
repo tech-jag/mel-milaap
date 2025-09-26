@@ -2175,6 +2175,7 @@ export type Database = {
           nakshatra: string | null
           occupation: string | null
           phone_verified: boolean | null
+          photo_primary_url: string | null
           photo_privacy_settings: Json | null
           photo_visibility: string | null
           professional_verified: boolean | null
@@ -2188,6 +2189,7 @@ export type Database = {
           smoking: Database["public"]["Enums"]["freq_t"] | null
           social_media_verified: boolean | null
           sub_community: string | null
+          subscription_tier: string | null
           university: string | null
           updated_at: string | null
           user_id: string
@@ -2235,6 +2237,7 @@ export type Database = {
           nakshatra?: string | null
           occupation?: string | null
           phone_verified?: boolean | null
+          photo_primary_url?: string | null
           photo_privacy_settings?: Json | null
           photo_visibility?: string | null
           professional_verified?: boolean | null
@@ -2248,6 +2251,7 @@ export type Database = {
           smoking?: Database["public"]["Enums"]["freq_t"] | null
           social_media_verified?: boolean | null
           sub_community?: string | null
+          subscription_tier?: string | null
           university?: string | null
           updated_at?: string | null
           user_id: string
@@ -2295,6 +2299,7 @@ export type Database = {
           nakshatra?: string | null
           occupation?: string | null
           phone_verified?: boolean | null
+          photo_primary_url?: string | null
           photo_privacy_settings?: Json | null
           photo_visibility?: string | null
           professional_verified?: boolean | null
@@ -2308,6 +2313,7 @@ export type Database = {
           smoking?: Database["public"]["Enums"]["freq_t"] | null
           social_media_verified?: boolean | null
           sub_community?: string | null
+          subscription_tier?: string | null
           university?: string | null
           updated_at?: string | null
           user_id?: string

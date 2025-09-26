@@ -57,6 +57,30 @@ const navItems = [
 export function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { user, loading } = useAuth();
+  const [userProfile, setUserProfile] = React.useState<any>(null);
+
+  // Load user profile with primary photo
+  React.useEffect(() => {
+    if (user?.id) {
+      loadUserProfile();
+    }
+  }, [user?.id]);
+
+  const loadUserProfile = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('user_profiles')  
+        .select('photo_primary_url, first_name')
+        .eq('user_id', user?.id)
+        .single();
+      
+      if (!error && data) {
+        setUserProfile(data);
+      }
+    } catch (err) {
+      console.error('Error loading user profile:', err);
+    }
+  };
 
   const handleNavClick = (href: string) => {
     if (href.startsWith('#')) {
@@ -158,9 +182,9 @@ return (
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                   <Avatar className="h-10 w-10">
-                    <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.name || user.email} />
+                    <AvatarImage src={userProfile?.photo_primary_url || user.user_metadata?.avatar_url} alt={userProfile?.first_name || user.user_metadata?.name || user.email} />
                     <AvatarFallback>
-                      {user.user_metadata?.name ? user.user_metadata.name[0] : user.email?.[0]}
+                      {userProfile?.first_name?.[0] || user.user_metadata?.name?.[0] || user.email?.[0]}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
@@ -168,13 +192,13 @@ return (
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <div className="flex items-center justify-start gap-3 p-3">
                   <Avatar className="h-10 w-10">
-                    <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.name || user.email} />
+                    <AvatarImage src={userProfile?.photo_primary_url || user.user_metadata?.avatar_url} alt={userProfile?.first_name || user.user_metadata?.name || user.email} />
                     <AvatarFallback>
-                      {user.user_metadata?.name ? user.user_metadata.name[0] : user.email?.[0]}
+                      {userProfile?.first_name?.[0] || user.user_metadata?.name?.[0] || user.email?.[0]}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col space-y-1 leading-none">
-                    <p className="font-medium">{user.user_metadata?.name || 'Account'}</p>
+                    <p className="font-medium">{userProfile?.first_name || user.user_metadata?.name || 'Account'}</p>
                     <p className="w-[200px] truncate text-sm text-muted-foreground">
                       {user.email}
                     </p>

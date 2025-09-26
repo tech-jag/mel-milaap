@@ -72,14 +72,18 @@ export const PhotoPrivacyControls: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('user_profiles')
-        .select('photo_privacy_settings')
+        .select('*')
         .eq('user_id', user?.id)
         .single();
 
       if (error) throw error;
 
-      if (data?.photo_privacy_settings) {
-        setSettings(data.photo_privacy_settings as PhotoPrivacySettings);
+      // Handle the photo_privacy_settings column safely
+      if (data && typeof data === 'object' && 'photo_privacy_settings' in data) {
+        const privacySettings = (data as any).photo_privacy_settings;
+        if (privacySettings) {
+          setSettings(privacySettings as PhotoPrivacySettings);
+        }
       }
     } catch (error) {
       console.error('Error loading privacy settings:', error);
@@ -93,7 +97,7 @@ export const PhotoPrivacyControls: React.FC = () => {
     try {
       const { error } = await supabase
         .from('user_profiles')
-        .update({ photo_privacy_settings: settings })
+        .update({ photo_privacy_settings: settings } as any)
         .eq('user_id', user?.id);
 
       if (error) throw error;

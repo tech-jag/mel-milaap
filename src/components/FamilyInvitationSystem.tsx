@@ -58,18 +58,21 @@ export const FamilyInvitationSystem: React.FC = () => {
     try {
       const { data, error } = await supabase
         .from('family_members')
-        .select(`
-          *,
-          member_profile:user_profiles!family_members_family_member_id_fkey(
-            first_name,
-            last_name
-          )
-        `)
+        .select('*')
         .eq('user_id', user?.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setInvitations(data || []);
+      
+      // Transform data to match FamilyInvitation interface
+      const transformedData = (data || []).map(member => ({
+        ...member,
+        member_profile: member.family_member_id ? 
+          { first_name: 'Loading...', last_name: '' } : 
+          null
+      }));
+      
+      setInvitations(transformedData);
     } catch (error) {
       console.error('Error loading invitations:', error);
       toast({

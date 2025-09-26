@@ -45,7 +45,9 @@ const TermsOfService = () => {
         .single();
 
       if (error) throw error;
-      setTermsData(data.content as TermsData);
+      if (data?.content) {
+        setTermsData(data.content as unknown as TermsData);
+      }
     } catch (error) {
       console.error('Error loading terms:', error);
       // Fallback to hardcoded terms
@@ -247,7 +249,7 @@ const TermsOfService = () => {
                       <Checkbox
                         id="accept-terms"
                         checked={accepted}
-                        onCheckedChange={setAccepted}
+                        onCheckedChange={(checked) => setAccepted(checked === true)}
                       />
                       <label
                         htmlFor="accept-terms"

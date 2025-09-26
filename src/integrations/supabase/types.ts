@@ -2175,6 +2175,7 @@ export type Database = {
           nakshatra: string | null
           occupation: string | null
           phone_verified: boolean | null
+          photo_privacy_settings: Json | null
           photo_visibility: string | null
           professional_verified: boolean | null
           profile_completion_percentage: number | null
@@ -2234,6 +2235,7 @@ export type Database = {
           nakshatra?: string | null
           occupation?: string | null
           phone_verified?: boolean | null
+          photo_privacy_settings?: Json | null
           photo_visibility?: string | null
           professional_verified?: boolean | null
           profile_completion_percentage?: number | null
@@ -2293,6 +2295,7 @@ export type Database = {
           nakshatra?: string | null
           occupation?: string | null
           phone_verified?: boolean | null
+          photo_privacy_settings?: Json | null
           photo_visibility?: string | null
           professional_verified?: boolean | null
           profile_completion_percentage?: number | null

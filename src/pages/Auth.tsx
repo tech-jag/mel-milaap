@@ -314,6 +314,19 @@ const Auth = () => {
 
       // Check if user was created but needs email confirmation
       if (data.user && !data.session) {
+        // Send welcome email for users who need email confirmation
+        try {
+          console.log('Sending welcome email to user pending confirmation:', data.user.email);
+          const { sendWelcomeEmail } = await import('@/emailService');
+          await sendWelcomeEmail('user', data.user.email, {
+            full_name: signupData.name,
+            role: 'user'
+          });
+        } catch (emailError) {
+          console.error('Failed to send welcome email:', emailError);
+          // Don't block signup flow if email fails
+        }
+
         toast({
           title: "Account Created!",
           description: "Please check your email to verify your account, then sign in to continue.",
@@ -327,6 +340,19 @@ const Auth = () => {
 
       // User is fully authenticated (email confirmation disabled)
       if (data.user && data.session) {
+        // Send welcome email
+        try {
+          console.log('Sending welcome email to new user:', data.user.email);
+          const { sendWelcomeEmail } = await import('@/emailService');
+          await sendWelcomeEmail('user', data.user.email, {
+            full_name: signupData.name,
+            role: 'user'
+          });
+        } catch (emailError) {
+          console.error('Failed to send welcome email:', emailError);
+          // Don't block signup flow if email fails
+        }
+
         toast({
           title: "Welcome to Mēl Milaap!",
           description: "Account created successfully. Let's build your profile!",

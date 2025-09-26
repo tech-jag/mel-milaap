@@ -2,7 +2,7 @@ import React from "react";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Camera } from "lucide-react";
+import { Crown, Camera } from "lucide-react";
 import { Link } from "react-router-dom";
 import { PhotoManager } from "@/components/PhotoManager";
 import { PhotoPrivacyControls } from "@/components/PhotoPrivacyControls";

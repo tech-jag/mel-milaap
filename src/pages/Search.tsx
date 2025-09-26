@@ -2,45 +2,81 @@
 
 import * as React from "react";
 import { motion } from "framer-motion";
-import { Navigation } from "@/components/ui/navigation";
-import { Footer } from "@/components/ui/footer";
 import { AccountSidebar } from "@/components/ui/account-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Slider } from "@/components/ui/slider";
+import { AccountHeader } from "@/components/ui/account-header";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { 
   Search as SearchIcon, 
-  Filter,
+  Filter, 
+  Heart, 
+  MessageCircle, 
   MapPin, 
   Briefcase, 
   Shield,
-  Heart,
-  MessageCircle,
   Eye,
-  User,
-  ArrowLeft
+  ChevronDown,
+  X
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { fadeInUp, staggerChildren } from "@/lib/motion";
 import { useAuth } from "@/hooks/useAuth";
-import { AccountHeader } from "@/components/ui/account-header";
-import { allProfiles } from "@/data/dummyProfiles";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
 
 const Search = () => {
   const { user } = useAuth();
-  const [ageRange, setAgeRange] = React.useState([25, 35]);
-  const [heightRange, setHeightRange] = React.useState([150, 180]);
-  // ADD MOBILE FILTER TOGGLE STATE
-  const [showFilters, setShowFilters] = React.useState(false);
-  
-  // Use dummy profiles for search results
-  const searchResults = allProfiles;
+  const [allProfiles, setAllProfiles] = useState<any[]>([]);
+  const [displayedProfiles, setDisplayedProfiles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filtersOpen, setFiltersOpen] = React.useState(false);
+  const [sortBy, setSortBy] = React.useState("relevance");
+
+  // Load real profiles from database
+  useEffect(() => {
+    loadProfiles();
+  }, []);
+
+  const loadProfiles = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('profile_ready', true);
+      
+      if (!error && data) {
+        setAllProfiles(data);
+        setDisplayedProfiles(data.slice(0, 20));
+      }
+    } catch (err) {
+      console.error('Error loading profiles:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const applyFilters = () => {
+    let filtered = allProfiles;
+
+    // Apply any filters here based on filter state
+    // For now, just using all profiles
+
+    // Sort the results
+    if (sortBy === "newest") {
+      filtered = [...filtered].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    } else if (sortBy === "age") {
+      filtered = [...filtered].sort((a, b) => a.age - b.age);
+    }
+
+    setDisplayedProfiles(filtered.slice(0, 20));
+  };
+
+  React.useEffect(() => {
+    applyFilters();
+  }, [sortBy, allProfiles]);
 
   if (!user) {
     return (
@@ -61,311 +97,236 @@ const Search = () => {
     );
   }
 
+  if (loading) {
+    return (
+      <SidebarProvider>
+        <div className="min-h-screen bg-background flex w-full">
+          <AccountSidebar />
+          <div className="flex-1 flex items-center justify-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+          </div>
+        </div>
+      </SidebarProvider>
+    );
+  }
+
   return (
     <SidebarProvider>
       <div className="min-h-screen bg-background flex w-full">
         <AccountSidebar />
         
         <div className="flex-1">
-          {/* REPLACE OLD HEADER WITH ACCOUNTHEADER */}
           <AccountHeader
-            title="Find Your Ideal Partner"
-            description="Use advanced filters to discover profiles that match your preferences"
+            title="Search Profiles"
+            description="Find your perfect match"
             icon={SearchIcon}
             backUrl="/account"
             backText="Back to Dashboard"
           >
-            {/* MOBILE FILTER TOGGLE BUTTON */}
             <Button 
               variant="outline" 
               size="sm"
-              className="lg:hidden w-full"
-              onClick={() => setShowFilters(!showFilters)}
+              onClick={() => setFiltersOpen(!filtersOpen)}
             >
               <Filter className="w-4 h-4 mr-2" />
-              {showFilters ? 'Hide Filters' : 'Show Filters'}
+              Filter
             </Button>
           </AccountHeader>
 
           {/* Search Content */}
           <section className="py-4 lg:py-8">
-            <div className="container mx-auto px-4 lg:px-8">
-              <div className="max-w-7xl mx-auto">
-                
-                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
+            <div className="container mx-auto px-4 max-w-7xl">
               
-                  {/* Search Filters Sidebar - WITH MOBILE TOGGLE VISIBILITY */}
-                  <div className={`lg:col-span-1 ${showFilters ? 'block' : 'hidden lg:block'}`}>
-                    <motion.div
-                      variants={fadeInUp}
-                      initial="initial"
-                      whileInView="animate"
-                      viewport={{ once: true }}
-                    >
-                      <Card className="lg:sticky lg:top-8">
-                        <CardContent className="p-4 lg:p-6">
-                          <div className="flex items-center gap-2 mb-4 lg:mb-6">
-                            <Filter className="w-5 h-5" />
-                            <h2 className="text-lg font-semibold">Search Filters</h2>
-                          </div>
-                          
-                          <div className="space-y-4 lg:space-y-6">
-                            {/* Profile ID Search */}
-                            <div>
-                              <Label className="text-sm">Profile ID</Label>
-                              <Input placeholder="Enter Profile ID" className="mt-1" />
-                            </div>
-                            
-                            {/* Age Range */}
-                            <div>
-                              <Label className="text-sm">Age: {ageRange[0]} - {ageRange[1]} years</Label>
-                              <Slider
-                                value={ageRange}
-                                onValueChange={setAgeRange}
-                                max={60}
-                                min={18}
-                                step={1}
-                                className="mt-2"
-                              />
-                            </div>
-                            
-                            {/* Height Range */}
-                            <div>
-                              <Label className="text-sm">Height: {heightRange[0]} - {heightRange[1]} cm</Label>
-                              <Slider
-                                value={heightRange}
-                                onValueChange={setHeightRange}
-                                max={200}
-                                min={140}
-                                step={1}
-                                className="mt-2"
-                              />
-                            </div>
-                            
-                            {/* Marital Status */}
-                            <div>
-                              <Label className="text-sm">Marital Status</Label>
-                              <Select>
-                                <SelectTrigger className="mt-1">
-                                  <SelectValue placeholder="Select status" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="never_married">Never Married</SelectItem>
-                                  <SelectItem value="divorced">Divorced</SelectItem>
-                                  <SelectItem value="widowed">Widowed</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                            
-                            {/* Religion */}
-                            <div>
-                              <Label className="text-sm">Religion</Label>
-                              <Select>
-                                <SelectTrigger className="mt-1">
-                                  <SelectValue placeholder="Select religion" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="hindu">Hindu</SelectItem>
-                                  <SelectItem value="muslim">Muslim</SelectItem>
-                                  <SelectItem value="christian">Christian</SelectItem>
-                                  <SelectItem value="sikh">Sikh</SelectItem>
-                                  <SelectItem value="buddhist">Buddhist</SelectItem>
-                                  <SelectItem value="jain">Jain</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                            
-                            {/* Mother Tongue */}
-                            <div>
-                              <Label className="text-sm">Mother Tongue</Label>
-                              <Select>
-                                <SelectTrigger className="mt-1">
-                                  <SelectValue placeholder="Select language" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="hindi">Hindi</SelectItem>
-                                  <SelectItem value="english">English</SelectItem>
-                                  <SelectItem value="punjabi">Punjabi</SelectItem>
-                                  <SelectItem value="tamil">Tamil</SelectItem>
-                                  <SelectItem value="telugu">Telugu</SelectItem>
-                                  <SelectItem value="bengali">Bengali</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                            
-                            {/* Location */}
-                            <div>
-                              <Label className="text-sm">Country Living In</Label>
-                              <Select>
-                                <SelectTrigger className="mt-1">
-                                  <SelectValue placeholder="Select country" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="australia">Australia</SelectItem>
-                                  <SelectItem value="india">India</SelectItem>
-                                  <SelectItem value="usa">USA</SelectItem>
-                                  <SelectItem value="uk">UK</SelectItem>
-                                  <SelectItem value="canada">Canada</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                            
-                            {/* Photo Settings */}
-                            <div>
-                              <Label className="text-sm">Photo Settings</Label>
-                              <div className="space-y-2 mt-2">
-                                <div className="flex items-center space-x-2">
-                                  <Checkbox id="visible-to-all" />
-                                  <Label htmlFor="visible-to-all" className="text-sm">Visible to all</Label>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                  <Checkbox id="protected-photo" />
-                                  <Label htmlFor="protected-photo" className="text-sm">Protected Photo</Label>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            {/* Search Button - HIDE FILTERS ON MOBILE AFTER SEARCH */}
-                            <Button 
-                              className="w-full" 
-                              onClick={() => setShowFilters(false)}
-                            >
-                              <SearchIcon className="w-4 h-4 mr-2" />
-                              Search Profiles
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </motion.div>
+              {/* Search Stats */}
+              <div className="mb-6 lg:mb-8 p-4 bg-card rounded-lg border">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-primary">{displayedProfiles.length}</div>
+                      <div className="text-sm text-muted-foreground">Profiles Found</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-green-600">
+                        {displayedProfiles.filter(p => p.subscription_tier === 'premium').length}
+                      </div>
+                      <div className="text-sm text-muted-foreground">Premium</div>
+                    </div>
                   </div>
                   
-                  {/* Search Results */}
-                  <div className="lg:col-span-3">
-                    <motion.div
-                      variants={staggerChildren}
-                      initial="initial"
-                      whileInView="animate"
-                      viewport={{ once: true }}
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-muted-foreground">Sort by:</span>
+                    <select 
+                      value={sortBy} 
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="bg-background border border-border rounded-md px-3 py-1 text-sm"
                     >
-                      {/* Results Header - MOBILE RESPONSIVE */}
-                      <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                        <div className="min-w-0 flex-1">
-                          <h2 className="text-lg lg:text-xl font-semibold">
-                            {searchResults.length} profiles found
-                          </h2>
-                          <p className="text-sm text-muted-foreground mt-1 hidden sm:block">
-                            Female, 18 - 35, 5ft 0in - 5ft 11in, 160, Sikh, Never Married
-                          </p>
-                        </div>
-                        <Select defaultValue="default">
-                          <SelectTrigger className="w-full sm:w-48">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="default">Default Order</SelectItem>
-                            <SelectItem value="newest">Newest First</SelectItem>
-                            <SelectItem value="active">Most Active</SelectItem>
-                            <SelectItem value="compatibility">Best Match</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </motion.div>
-                      
-                      {/* Results Grid - MOBILE RESPONSIVE */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
-                        {searchResults.map((profile) => (
-                          <motion.div key={profile.id} variants={fadeInUp}>
-                            <Card className="overflow-hidden hover:shadow-lg transition-shadow">
-                              <div className="relative">
-                                <img 
-                                  src={profile.photos[0]} 
-                                  alt={profile.name}
-                                  className="w-full h-48 sm:h-64 object-cover"
-                                />
-                                
-                                {/* Premium Badge */}
-                                {profile.premium && (
-                                  <Badge className="absolute top-3 left-3 bg-purple-500 text-white text-xs">
-                                    VIP
-                                  </Badge>
-                                )}
-                                
-                                {/* Verified Badge */}
-                                {profile.verified && (
-                                  <Badge className="absolute top-3 right-3 bg-green-500 text-white text-xs">
-                                    <Shield className="w-3 h-3 mr-1" />
-                                    Verified
-                                  </Badge>
-                                )}
-                                
-                                {/* Compatibility Score */}
-                                <div className="absolute bottom-3 left-3">
-                                  <Badge className="bg-blue-500 text-white text-xs">
-                                    {profile.compatibility}% Match
-                                  </Badge>
-                                </div>
-                                
-                                {/* Quick Actions */}
-                                <div className="absolute bottom-3 right-3 flex gap-1">
-                                  <Button size="sm" variant="outline" className="h-7 w-7 p-0 bg-white/90">
-                                    <Heart className="w-3 h-3" />
-                                  </Button>
-                                  <Button size="sm" variant="outline" className="h-7 w-7 p-0 bg-white/90">
-                                    <MessageCircle className="w-3 h-3" />
-                                  </Button>
-                                </div>
-                              </div>
-                              
-                              <CardContent className="p-3 sm:p-4">
-                                <div className="space-y-2">
-                                  <div className="flex items-center justify-between">
-                                    <h3 className="font-semibold text-base lg:text-lg truncate">{profile.name}</h3>
-                                    <div className="flex items-center gap-1 text-xs text-green-600 flex-shrink-0">
-                                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                                      <span className="hidden sm:inline">Online {profile.lastSeen}</span>
-                                      <span className="sm:hidden">Online</span>
-                                    </div>
-                                  </div>
-                                  
-                                  <p className="text-sm text-muted-foreground">{profile.age} yrs, 5' 2"</p>
-                                  
-                                  <p className="text-sm text-muted-foreground flex items-center gap-1 truncate">
-                                    <MapPin className="w-3 h-3 flex-shrink-0" />
-                                    {profile.location}
-                                  </p>
-                                  
-                                  <p className="text-sm text-muted-foreground flex items-center gap-1 truncate">
-                                    <Briefcase className="w-3 h-3 flex-shrink-0" />
-                                    {profile.profession}
-                                  </p>
-                                  
-                                  <div className="flex gap-2 pt-2">
-                                    <Button size="sm" variant="outline" className="flex-1 text-xs">
-                                      <Eye className="w-3 h-3 mr-1" />
-                                      <span className="hidden sm:inline">View Profile</span>
-                                      <span className="sm:hidden">View</span>
-                                    </Button>
-                                    <Button size="sm" className="flex-1 text-xs">
-                                      <MessageCircle className="w-3 h-3 mr-1" />
-                                      Connect
-                                    </Button>
-                                  </div>
-                                </div>
-                              </CardContent>
-                            </Card>
-                          </motion.div>
-                        ))}
-                      </div>
-                      
-                      {/* Load More */}
-                      <motion.div variants={fadeInUp} className="text-center mt-6 lg:mt-8">
-                        <Button variant="outline" size="lg" className="w-full sm:w-auto">
-                          Load More Profiles
-                        </Button>
-                      </motion.div>
-                    </motion.div>
+                      <option value="relevance">Relevance</option>
+                      <option value="newest">Newest First</option>
+                      <option value="age">Age</option>
+                    </select>
                   </div>
                 </div>
               </div>
+
+              {/* Advanced Filters */}
+              <Collapsible open={filtersOpen} onOpenChange={setFiltersOpen}>
+                <CollapsibleContent>
+                  <Card className="mb-6">
+                    <CardContent className="p-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div>
+                          <label className="text-sm font-medium mb-2 block">Age Range</label>
+                          <div className="flex gap-2">
+                            <input type="number" placeholder="Min" className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm" />
+                            <input type="number" placeholder="Max" className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm" />
+                          </div>
+                        </div>
+                        
+                        <div>
+                          <label className="text-sm font-medium mb-2 block">Location</label>
+                          <select className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm">
+                            <option>All Locations</option>
+                            <option>Sydney, NSW</option>
+                            <option>Melbourne, VIC</option>
+                            <option>Brisbane, QLD</option>
+                            <option>Perth, WA</option>
+                            <option>Adelaide, SA</option>
+                          </select>
+                        </div>
+                        
+                        <div>
+                          <label className="text-sm font-medium mb-2 block">Religion</label>
+                          <select className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm">
+                            <option>All Religions</option>
+                            <option>Hindu</option>
+                            <option>Muslim</option>
+                            <option>Christian</option>
+                            <option>Sikh</option>
+                          </select>
+                        </div>
+                        
+                        <div>
+                          <label className="text-sm font-medium mb-2 block">Profession</label>
+                          <select className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm">
+                            <option>All Professions</option>
+                            <option>Engineer</option>
+                            <option>Doctor</option>
+                            <option>Teacher</option>
+                            <option>Business</option>
+                          </select>
+                        </div>
+                      </div>
+                      
+                      <div className="flex gap-2 mt-4">
+                        <Button onClick={applyFilters}>Apply Filters</Button>
+                        <Button variant="outline">Clear All</Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </CollapsibleContent>
+              </Collapsible>
+
+              {/* Search Results Grid */}
+              <motion.div
+                variants={staggerChildren}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              >
+                {displayedProfiles.map((profile) => (
+                  <motion.div key={profile.user_id} variants={fadeInUp}>
+                    <Card className="group hover:shadow-lg transition-all duration-300 overflow-hidden">
+                      <div className="relative">
+                        <img 
+                          src={profile.photo_primary_url || '/placeholder.svg'} 
+                          alt={`${profile.first_name} ${profile.last_name}`}
+                          className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        
+                        {/* Status Badges */}
+                        <div className="absolute top-3 left-3 flex gap-1">
+                          <Badge className="bg-green-500 text-white text-xs">
+                            <Shield className="w-3 h-3 mr-1" />
+                            Verified
+                          </Badge>
+                          {profile.subscription_tier === 'premium' && (
+                            <Badge className="bg-purple-500 text-white text-xs">
+                              Premium
+                            </Badge>
+                          )}
+                        </div>
+
+                        {/* Quick Actions Overlay */}
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                          <div className="flex gap-2">
+                            <Button size="sm" variant="secondary" className="rounded-full" asChild>
+                              <Link to={`/profile/${profile.user_id}`}>
+                                <Eye className="w-4 h-4" />
+                              </Link>
+                            </Button>
+                            <Button size="sm" variant="secondary" className="rounded-full">
+                              <MessageCircle className="w-4 h-4" />
+                            </Button>
+                            <Button size="sm" className="rounded-full bg-red-500 hover:bg-red-600">
+                              <Heart className="w-4 h-4" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <CardContent className="p-4">
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <h3 className="font-semibold text-lg truncate">
+                              {profile.first_name} {profile.last_name}
+                            </h3>
+                            <span className="text-sm text-muted-foreground">{profile.age}</span>
+                          </div>
+                          
+                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <MapPin className="w-4 h-4 flex-shrink-0" />
+                            <span className="truncate">{profile.location}</span>
+                          </div>
+                          
+                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <Briefcase className="w-4 h-4 flex-shrink-0" />
+                            <span className="truncate">{profile.profession}</span>
+                          </div>
+                          
+                          <p className="text-sm text-muted-foreground line-clamp-2">{profile.bio}</p>
+                          
+                          <div className="flex gap-2 pt-2">
+                            <Button size="sm" variant="outline" className="flex-1" asChild>
+                              <Link to={`/profile/${profile.user_id}`}>
+                                View Profile
+                              </Link>
+                            </Button>
+                            <Button size="sm" className="flex-1">
+                              Connect
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              {/* Load More */}
+              {displayedProfiles.length < allProfiles.length && (
+                <div className="text-center mt-8">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      const nextBatch = allProfiles.slice(displayedProfiles.length, displayedProfiles.length + 20);
+                      setDisplayedProfiles([...displayedProfiles, ...nextBatch]);
+                    }}
+                  >
+                    Load More Profiles
+                  </Button>
+                </div>
+              )}
             </div>
           </section>
         </div>

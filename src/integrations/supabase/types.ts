@@ -586,6 +586,57 @@ export type Database = {
         }
         Relationships: []
       }
+      family_members: {
+        Row: {
+          access_level: string
+          can_manage_profile: boolean | null
+          can_view_contacts: boolean | null
+          can_view_photos: boolean | null
+          created_at: string
+          family_member_id: string | null
+          id: string
+          invitation_email: string
+          invitation_expires_at: string | null
+          invitation_token: string | null
+          relationship: string
+          status: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          access_level?: string
+          can_manage_profile?: boolean | null
+          can_view_contacts?: boolean | null
+          can_view_photos?: boolean | null
+          created_at?: string
+          family_member_id?: string | null
+          id?: string
+          invitation_email: string
+          invitation_expires_at?: string | null
+          invitation_token?: string | null
+          relationship: string
+          status?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          access_level?: string
+          can_manage_profile?: boolean | null
+          can_view_contacts?: boolean | null
+          can_view_photos?: boolean | null
+          created_at?: string
+          family_member_id?: string | null
+          id?: string
+          invitation_email?: string
+          invitation_expires_at?: string | null
+          invitation_token?: string | null
+          relationship?: string
+          status?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       favorites: {
         Row: {
           created_at: string
@@ -1987,6 +2038,33 @@ export type Database = {
           },
         ]
       }
+      terms_of_service: {
+        Row: {
+          content: Json
+          created_at: string
+          effective_date: string
+          id: string
+          is_active: boolean | null
+          version: string
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          effective_date: string
+          id?: string
+          is_active?: boolean | null
+          version: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          effective_date?: string
+          id?: string
+          is_active?: boolean | null
+          version?: string
+        }
+        Relationships: []
+      }
       todo_items: {
         Row: {
           category: string | null
@@ -2281,6 +2359,33 @@ export type Database = {
           profile_visibility?: string | null
           two_factor_enabled?: boolean | null
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_terms_acceptance: {
+        Row: {
+          accepted_at: string
+          id: string
+          ip_address: unknown | null
+          terms_version: string
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          accepted_at?: string
+          id?: string
+          ip_address?: unknown | null
+          terms_version: string
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          accepted_at?: string
+          id?: string
+          ip_address?: unknown | null
+          terms_version?: string
+          user_agent?: string | null
           user_id?: string
         }
         Relationships: []

@@ -140,7 +140,16 @@ export const EnterpriseSecurityDashboard: React.FC = () => {
             }
           ]);
         } else {
-          setRecentEvents(events || []);
+          // Transform the database events to match our SecurityEvent interface
+          const transformedEvents = (events || []).map(event => ({
+            id: event.id,
+            event_type: event.event_type,
+            severity: 'info' as const, // Default severity since it's not in DB
+            details: event.event_data || {},
+            created_at: event.created_at,
+            user_id: event.user_id
+          }));
+          setRecentEvents(transformedEvents);
         }
       } catch (eventError) {
         console.error('Security events query failed:', eventError);

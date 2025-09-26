@@ -17,7 +17,8 @@ import {
   Camera,
   MessageSquare,
   Lock,
-  Gavel
+  Gavel,
+  Eye
 } from 'lucide-react';
 import { fadeInUp, staggerChildren } from '@/lib/motion';
 

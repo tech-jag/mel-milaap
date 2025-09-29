@@ -2,6 +2,9 @@
  * Calculate profile completion percentage based on filled fields
  */
 export function calculateProfileCompletion(profileData: any): number {
+  // Debug log to see what data we're getting
+  console.log('Profile completion calculation - received data:', profileData);
+  
   const requiredFields = [
     'full_name', 
     'gender', 
@@ -32,7 +35,9 @@ export function calculateProfileCompletion(profileData: any): number {
   // Calculate required fields completion (80% weight)
   const completedRequired = requiredFields.filter(field => {
     const value = profileData[field];
-    return value && value.toString().trim() !== '';
+    const isComplete = value && value.toString().trim() !== '';
+    console.log(`Required field ${field}:`, value, '- Complete:', isComplete);
+    return isComplete;
   });
   
   const requiredScore = (completedRequired.length / requiredFields.length) * 80;
@@ -40,12 +45,25 @@ export function calculateProfileCompletion(profileData: any): number {
   // Calculate optional fields completion (20% weight)
   const completedOptional = optionalButImportantFields.filter(field => {
     const value = profileData[field];
-    return value && value.toString().trim() !== '';
+    const isComplete = value && value.toString().trim() !== '';
+    console.log(`Optional field ${field}:`, value, '- Complete:', isComplete);
+    return isComplete;
   });
   
   const optionalScore = (completedOptional.length / optionalButImportantFields.length) * 20;
   
-  return Math.round(requiredScore + optionalScore);
+  const totalScore = Math.round(requiredScore + optionalScore);
+  console.log('Profile completion calculation result:', {
+    completedRequired: completedRequired.length,
+    totalRequired: requiredFields.length,
+    requiredScore,
+    completedOptional: completedOptional.length,
+    totalOptional: optionalButImportantFields.length,
+    optionalScore,
+    totalScore
+  });
+  
+  return totalScore;
 }
 
 /**

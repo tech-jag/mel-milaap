@@ -3,10 +3,12 @@
  */
 export function calculateProfileCompletion(profileData: any): number {
   const requiredFields = [
-    'first_name', 
-    'last_name', 
+    'full_name', 
     'gender', 
     'birth_date', 
+    'height_cm',
+    'body_type',
+    'complexion',
     'religion', 
     'mother_tongue',
     'education_level', 
@@ -20,7 +22,11 @@ export function calculateProfileCompletion(profileData: any): number {
     'community',
     'family_type',
     'father_occupation',
-    'height_cm'
+    'birth_time',
+    'birth_city',
+    'diet',
+    'drinking',
+    'smoking'
   ];
   
   // Calculate required fields completion (80% weight)

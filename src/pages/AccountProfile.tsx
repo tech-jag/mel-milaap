@@ -45,6 +45,8 @@ export default function AccountProfile() {
     { key: 'gender', label: 'Gender', type: 'select' as const, options: ['male', 'female', 'non_binary', 'prefer_not'] },
     { key: 'marital_status', label: 'Marital Status', type: 'select' as const, options: ['never_married', 'divorced', 'widowed', 'annulled'] },
     { key: 'height_cm', label: 'Height (cm)', type: 'number' as const },
+    { key: 'body_type', label: 'Body Type', type: 'select' as const, options: ['slim', 'average', 'athletic', 'heavy', 'prefer_not'] },
+    { key: 'complexion', label: 'Complexion', type: 'select' as const, options: ['very_fair', 'fair', 'wheatish', 'dark', 'prefer_not'] },
     { key: 'birth_date', label: 'Date of Birth', type: 'date' as const },
     { key: 'diet', label: 'Diet', type: 'select' as const, options: ['vegetarian', 'eggetarian', 'non_vegetarian', 'vegan', 'halal', 'prefer_not'] },
     { key: 'drinking', label: 'Drinking', type: 'select' as const, options: ['no', 'occasional', 'yes'] },
@@ -61,13 +63,10 @@ export default function AccountProfile() {
 
   const astroFields = [
     { key: 'birth_time', label: 'Time of Birth', type: 'text' as const },
-    { key: 'birth_place', label: 'Place of Birth', type: 'text' as const },
+    { key: 'birth_city', label: 'Place of Birth', type: 'text' as const },
     { key: 'gothra', label: 'Gothra', type: 'text' as const },
     { key: 'nakshatra', label: 'Nakshatra', type: 'text' as const },
-    { key: 'raashi', label: 'Raashi', type: 'text' as const },
-    { key: 'manglik', label: 'Manglik', type: 'select' as const, options: ['yes', 'no', 'unknown'] },
-    { key: 'mangal_dosha', label: 'Mangal Dosha', type: 'select' as const, options: ['yes', 'no', 'anshik', 'dont_know'] },
-    { key: 'horoscope_matching_importance', label: 'Horoscope Matching', type: 'select' as const, options: ['very_important', 'important', 'not_important'] }
+    { key: 'manglik', label: 'Manglik', type: 'select' as const, options: ['yes', 'no', 'unknown'] }
   ];
 
   const familyFields = [
@@ -169,8 +168,16 @@ export default function AccountProfile() {
                 <Card>
                   <CardContent className="pt-4 lg:pt-6">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                      <div className="h-16 w-16 lg:h-20 lg:w-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0">
-                        <Camera className="h-6 w-6 lg:h-8 lg:w-8 text-white" />
+                      <div className="h-16 w-16 lg:h-20 lg:w-20 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden">
+                        {profileData.photo_primary_url ? (
+                          <img 
+                            src={profileData.photo_primary_url} 
+                            alt="Profile" 
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <Camera className="h-6 w-6 lg:h-8 lg:w-8 text-white" />
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <h2 className="text-lg lg:text-xl font-semibold truncate">

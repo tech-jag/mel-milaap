@@ -146,17 +146,28 @@ export const useOnboardingState = () => {
     mutationFn: async (step: number) => {
       if (!user?.id) throw new Error('User not authenticated');
       
-      const { error } = await supabase
+      // Try update first, then insert if no rows affected
+      const { error: updateError, count } = await supabase
         .from('onboarding_state')
-        .upsert({
-          user_id: user.id,
+        .update({
           current_step: step,
           last_saved_at: new Date().toISOString(),
-        }, {
-          onConflict: 'user_id'
-        });
-
-      if (error) throw error;
+        })
+        .eq('user_id', user.id);
+        
+      if (updateError) throw updateError;
+      
+      // If no rows updated, insert new record
+      if (count === 0) {
+        const { error: insertError } = await supabase
+          .from('onboarding_state')
+          .insert({
+            user_id: user.id,
+            current_step: step,
+            last_saved_at: new Date().toISOString(),
+          });
+        if (insertError) throw insertError;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['onboarding-state'] });
@@ -167,17 +178,28 @@ export const useOnboardingState = () => {
     mutationFn: async (updates: Partial<UserProfile>) => {
       if (!user?.id) throw new Error('User not authenticated');
       
-      const { error } = await supabase
+      // Try update first, then insert if no rows affected
+      const { error: updateError, count } = await supabase
         .from('user_profiles')
-        .upsert({
-          user_id: user.id,
+        .update({
           ...updates,
           updated_at: new Date().toISOString(),
-        }, {
-          onConflict: 'user_id'
-        });
-
-      if (error) throw error;
+        })
+        .eq('user_id', user.id);
+        
+      if (updateError) throw updateError;
+      
+      // If no rows updated, insert new record
+      if (count === 0) {
+        const { error: insertError } = await supabase
+          .from('user_profiles')
+          .insert({
+            user_id: user.id,
+            ...updates,
+            updated_at: new Date().toISOString(),
+          });
+        if (insertError) throw insertError;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user-profile'] });
@@ -188,17 +210,28 @@ export const useOnboardingState = () => {
     mutationFn: async (updates: Partial<PartnerPreferences>) => {
       if (!user?.id) throw new Error('User not authenticated');
       
-      const { error } = await supabase
+      // Try update first, then insert if no rows affected
+      const { error: updateError, count } = await supabase
         .from('partner_preferences')
-        .upsert({
-          user_id: user.id,
+        .update({
           ...updates,
           updated_at: new Date().toISOString(),
-        }, {
-          onConflict: 'user_id'
-        });
-
-      if (error) throw error;
+        })
+        .eq('user_id', user.id);
+        
+      if (updateError) throw updateError;
+      
+      // If no rows updated, insert new record
+      if (count === 0) {
+        const { error: insertError } = await supabase
+          .from('partner_preferences')
+          .insert({
+            user_id: user.id,
+            ...updates,
+            updated_at: new Date().toISOString(),
+          });
+        if (insertError) throw insertError;
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['partner-preferences'] });

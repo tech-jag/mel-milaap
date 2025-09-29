@@ -178,26 +178,35 @@ export const useOnboardingState = () => {
     mutationFn: async (updates: Partial<UserProfile>) => {
       if (!user?.id) throw new Error('User not authenticated');
       
+      console.log('Updating user profile with:', updates, 'for user:', user.id);
+      
       // Try update first, then insert if no rows affected
-      const { error: updateError, count } = await supabase
+      const { data: updateData, error: updateError, count } = await supabase
         .from('user_profiles')
         .update({
           ...updates,
           updated_at: new Date().toISOString(),
         })
-        .eq('user_id', user.id);
+        .eq('user_id', user.id)
+        .select();
+        
+      console.log('Update result:', { updateData, updateError, count });
         
       if (updateError) throw updateError;
       
       // If no rows updated, insert new record
-      if (count === 0) {
-        const { error: insertError } = await supabase
+      if (!updateData || updateData.length === 0) {
+        console.log('No existing profile found, inserting new record');
+        const { data: insertData, error: insertError } = await supabase
           .from('user_profiles')
           .insert({
             user_id: user.id,
             ...updates,
             updated_at: new Date().toISOString(),
-          });
+          })
+          .select();
+          
+        console.log('Insert result:', { insertData, insertError });
         if (insertError) throw insertError;
       }
     },

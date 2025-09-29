@@ -181,7 +181,7 @@ export default function AccountProfile() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <h2 className="text-lg lg:text-xl font-semibold truncate">
-                          {profileData.first_name} {profileData.last_name}
+                          {profileData.full_name || 'Your Name'}
                         </h2>
                         <p className="text-muted-foreground text-sm lg:text-base">
                           Profile ID: {profileData.profile_id}
